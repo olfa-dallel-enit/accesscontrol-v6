@@ -269,7 +269,7 @@ func (k Keeper) OnAcknowledgementEstablishCooperationPacket(ctx sdk.Context, pac
 								k.TransmitForwardCooperationDataPacket(
 									ctx,
 									packetToForward,
-									"cdaccesscontrol",
+									"cdac",
 									domainCooperation.SourceDomain.IbcConnection.Channel,
 									clienttypes.ZeroHeight(),
 									packet.TimeoutTimestamp,
@@ -296,7 +296,7 @@ func (k Keeper) OnAcknowledgementEstablishCooperationPacket(ctx sdk.Context, pac
 									k.TransmitForwardCooperationDataPacket(
 										ctx,
 										packetToForward,
-										"cdaccesscontrol",
+										"cdac",
 										domainCooperation.SourceDomain.IbcConnection.Channel,
 										clienttypes.ZeroHeight(),
 										packet.TimeoutTimestamp,
@@ -326,7 +326,7 @@ func (k Keeper) OnAcknowledgementEstablishCooperationPacket(ctx sdk.Context, pac
 								k.TransmitForwardCooperationDataPacket(
 									ctx,
 									packetToForward,
-									"cdaccesscontrol",
+									"cdac",
 									domainCooperation.SourceDomain.IbcConnection.Channel,
 									clienttypes.ZeroHeight(),
 									packet.TimeoutTimestamp,
@@ -354,7 +354,7 @@ func (k Keeper) OnAcknowledgementEstablishCooperationPacket(ctx sdk.Context, pac
 									k.TransmitForwardCooperationDataPacket(
 										ctx,
 										packetToForward,
-										"cdaccesscontrol",
+										"cdac",
 										domainCooperation.SourceDomain.IbcConnection.Channel,
 										clienttypes.ZeroHeight(),
 										packet.TimeoutTimestamp,
@@ -1217,7 +1217,7 @@ func (k Keeper) ForwardCooperationData(ctx sdk.Context, packet channeltypes.Pack
 						k.TransmitForwardCooperationDataPacket(
 							ctx,
 							packetToForward,
-							"cdaccesscontrol",
+							"cdac",
 							domainCooperation.SourceDomain.IbcConnection.Channel,
 							clienttypes.ZeroHeight(),
 							packet.TimeoutTimestamp,
@@ -1244,7 +1244,7 @@ func (k Keeper) ForwardCooperationData(ctx sdk.Context, packet channeltypes.Pack
 							k.TransmitForwardCooperationDataPacket(
 								ctx,
 								packetToForward,
-								"cdaccesscontrol",
+								"cdac",
 								domainCooperation.SourceDomain.IbcConnection.Channel,
 								clienttypes.ZeroHeight(),
 								packet.TimeoutTimestamp,
@@ -1274,7 +1274,7 @@ func (k Keeper) ForwardCooperationData(ctx sdk.Context, packet channeltypes.Pack
 						k.TransmitForwardCooperationDataPacket(
 							ctx,
 							packetToForward,
-							"cdaccesscontrol",
+							"cdac",
 							domainCooperation.SourceDomain.IbcConnection.Channel,
 							clienttypes.ZeroHeight(),
 							packet.TimeoutTimestamp,
@@ -1302,7 +1302,7 @@ func (k Keeper) ForwardCooperationData(ctx sdk.Context, packet channeltypes.Pack
 							k.TransmitForwardCooperationDataPacket(
 								ctx,
 								packetToForward,
-								"cdaccesscontrol",
+								"cdac",
 								domainCooperation.SourceDomain.IbcConnection.Channel,
 								clienttypes.ZeroHeight(),
 								packet.TimeoutTimestamp,
@@ -1354,7 +1354,7 @@ func (k Keeper) ForwardCooperationsToNewCooperativeDomain(ctx sdk.Context, packe
 				k.TransmitForwardCooperationDataPacket(
 					ctx,
 					packetToForward,
-					"cdaccesscontrol",
+					"cdac",
 					packet.DestinationChannel,
 					clienttypes.ZeroHeight(),
 					packet.TimeoutTimestamp,
