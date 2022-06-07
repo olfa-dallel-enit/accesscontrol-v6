@@ -1,0 +1,20 @@
+accounts:
+  - name: aliceEarth
+    coins: ["100000token", "10000000000stake"]
+  - name: relayerEarthMars
+    address: "cosmos1ujrtv2p8tzchjch74sz057kr2j4p669wfkldza"
+    coins: ["50000token", "10000000000stake"]
+validator:
+  name: aliceEarth
+  staked: "10000000000stake"
+host:
+  rpc: ":26657"
+  p2p: ":26656"
+  prof: ":6060"
+  grpc: ":9090"
+  grpc-web: ":9091"
+  api: ":1317"
+genesis:
+  chain_id: "earth"
+init:
+  home: "$HOME/.earth"

@@ -1,0 +1,21 @@
+# venus.yml
+accounts:
+  - name: aliceVenus
+    coins: ["100000token", "100000000000stake"]
+  - name: relayerMarsVenus
+    address: "cosmos1dfck3876l87vjy9vcgh335ychlh6aespkrlw2h"
+    coins: ["50000token", "10000000000stake"]
+validator:
+  name: aliceVenus
+  staked: "10000000000stake"
+host:
+  rpc: ":26663"
+  p2p: ":26664"
+  prof: ":6063"
+  grpc: ":9094"
+  grpc-web: ":9095"
+  api: ":1320"
+genesis:
+  chain_id: "venus"
+init:
+  home: "$HOME/.venus"

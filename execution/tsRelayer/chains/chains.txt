@@ -1,0 +1,5 @@
+ignite chain serve -c execution/tsRelayer/chains/earth.yml --reset-once
+ignite chain serve -c execution/tsRelayer/chains/mars.yml --reset-once
+ignite chain serve -c execution/tsRelayer/chains/venus.yml --reset-once
+ignite chain serve -c execution/tsRelayer/chains/neptune.yml --reset-once
+ignite chain serve -c execution/tsRelayer/chains/jupiter.yml --reset-once

@@ -1,0 +1,52 @@
+https://github.com/confio/ts-relayer/blob/main/spec/ibc-setup.md
+https://github.com/confio/ts-relayer/issues/127
+
+installation:
+npm i -g @confio/relayer
+
+#####
+steps
+#####
+ibc-setup init --home execution/tsRelayer/mars-venus
+
+version: 1
+ 
+chains:
+ mars:
+   chain_id: mars
+   prefix: cosmos
+   gas_price: 0.0000025stake
+   rpc:
+     - http://0.0.0.0:26659
+ venus:
+   chain_id: venus
+   prefix: cosmos
+   gas_price: 0.0000025stake
+   rpc:
+     - http://0.0.0.0:26663
+
+ibc-setup init --src=mars --dest=venus --home execution/tsRelayer/mars-venus
+Source address: cosmos1dfck3876l87vjy9vcgh335ychlh6aespkrlw2h
+Destination address: cosmos1dfck3876l87vjy9vcgh335ychlh6aespkrlw2h
+
+get the relayer address and add it the configuration files
+
+####
+run blockchains
+ignite chain serve -c execution/tsRelayer/chains/mars.yml --reset-once
+ignite chain serve -c execution/tsRelayer/chains/venus.yml --reset-once
+
+ibc-setup connect -v --home execution/tsRelayer/mars-venus
+
+#ibc-setup channel --src-connection=connection-0 --dest-connection=connection-0 --src-port=authentication --dest-port=authentication --ordered --version=authentication-1 --home execution/tsRelayer/earth-mars
+ 
+ ibc-setup channel --src-connection=connection-1 --dest-connection=connection-0 --src-port=cdac --dest-port=cdac --version=cdac-1 --home execution/tsRelayer/mars-venus
+mars: cdac/channel-1 (connection-1)
+  venus: cdac/channel-0 (connection-0)
+
+  ibc-relayer start --poll 0 --home execution/tsRelayer/mars-venus
+
+ibc-relayer start -v --poll 10 --home execution/tsRelayer/mars-venus
+
+
+

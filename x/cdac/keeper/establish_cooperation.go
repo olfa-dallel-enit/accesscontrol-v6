@@ -1230,6 +1230,7 @@ func (k Keeper) ForwardCooperationData(ctx sdk.Context, packet channeltypes.Pack
 							Function:    "OnRecvEstablishCooperationPacket",
 							Decision:    "Confirmed: cooperation data is forwarded to " + domainCooperation.RemoteDomain.Name + " in broadcast mode",
 						})
+						//time.Sleep(10 * time.Second)
 					}
 				}
 			}
@@ -1367,6 +1368,7 @@ func (k Keeper) ForwardCooperationsToNewCooperativeDomain(ctx sdk.Context, packe
 					Function:    "OnRecvEstablishCooperationPacket",
 					Decision:    "Confirmed: new cooperation data is forwarded to " + domainName,
 				})
+				//time.Sleep(10 * time.Second)
 			}
 		}
 	}

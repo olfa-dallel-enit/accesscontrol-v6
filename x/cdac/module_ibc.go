@@ -182,12 +182,12 @@ func (am AppModule) OnRecvPacket(
 		)
 	case *types.CdacPacketData_ForwardCooperationDataPacket:
 		am.keeper.OnRecvForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket)
-		ctx.EventManager().EmitEvent(
+		/*ctx.EventManager().EmitEvent(
 			sdk.NewEvent(
 				types.EventTypeForwardCooperationDataPacket,
 				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
 			),
-		)
+		)*/
 		
 		/*packetAck, err := am.keeper.OnRecvForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket)
 		if err != nil {
@@ -253,11 +253,11 @@ func (am AppModule) OnAcknowledgementPacket(
 		}
 		eventType = types.EventTypeEstablishCooperationPacket
 	case *types.CdacPacketData_ForwardCooperationDataPacket:
-		err := am.keeper.OnAcknowledgementForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket, ack)
+		/*err := am.keeper.OnAcknowledgementForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket, ack)
 		if err != nil {
 			return err
 		}
-		eventType = types.EventTypeForwardCooperationDataPacket
+		eventType = types.EventTypeForwardCooperationDataPacket*/
 		// this line is used by starport scaffolding # ibc/packet/module/ack
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s packet type: %T", types.ModuleName, packet)
@@ -280,13 +280,13 @@ func (am AppModule) OnAcknowledgementPacket(
 				sdk.NewAttribute(types.AttributeKeyAckSuccess, string(resp.Result)),
 			),
 		)
-	case *channeltypes.Acknowledgement_Error:
+	/*case *channeltypes.Acknowledgement_Error:
 		ctx.EventManager().EmitEvent(
 			sdk.NewEvent(
 				eventType,
 				sdk.NewAttribute(types.AttributeKeyAckError, resp.Error),
 			),
-		)
+		)*/
 	}
 
 	return nil

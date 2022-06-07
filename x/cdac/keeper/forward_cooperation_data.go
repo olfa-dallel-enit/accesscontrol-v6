@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"errors"
+	//"errors"
 
 	"crossdomain/x/cdac/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -70,11 +70,12 @@ func (k Keeper) TransmitForwardCooperationDataPacket(
 }
 
 // OnRecvForwardCooperationDataPacket processes packet reception
-func (k Keeper) OnRecvForwardCooperationDataPacket(ctx sdk.Context, packet channeltypes.Packet, data types.ForwardCooperationDataPacketData) (packetAck types.ForwardCooperationDataPacketAck, err error) {
+func (k Keeper) OnRecvForwardCooperationDataPacket(ctx sdk.Context, packet channeltypes.Packet, data types.ForwardCooperationDataPacketData){
+	// (packetAck types.ForwardCooperationDataPacketAck, err error) {
 	// validate packet data upon receiving
-	if err := data.ValidateBasic(); err != nil {
+	/*if err := data.ValidateBasic(); err != nil {
 		return packetAck, err
-	}
+	}*/
 
 	// TODO: packet reception logic
 	k.AppendDomainCooperation(ctx, types.DomainCooperation{
@@ -115,9 +116,10 @@ func (k Keeper) OnRecvForwardCooperationDataPacket(ctx sdk.Context, packet chann
 	k.ReForwardCooperationData(ctx , packet, data)
 
 
-	return packetAck, nil
+	//return packetAck, nil
 }
 
+/*
 // OnAcknowledgementForwardCooperationDataPacket responds to the the success or failure of a packet
 // acknowledgement written on the receiving chain.
 func (k Keeper) OnAcknowledgementForwardCooperationDataPacket(ctx sdk.Context, packet channeltypes.Packet, data types.ForwardCooperationDataPacketData, ack channeltypes.Acknowledgement) error {
@@ -145,6 +147,7 @@ func (k Keeper) OnAcknowledgementForwardCooperationDataPacket(ctx sdk.Context, p
 		return errors.New("invalid acknowledgment format")
 	}
 }
+*/
 
 // OnTimeoutForwardCooperationDataPacket responds to the case where a packet has not been transmitted because of a timeout
 func (k Keeper) OnTimeoutForwardCooperationDataPacket(ctx sdk.Context, packet channeltypes.Packet, data types.ForwardCooperationDataPacketData) error {

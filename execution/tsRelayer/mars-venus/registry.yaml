@@ -1,0 +1,15 @@
+version: 1
+ 
+chains:
+ mars:
+   chain_id: mars
+   prefix: cosmos
+   gas_price: 0.0000025stake
+   rpc:
+     - http://0.0.0.0:26659
+ venus:
+   chain_id: venus
+   prefix: cosmos
+   gas_price: 0.0000025stake
+   rpc:
+     - http://0.0.0.0:26663
