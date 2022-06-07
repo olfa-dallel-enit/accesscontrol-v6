@@ -1,0 +1,13 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+import "cdac/public_key.proto"; 
+import "cdac/validity.proto"; 
+
+message Certificate {
+  uint64 id = 1;
+  PublicKey publicKey = 2; 
+  Validity validity = 3; 
+  string creator = 4;
+}

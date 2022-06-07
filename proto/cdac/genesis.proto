@@ -1,0 +1,39 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+import "gogoproto/gogo.proto";
+import "cdac/params.proto";
+import "cdac/public_key.proto";
+import "cdac/validity.proto";
+import "cdac/certificate.proto";
+import "cdac/ibc_connection.proto";
+import "cdac/domain.proto";
+import "cdac/authentication_log.proto";
+import "cdac/domain_cooperation.proto";
+import "cdac/cooperation_log.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "crossdomain/x/cdac/types";
+
+// GenesisState defines the cdac module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  string port_id = 2;
+  repeated PublicKey publicKeyList = 3 [(gogoproto.nullable) = false];
+  uint64 publicKeyCount = 4;
+  repeated Validity validityList = 5 [(gogoproto.nullable) = false];
+  uint64 validityCount = 6;
+  repeated Certificate certificateList = 7 [(gogoproto.nullable) = false];
+  uint64 certificateCount = 8;
+  repeated IbcConnection ibcConnectionList = 9 [(gogoproto.nullable) = false];
+  uint64 ibcConnectionCount = 10;
+  repeated Domain domainList = 11 [(gogoproto.nullable) = false];
+  uint64 domainCount = 12;
+  repeated AuthenticationLog authenticationLogList = 13 [(gogoproto.nullable) = false];
+  uint64 authenticationLogCount = 14;
+  repeated DomainCooperation domainCooperationList = 15 [(gogoproto.nullable) = false];
+  uint64 domainCooperationCount = 16;
+  repeated CooperationLog cooperationLogList = 17 [(gogoproto.nullable) = false];
+  uint64 cooperationLogCount = 18;
+  // this line is used by starport scaffolding # genesis/proto/state
+}

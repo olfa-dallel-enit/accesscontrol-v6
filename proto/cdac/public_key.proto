@@ -1,0 +1,11 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message PublicKey {
+  uint64 id = 1;
+  uint64 n = 2; 
+  uint64 e = 3; 
+  string creator = 4;
+}

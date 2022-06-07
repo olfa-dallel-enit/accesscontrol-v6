@@ -20,3 +20,40 @@ const (
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	PrivateKeyKey = "PrivateKey-value-"
+)
+
+const (
+	LocalDomainCertificateKey = "LocalDomainCertificate-value-"
+)
+
+const (
+	RootCertificateKey = "RootCertificate-value-"
+)
+
+const (
+	LocalDomainKey = "LocalDomain-value-"
+)
+
+const (
+	ForwardPolicyKey = "ForwardPolicy-value-"
+)
+
+const (
+	ValidityKey      = "Validity-value-"
+	ValidityCountKey = "Validity-count-"
+)
+
+const (
+	DecisionPolicyKey = "DecisionPolicy-value-"
+)
+
+const (
+	UpdatePolicyKey = "UpdatePolicy-value-"
+)
+
+const (
+	CooperationNetworkFeaturesKey = "CooperationNetworkFeatures-value-"
+)
