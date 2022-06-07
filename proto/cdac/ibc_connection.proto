@@ -6,5 +6,6 @@ option go_package = "crossdomain/x/cdac/types";
 message IbcConnection {
   uint64 id = 1;
   string channel = 2; 
-  string creator = 3;
+  string port = 3;
+  string creator = 4;
 }

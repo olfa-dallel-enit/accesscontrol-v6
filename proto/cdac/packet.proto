@@ -20,10 +20,23 @@ message NoData {
 
 // AuthenticateDomainPacketData defines a struct for the packet payload
 message AuthenticateDomainPacketData {
+  string sender = 1;
+  string pke = 2;
+  string pkn = 3;
+  string notBefore = 4;
+  string notAfter = 5;
+  string location = 6;
 }
 
 // AuthenticateDomainPacketAck defines a struct for the packet acknowledgment
 message AuthenticateDomainPacketAck {
+  string confirmation = 1;
+  string confirmedBy = 2;
+  string location = 3;
+  string pke = 4;
+  string pkn = 5;
+  string notBefore = 6;
+  string notAfter = 7;
 	}
 // EstablishCooperationPacketData defines a struct for the packet payload
 message EstablishCooperationPacketData {
@@ -31,13 +44,25 @@ message EstablishCooperationPacketData {
   string notAfter = 2;
   string interest = 3;
   string cost = 4;
+  string sender = 5;
 }
 
 // EstablishCooperationPacketAck defines a struct for the packet acknowledgment
 message EstablishCooperationPacketAck {
+  string confirmation = 1;
+  string confirmedBy = 2;
 	}
 // ForwardCooperationDataPacketData defines a struct for the packet payload
 message ForwardCooperationDataPacketData {
+  string notBefore = 1;
+	string notAfter = 2;
+  string interest = 3;
+	string cost = 4;
+	string domain1Name = 5;
+	string domain2Name = 6;
+	string domain1Location = 7;
+	string domain2Location = 8;
+  string sender = 9;
 }
 
 // ForwardCooperationDataPacketAck defines a struct for the packet acknowledgment

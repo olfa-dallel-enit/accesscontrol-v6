@@ -171,6 +171,12 @@ var xxx_messageInfo_NoData proto.InternalMessageInfo
 
 // AuthenticateDomainPacketData defines a struct for the packet payload
 type AuthenticateDomainPacketData struct {
+	Sender    string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
+	Pke       string `protobuf:"bytes,2,opt,name=pke,proto3" json:"pke,omitempty"`
+	Pkn       string `protobuf:"bytes,3,opt,name=pkn,proto3" json:"pkn,omitempty"`
+	NotBefore string `protobuf:"bytes,4,opt,name=notBefore,proto3" json:"notBefore,omitempty"`
+	NotAfter  string `protobuf:"bytes,5,opt,name=notAfter,proto3" json:"notAfter,omitempty"`
+	Location  string `protobuf:"bytes,6,opt,name=location,proto3" json:"location,omitempty"`
 }
 
 func (m *AuthenticateDomainPacketData) Reset()         { *m = AuthenticateDomainPacketData{} }
@@ -206,8 +212,57 @@ func (m *AuthenticateDomainPacketData) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_AuthenticateDomainPacketData proto.InternalMessageInfo
 
+func (m *AuthenticateDomainPacketData) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketData) GetPke() string {
+	if m != nil {
+		return m.Pke
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketData) GetPkn() string {
+	if m != nil {
+		return m.Pkn
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketData) GetNotBefore() string {
+	if m != nil {
+		return m.NotBefore
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketData) GetNotAfter() string {
+	if m != nil {
+		return m.NotAfter
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketData) GetLocation() string {
+	if m != nil {
+		return m.Location
+	}
+	return ""
+}
+
 // AuthenticateDomainPacketAck defines a struct for the packet acknowledgment
 type AuthenticateDomainPacketAck struct {
+	Confirmation string `protobuf:"bytes,1,opt,name=confirmation,proto3" json:"confirmation,omitempty"`
+	ConfirmedBy  string `protobuf:"bytes,2,opt,name=confirmedBy,proto3" json:"confirmedBy,omitempty"`
+	Location     string `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"`
+	Pke          string `protobuf:"bytes,4,opt,name=pke,proto3" json:"pke,omitempty"`
+	Pkn          string `protobuf:"bytes,5,opt,name=pkn,proto3" json:"pkn,omitempty"`
+	NotBefore    string `protobuf:"bytes,6,opt,name=notBefore,proto3" json:"notBefore,omitempty"`
+	NotAfter     string `protobuf:"bytes,7,opt,name=notAfter,proto3" json:"notAfter,omitempty"`
 }
 
 func (m *AuthenticateDomainPacketAck) Reset()         { *m = AuthenticateDomainPacketAck{} }
@@ -243,12 +298,62 @@ func (m *AuthenticateDomainPacketAck) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_AuthenticateDomainPacketAck proto.InternalMessageInfo
 
+func (m *AuthenticateDomainPacketAck) GetConfirmation() string {
+	if m != nil {
+		return m.Confirmation
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketAck) GetConfirmedBy() string {
+	if m != nil {
+		return m.ConfirmedBy
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketAck) GetLocation() string {
+	if m != nil {
+		return m.Location
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketAck) GetPke() string {
+	if m != nil {
+		return m.Pke
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketAck) GetPkn() string {
+	if m != nil {
+		return m.Pkn
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketAck) GetNotBefore() string {
+	if m != nil {
+		return m.NotBefore
+	}
+	return ""
+}
+
+func (m *AuthenticateDomainPacketAck) GetNotAfter() string {
+	if m != nil {
+		return m.NotAfter
+	}
+	return ""
+}
+
 // EstablishCooperationPacketData defines a struct for the packet payload
 type EstablishCooperationPacketData struct {
 	NotBefore string `protobuf:"bytes,1,opt,name=notBefore,proto3" json:"notBefore,omitempty"`
 	NotAfter  string `protobuf:"bytes,2,opt,name=notAfter,proto3" json:"notAfter,omitempty"`
 	Interest  string `protobuf:"bytes,3,opt,name=interest,proto3" json:"interest,omitempty"`
 	Cost      string `protobuf:"bytes,4,opt,name=cost,proto3" json:"cost,omitempty"`
+	Sender    string `protobuf:"bytes,5,opt,name=sender,proto3" json:"sender,omitempty"`
 }
 
 func (m *EstablishCooperationPacketData) Reset()         { *m = EstablishCooperationPacketData{} }
@@ -312,8 +417,17 @@ func (m *EstablishCooperationPacketData) GetCost() string {
 	return ""
 }
 
+func (m *EstablishCooperationPacketData) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
 // EstablishCooperationPacketAck defines a struct for the packet acknowledgment
 type EstablishCooperationPacketAck struct {
+	Confirmation string `protobuf:"bytes,1,opt,name=confirmation,proto3" json:"confirmation,omitempty"`
+	ConfirmedBy  string `protobuf:"bytes,2,opt,name=confirmedBy,proto3" json:"confirmedBy,omitempty"`
 }
 
 func (m *EstablishCooperationPacketAck) Reset()         { *m = EstablishCooperationPacketAck{} }
@@ -349,8 +463,31 @@ func (m *EstablishCooperationPacketAck) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_EstablishCooperationPacketAck proto.InternalMessageInfo
 
+func (m *EstablishCooperationPacketAck) GetConfirmation() string {
+	if m != nil {
+		return m.Confirmation
+	}
+	return ""
+}
+
+func (m *EstablishCooperationPacketAck) GetConfirmedBy() string {
+	if m != nil {
+		return m.ConfirmedBy
+	}
+	return ""
+}
+
 // ForwardCooperationDataPacketData defines a struct for the packet payload
 type ForwardCooperationDataPacketData struct {
+	NotBefore       string `protobuf:"bytes,1,opt,name=notBefore,proto3" json:"notBefore,omitempty"`
+	NotAfter        string `protobuf:"bytes,2,opt,name=notAfter,proto3" json:"notAfter,omitempty"`
+	Interest        string `protobuf:"bytes,3,opt,name=interest,proto3" json:"interest,omitempty"`
+	Cost            string `protobuf:"bytes,4,opt,name=cost,proto3" json:"cost,omitempty"`
+	Domain1Name     string `protobuf:"bytes,5,opt,name=domain1Name,proto3" json:"domain1Name,omitempty"`
+	Domain2Name     string `protobuf:"bytes,6,opt,name=domain2Name,proto3" json:"domain2Name,omitempty"`
+	Domain1Location string `protobuf:"bytes,7,opt,name=domain1Location,proto3" json:"domain1Location,omitempty"`
+	Domain2Location string `protobuf:"bytes,8,opt,name=domain2Location,proto3" json:"domain2Location,omitempty"`
+	Sender          string `protobuf:"bytes,9,opt,name=sender,proto3" json:"sender,omitempty"`
 }
 
 func (m *ForwardCooperationDataPacketData) Reset()         { *m = ForwardCooperationDataPacketData{} }
@@ -385,6 +522,69 @@ func (m *ForwardCooperationDataPacketData) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_ForwardCooperationDataPacketData proto.InternalMessageInfo
+
+func (m *ForwardCooperationDataPacketData) GetNotBefore() string {
+	if m != nil {
+		return m.NotBefore
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetNotAfter() string {
+	if m != nil {
+		return m.NotAfter
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetInterest() string {
+	if m != nil {
+		return m.Interest
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetCost() string {
+	if m != nil {
+		return m.Cost
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetDomain1Name() string {
+	if m != nil {
+		return m.Domain1Name
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetDomain2Name() string {
+	if m != nil {
+		return m.Domain2Name
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetDomain1Location() string {
+	if m != nil {
+		return m.Domain1Location
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetDomain2Location() string {
+	if m != nil {
+		return m.Domain2Location
+	}
+	return ""
+}
+
+func (m *ForwardCooperationDataPacketData) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
 
 // ForwardCooperationDataPacketAck defines a struct for the packet acknowledgment
 type ForwardCooperationDataPacketAck struct {
@@ -437,30 +637,41 @@ func init() {
 func init() { proto.RegisterFile("cdac/packet.proto", fileDescriptor_d7821588041dde76) }
 
 var fileDescriptor_d7821588041dde76 = []byte{
-	// 368 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x93, 0xb1, 0x4e, 0xeb, 0x30,
-	0x14, 0x86, 0x93, 0xdb, 0x2a, 0x6a, 0xce, 0x95, 0xae, 0x2e, 0x9e, 0xa2, 0xd2, 0xba, 0xc5, 0x13,
-	0x53, 0x8a, 0xc2, 0x13, 0xa4, 0x2d, 0x88, 0x09, 0xa1, 0x8c, 0x6c, 0xae, 0xe3, 0xaa, 0x51, 0x8b,
-	0x1d, 0xd9, 0x46, 0x94, 0x57, 0x60, 0xe2, 0x39, 0x78, 0x12, 0xc6, 0x8e, 0x8c, 0xa8, 0x7d, 0x11,
-	0x14, 0x27, 0x2a, 0x15, 0x55, 0xc2, 0x66, 0xe7, 0x3f, 0xff, 0xff, 0x39, 0xc7, 0xc7, 0x70, 0xc2,
-	0x52, 0xca, 0x46, 0x39, 0x65, 0x4b, 0x6e, 0xc2, 0x5c, 0x49, 0x23, 0xd1, 0x7f, 0xa6, 0xa4, 0xd6,
-	0xa9, 0x7c, 0xa0, 0x99, 0x08, 0x0b, 0x99, 0xbc, 0xb5, 0xe0, 0xdf, 0x24, 0xa5, 0xec, 0xce, 0x96,
-	0x4d, 0xa9, 0xa1, 0x28, 0x02, 0x4f, 0xc8, 0x62, 0x15, 0xb8, 0x43, 0xf7, 0xfc, 0x6f, 0x14, 0x84,
-	0x3f, 0x5d, 0xe1, 0xad, 0xd5, 0x6f, 0x9c, 0xa4, 0xaa, 0x44, 0x6b, 0xe8, 0xcd, 0xa5, 0x7a, 0xa2,
-	0x2a, 0x9d, 0x48, 0x99, 0x73, 0x45, 0x4d, 0x26, 0x45, 0xa1, 0x94, 0xb9, 0x41, 0xdb, 0x26, 0x45,
-	0xc7, 0x49, 0xd7, 0x0d, 0xae, 0x8a, 0xd1, 0x98, 0x8c, 0x14, 0x74, 0xb9, 0x36, 0x74, 0xb6, 0xca,
-	0xf4, 0xe2, 0xa0, 0xa2, 0xe2, 0xb6, 0x2c, 0xf7, 0xe2, 0x98, 0x7b, 0x55, 0xeb, 0xa9, 0xa8, 0x0d,
-	0xa9, 0x68, 0x05, 0x01, 0x7d, 0x34, 0x0b, 0x2e, 0x4c, 0xc6, 0xa8, 0xe1, 0x53, 0x9b, 0x5b, 0x11,
-	0xff, 0x58, 0x62, 0x78, 0x4c, 0x8c, 0x6b, 0x1c, 0x15, 0xaf, 0x36, 0x71, 0xdc, 0x01, 0xaf, 0xbc,
-	0x44, 0xd2, 0x01, 0xaf, 0xec, 0x3c, 0xc1, 0xd0, 0x6b, 0xca, 0x23, 0x7d, 0x38, 0xad, 0xd3, 0x63,
-	0xb6, 0x24, 0x2f, 0x2e, 0xe0, 0xe6, 0x0e, 0xa0, 0x1e, 0xf8, 0x42, 0x9a, 0x31, 0x9f, 0x4b, 0xc5,
-	0xed, 0x20, 0xf8, 0xc9, 0xf7, 0x07, 0xd4, 0x85, 0x8e, 0x90, 0x26, 0x9e, 0x1b, 0xae, 0xec, 0x1f,
-	0xfb, 0xc9, 0x7e, 0x5f, 0x68, 0x99, 0x30, 0x5c, 0x71, 0x5d, 0xf6, 0xdf, 0x4f, 0xf6, 0x7b, 0x84,
-	0xa0, 0xcd, 0xa4, 0x2e, 0xe7, 0xc1, 0x4f, 0xec, 0x9a, 0x0c, 0xa0, 0x5f, 0x7f, 0x96, 0xe2, 0xb4,
-	0x04, 0x86, 0xbf, 0x8d, 0x09, 0x39, 0x83, 0x41, 0x53, 0x4d, 0xcc, 0x96, 0xe3, 0xe8, 0x7d, 0x8b,
-	0xdd, 0xcd, 0x16, 0xbb, 0x9f, 0x5b, 0xec, 0xbe, 0xee, 0xb0, 0xb3, 0xd9, 0x61, 0xe7, 0x63, 0x87,
-	0x9d, 0xfb, 0xe0, 0xe0, 0xb2, 0x46, 0xeb, 0x91, 0x7d, 0x37, 0xe6, 0x39, 0xe7, 0x7a, 0xe6, 0xd9,
-	0x77, 0x73, 0xf9, 0x15, 0x00, 0x00, 0xff, 0xff, 0xca, 0x66, 0x75, 0xeb, 0x4c, 0x03, 0x00, 0x00,
+	// 529 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xbd, 0x8e, 0xd3, 0x40,
+	0x10, 0x8e, 0xf3, 0x63, 0xe2, 0x09, 0x82, 0x63, 0x0b, 0x64, 0x1d, 0xc1, 0x04, 0x57, 0x57, 0x39,
+	0x60, 0x9e, 0x20, 0xb9, 0x03, 0x51, 0xa0, 0x13, 0x4a, 0x49, 0xb7, 0xb7, 0xde, 0xe8, 0xac, 0x24,
+	0xbb, 0xd6, 0x7a, 0x11, 0x77, 0x6f, 0xc1, 0x33, 0x50, 0x52, 0xf1, 0x00, 0x3c, 0x00, 0xe5, 0x95,
+	0x34, 0x48, 0x28, 0x79, 0x11, 0xe4, 0xf1, 0x3a, 0xb1, 0x63, 0xd9, 0x34, 0x88, 0x6e, 0x67, 0xe6,
+	0x9b, 0xef, 0x9b, 0x9f, 0xb5, 0x17, 0x1e, 0xb1, 0x88, 0xb2, 0x69, 0x42, 0xd9, 0x8a, 0xeb, 0x20,
+	0x51, 0x52, 0x4b, 0x72, 0xc2, 0x94, 0x4c, 0xd3, 0x48, 0x6e, 0x68, 0x2c, 0x82, 0x2c, 0xec, 0x7f,
+	0xed, 0xc1, 0x83, 0xf3, 0x88, 0xb2, 0xf7, 0x08, 0xbb, 0xa0, 0x9a, 0x92, 0x10, 0x6c, 0x21, 0xb3,
+	0x93, 0x6b, 0x4d, 0xac, 0xb3, 0x51, 0xe8, 0x06, 0xc7, 0x59, 0xc1, 0x25, 0xc6, 0xdf, 0x76, 0x16,
+	0x06, 0x49, 0x6e, 0x60, 0xbc, 0x94, 0xea, 0x13, 0x55, 0xd1, 0xb9, 0x94, 0x09, 0x57, 0x54, 0xc7,
+	0x52, 0x64, 0x91, 0x9c, 0xd7, 0xed, 0x23, 0x53, 0x58, 0x67, 0x7a, 0xd3, 0x92, 0x65, 0x34, 0x5a,
+	0x99, 0x89, 0x82, 0x53, 0x9e, 0x6a, 0x7a, 0xb5, 0x8e, 0xd3, 0xeb, 0x12, 0xc2, 0xe8, 0xf6, 0x50,
+	0xf7, 0x45, 0x5d, 0xf7, 0x75, 0x63, 0x8e, 0x51, 0x6d, 0x61, 0x25, 0x6b, 0x70, 0xe9, 0x47, 0x7d,
+	0xcd, 0x85, 0x8e, 0x19, 0xd5, 0xfc, 0x02, 0x79, 0x8d, 0x62, 0x17, 0x15, 0x83, 0xba, 0xe2, 0xac,
+	0x21, 0xc3, 0xe8, 0x35, 0x32, 0xce, 0x87, 0x60, 0xe7, 0x4b, 0xf4, 0x87, 0x60, 0xe7, 0x93, 0xf7,
+	0xbf, 0x59, 0x30, 0x6e, 0x23, 0x24, 0x8f, 0xc1, 0x4e, 0xb9, 0x88, 0xb8, 0xc2, 0x25, 0x3a, 0x0b,
+	0x63, 0x91, 0x13, 0xe8, 0x25, 0x2b, 0x8e, 0x55, 0x3a, 0x8b, 0xec, 0x98, 0x7b, 0x04, 0x4e, 0x0a,
+	0x3d, 0x82, 0x8c, 0xc1, 0x11, 0x52, 0xcf, 0xf9, 0x52, 0x2a, 0x8e, 0x9b, 0x73, 0x16, 0x07, 0x07,
+	0x39, 0x85, 0xa1, 0x90, 0x7a, 0xb6, 0xd4, 0x5c, 0xb9, 0x03, 0x0c, 0xee, 0xed, 0x2c, 0xb6, 0x96,
+	0x0c, 0x47, 0xe5, 0xda, 0x79, 0xac, 0xb0, 0xfd, 0x5f, 0x16, 0x3c, 0x69, 0x2a, 0x79, 0xc6, 0x56,
+	0xc4, 0x87, 0xfb, 0x4c, 0x8a, 0x65, 0xac, 0x36, 0x79, 0x7e, 0x5e, 0x77, 0xc5, 0x47, 0x26, 0x30,
+	0x32, 0x36, 0x8f, 0xe6, 0xb7, 0xa6, 0x8b, 0xb2, 0xab, 0x52, 0x41, 0xaf, 0x5a, 0x41, 0xd1, 0x7b,
+	0xbf, 0xd6, 0xfb, 0xa0, 0xa1, 0x77, 0xbb, 0xad, 0xf7, 0x7b, 0xd5, 0xde, 0xfd, 0x2f, 0x16, 0x78,
+	0xed, 0xb7, 0xaa, 0x4a, 0x6e, 0xb5, 0x91, 0x77, 0xeb, 0x83, 0x8d, 0x85, 0xe6, 0x8a, 0xa7, 0xba,
+	0x68, 0xab, 0xb0, 0x09, 0x81, 0x3e, 0x93, 0xa9, 0x36, 0x7d, 0xe1, 0xb9, 0xb4, 0xfe, 0x41, 0x79,
+	0xfd, 0x3e, 0x87, 0xa7, 0xcd, 0x35, 0xfe, 0xb3, 0x2d, 0xf8, 0xdf, 0xbb, 0x30, 0xf9, 0xdb, 0x97,
+	0xfd, 0x1f, 0xa7, 0x31, 0x81, 0x51, 0xfe, 0x25, 0xbe, 0xbc, 0xa4, 0x1b, 0x6e, 0x46, 0x52, 0x76,
+	0x1d, 0x10, 0x21, 0x22, 0xec, 0x32, 0x02, 0x5d, 0xe4, 0x0c, 0x1e, 0x9a, 0x84, 0x77, 0xc5, 0xfd,
+	0xca, 0x6f, 0xc0, 0xb1, 0xfb, 0x80, 0x0c, 0xf7, 0xc8, 0x61, 0x19, 0xb9, 0x77, 0x97, 0xb6, 0xe4,
+	0x54, 0xb6, 0xf4, 0x1c, 0x9e, 0xb5, 0x4d, 0x6f, 0xc6, 0x56, 0xf3, 0xf0, 0xc7, 0xd6, 0xb3, 0xee,
+	0xb6, 0x9e, 0xf5, 0x7b, 0xeb, 0x59, 0x9f, 0x77, 0x5e, 0xe7, 0x6e, 0xe7, 0x75, 0x7e, 0xee, 0xbc,
+	0xce, 0x07, 0xb7, 0xf4, 0xe7, 0x99, 0xde, 0x4c, 0xf1, 0x11, 0xd0, 0xb7, 0x09, 0x4f, 0xaf, 0x6c,
+	0x7c, 0x04, 0x5e, 0xfd, 0x09, 0x00, 0x00, 0xff, 0xff, 0xeb, 0xcb, 0x50, 0x81, 0x19, 0x06, 0x00,
+	0x00,
 }
 
 func (m *CdacPacketData) Marshal() (dAtA []byte, err error) {
@@ -622,6 +833,48 @@ func (m *AuthenticateDomainPacketData) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
+	if len(m.Location) > 0 {
+		i -= len(m.Location)
+		copy(dAtA[i:], m.Location)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Location)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.NotAfter) > 0 {
+		i -= len(m.NotAfter)
+		copy(dAtA[i:], m.NotAfter)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.NotAfter)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.NotBefore) > 0 {
+		i -= len(m.NotBefore)
+		copy(dAtA[i:], m.NotBefore)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.NotBefore)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Pkn) > 0 {
+		i -= len(m.Pkn)
+		copy(dAtA[i:], m.Pkn)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Pkn)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Pke) > 0 {
+		i -= len(m.Pke)
+		copy(dAtA[i:], m.Pke)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Pke)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -645,6 +898,55 @@ func (m *AuthenticateDomainPacketAck) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
+	if len(m.NotAfter) > 0 {
+		i -= len(m.NotAfter)
+		copy(dAtA[i:], m.NotAfter)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.NotAfter)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.NotBefore) > 0 {
+		i -= len(m.NotBefore)
+		copy(dAtA[i:], m.NotBefore)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.NotBefore)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.Pkn) > 0 {
+		i -= len(m.Pkn)
+		copy(dAtA[i:], m.Pkn)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Pkn)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Pke) > 0 {
+		i -= len(m.Pke)
+		copy(dAtA[i:], m.Pke)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Pke)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Location) > 0 {
+		i -= len(m.Location)
+		copy(dAtA[i:], m.Location)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Location)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.ConfirmedBy) > 0 {
+		i -= len(m.ConfirmedBy)
+		copy(dAtA[i:], m.ConfirmedBy)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.ConfirmedBy)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Confirmation) > 0 {
+		i -= len(m.Confirmation)
+		copy(dAtA[i:], m.Confirmation)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Confirmation)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -668,6 +970,13 @@ func (m *EstablishCooperationPacketData) MarshalToSizedBuffer(dAtA []byte) (int,
 	_ = i
 	var l int
 	_ = l
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0x2a
+	}
 	if len(m.Cost) > 0 {
 		i -= len(m.Cost)
 		copy(dAtA[i:], m.Cost)
@@ -719,6 +1028,20 @@ func (m *EstablishCooperationPacketAck) MarshalToSizedBuffer(dAtA []byte) (int, 
 	_ = i
 	var l int
 	_ = l
+	if len(m.ConfirmedBy) > 0 {
+		i -= len(m.ConfirmedBy)
+		copy(dAtA[i:], m.ConfirmedBy)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.ConfirmedBy)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Confirmation) > 0 {
+		i -= len(m.Confirmation)
+		copy(dAtA[i:], m.Confirmation)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Confirmation)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -742,6 +1065,69 @@ func (m *ForwardCooperationDataPacketData) MarshalToSizedBuffer(dAtA []byte) (in
 	_ = i
 	var l int
 	_ = l
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0x4a
+	}
+	if len(m.Domain2Location) > 0 {
+		i -= len(m.Domain2Location)
+		copy(dAtA[i:], m.Domain2Location)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Domain2Location)))
+		i--
+		dAtA[i] = 0x42
+	}
+	if len(m.Domain1Location) > 0 {
+		i -= len(m.Domain1Location)
+		copy(dAtA[i:], m.Domain1Location)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Domain1Location)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.Domain2Name) > 0 {
+		i -= len(m.Domain2Name)
+		copy(dAtA[i:], m.Domain2Name)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Domain2Name)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.Domain1Name) > 0 {
+		i -= len(m.Domain1Name)
+		copy(dAtA[i:], m.Domain1Name)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Domain1Name)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Cost) > 0 {
+		i -= len(m.Cost)
+		copy(dAtA[i:], m.Cost)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Cost)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Interest) > 0 {
+		i -= len(m.Interest)
+		copy(dAtA[i:], m.Interest)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Interest)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.NotAfter) > 0 {
+		i -= len(m.NotAfter)
+		copy(dAtA[i:], m.NotAfter)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.NotAfter)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.NotBefore) > 0 {
+		i -= len(m.NotBefore)
+		copy(dAtA[i:], m.NotBefore)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.NotBefore)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -854,6 +1240,30 @@ func (m *AuthenticateDomainPacketData) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Pke)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Pkn)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.NotBefore)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.NotAfter)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Location)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
 	return n
 }
 
@@ -863,6 +1273,34 @@ func (m *AuthenticateDomainPacketAck) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.Confirmation)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.ConfirmedBy)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Location)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Pke)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Pkn)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.NotBefore)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.NotAfter)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
 	return n
 }
 
@@ -888,6 +1326,10 @@ func (m *EstablishCooperationPacketData) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovPacket(uint64(l))
 	}
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
 	return n
 }
 
@@ -897,6 +1339,14 @@ func (m *EstablishCooperationPacketAck) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.Confirmation)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.ConfirmedBy)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
 	return n
 }
 
@@ -906,6 +1356,42 @@ func (m *ForwardCooperationDataPacketData) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.NotBefore)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.NotAfter)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Interest)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Cost)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Domain1Name)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Domain2Name)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Domain1Location)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Domain2Location)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
 	return n
 }
 
@@ -1193,6 +1679,198 @@ func (m *AuthenticateDomainPacketData) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: AuthenticateDomainPacketData: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pke", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Pke = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pkn", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Pkn = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotBefore", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NotBefore = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotAfter", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NotAfter = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Location", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Location = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPacket(dAtA[iNdEx:])
@@ -1243,6 +1921,230 @@ func (m *AuthenticateDomainPacketAck) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: AuthenticateDomainPacketAck: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Confirmation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Confirmation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConfirmedBy", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ConfirmedBy = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Location", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Location = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pke", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Pke = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pkn", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Pkn = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotBefore", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NotBefore = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotAfter", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NotAfter = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPacket(dAtA[iNdEx:])
@@ -1421,6 +2323,38 @@ func (m *EstablishCooperationPacketData) Unmarshal(dAtA []byte) error {
 			}
 			m.Cost = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPacket(dAtA[iNdEx:])
@@ -1471,6 +2405,70 @@ func (m *EstablishCooperationPacketAck) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: EstablishCooperationPacketAck: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Confirmation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Confirmation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConfirmedBy", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ConfirmedBy = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPacket(dAtA[iNdEx:])
@@ -1521,6 +2519,294 @@ func (m *ForwardCooperationDataPacketData) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: ForwardCooperationDataPacketData: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotBefore", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NotBefore = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NotAfter", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NotAfter = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Interest", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Interest = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Cost", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Cost = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Domain1Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Domain1Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Domain2Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Domain2Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Domain1Location", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Domain1Location = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Domain2Location", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Domain2Location = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPacket(dAtA[iNdEx:])

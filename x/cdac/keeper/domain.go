@@ -6,6 +6,9 @@ import (
 	"crossdomain/x/cdac/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+
+	"github.com/spf13/cast"
+	"time"
 )
 
 // GetDomainCount get the total number of domain
@@ -103,4 +106,66 @@ func GetDomainIDBytes(id uint64) []byte {
 // GetDomainIDFromBytes returns ID in uint64 format from a byte array
 func GetDomainIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
+}
+
+func (k Keeper) GetDomainByName(ctx sdk.Context, domainName string) (val types.Domain, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.Domain
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Name == domainName {
+			return val, true
+		}
+	}
+
+	return val, false
+}
+
+func (k Keeper) FindDomainByName(ctx sdk.Context, domainName string) (found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.Domain
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Name == domainName {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (k Keeper) IsAuthenticated(ctx sdk.Context, domainName string) (found bool) {
+
+	domain, found := k.GetDomainByName(ctx, domainName)
+	if found {
+		if cast.ToTime(domain.Certificate.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domain.Certificate.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+			return true
+		}
+	}
+	return false
+}
+
+func (k Keeper) GetDomainLocationByDomainName(ctx sdk.Context, domainName string) (location string, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.Domain
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Name == domainName {
+			return val.Location, true
+		}
+	}
+
+	return location, false
 }
