@@ -5,7 +5,11 @@ import "cdac/authentication_log.proto";
 import "cdac/domain_cooperation.proto";
 import "cdac/cooperation_log.proto";
 import "cdac/forward_policy.proto";
+import "cdac/cooperation_network.proto";
 // this line is used by starport scaffolding # proto/tx/import
+import "cdac/cooperation_network_features.proto";
+import "cdac/cooperation_data.proto";
+import "cdac/domain_map.proto";
 import "cdac/validity.proto";
 import "cdac/domain.proto";
 import "cdac/ibc_connection.proto";
@@ -52,6 +56,20 @@ rpc CreateForwardPolicy(MsgCreateForwardPolicy) returns (MsgCreateForwardPolicyR
   rpc SendEnableCooperation(MsgSendEnableCooperation) returns (MsgSendEnableCooperationResponse);
   rpc SendModifyCooperationValidity(MsgSendModifyCooperationValidity) returns (MsgSendModifyCooperationValidityResponse);
   rpc SendModifyCooperationInterest(MsgSendModifyCooperationInterest) returns (MsgSendModifyCooperationInterestResponse);
+  rpc SendRevokeCooperation(MsgSendRevokeCooperation) returns (MsgSendRevokeCooperationResponse);
+  rpc CreateDomainMap(MsgCreateDomainMap) returns (MsgCreateDomainMapResponse);
+  rpc UpdateDomainMap(MsgUpdateDomainMap) returns (MsgUpdateDomainMapResponse);
+  rpc DeleteDomainMap(MsgDeleteDomainMap) returns (MsgDeleteDomainMapResponse);
+rpc CreateCooperationNetworkFeatures(MsgCreateCooperationNetworkFeatures) returns (MsgCreateCooperationNetworkFeaturesResponse);
+  rpc UpdateCooperationNetworkFeatures(MsgUpdateCooperationNetworkFeatures) returns (MsgUpdateCooperationNetworkFeaturesResponse);
+  rpc DeleteCooperationNetworkFeatures(MsgDeleteCooperationNetworkFeatures) returns (MsgDeleteCooperationNetworkFeaturesResponse);
+  rpc CreateCooperationData(MsgCreateCooperationData) returns (MsgCreateCooperationDataResponse);
+  rpc UpdateCooperationData(MsgUpdateCooperationData) returns (MsgUpdateCooperationDataResponse);
+  rpc DeleteCooperationData(MsgDeleteCooperationData) returns (MsgDeleteCooperationDataResponse);
+rpc CreateCooperationNetwork(MsgCreateCooperationNetwork) returns (MsgCreateCooperationNetworkResponse);
+  rpc UpdateCooperationNetwork(MsgUpdateCooperationNetwork) returns (MsgUpdateCooperationNetworkResponse);
+  rpc DeleteCooperationNetwork(MsgDeleteCooperationNetwork) returns (MsgDeleteCooperationNetworkResponse);
+  rpc GenerateCooperationNetwork(MsgGenerateCooperationNetwork) returns (MsgGenerateCooperationNetworkResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -418,4 +436,138 @@ message MsgSendModifyCooperationInterest {
 
 message MsgSendModifyCooperationInterestResponse {
 }
+message MsgSendRevokeCooperation {
+  string creator = 1;
+  string port = 2;
+  string channelID = 3;
+  uint64 timeoutTimestamp = 4;
+}
+
+message MsgSendRevokeCooperationResponse {
+}
+message MsgCreateDomainMap {
+  string creator = 1;
+  string domainIndex = 2;
+
+  repeated Domain domainList = 3;
+}
+message MsgCreateDomainMapResponse {}
+
+message MsgUpdateDomainMap {
+  string creator = 1;
+  string domainIndex = 2;
+
+  repeated Domain domainList = 3;
+}
+message MsgUpdateDomainMapResponse {}
+
+message MsgDeleteDomainMap {
+  string creator = 1;
+  string domainIndex = 2;
+}
+message MsgDeleteDomainMapResponse {}
+
+message MsgCreateCooperationNetworkFeatures {
+  string creator = 1;
+  uint64 depth = 2;
+  uint64 cost = 3;
+  repeated string interestList = 4;
+  repeated string locationList = 5;
+  string lastUpdate = 6;
+}
+
+message MsgCreateCooperationNetworkFeaturesResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateCooperationNetworkFeatures {
+  string creator = 1;
+  uint64 id = 2;
+  uint64 depth = 3;
+  uint64 cost = 4;
+  repeated string interestList = 5;
+  repeated string locationList = 6;
+  string lastUpdate = 7;
+}
+
+message MsgUpdateCooperationNetworkFeaturesResponse {}
+
+message MsgDeleteCooperationNetworkFeatures {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteCooperationNetworkFeaturesResponse {}
+
+message MsgCreateCooperationData {
+  string creator = 1;
+  string labelIndex = 2;
+
+  Validity validity = 3;
+  string status = 4;
+  uint64 cost = 5;
+  string lastUpdate = 6;
+  repeated string interestList = 7;
+}
+message MsgCreateCooperationDataResponse {}
+
+message MsgUpdateCooperationData {
+  string creator = 1;
+  string labelIndex = 2;
+
+  Validity validity = 3;
+  string status = 4;
+  uint64 cost = 5;
+  string lastUpdate = 6;
+  repeated string interestList = 7;
+}
+message MsgUpdateCooperationDataResponse {}
+
+message MsgDeleteCooperationData {
+  string creator = 1;
+  string labelIndex = 2;
+}
+message MsgDeleteCooperationDataResponse {}
+
+message MsgCreateCooperationNetwork {
+  string creator = 1;
+  string label = 2;
+  repeated DomainMap domainMapList = 3;
+  repeated CooperationData cooperationDataList = 4;
+  CooperationNetworkFeatures features = 5;
+  string creationTimestamp = 6;
+  string updateTimestamp = 7;
+}
+
+message MsgCreateCooperationNetworkResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateCooperationNetwork {
+  string creator = 1;
+  uint64 id = 2;
+  string label = 3;
+  repeated DomainMap domainMapList = 4;
+  repeated CooperationData cooperationDataList = 5;
+  CooperationNetworkFeatures features = 6;
+  string creationTimestamp = 7;
+  string updateTimestamp = 8;
+}
+
+message MsgUpdateCooperationNetworkResponse {}
+
+message MsgDeleteCooperationNetwork {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteCooperationNetworkResponse {}
+
+message MsgGenerateCooperationNetwork {
+  string creator = 1;
+}
+
+message MsgGenerateCooperationNetworkResponse {
+}
+
 // this line is used by starport scaffolding # proto/tx/message

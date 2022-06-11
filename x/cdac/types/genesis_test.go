@@ -103,6 +103,40 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ForwardPolicyCount: 2,
+				DomainMapList: []types.DomainMap{
+					{
+						DomainIndex: "0",
+					},
+					{
+						DomainIndex: "1",
+					},
+				},
+				CooperationNetworkFeaturesList: []types.CooperationNetworkFeatures{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				CooperationNetworkFeaturesCount: 2,
+				CooperationDataList: []types.CooperationData{
+					{
+						LabelIndex: "0",
+					},
+					{
+						LabelIndex: "1",
+					},
+				},
+				CooperationNetworkList: []types.CooperationNetwork{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				CooperationNetworkCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -338,6 +372,86 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ForwardPolicyCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated domainMap",
+			genState: &types.GenesisState{
+				DomainMapList: []types.DomainMap{
+					{
+						DomainIndex: "0",
+					},
+					{
+						DomainIndex: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated cooperationNetworkFeatures",
+			genState: &types.GenesisState{
+				CooperationNetworkFeaturesList: []types.CooperationNetworkFeatures{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid cooperationNetworkFeatures count",
+			genState: &types.GenesisState{
+				CooperationNetworkFeaturesList: []types.CooperationNetworkFeatures{
+					{
+						Id: 1,
+					},
+				},
+				CooperationNetworkFeaturesCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated cooperationData",
+			genState: &types.GenesisState{
+				CooperationDataList: []types.CooperationData{
+					{
+						LabelIndex: "0",
+					},
+					{
+						LabelIndex: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated cooperationNetwork",
+			genState: &types.GenesisState{
+				CooperationNetworkList: []types.CooperationNetwork{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid cooperationNetwork count",
+			genState: &types.GenesisState{
+				CooperationNetworkList: []types.CooperationNetwork{
+					{
+						Id: 1,
+					},
+				},
+				CooperationNetworkCount: 0,
 			},
 			valid: false,
 		},

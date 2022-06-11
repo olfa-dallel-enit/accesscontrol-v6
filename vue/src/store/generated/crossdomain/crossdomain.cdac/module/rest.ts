@@ -28,6 +28,18 @@ export interface CdacCertificate {
   creator?: string;
 }
 
+export interface CdacCooperationData {
+  labelIndex?: string;
+  validity?: CdacValidity;
+  status?: string;
+
+  /** @format uint64 */
+  cost?: string;
+  lastUpdate?: string;
+  interestList?: string[];
+  creator?: string;
+}
+
 export interface CdacCooperationLog {
   /** @format uint64 */
   id?: string;
@@ -36,6 +48,33 @@ export interface CdacCooperationLog {
   details?: string;
   decision?: string;
   function?: string;
+  creator?: string;
+}
+
+export interface CdacCooperationNetwork {
+  /** @format uint64 */
+  id?: string;
+  label?: string;
+  domainMapList?: CdacDomainMap[];
+  cooperationDataList?: CdacCooperationData[];
+  features?: CdacCooperationNetworkFeatures;
+  creationTimestamp?: string;
+  updateTimestamp?: string;
+  creator?: string;
+}
+
+export interface CdacCooperationNetworkFeatures {
+  /** @format uint64 */
+  id?: string;
+
+  /** @format uint64 */
+  depth?: string;
+
+  /** @format uint64 */
+  cost?: string;
+  interestList?: string[];
+  locationList?: string[];
+  lastUpdate?: string;
   creator?: string;
 }
 
@@ -68,6 +107,12 @@ export interface CdacDomainCooperation {
   status?: string;
 }
 
+export interface CdacDomainMap {
+  domainIndex?: string;
+  domainList?: CdacDomain;
+  creator?: string;
+}
+
 export interface CdacForwardPolicy {
   /** @format uint64 */
   id?: string;
@@ -95,7 +140,19 @@ export interface CdacMsgCreateCertificateResponse {
   id?: string;
 }
 
+export type CdacMsgCreateCooperationDataResponse = object;
+
 export interface CdacMsgCreateCooperationLogResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
+export interface CdacMsgCreateCooperationNetworkFeaturesResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
+export interface CdacMsgCreateCooperationNetworkResponse {
   /** @format uint64 */
   id?: string;
 }
@@ -104,6 +161,8 @@ export interface CdacMsgCreateDomainCooperationResponse {
   /** @format uint64 */
   id?: string;
 }
+
+export type CdacMsgCreateDomainMapResponse = object;
 
 export interface CdacMsgCreateDomainResponse {
   /** @format uint64 */
@@ -134,9 +193,17 @@ export type CdacMsgDeleteAuthenticationLogResponse = object;
 
 export type CdacMsgDeleteCertificateResponse = object;
 
+export type CdacMsgDeleteCooperationDataResponse = object;
+
 export type CdacMsgDeleteCooperationLogResponse = object;
 
+export type CdacMsgDeleteCooperationNetworkFeaturesResponse = object;
+
+export type CdacMsgDeleteCooperationNetworkResponse = object;
+
 export type CdacMsgDeleteDomainCooperationResponse = object;
+
+export type CdacMsgDeleteDomainMapResponse = object;
 
 export type CdacMsgDeleteDomainResponse = object;
 
@@ -147,6 +214,8 @@ export type CdacMsgDeleteIbcConnectionResponse = object;
 export type CdacMsgDeletePublicKeyResponse = object;
 
 export type CdacMsgDeleteValidityResponse = object;
+
+export type CdacMsgGenerateCooperationNetworkResponse = object;
 
 export type CdacMsgSendAuthenticateDomainResponse = object;
 
@@ -166,13 +235,23 @@ export type CdacMsgSendModifyCooperationInterestResponse = object;
 
 export type CdacMsgSendModifyCooperationValidityResponse = object;
 
+export type CdacMsgSendRevokeCooperationResponse = object;
+
 export type CdacMsgUpdateAuthenticationLogResponse = object;
 
 export type CdacMsgUpdateCertificateResponse = object;
 
+export type CdacMsgUpdateCooperationDataResponse = object;
+
 export type CdacMsgUpdateCooperationLogResponse = object;
 
+export type CdacMsgUpdateCooperationNetworkFeaturesResponse = object;
+
+export type CdacMsgUpdateCooperationNetworkResponse = object;
+
 export type CdacMsgUpdateDomainCooperationResponse = object;
+
+export type CdacMsgUpdateDomainMapResponse = object;
 
 export type CdacMsgUpdateDomainResponse = object;
 
@@ -231,6 +310,21 @@ export interface CdacQueryAllCertificateResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryAllCooperationDataResponse {
+  cooperationData?: CdacCooperationData[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CdacQueryAllCooperationLogResponse {
   CooperationLog?: CdacCooperationLog[];
 
@@ -246,8 +340,53 @@ export interface CdacQueryAllCooperationLogResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryAllCooperationNetworkFeaturesResponse {
+  CooperationNetworkFeatures?: CdacCooperationNetworkFeatures[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface CdacQueryAllCooperationNetworkResponse {
+  CooperationNetwork?: CdacCooperationNetwork[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CdacQueryAllDomainCooperationResponse {
   DomainCooperation?: CdacDomainCooperation[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface CdacQueryAllDomainMapResponse {
+  domainMap?: CdacDomainMap[];
 
   /**
    * PageResponse is to be embedded in gRPC response messages where the
@@ -354,12 +493,28 @@ export interface CdacQueryGetCertificateResponse {
   Certificate?: CdacCertificate;
 }
 
+export interface CdacQueryGetCooperationDataResponse {
+  cooperationData?: CdacCooperationData;
+}
+
 export interface CdacQueryGetCooperationLogResponse {
   CooperationLog?: CdacCooperationLog;
 }
 
+export interface CdacQueryGetCooperationNetworkFeaturesResponse {
+  CooperationNetworkFeatures?: CdacCooperationNetworkFeatures;
+}
+
+export interface CdacQueryGetCooperationNetworkResponse {
+  CooperationNetwork?: CdacCooperationNetwork;
+}
+
 export interface CdacQueryGetDomainCooperationResponse {
   DomainCooperation?: CdacDomainCooperation;
+}
+
+export interface CdacQueryGetDomainMapResponse {
+  domainMap?: CdacDomainMap;
 }
 
 export interface CdacQueryGetDomainResponse {
@@ -776,6 +931,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryCooperationDataAll
+   * @summary Queries a list of CooperationData items.
+   * @request GET:/crossdomain/cdac/cooperation_data
+   */
+  queryCooperationDataAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllCooperationDataResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperation_data`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCooperationData
+   * @summary Queries a CooperationData by index.
+   * @request GET:/crossdomain/cdac/cooperation_data/{labelIndex}
+   */
+  queryCooperationData = (labelIndex: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetCooperationDataResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperation_data/${labelIndex}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryCooperationLogAll
    * @summary Queries a list of CooperationLog items.
    * @request GET:/crossdomain/cdac/cooperation_log
@@ -809,6 +1006,90 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryCooperationLog = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetCooperationLogResponse, RpcStatus>({
       path: `/crossdomain/cdac/cooperation_log/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCooperationNetworkAll
+   * @summary Queries a list of CooperationNetwork items.
+   * @request GET:/crossdomain/cdac/cooperation_network
+   */
+  queryCooperationNetworkAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllCooperationNetworkResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperation_network`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCooperationNetwork
+   * @summary Queries a CooperationNetwork by id.
+   * @request GET:/crossdomain/cdac/cooperation_network/{id}
+   */
+  queryCooperationNetwork = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetCooperationNetworkResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperation_network/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCooperationNetworkFeaturesAll
+   * @summary Queries a list of CooperationNetworkFeatures items.
+   * @request GET:/crossdomain/cdac/cooperation_network_features
+   */
+  queryCooperationNetworkFeaturesAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllCooperationNetworkFeaturesResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperation_network_features`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCooperationNetworkFeatures
+   * @summary Queries a CooperationNetworkFeatures by id.
+   * @request GET:/crossdomain/cdac/cooperation_network_features/{id}
+   */
+  queryCooperationNetworkFeatures = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetCooperationNetworkFeaturesResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperation_network_features/${id}`,
       method: "GET",
       format: "json",
       ...params,
@@ -893,6 +1174,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryDomainCooperation = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetDomainCooperationResponse, RpcStatus>({
       path: `/crossdomain/cdac/domain_cooperation/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDomainMapAll
+   * @summary Queries a list of DomainMap items.
+   * @request GET:/crossdomain/cdac/domain_map
+   */
+  queryDomainMapAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllDomainMapResponse, RpcStatus>({
+      path: `/crossdomain/cdac/domain_map`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDomainMap
+   * @summary Queries a DomainMap by index.
+   * @request GET:/crossdomain/cdac/domain_map/{domainIndex}
+   */
+  queryDomainMap = (domainIndex: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetDomainMapResponse, RpcStatus>({
+      path: `/crossdomain/cdac/domain_map/${domainIndex}`,
       method: "GET",
       format: "json",
       ...params,

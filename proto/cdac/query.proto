@@ -6,13 +6,17 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "cdac/params.proto";
 import "cdac/public_key.proto";
-import "cdac/validity.proto";
 import "cdac/certificate.proto";
 import "cdac/ibc_connection.proto";
-import "cdac/domain.proto";
 import "cdac/authentication_log.proto";
 import "cdac/cooperation_log.proto";
+import "cdac/domain_map.proto";
+import "cdac/cooperation_network_features.proto";
+import "cdac/cooperation_data.proto";
+import "cdac/cooperation_network.proto";
 // this line is used by starport scaffolding # 1
+import "cdac/validity.proto";
+import "cdac/domain.proto";
 import "cdac/forward_policy.proto";
 import "cdac/domain_cooperation.proto";
 
@@ -127,6 +131,46 @@ service Query {
 // Queries a list of RetrieveForwardPolicy items.
 	rpc RetrieveForwardPolicy(QueryRetrieveForwardPolicyRequest) returns (QueryRetrieveForwardPolicyResponse) {
 		option (google.api.http).get = "/crossdomain/cdac/retrieve_forward_policy";
+	}
+
+// Queries a DomainMap by index.
+	rpc DomainMap(QueryGetDomainMapRequest) returns (QueryGetDomainMapResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/domain_map/{domainIndex}";
+	}
+
+	// Queries a list of DomainMap items.
+	rpc DomainMapAll(QueryAllDomainMapRequest) returns (QueryAllDomainMapResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/domain_map";
+	}
+
+// Queries a CooperationNetworkFeatures by id.
+	rpc CooperationNetworkFeatures(QueryGetCooperationNetworkFeaturesRequest) returns (QueryGetCooperationNetworkFeaturesResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/cooperation_network_features/{id}";
+	}
+
+	// Queries a list of CooperationNetworkFeatures items.
+	rpc CooperationNetworkFeaturesAll(QueryAllCooperationNetworkFeaturesRequest) returns (QueryAllCooperationNetworkFeaturesResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/cooperation_network_features";
+	}
+
+// Queries a CooperationData by index.
+	rpc CooperationData(QueryGetCooperationDataRequest) returns (QueryGetCooperationDataResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/cooperation_data/{labelIndex}";
+	}
+
+	// Queries a list of CooperationData items.
+	rpc CooperationDataAll(QueryAllCooperationDataRequest) returns (QueryAllCooperationDataResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/cooperation_data";
+	}
+
+// Queries a CooperationNetwork by id.
+	rpc CooperationNetwork(QueryGetCooperationNetworkRequest) returns (QueryGetCooperationNetworkResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/cooperation_network/{id}";
+	}
+
+	// Queries a list of CooperationNetwork items.
+	rpc CooperationNetworkAll(QueryAllCooperationNetworkRequest) returns (QueryAllCooperationNetworkResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/cooperation_network";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -317,6 +361,76 @@ message QueryRetrieveForwardPolicyRequest {
 
 message QueryRetrieveForwardPolicyResponse {
   ForwardPolicy forwardPolicy = 1;
+}
+
+message QueryGetDomainMapRequest {
+	  string domainIndex = 1;
+
+}
+
+message QueryGetDomainMapResponse {
+	DomainMap domainMap = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDomainMapRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDomainMapResponse {
+	repeated DomainMap domainMap = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCooperationNetworkFeaturesRequest {
+	uint64 id = 1;
+}
+
+message QueryGetCooperationNetworkFeaturesResponse {
+	CooperationNetworkFeatures CooperationNetworkFeatures = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCooperationNetworkFeaturesRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCooperationNetworkFeaturesResponse {
+	repeated CooperationNetworkFeatures CooperationNetworkFeatures = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCooperationDataRequest {
+	  string labelIndex = 1;
+
+}
+
+message QueryGetCooperationDataResponse {
+	CooperationData cooperationData = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCooperationDataRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCooperationDataResponse {
+	repeated CooperationData cooperationData = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCooperationNetworkRequest {
+	uint64 id = 1;
+}
+
+message QueryGetCooperationNetworkResponse {
+	CooperationNetwork CooperationNetwork = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCooperationNetworkRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCooperationNetworkResponse {
+	repeated CooperationNetwork CooperationNetwork = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

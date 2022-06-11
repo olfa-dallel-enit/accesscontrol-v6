@@ -1,0 +1,18 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+import "cdac/domain_map.proto"; 
+import "cdac/cooperation_data.proto"; 
+import "cdac/cooperation_network_features.proto"; 
+
+message CooperationNetwork {
+  uint64 id = 1;
+  string label = 2; 
+  repeated DomainMap domainMapList = 3; 
+  repeated CooperationData cooperationDataList = 4; 
+  CooperationNetworkFeatures features = 5; 
+  string creationTimestamp = 6; 
+  string updateTimestamp = 7; 
+  string creator = 8;
+}

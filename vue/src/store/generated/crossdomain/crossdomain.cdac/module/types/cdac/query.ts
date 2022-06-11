@@ -15,6 +15,10 @@ import { AuthenticationLog } from "../cdac/authentication_log";
 import { DomainCooperation } from "../cdac/domain_cooperation";
 import { CooperationLog } from "../cdac/cooperation_log";
 import { ForwardPolicy } from "../cdac/forward_policy";
+import { DomainMap } from "../cdac/domain_map";
+import { CooperationNetworkFeatures } from "../cdac/cooperation_network_features";
+import { CooperationData } from "../cdac/cooperation_data";
+import { CooperationNetwork } from "../cdac/cooperation_network";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -202,6 +206,74 @@ export interface QueryRetrieveForwardPolicyRequest {}
 
 export interface QueryRetrieveForwardPolicyResponse {
   forwardPolicy: ForwardPolicy | undefined;
+}
+
+export interface QueryGetDomainMapRequest {
+  domainIndex: string;
+}
+
+export interface QueryGetDomainMapResponse {
+  domainMap: DomainMap | undefined;
+}
+
+export interface QueryAllDomainMapRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllDomainMapResponse {
+  domainMap: DomainMap[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetCooperationNetworkFeaturesRequest {
+  id: number;
+}
+
+export interface QueryGetCooperationNetworkFeaturesResponse {
+  CooperationNetworkFeatures: CooperationNetworkFeatures | undefined;
+}
+
+export interface QueryAllCooperationNetworkFeaturesRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllCooperationNetworkFeaturesResponse {
+  CooperationNetworkFeatures: CooperationNetworkFeatures[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetCooperationDataRequest {
+  labelIndex: string;
+}
+
+export interface QueryGetCooperationDataResponse {
+  cooperationData: CooperationData | undefined;
+}
+
+export interface QueryAllCooperationDataRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllCooperationDataResponse {
+  cooperationData: CooperationData[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetCooperationNetworkRequest {
+  id: number;
+}
+
+export interface QueryGetCooperationNetworkResponse {
+  CooperationNetwork: CooperationNetwork | undefined;
+}
+
+export interface QueryAllCooperationNetworkRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllCooperationNetworkResponse {
+  CooperationNetwork: CooperationNetwork[];
+  pagination: PageResponse | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -3617,6 +3689,1339 @@ export const QueryRetrieveForwardPolicyResponse = {
   },
 };
 
+const baseQueryGetDomainMapRequest: object = { domainIndex: "" };
+
+export const QueryGetDomainMapRequest = {
+  encode(
+    message: QueryGetDomainMapRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.domainIndex !== "") {
+      writer.uint32(10).string(message.domainIndex);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetDomainMapRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetDomainMapRequest,
+    } as QueryGetDomainMapRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.domainIndex = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetDomainMapRequest {
+    const message = {
+      ...baseQueryGetDomainMapRequest,
+    } as QueryGetDomainMapRequest;
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = String(object.domainIndex);
+    } else {
+      message.domainIndex = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetDomainMapRequest): unknown {
+    const obj: any = {};
+    message.domainIndex !== undefined &&
+      (obj.domainIndex = message.domainIndex);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetDomainMapRequest>
+  ): QueryGetDomainMapRequest {
+    const message = {
+      ...baseQueryGetDomainMapRequest,
+    } as QueryGetDomainMapRequest;
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = object.domainIndex;
+    } else {
+      message.domainIndex = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryGetDomainMapResponse: object = {};
+
+export const QueryGetDomainMapResponse = {
+  encode(
+    message: QueryGetDomainMapResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.domainMap !== undefined) {
+      DomainMap.encode(message.domainMap, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetDomainMapResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetDomainMapResponse,
+    } as QueryGetDomainMapResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.domainMap = DomainMap.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetDomainMapResponse {
+    const message = {
+      ...baseQueryGetDomainMapResponse,
+    } as QueryGetDomainMapResponse;
+    if (object.domainMap !== undefined && object.domainMap !== null) {
+      message.domainMap = DomainMap.fromJSON(object.domainMap);
+    } else {
+      message.domainMap = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetDomainMapResponse): unknown {
+    const obj: any = {};
+    message.domainMap !== undefined &&
+      (obj.domainMap = message.domainMap
+        ? DomainMap.toJSON(message.domainMap)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetDomainMapResponse>
+  ): QueryGetDomainMapResponse {
+    const message = {
+      ...baseQueryGetDomainMapResponse,
+    } as QueryGetDomainMapResponse;
+    if (object.domainMap !== undefined && object.domainMap !== null) {
+      message.domainMap = DomainMap.fromPartial(object.domainMap);
+    } else {
+      message.domainMap = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllDomainMapRequest: object = {};
+
+export const QueryAllDomainMapRequest = {
+  encode(
+    message: QueryAllDomainMapRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllDomainMapRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllDomainMapRequest,
+    } as QueryAllDomainMapRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllDomainMapRequest {
+    const message = {
+      ...baseQueryAllDomainMapRequest,
+    } as QueryAllDomainMapRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllDomainMapRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllDomainMapRequest>
+  ): QueryAllDomainMapRequest {
+    const message = {
+      ...baseQueryAllDomainMapRequest,
+    } as QueryAllDomainMapRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllDomainMapResponse: object = {};
+
+export const QueryAllDomainMapResponse = {
+  encode(
+    message: QueryAllDomainMapResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.domainMap) {
+      DomainMap.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllDomainMapResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllDomainMapResponse,
+    } as QueryAllDomainMapResponse;
+    message.domainMap = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.domainMap.push(DomainMap.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllDomainMapResponse {
+    const message = {
+      ...baseQueryAllDomainMapResponse,
+    } as QueryAllDomainMapResponse;
+    message.domainMap = [];
+    if (object.domainMap !== undefined && object.domainMap !== null) {
+      for (const e of object.domainMap) {
+        message.domainMap.push(DomainMap.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllDomainMapResponse): unknown {
+    const obj: any = {};
+    if (message.domainMap) {
+      obj.domainMap = message.domainMap.map((e) =>
+        e ? DomainMap.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainMap = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllDomainMapResponse>
+  ): QueryAllDomainMapResponse {
+    const message = {
+      ...baseQueryAllDomainMapResponse,
+    } as QueryAllDomainMapResponse;
+    message.domainMap = [];
+    if (object.domainMap !== undefined && object.domainMap !== null) {
+      for (const e of object.domainMap) {
+        message.domainMap.push(DomainMap.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCooperationNetworkFeaturesRequest: object = { id: 0 };
+
+export const QueryGetCooperationNetworkFeaturesRequest = {
+  encode(
+    message: QueryGetCooperationNetworkFeaturesRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCooperationNetworkFeaturesRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCooperationNetworkFeaturesRequest,
+    } as QueryGetCooperationNetworkFeaturesRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCooperationNetworkFeaturesRequest {
+    const message = {
+      ...baseQueryGetCooperationNetworkFeaturesRequest,
+    } as QueryGetCooperationNetworkFeaturesRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCooperationNetworkFeaturesRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCooperationNetworkFeaturesRequest>
+  ): QueryGetCooperationNetworkFeaturesRequest {
+    const message = {
+      ...baseQueryGetCooperationNetworkFeaturesRequest,
+    } as QueryGetCooperationNetworkFeaturesRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCooperationNetworkFeaturesResponse: object = {};
+
+export const QueryGetCooperationNetworkFeaturesResponse = {
+  encode(
+    message: QueryGetCooperationNetworkFeaturesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.CooperationNetworkFeatures !== undefined) {
+      CooperationNetworkFeatures.encode(
+        message.CooperationNetworkFeatures,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCooperationNetworkFeaturesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCooperationNetworkFeaturesResponse,
+    } as QueryGetCooperationNetworkFeaturesResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.CooperationNetworkFeatures = CooperationNetworkFeatures.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseQueryGetCooperationNetworkFeaturesResponse,
+    } as QueryGetCooperationNetworkFeaturesResponse;
+    if (
+      object.CooperationNetworkFeatures !== undefined &&
+      object.CooperationNetworkFeatures !== null
+    ) {
+      message.CooperationNetworkFeatures = CooperationNetworkFeatures.fromJSON(
+        object.CooperationNetworkFeatures
+      );
+    } else {
+      message.CooperationNetworkFeatures = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCooperationNetworkFeaturesResponse): unknown {
+    const obj: any = {};
+    message.CooperationNetworkFeatures !== undefined &&
+      (obj.CooperationNetworkFeatures = message.CooperationNetworkFeatures
+        ? CooperationNetworkFeatures.toJSON(message.CooperationNetworkFeatures)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCooperationNetworkFeaturesResponse>
+  ): QueryGetCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseQueryGetCooperationNetworkFeaturesResponse,
+    } as QueryGetCooperationNetworkFeaturesResponse;
+    if (
+      object.CooperationNetworkFeatures !== undefined &&
+      object.CooperationNetworkFeatures !== null
+    ) {
+      message.CooperationNetworkFeatures = CooperationNetworkFeatures.fromPartial(
+        object.CooperationNetworkFeatures
+      );
+    } else {
+      message.CooperationNetworkFeatures = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCooperationNetworkFeaturesRequest: object = {};
+
+export const QueryAllCooperationNetworkFeaturesRequest = {
+  encode(
+    message: QueryAllCooperationNetworkFeaturesRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllCooperationNetworkFeaturesRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllCooperationNetworkFeaturesRequest,
+    } as QueryAllCooperationNetworkFeaturesRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCooperationNetworkFeaturesRequest {
+    const message = {
+      ...baseQueryAllCooperationNetworkFeaturesRequest,
+    } as QueryAllCooperationNetworkFeaturesRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCooperationNetworkFeaturesRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCooperationNetworkFeaturesRequest>
+  ): QueryAllCooperationNetworkFeaturesRequest {
+    const message = {
+      ...baseQueryAllCooperationNetworkFeaturesRequest,
+    } as QueryAllCooperationNetworkFeaturesRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCooperationNetworkFeaturesResponse: object = {};
+
+export const QueryAllCooperationNetworkFeaturesResponse = {
+  encode(
+    message: QueryAllCooperationNetworkFeaturesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.CooperationNetworkFeatures) {
+      CooperationNetworkFeatures.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllCooperationNetworkFeaturesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllCooperationNetworkFeaturesResponse,
+    } as QueryAllCooperationNetworkFeaturesResponse;
+    message.CooperationNetworkFeatures = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.CooperationNetworkFeatures.push(
+            CooperationNetworkFeatures.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseQueryAllCooperationNetworkFeaturesResponse,
+    } as QueryAllCooperationNetworkFeaturesResponse;
+    message.CooperationNetworkFeatures = [];
+    if (
+      object.CooperationNetworkFeatures !== undefined &&
+      object.CooperationNetworkFeatures !== null
+    ) {
+      for (const e of object.CooperationNetworkFeatures) {
+        message.CooperationNetworkFeatures.push(
+          CooperationNetworkFeatures.fromJSON(e)
+        );
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCooperationNetworkFeaturesResponse): unknown {
+    const obj: any = {};
+    if (message.CooperationNetworkFeatures) {
+      obj.CooperationNetworkFeatures = message.CooperationNetworkFeatures.map(
+        (e) => (e ? CooperationNetworkFeatures.toJSON(e) : undefined)
+      );
+    } else {
+      obj.CooperationNetworkFeatures = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCooperationNetworkFeaturesResponse>
+  ): QueryAllCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseQueryAllCooperationNetworkFeaturesResponse,
+    } as QueryAllCooperationNetworkFeaturesResponse;
+    message.CooperationNetworkFeatures = [];
+    if (
+      object.CooperationNetworkFeatures !== undefined &&
+      object.CooperationNetworkFeatures !== null
+    ) {
+      for (const e of object.CooperationNetworkFeatures) {
+        message.CooperationNetworkFeatures.push(
+          CooperationNetworkFeatures.fromPartial(e)
+        );
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCooperationDataRequest: object = { labelIndex: "" };
+
+export const QueryGetCooperationDataRequest = {
+  encode(
+    message: QueryGetCooperationDataRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.labelIndex !== "") {
+      writer.uint32(10).string(message.labelIndex);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCooperationDataRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCooperationDataRequest,
+    } as QueryGetCooperationDataRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.labelIndex = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCooperationDataRequest {
+    const message = {
+      ...baseQueryGetCooperationDataRequest,
+    } as QueryGetCooperationDataRequest;
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = String(object.labelIndex);
+    } else {
+      message.labelIndex = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCooperationDataRequest): unknown {
+    const obj: any = {};
+    message.labelIndex !== undefined && (obj.labelIndex = message.labelIndex);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCooperationDataRequest>
+  ): QueryGetCooperationDataRequest {
+    const message = {
+      ...baseQueryGetCooperationDataRequest,
+    } as QueryGetCooperationDataRequest;
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = object.labelIndex;
+    } else {
+      message.labelIndex = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCooperationDataResponse: object = {};
+
+export const QueryGetCooperationDataResponse = {
+  encode(
+    message: QueryGetCooperationDataResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.cooperationData !== undefined) {
+      CooperationData.encode(
+        message.cooperationData,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCooperationDataResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCooperationDataResponse,
+    } as QueryGetCooperationDataResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.cooperationData = CooperationData.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCooperationDataResponse {
+    const message = {
+      ...baseQueryGetCooperationDataResponse,
+    } as QueryGetCooperationDataResponse;
+    if (
+      object.cooperationData !== undefined &&
+      object.cooperationData !== null
+    ) {
+      message.cooperationData = CooperationData.fromJSON(
+        object.cooperationData
+      );
+    } else {
+      message.cooperationData = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCooperationDataResponse): unknown {
+    const obj: any = {};
+    message.cooperationData !== undefined &&
+      (obj.cooperationData = message.cooperationData
+        ? CooperationData.toJSON(message.cooperationData)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCooperationDataResponse>
+  ): QueryGetCooperationDataResponse {
+    const message = {
+      ...baseQueryGetCooperationDataResponse,
+    } as QueryGetCooperationDataResponse;
+    if (
+      object.cooperationData !== undefined &&
+      object.cooperationData !== null
+    ) {
+      message.cooperationData = CooperationData.fromPartial(
+        object.cooperationData
+      );
+    } else {
+      message.cooperationData = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCooperationDataRequest: object = {};
+
+export const QueryAllCooperationDataRequest = {
+  encode(
+    message: QueryAllCooperationDataRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllCooperationDataRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllCooperationDataRequest,
+    } as QueryAllCooperationDataRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCooperationDataRequest {
+    const message = {
+      ...baseQueryAllCooperationDataRequest,
+    } as QueryAllCooperationDataRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCooperationDataRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCooperationDataRequest>
+  ): QueryAllCooperationDataRequest {
+    const message = {
+      ...baseQueryAllCooperationDataRequest,
+    } as QueryAllCooperationDataRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCooperationDataResponse: object = {};
+
+export const QueryAllCooperationDataResponse = {
+  encode(
+    message: QueryAllCooperationDataResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.cooperationData) {
+      CooperationData.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllCooperationDataResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllCooperationDataResponse,
+    } as QueryAllCooperationDataResponse;
+    message.cooperationData = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.cooperationData.push(
+            CooperationData.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCooperationDataResponse {
+    const message = {
+      ...baseQueryAllCooperationDataResponse,
+    } as QueryAllCooperationDataResponse;
+    message.cooperationData = [];
+    if (
+      object.cooperationData !== undefined &&
+      object.cooperationData !== null
+    ) {
+      for (const e of object.cooperationData) {
+        message.cooperationData.push(CooperationData.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCooperationDataResponse): unknown {
+    const obj: any = {};
+    if (message.cooperationData) {
+      obj.cooperationData = message.cooperationData.map((e) =>
+        e ? CooperationData.toJSON(e) : undefined
+      );
+    } else {
+      obj.cooperationData = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCooperationDataResponse>
+  ): QueryAllCooperationDataResponse {
+    const message = {
+      ...baseQueryAllCooperationDataResponse,
+    } as QueryAllCooperationDataResponse;
+    message.cooperationData = [];
+    if (
+      object.cooperationData !== undefined &&
+      object.cooperationData !== null
+    ) {
+      for (const e of object.cooperationData) {
+        message.cooperationData.push(CooperationData.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCooperationNetworkRequest: object = { id: 0 };
+
+export const QueryGetCooperationNetworkRequest = {
+  encode(
+    message: QueryGetCooperationNetworkRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCooperationNetworkRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCooperationNetworkRequest,
+    } as QueryGetCooperationNetworkRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCooperationNetworkRequest {
+    const message = {
+      ...baseQueryGetCooperationNetworkRequest,
+    } as QueryGetCooperationNetworkRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCooperationNetworkRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCooperationNetworkRequest>
+  ): QueryGetCooperationNetworkRequest {
+    const message = {
+      ...baseQueryGetCooperationNetworkRequest,
+    } as QueryGetCooperationNetworkRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCooperationNetworkResponse: object = {};
+
+export const QueryGetCooperationNetworkResponse = {
+  encode(
+    message: QueryGetCooperationNetworkResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.CooperationNetwork !== undefined) {
+      CooperationNetwork.encode(
+        message.CooperationNetwork,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCooperationNetworkResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCooperationNetworkResponse,
+    } as QueryGetCooperationNetworkResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.CooperationNetwork = CooperationNetwork.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCooperationNetworkResponse {
+    const message = {
+      ...baseQueryGetCooperationNetworkResponse,
+    } as QueryGetCooperationNetworkResponse;
+    if (
+      object.CooperationNetwork !== undefined &&
+      object.CooperationNetwork !== null
+    ) {
+      message.CooperationNetwork = CooperationNetwork.fromJSON(
+        object.CooperationNetwork
+      );
+    } else {
+      message.CooperationNetwork = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCooperationNetworkResponse): unknown {
+    const obj: any = {};
+    message.CooperationNetwork !== undefined &&
+      (obj.CooperationNetwork = message.CooperationNetwork
+        ? CooperationNetwork.toJSON(message.CooperationNetwork)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCooperationNetworkResponse>
+  ): QueryGetCooperationNetworkResponse {
+    const message = {
+      ...baseQueryGetCooperationNetworkResponse,
+    } as QueryGetCooperationNetworkResponse;
+    if (
+      object.CooperationNetwork !== undefined &&
+      object.CooperationNetwork !== null
+    ) {
+      message.CooperationNetwork = CooperationNetwork.fromPartial(
+        object.CooperationNetwork
+      );
+    } else {
+      message.CooperationNetwork = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCooperationNetworkRequest: object = {};
+
+export const QueryAllCooperationNetworkRequest = {
+  encode(
+    message: QueryAllCooperationNetworkRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllCooperationNetworkRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllCooperationNetworkRequest,
+    } as QueryAllCooperationNetworkRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCooperationNetworkRequest {
+    const message = {
+      ...baseQueryAllCooperationNetworkRequest,
+    } as QueryAllCooperationNetworkRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCooperationNetworkRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCooperationNetworkRequest>
+  ): QueryAllCooperationNetworkRequest {
+    const message = {
+      ...baseQueryAllCooperationNetworkRequest,
+    } as QueryAllCooperationNetworkRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCooperationNetworkResponse: object = {};
+
+export const QueryAllCooperationNetworkResponse = {
+  encode(
+    message: QueryAllCooperationNetworkResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.CooperationNetwork) {
+      CooperationNetwork.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllCooperationNetworkResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllCooperationNetworkResponse,
+    } as QueryAllCooperationNetworkResponse;
+    message.CooperationNetwork = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.CooperationNetwork.push(
+            CooperationNetwork.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCooperationNetworkResponse {
+    const message = {
+      ...baseQueryAllCooperationNetworkResponse,
+    } as QueryAllCooperationNetworkResponse;
+    message.CooperationNetwork = [];
+    if (
+      object.CooperationNetwork !== undefined &&
+      object.CooperationNetwork !== null
+    ) {
+      for (const e of object.CooperationNetwork) {
+        message.CooperationNetwork.push(CooperationNetwork.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCooperationNetworkResponse): unknown {
+    const obj: any = {};
+    if (message.CooperationNetwork) {
+      obj.CooperationNetwork = message.CooperationNetwork.map((e) =>
+        e ? CooperationNetwork.toJSON(e) : undefined
+      );
+    } else {
+      obj.CooperationNetwork = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCooperationNetworkResponse>
+  ): QueryAllCooperationNetworkResponse {
+    const message = {
+      ...baseQueryAllCooperationNetworkResponse,
+    } as QueryAllCooperationNetworkResponse;
+    message.CooperationNetwork = [];
+    if (
+      object.CooperationNetwork !== undefined &&
+      object.CooperationNetwork !== null
+    ) {
+      for (const e of object.CooperationNetwork) {
+        message.CooperationNetwork.push(CooperationNetwork.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -3699,6 +5104,38 @@ export interface Query {
   RetrieveForwardPolicy(
     request: QueryRetrieveForwardPolicyRequest
   ): Promise<QueryRetrieveForwardPolicyResponse>;
+  /** Queries a DomainMap by index. */
+  DomainMap(
+    request: QueryGetDomainMapRequest
+  ): Promise<QueryGetDomainMapResponse>;
+  /** Queries a list of DomainMap items. */
+  DomainMapAll(
+    request: QueryAllDomainMapRequest
+  ): Promise<QueryAllDomainMapResponse>;
+  /** Queries a CooperationNetworkFeatures by id. */
+  CooperationNetworkFeatures(
+    request: QueryGetCooperationNetworkFeaturesRequest
+  ): Promise<QueryGetCooperationNetworkFeaturesResponse>;
+  /** Queries a list of CooperationNetworkFeatures items. */
+  CooperationNetworkFeaturesAll(
+    request: QueryAllCooperationNetworkFeaturesRequest
+  ): Promise<QueryAllCooperationNetworkFeaturesResponse>;
+  /** Queries a CooperationData by index. */
+  CooperationData(
+    request: QueryGetCooperationDataRequest
+  ): Promise<QueryGetCooperationDataResponse>;
+  /** Queries a list of CooperationData items. */
+  CooperationDataAll(
+    request: QueryAllCooperationDataRequest
+  ): Promise<QueryAllCooperationDataResponse>;
+  /** Queries a CooperationNetwork by id. */
+  CooperationNetwork(
+    request: QueryGetCooperationNetworkRequest
+  ): Promise<QueryGetCooperationNetworkResponse>;
+  /** Queries a list of CooperationNetwork items. */
+  CooperationNetworkAll(
+    request: QueryAllCooperationNetworkRequest
+  ): Promise<QueryAllCooperationNetworkResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -3999,6 +5436,122 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryRetrieveForwardPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  DomainMap(
+    request: QueryGetDomainMapRequest
+  ): Promise<QueryGetDomainMapResponse> {
+    const data = QueryGetDomainMapRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "DomainMap",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetDomainMapResponse.decode(new Reader(data))
+    );
+  }
+
+  DomainMapAll(
+    request: QueryAllDomainMapRequest
+  ): Promise<QueryAllDomainMapResponse> {
+    const data = QueryAllDomainMapRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "DomainMapAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllDomainMapResponse.decode(new Reader(data))
+    );
+  }
+
+  CooperationNetworkFeatures(
+    request: QueryGetCooperationNetworkFeaturesRequest
+  ): Promise<QueryGetCooperationNetworkFeaturesResponse> {
+    const data = QueryGetCooperationNetworkFeaturesRequest.encode(
+      request
+    ).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "CooperationNetworkFeatures",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetCooperationNetworkFeaturesResponse.decode(new Reader(data))
+    );
+  }
+
+  CooperationNetworkFeaturesAll(
+    request: QueryAllCooperationNetworkFeaturesRequest
+  ): Promise<QueryAllCooperationNetworkFeaturesResponse> {
+    const data = QueryAllCooperationNetworkFeaturesRequest.encode(
+      request
+    ).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "CooperationNetworkFeaturesAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllCooperationNetworkFeaturesResponse.decode(new Reader(data))
+    );
+  }
+
+  CooperationData(
+    request: QueryGetCooperationDataRequest
+  ): Promise<QueryGetCooperationDataResponse> {
+    const data = QueryGetCooperationDataRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "CooperationData",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetCooperationDataResponse.decode(new Reader(data))
+    );
+  }
+
+  CooperationDataAll(
+    request: QueryAllCooperationDataRequest
+  ): Promise<QueryAllCooperationDataResponse> {
+    const data = QueryAllCooperationDataRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "CooperationDataAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllCooperationDataResponse.decode(new Reader(data))
+    );
+  }
+
+  CooperationNetwork(
+    request: QueryGetCooperationNetworkRequest
+  ): Promise<QueryGetCooperationNetworkResponse> {
+    const data = QueryGetCooperationNetworkRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "CooperationNetwork",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetCooperationNetworkResponse.decode(new Reader(data))
+    );
+  }
+
+  CooperationNetworkAll(
+    request: QueryAllCooperationNetworkRequest
+  ): Promise<QueryAllCooperationNetworkResponse> {
+    const data = QueryAllCooperationNetworkRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "CooperationNetworkAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllCooperationNetworkResponse.decode(new Reader(data))
     );
   }
 }

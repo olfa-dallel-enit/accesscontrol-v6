@@ -11,6 +11,10 @@ import { AuthenticationLog } from "../cdac/authentication_log";
 import { DomainCooperation } from "../cdac/domain_cooperation";
 import { CooperationLog } from "../cdac/cooperation_log";
 import { ForwardPolicy } from "../cdac/forward_policy";
+import { DomainMap } from "../cdac/domain_map";
+import { CooperationNetworkFeatures } from "../cdac/cooperation_network_features";
+import { CooperationData } from "../cdac/cooperation_data";
+import { CooperationNetwork } from "../cdac/cooperation_network";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -35,8 +39,14 @@ export interface GenesisState {
   cooperationLogList: CooperationLog[];
   cooperationLogCount: number;
   forwardPolicyList: ForwardPolicy[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   forwardPolicyCount: number;
+  domainMapList: DomainMap[];
+  cooperationNetworkFeaturesList: CooperationNetworkFeatures[];
+  cooperationNetworkFeaturesCount: number;
+  cooperationDataList: CooperationData[];
+  cooperationNetworkList: CooperationNetwork[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  cooperationNetworkCount: number;
 }
 
 const baseGenesisState: object = {
@@ -50,6 +60,8 @@ const baseGenesisState: object = {
   domainCooperationCount: 0,
   cooperationLogCount: 0,
   forwardPolicyCount: 0,
+  cooperationNetworkFeaturesCount: 0,
+  cooperationNetworkCount: 0,
 };
 
 export const GenesisState = {
@@ -114,6 +126,24 @@ export const GenesisState = {
     if (message.forwardPolicyCount !== 0) {
       writer.uint32(160).uint64(message.forwardPolicyCount);
     }
+    for (const v of message.domainMapList) {
+      DomainMap.encode(v!, writer.uint32(170).fork()).ldelim();
+    }
+    for (const v of message.cooperationNetworkFeaturesList) {
+      CooperationNetworkFeatures.encode(v!, writer.uint32(178).fork()).ldelim();
+    }
+    if (message.cooperationNetworkFeaturesCount !== 0) {
+      writer.uint32(184).uint64(message.cooperationNetworkFeaturesCount);
+    }
+    for (const v of message.cooperationDataList) {
+      CooperationData.encode(v!, writer.uint32(194).fork()).ldelim();
+    }
+    for (const v of message.cooperationNetworkList) {
+      CooperationNetwork.encode(v!, writer.uint32(202).fork()).ldelim();
+    }
+    if (message.cooperationNetworkCount !== 0) {
+      writer.uint32(208).uint64(message.cooperationNetworkCount);
+    }
     return writer;
   },
 
@@ -130,6 +160,10 @@ export const GenesisState = {
     message.domainCooperationList = [];
     message.cooperationLogList = [];
     message.forwardPolicyList = [];
+    message.domainMapList = [];
+    message.cooperationNetworkFeaturesList = [];
+    message.cooperationDataList = [];
+    message.cooperationNetworkList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -209,6 +243,34 @@ export const GenesisState = {
         case 20:
           message.forwardPolicyCount = longToNumber(reader.uint64() as Long);
           break;
+        case 21:
+          message.domainMapList.push(DomainMap.decode(reader, reader.uint32()));
+          break;
+        case 22:
+          message.cooperationNetworkFeaturesList.push(
+            CooperationNetworkFeatures.decode(reader, reader.uint32())
+          );
+          break;
+        case 23:
+          message.cooperationNetworkFeaturesCount = longToNumber(
+            reader.uint64() as Long
+          );
+          break;
+        case 24:
+          message.cooperationDataList.push(
+            CooperationData.decode(reader, reader.uint32())
+          );
+          break;
+        case 25:
+          message.cooperationNetworkList.push(
+            CooperationNetwork.decode(reader, reader.uint32())
+          );
+          break;
+        case 26:
+          message.cooperationNetworkCount = longToNumber(
+            reader.uint64() as Long
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -228,6 +290,10 @@ export const GenesisState = {
     message.domainCooperationList = [];
     message.cooperationLogList = [];
     message.forwardPolicyList = [];
+    message.domainMapList = [];
+    message.cooperationNetworkFeaturesList = [];
+    message.cooperationDataList = [];
+    message.cooperationNetworkList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -364,6 +430,55 @@ export const GenesisState = {
     } else {
       message.forwardPolicyCount = 0;
     }
+    if (object.domainMapList !== undefined && object.domainMapList !== null) {
+      for (const e of object.domainMapList) {
+        message.domainMapList.push(DomainMap.fromJSON(e));
+      }
+    }
+    if (
+      object.cooperationNetworkFeaturesList !== undefined &&
+      object.cooperationNetworkFeaturesList !== null
+    ) {
+      for (const e of object.cooperationNetworkFeaturesList) {
+        message.cooperationNetworkFeaturesList.push(
+          CooperationNetworkFeatures.fromJSON(e)
+        );
+      }
+    }
+    if (
+      object.cooperationNetworkFeaturesCount !== undefined &&
+      object.cooperationNetworkFeaturesCount !== null
+    ) {
+      message.cooperationNetworkFeaturesCount = Number(
+        object.cooperationNetworkFeaturesCount
+      );
+    } else {
+      message.cooperationNetworkFeaturesCount = 0;
+    }
+    if (
+      object.cooperationDataList !== undefined &&
+      object.cooperationDataList !== null
+    ) {
+      for (const e of object.cooperationDataList) {
+        message.cooperationDataList.push(CooperationData.fromJSON(e));
+      }
+    }
+    if (
+      object.cooperationNetworkList !== undefined &&
+      object.cooperationNetworkList !== null
+    ) {
+      for (const e of object.cooperationNetworkList) {
+        message.cooperationNetworkList.push(CooperationNetwork.fromJSON(e));
+      }
+    }
+    if (
+      object.cooperationNetworkCount !== undefined &&
+      object.cooperationNetworkCount !== null
+    ) {
+      message.cooperationNetworkCount = Number(object.cooperationNetworkCount);
+    } else {
+      message.cooperationNetworkCount = 0;
+    }
     return message;
   },
 
@@ -453,6 +568,39 @@ export const GenesisState = {
     }
     message.forwardPolicyCount !== undefined &&
       (obj.forwardPolicyCount = message.forwardPolicyCount);
+    if (message.domainMapList) {
+      obj.domainMapList = message.domainMapList.map((e) =>
+        e ? DomainMap.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainMapList = [];
+    }
+    if (message.cooperationNetworkFeaturesList) {
+      obj.cooperationNetworkFeaturesList = message.cooperationNetworkFeaturesList.map(
+        (e) => (e ? CooperationNetworkFeatures.toJSON(e) : undefined)
+      );
+    } else {
+      obj.cooperationNetworkFeaturesList = [];
+    }
+    message.cooperationNetworkFeaturesCount !== undefined &&
+      (obj.cooperationNetworkFeaturesCount =
+        message.cooperationNetworkFeaturesCount);
+    if (message.cooperationDataList) {
+      obj.cooperationDataList = message.cooperationDataList.map((e) =>
+        e ? CooperationData.toJSON(e) : undefined
+      );
+    } else {
+      obj.cooperationDataList = [];
+    }
+    if (message.cooperationNetworkList) {
+      obj.cooperationNetworkList = message.cooperationNetworkList.map((e) =>
+        e ? CooperationNetwork.toJSON(e) : undefined
+      );
+    } else {
+      obj.cooperationNetworkList = [];
+    }
+    message.cooperationNetworkCount !== undefined &&
+      (obj.cooperationNetworkCount = message.cooperationNetworkCount);
     return obj;
   },
 
@@ -467,6 +615,10 @@ export const GenesisState = {
     message.domainCooperationList = [];
     message.cooperationLogList = [];
     message.forwardPolicyList = [];
+    message.domainMapList = [];
+    message.cooperationNetworkFeaturesList = [];
+    message.cooperationDataList = [];
+    message.cooperationNetworkList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -602,6 +754,54 @@ export const GenesisState = {
       message.forwardPolicyCount = object.forwardPolicyCount;
     } else {
       message.forwardPolicyCount = 0;
+    }
+    if (object.domainMapList !== undefined && object.domainMapList !== null) {
+      for (const e of object.domainMapList) {
+        message.domainMapList.push(DomainMap.fromPartial(e));
+      }
+    }
+    if (
+      object.cooperationNetworkFeaturesList !== undefined &&
+      object.cooperationNetworkFeaturesList !== null
+    ) {
+      for (const e of object.cooperationNetworkFeaturesList) {
+        message.cooperationNetworkFeaturesList.push(
+          CooperationNetworkFeatures.fromPartial(e)
+        );
+      }
+    }
+    if (
+      object.cooperationNetworkFeaturesCount !== undefined &&
+      object.cooperationNetworkFeaturesCount !== null
+    ) {
+      message.cooperationNetworkFeaturesCount =
+        object.cooperationNetworkFeaturesCount;
+    } else {
+      message.cooperationNetworkFeaturesCount = 0;
+    }
+    if (
+      object.cooperationDataList !== undefined &&
+      object.cooperationDataList !== null
+    ) {
+      for (const e of object.cooperationDataList) {
+        message.cooperationDataList.push(CooperationData.fromPartial(e));
+      }
+    }
+    if (
+      object.cooperationNetworkList !== undefined &&
+      object.cooperationNetworkList !== null
+    ) {
+      for (const e of object.cooperationNetworkList) {
+        message.cooperationNetworkList.push(CooperationNetwork.fromPartial(e));
+      }
+    }
+    if (
+      object.cooperationNetworkCount !== undefined &&
+      object.cooperationNetworkCount !== null
+    ) {
+      message.cooperationNetworkCount = object.cooperationNetworkCount;
+    } else {
+      message.cooperationNetworkCount = 0;
     }
     return message;
   },

@@ -1,0 +1,16 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+import "cdac/validity.proto"; 
+
+message CooperationData {
+  string labelIndex = 1; 
+  Validity validity = 2; 
+  string status = 3; 
+  uint64 cost = 4; 
+  string lastUpdate = 5; 
+  repeated string interestList = 6; 
+  string creator = 7;
+}
+

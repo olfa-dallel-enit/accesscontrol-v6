@@ -20196,6 +20196,217 @@ paths:
           type: string
       tags:
         - Query
+  /crossdomain/cdac/cooperation_data:
+    get:
+      summary: Queries a list of CooperationData items.
+      operationId: CrossdomainCdacCooperationDataAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              cooperationData:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    labelIndex:
+                      type: string
+                    validity:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        notBefore:
+                          type: string
+                        notAfter:
+                          type: string
+                        creator:
+                          type: string
+                    status:
+                      type: string
+                    cost:
+                      type: string
+                      format: uint64
+                    lastUpdate:
+                      type: string
+                    interestList:
+                      type: array
+                      items:
+                        type: string
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/cooperation_data/{labelIndex}':
+    get:
+      summary: Queries a CooperationData by index.
+      operationId: CrossdomainCdacCooperationData
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              cooperationData:
+                type: object
+                properties:
+                  labelIndex:
+                    type: string
+                  validity:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      notBefore:
+                        type: string
+                      notAfter:
+                        type: string
+                      creator:
+                        type: string
+                  status:
+                    type: string
+                  cost:
+                    type: string
+                    format: uint64
+                  lastUpdate:
+                    type: string
+                  interestList:
+                    type: array
+                    items:
+                      type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: labelIndex
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
   /crossdomain/cdac/cooperation_log:
     get:
       summary: Queries a list of CooperationLog items.
@@ -20355,6 +20566,636 @@ paths:
                   decision:
                     type: string
                   function:
+                    type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /crossdomain/cdac/cooperation_network:
+    get:
+      summary: Queries a list of CooperationNetwork items.
+      operationId: CrossdomainCdacCooperationNetworkAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              CooperationNetwork:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    label:
+                      type: string
+                    domainMapList:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          domainIndex:
+                            type: string
+                          domainList:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              name:
+                                type: string
+                              domainType:
+                                type: string
+                              location:
+                                type: string
+                              certificate:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uint64
+                                  publicKey:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uint64
+                                      'n':
+                                        type: string
+                                        format: uint64
+                                      e:
+                                        type: string
+                                        format: uint64
+                                      creator:
+                                        type: string
+                                  validity:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uint64
+                                      notBefore:
+                                        type: string
+                                      notAfter:
+                                        type: string
+                                      creator:
+                                        type: string
+                                  creator:
+                                    type: string
+                              ibcConnection:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uint64
+                                  channel:
+                                    type: string
+                                  port:
+                                    type: string
+                                  creator:
+                                    type: string
+                              creator:
+                                type: string
+                          creator:
+                            type: string
+                    cooperationDataList:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          labelIndex:
+                            type: string
+                          validity:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              notBefore:
+                                type: string
+                              notAfter:
+                                type: string
+                              creator:
+                                type: string
+                          status:
+                            type: string
+                          cost:
+                            type: string
+                            format: uint64
+                          lastUpdate:
+                            type: string
+                          interestList:
+                            type: array
+                            items:
+                              type: string
+                          creator:
+                            type: string
+                    features:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        depth:
+                          type: string
+                          format: uint64
+                        cost:
+                          type: string
+                          format: uint64
+                        interestList:
+                          type: array
+                          items:
+                            type: string
+                        locationList:
+                          type: array
+                          items:
+                            type: string
+                        lastUpdate:
+                          type: string
+                        creator:
+                          type: string
+                    creationTimestamp:
+                      type: string
+                    updateTimestamp:
+                      type: string
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/cooperation_network/{id}':
+    get:
+      summary: Queries a CooperationNetwork by id.
+      operationId: CrossdomainCdacCooperationNetwork
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              CooperationNetwork:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  label:
+                    type: string
+                  domainMapList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        domainIndex:
+                          type: string
+                        domainList:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            name:
+                              type: string
+                            domainType:
+                              type: string
+                            location:
+                              type: string
+                            certificate:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                publicKey:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      format: uint64
+                                    'n':
+                                      type: string
+                                      format: uint64
+                                    e:
+                                      type: string
+                                      format: uint64
+                                    creator:
+                                      type: string
+                                validity:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      format: uint64
+                                    notBefore:
+                                      type: string
+                                    notAfter:
+                                      type: string
+                                    creator:
+                                      type: string
+                                creator:
+                                  type: string
+                            ibcConnection:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                channel:
+                                  type: string
+                                port:
+                                  type: string
+                                creator:
+                                  type: string
+                            creator:
+                              type: string
+                        creator:
+                          type: string
+                  cooperationDataList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        labelIndex:
+                          type: string
+                        validity:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            notBefore:
+                              type: string
+                            notAfter:
+                              type: string
+                            creator:
+                              type: string
+                        status:
+                          type: string
+                        cost:
+                          type: string
+                          format: uint64
+                        lastUpdate:
+                          type: string
+                        interestList:
+                          type: array
+                          items:
+                            type: string
+                        creator:
+                          type: string
+                  features:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      depth:
+                        type: string
+                        format: uint64
+                      cost:
+                        type: string
+                        format: uint64
+                      interestList:
+                        type: array
+                        items:
+                          type: string
+                      locationList:
+                        type: array
+                        items:
+                          type: string
+                      lastUpdate:
+                        type: string
+                      creator:
+                        type: string
+                  creationTimestamp:
+                    type: string
+                  updateTimestamp:
+                    type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /crossdomain/cdac/cooperation_network_features:
+    get:
+      summary: Queries a list of CooperationNetworkFeatures items.
+      operationId: CrossdomainCdacCooperationNetworkFeaturesAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              CooperationNetworkFeatures:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    depth:
+                      type: string
+                      format: uint64
+                    cost:
+                      type: string
+                      format: uint64
+                    interestList:
+                      type: array
+                      items:
+                        type: string
+                    locationList:
+                      type: array
+                      items:
+                        type: string
+                    lastUpdate:
+                      type: string
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/cooperation_network_features/{id}':
+    get:
+      summary: Queries a CooperationNetworkFeatures by id.
+      operationId: CrossdomainCdacCooperationNetworkFeatures
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              CooperationNetworkFeatures:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  depth:
+                    type: string
+                    format: uint64
+                  cost:
+                    type: string
+                    format: uint64
+                  interestList:
+                    type: array
+                    items:
+                      type: string
+                  locationList:
+                    type: array
+                    items:
+                      type: string
+                  lastUpdate:
                     type: string
                   creator:
                     type: string
@@ -21116,6 +21957,291 @@ paths:
           required: true
           type: string
           format: uint64
+      tags:
+        - Query
+  /crossdomain/cdac/domain_map:
+    get:
+      summary: Queries a list of DomainMap items.
+      operationId: CrossdomainCdacDomainMapAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              domainMap:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    domainIndex:
+                      type: string
+                    domainList:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        name:
+                          type: string
+                        domainType:
+                          type: string
+                        location:
+                          type: string
+                        certificate:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            publicKey:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                'n':
+                                  type: string
+                                  format: uint64
+                                e:
+                                  type: string
+                                  format: uint64
+                                creator:
+                                  type: string
+                            validity:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                notBefore:
+                                  type: string
+                                notAfter:
+                                  type: string
+                                creator:
+                                  type: string
+                            creator:
+                              type: string
+                        ibcConnection:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            channel:
+                              type: string
+                            port:
+                              type: string
+                            creator:
+                              type: string
+                        creator:
+                          type: string
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/domain_map/{domainIndex}':
+    get:
+      summary: Queries a DomainMap by index.
+      operationId: CrossdomainCdacDomainMap
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              domainMap:
+                type: object
+                properties:
+                  domainIndex:
+                    type: string
+                  domainList:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      name:
+                        type: string
+                      domainType:
+                        type: string
+                      location:
+                        type: string
+                      certificate:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          publicKey:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              'n':
+                                type: string
+                                format: uint64
+                              e:
+                                type: string
+                                format: uint64
+                              creator:
+                                type: string
+                          validity:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              notBefore:
+                                type: string
+                              notAfter:
+                                type: string
+                              creator:
+                                type: string
+                          creator:
+                            type: string
+                      ibcConnection:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          channel:
+                            type: string
+                          port:
+                            type: string
+                          creator:
+                            type: string
+                      creator:
+                        type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: domainIndex
+          in: path
+          required: true
+          type: string
       tags:
         - Query
   '/crossdomain/cdac/established_cooperation_by_channel/{channel}':
@@ -49345,6 +50471,36 @@ definitions:
             type: string
       creator:
         type: string
+  crossdomain.cdac.CooperationData:
+    type: object
+    properties:
+      labelIndex:
+        type: string
+      validity:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          notBefore:
+            type: string
+          notAfter:
+            type: string
+          creator:
+            type: string
+      status:
+        type: string
+      cost:
+        type: string
+        format: uint64
+      lastUpdate:
+        type: string
+      interestList:
+        type: array
+        items:
+          type: string
+      creator:
+        type: string
   crossdomain.cdac.CooperationLog:
     type: object
     properties:
@@ -49360,6 +50516,169 @@ definitions:
       decision:
         type: string
       function:
+        type: string
+      creator:
+        type: string
+  crossdomain.cdac.CooperationNetwork:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      label:
+        type: string
+      domainMapList:
+        type: array
+        items:
+          type: object
+          properties:
+            domainIndex:
+              type: string
+            domainList:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                name:
+                  type: string
+                domainType:
+                  type: string
+                location:
+                  type: string
+                certificate:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    publicKey:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        'n':
+                          type: string
+                          format: uint64
+                        e:
+                          type: string
+                          format: uint64
+                        creator:
+                          type: string
+                    validity:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        notBefore:
+                          type: string
+                        notAfter:
+                          type: string
+                        creator:
+                          type: string
+                    creator:
+                      type: string
+                ibcConnection:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    channel:
+                      type: string
+                    port:
+                      type: string
+                    creator:
+                      type: string
+                creator:
+                  type: string
+            creator:
+              type: string
+      cooperationDataList:
+        type: array
+        items:
+          type: object
+          properties:
+            labelIndex:
+              type: string
+            validity:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                notBefore:
+                  type: string
+                notAfter:
+                  type: string
+                creator:
+                  type: string
+            status:
+              type: string
+            cost:
+              type: string
+              format: uint64
+            lastUpdate:
+              type: string
+            interestList:
+              type: array
+              items:
+                type: string
+            creator:
+              type: string
+      features:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          depth:
+            type: string
+            format: uint64
+          cost:
+            type: string
+            format: uint64
+          interestList:
+            type: array
+            items:
+              type: string
+          locationList:
+            type: array
+            items:
+              type: string
+          lastUpdate:
+            type: string
+          creator:
+            type: string
+      creationTimestamp:
+        type: string
+      updateTimestamp:
+        type: string
+      creator:
+        type: string
+  crossdomain.cdac.CooperationNetworkFeatures:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      depth:
+        type: string
+        format: uint64
+      cost:
+        type: string
+        format: uint64
+      interestList:
+        type: array
+        items:
+          type: string
+      locationList:
+        type: array
+        items:
+          type: string
+      lastUpdate:
         type: string
       creator:
         type: string
@@ -49578,6 +50897,73 @@ definitions:
         type: string
       status:
         type: string
+  crossdomain.cdac.DomainMap:
+    type: object
+    properties:
+      domainIndex:
+        type: string
+      domainList:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          name:
+            type: string
+          domainType:
+            type: string
+          location:
+            type: string
+          certificate:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              publicKey:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  'n':
+                    type: string
+                    format: uint64
+                  e:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+              validity:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  notBefore:
+                    type: string
+                  notAfter:
+                    type: string
+                  creator:
+                    type: string
+              creator:
+                type: string
+          ibcConnection:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              channel:
+                type: string
+              port:
+                type: string
+              creator:
+                type: string
+          creator:
+            type: string
+      creator:
+        type: string
   crossdomain.cdac.ForwardPolicy:
     type: object
     properties:
@@ -49620,7 +51006,21 @@ definitions:
       id:
         type: string
         format: uint64
+  crossdomain.cdac.MsgCreateCooperationDataResponse:
+    type: object
   crossdomain.cdac.MsgCreateCooperationLogResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  crossdomain.cdac.MsgCreateCooperationNetworkFeaturesResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  crossdomain.cdac.MsgCreateCooperationNetworkResponse:
     type: object
     properties:
       id:
@@ -49632,6 +51032,8 @@ definitions:
       id:
         type: string
         format: uint64
+  crossdomain.cdac.MsgCreateDomainMapResponse:
+    type: object
   crossdomain.cdac.MsgCreateDomainResponse:
     type: object
     properties:
@@ -49666,9 +51068,17 @@ definitions:
     type: object
   crossdomain.cdac.MsgDeleteCertificateResponse:
     type: object
+  crossdomain.cdac.MsgDeleteCooperationDataResponse:
+    type: object
   crossdomain.cdac.MsgDeleteCooperationLogResponse:
     type: object
+  crossdomain.cdac.MsgDeleteCooperationNetworkFeaturesResponse:
+    type: object
+  crossdomain.cdac.MsgDeleteCooperationNetworkResponse:
+    type: object
   crossdomain.cdac.MsgDeleteDomainCooperationResponse:
+    type: object
+  crossdomain.cdac.MsgDeleteDomainMapResponse:
     type: object
   crossdomain.cdac.MsgDeleteDomainResponse:
     type: object
@@ -49679,6 +51089,8 @@ definitions:
   crossdomain.cdac.MsgDeletePublicKeyResponse:
     type: object
   crossdomain.cdac.MsgDeleteValidityResponse:
+    type: object
+  crossdomain.cdac.MsgGenerateCooperationNetworkResponse:
     type: object
   crossdomain.cdac.MsgSendAuthenticateDomainResponse:
     type: object
@@ -49698,13 +51110,23 @@ definitions:
     type: object
   crossdomain.cdac.MsgSendModifyCooperationValidityResponse:
     type: object
+  crossdomain.cdac.MsgSendRevokeCooperationResponse:
+    type: object
   crossdomain.cdac.MsgUpdateAuthenticationLogResponse:
     type: object
   crossdomain.cdac.MsgUpdateCertificateResponse:
     type: object
+  crossdomain.cdac.MsgUpdateCooperationDataResponse:
+    type: object
   crossdomain.cdac.MsgUpdateCooperationLogResponse:
     type: object
+  crossdomain.cdac.MsgUpdateCooperationNetworkFeaturesResponse:
+    type: object
+  crossdomain.cdac.MsgUpdateCooperationNetworkResponse:
+    type: object
   crossdomain.cdac.MsgUpdateDomainCooperationResponse:
+    type: object
+  crossdomain.cdac.MsgUpdateDomainMapResponse:
     type: object
   crossdomain.cdac.MsgUpdateDomainResponse:
     type: object
@@ -49845,6 +51267,66 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  crossdomain.cdac.QueryAllCooperationDataResponse:
+    type: object
+    properties:
+      cooperationData:
+        type: array
+        items:
+          type: object
+          properties:
+            labelIndex:
+              type: string
+            validity:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                notBefore:
+                  type: string
+                notAfter:
+                  type: string
+                creator:
+                  type: string
+            status:
+              type: string
+            cost:
+              type: string
+              format: uint64
+            lastUpdate:
+              type: string
+            interestList:
+              type: array
+              items:
+                type: string
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
   crossdomain.cdac.QueryAllCooperationLogResponse:
     type: object
     properties:
@@ -49865,6 +51347,229 @@ definitions:
             decision:
               type: string
             function:
+              type: string
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllCooperationNetworkFeaturesResponse:
+    type: object
+    properties:
+      CooperationNetworkFeatures:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            depth:
+              type: string
+              format: uint64
+            cost:
+              type: string
+              format: uint64
+            interestList:
+              type: array
+              items:
+                type: string
+            locationList:
+              type: array
+              items:
+                type: string
+            lastUpdate:
+              type: string
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllCooperationNetworkResponse:
+    type: object
+    properties:
+      CooperationNetwork:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            label:
+              type: string
+            domainMapList:
+              type: array
+              items:
+                type: object
+                properties:
+                  domainIndex:
+                    type: string
+                  domainList:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      name:
+                        type: string
+                      domainType:
+                        type: string
+                      location:
+                        type: string
+                      certificate:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          publicKey:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              'n':
+                                type: string
+                                format: uint64
+                              e:
+                                type: string
+                                format: uint64
+                              creator:
+                                type: string
+                          validity:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              notBefore:
+                                type: string
+                              notAfter:
+                                type: string
+                              creator:
+                                type: string
+                          creator:
+                            type: string
+                      ibcConnection:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          channel:
+                            type: string
+                          port:
+                            type: string
+                          creator:
+                            type: string
+                      creator:
+                        type: string
+                  creator:
+                    type: string
+            cooperationDataList:
+              type: array
+              items:
+                type: object
+                properties:
+                  labelIndex:
+                    type: string
+                  validity:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      notBefore:
+                        type: string
+                      notAfter:
+                        type: string
+                      creator:
+                        type: string
+                  status:
+                    type: string
+                  cost:
+                    type: string
+                    format: uint64
+                  lastUpdate:
+                    type: string
+                  interestList:
+                    type: array
+                    items:
+                      type: string
+                  creator:
+                    type: string
+            features:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                depth:
+                  type: string
+                  format: uint64
+                cost:
+                  type: string
+                  format: uint64
+                interestList:
+                  type: array
+                  items:
+                    type: string
+                locationList:
+                  type: array
+                  items:
+                    type: string
+                lastUpdate:
+                  type: string
+                creator:
+                  type: string
+            creationTimestamp:
+              type: string
+            updateTimestamp:
               type: string
             creator:
               type: string
@@ -50052,6 +51757,103 @@ definitions:
             creator:
               type: string
             status:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllDomainMapResponse:
+    type: object
+    properties:
+      domainMap:
+        type: array
+        items:
+          type: object
+          properties:
+            domainIndex:
+              type: string
+            domainList:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                name:
+                  type: string
+                domainType:
+                  type: string
+                location:
+                  type: string
+                certificate:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    publicKey:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        'n':
+                          type: string
+                          format: uint64
+                        e:
+                          type: string
+                          format: uint64
+                        creator:
+                          type: string
+                    validity:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        notBefore:
+                          type: string
+                        notAfter:
+                          type: string
+                        creator:
+                          type: string
+                    creator:
+                      type: string
+                ibcConnection:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    channel:
+                      type: string
+                    port:
+                      type: string
+                    creator:
+                      type: string
+                creator:
+                  type: string
+            creator:
               type: string
       pagination:
         type: object
@@ -50569,6 +52371,39 @@ definitions:
                 type: string
           creator:
             type: string
+  crossdomain.cdac.QueryGetCooperationDataResponse:
+    type: object
+    properties:
+      cooperationData:
+        type: object
+        properties:
+          labelIndex:
+            type: string
+          validity:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              notBefore:
+                type: string
+              notAfter:
+                type: string
+              creator:
+                type: string
+          status:
+            type: string
+          cost:
+            type: string
+            format: uint64
+          lastUpdate:
+            type: string
+          interestList:
+            type: array
+            items:
+              type: string
+          creator:
+            type: string
   crossdomain.cdac.QueryGetCooperationLogResponse:
     type: object
     properties:
@@ -50587,6 +52422,175 @@ definitions:
           decision:
             type: string
           function:
+            type: string
+          creator:
+            type: string
+  crossdomain.cdac.QueryGetCooperationNetworkFeaturesResponse:
+    type: object
+    properties:
+      CooperationNetworkFeatures:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          depth:
+            type: string
+            format: uint64
+          cost:
+            type: string
+            format: uint64
+          interestList:
+            type: array
+            items:
+              type: string
+          locationList:
+            type: array
+            items:
+              type: string
+          lastUpdate:
+            type: string
+          creator:
+            type: string
+  crossdomain.cdac.QueryGetCooperationNetworkResponse:
+    type: object
+    properties:
+      CooperationNetwork:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          label:
+            type: string
+          domainMapList:
+            type: array
+            items:
+              type: object
+              properties:
+                domainIndex:
+                  type: string
+                domainList:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    name:
+                      type: string
+                    domainType:
+                      type: string
+                    location:
+                      type: string
+                    certificate:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        publicKey:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            'n':
+                              type: string
+                              format: uint64
+                            e:
+                              type: string
+                              format: uint64
+                            creator:
+                              type: string
+                        validity:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            notBefore:
+                              type: string
+                            notAfter:
+                              type: string
+                            creator:
+                              type: string
+                        creator:
+                          type: string
+                    ibcConnection:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        channel:
+                          type: string
+                        port:
+                          type: string
+                        creator:
+                          type: string
+                    creator:
+                      type: string
+                creator:
+                  type: string
+          cooperationDataList:
+            type: array
+            items:
+              type: object
+              properties:
+                labelIndex:
+                  type: string
+                validity:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    notBefore:
+                      type: string
+                    notAfter:
+                      type: string
+                    creator:
+                      type: string
+                status:
+                  type: string
+                cost:
+                  type: string
+                  format: uint64
+                lastUpdate:
+                  type: string
+                interestList:
+                  type: array
+                  items:
+                    type: string
+                creator:
+                  type: string
+          features:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              depth:
+                type: string
+                format: uint64
+              cost:
+                type: string
+                format: uint64
+              interestList:
+                type: array
+                items:
+                  type: string
+              locationList:
+                type: array
+                items:
+                  type: string
+              lastUpdate:
+                type: string
+              creator:
+                type: string
+          creationTimestamp:
+            type: string
+          updateTimestamp:
             type: string
           creator:
             type: string
@@ -50747,6 +52751,76 @@ definitions:
           creator:
             type: string
           status:
+            type: string
+  crossdomain.cdac.QueryGetDomainMapResponse:
+    type: object
+    properties:
+      domainMap:
+        type: object
+        properties:
+          domainIndex:
+            type: string
+          domainList:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              name:
+                type: string
+              domainType:
+                type: string
+              location:
+                type: string
+              certificate:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  publicKey:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      'n':
+                        type: string
+                        format: uint64
+                      e:
+                        type: string
+                        format: uint64
+                      creator:
+                        type: string
+                  validity:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      notBefore:
+                        type: string
+                      notAfter:
+                        type: string
+                      creator:
+                        type: string
+                  creator:
+                    type: string
+              ibcConnection:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  channel:
+                    type: string
+                  port:
+                    type: string
+                  creator:
+                    type: string
+              creator:
+                type: string
+          creator:
             type: string
   crossdomain.cdac.QueryGetDomainResponse:
     type: object

@@ -44,6 +44,20 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSendEnableCooperation{}, "cdac/SendEnableCooperation", nil)
 	cdc.RegisterConcrete(&MsgSendModifyCooperationValidity{}, "cdac/SendModifyCooperationValidity", nil)
 	cdc.RegisterConcrete(&MsgSendModifyCooperationInterest{}, "cdac/SendModifyCooperationInterest", nil)
+	cdc.RegisterConcrete(&MsgSendRevokeCooperation{}, "cdac/SendRevokeCooperation", nil)
+	cdc.RegisterConcrete(&MsgCreateDomainMap{}, "cdac/CreateDomainMap", nil)
+	cdc.RegisterConcrete(&MsgUpdateDomainMap{}, "cdac/UpdateDomainMap", nil)
+	cdc.RegisterConcrete(&MsgDeleteDomainMap{}, "cdac/DeleteDomainMap", nil)
+	cdc.RegisterConcrete(&MsgCreateCooperationNetworkFeatures{}, "cdac/CreateCooperationNetworkFeatures", nil)
+	cdc.RegisterConcrete(&MsgUpdateCooperationNetworkFeatures{}, "cdac/UpdateCooperationNetworkFeatures", nil)
+	cdc.RegisterConcrete(&MsgDeleteCooperationNetworkFeatures{}, "cdac/DeleteCooperationNetworkFeatures", nil)
+	cdc.RegisterConcrete(&MsgCreateCooperationData{}, "cdac/CreateCooperationData", nil)
+	cdc.RegisterConcrete(&MsgUpdateCooperationData{}, "cdac/UpdateCooperationData", nil)
+	cdc.RegisterConcrete(&MsgDeleteCooperationData{}, "cdac/DeleteCooperationData", nil)
+	cdc.RegisterConcrete(&MsgCreateCooperationNetwork{}, "cdac/CreateCooperationNetwork", nil)
+	cdc.RegisterConcrete(&MsgUpdateCooperationNetwork{}, "cdac/UpdateCooperationNetwork", nil)
+	cdc.RegisterConcrete(&MsgDeleteCooperationNetwork{}, "cdac/DeleteCooperationNetwork", nil)
+	cdc.RegisterConcrete(&MsgGenerateCooperationNetwork{}, "cdac/GenerateCooperationNetwork", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -119,6 +133,32 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSendModifyCooperationInterest{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSendRevokeCooperation{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateDomainMap{},
+		&MsgUpdateDomainMap{},
+		&MsgDeleteDomainMap{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateCooperationNetworkFeatures{},
+		&MsgUpdateCooperationNetworkFeatures{},
+		&MsgDeleteCooperationNetworkFeatures{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateCooperationData{},
+		&MsgUpdateCooperationData{},
+		&MsgDeleteCooperationData{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateCooperationNetwork{},
+		&MsgUpdateCooperationNetwork{},
+		&MsgDeleteCooperationNetwork{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgGenerateCooperationNetwork{},
 	)
 	// this line is used by starport scaffolding # 3
 

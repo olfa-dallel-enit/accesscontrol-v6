@@ -66,6 +66,20 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdSendEnableCooperation())
 	cmd.AddCommand(CmdSendModifyCooperationValidity())
 	cmd.AddCommand(CmdSendModifyCooperationInterest())
+	cmd.AddCommand(CmdSendRevokeCooperation())
+	cmd.AddCommand(CmdCreateDomainMap())
+	cmd.AddCommand(CmdUpdateDomainMap())
+	cmd.AddCommand(CmdDeleteDomainMap())
+	cmd.AddCommand(CmdCreateCooperationNetworkFeatures())
+	cmd.AddCommand(CmdUpdateCooperationNetworkFeatures())
+	cmd.AddCommand(CmdDeleteCooperationNetworkFeatures())
+	cmd.AddCommand(CmdCreateCooperationData())
+	cmd.AddCommand(CmdUpdateCooperationData())
+	cmd.AddCommand(CmdDeleteCooperationData())
+	cmd.AddCommand(CmdCreateCooperationNetwork())
+	cmd.AddCommand(CmdUpdateCooperationNetwork())
+	cmd.AddCommand(CmdDeleteCooperationNetwork())
+	cmd.AddCommand(CmdGenerateCooperationNetwork())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

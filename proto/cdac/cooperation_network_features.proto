@@ -1,0 +1,14 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message CooperationNetworkFeatures {
+  uint64 id = 1;
+  uint64 depth = 2; 
+  uint64 cost = 3; 
+  repeated string interestList = 4; 
+  repeated string locationList = 5; 
+  string lastUpdate = 6; 
+  string creator = 7;
+}

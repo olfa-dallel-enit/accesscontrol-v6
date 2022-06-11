@@ -152,6 +152,54 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgSendModifyCooperationInterest:
 			res, err := msgServer.SendModifyCooperationInterest(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSendRevokeCooperation:
+			res, err := msgServer.SendRevokeCooperation(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgCreateDomainMap:
+			res, err := msgServer.CreateDomainMap(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgUpdateDomainMap:
+			res, err := msgServer.UpdateDomainMap(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgDeleteDomainMap:
+			res, err := msgServer.DeleteDomainMap(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgCreateCooperationNetworkFeatures:
+			res, err := msgServer.CreateCooperationNetworkFeatures(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateCooperationNetworkFeatures:
+			res, err := msgServer.UpdateCooperationNetworkFeatures(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteCooperationNetworkFeatures:
+			res, err := msgServer.DeleteCooperationNetworkFeatures(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateCooperationData:
+			res, err := msgServer.CreateCooperationData(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgUpdateCooperationData:
+			res, err := msgServer.UpdateCooperationData(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgDeleteCooperationData:
+			res, err := msgServer.DeleteCooperationData(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgCreateCooperationNetwork:
+			res, err := msgServer.CreateCooperationNetwork(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateCooperationNetwork:
+			res, err := msgServer.UpdateCooperationNetwork(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteCooperationNetwork:
+			res, err := msgServer.DeleteCooperationNetwork(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgGenerateCooperationNetwork:
+			res, err := msgServer.GenerateCooperationNetwork(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 			// this line is used by starport scaffolding # 1
 		default:
 			errMsg := fmt.Sprintf("unrecognized %s message type: %T", types.ModuleName, msg)

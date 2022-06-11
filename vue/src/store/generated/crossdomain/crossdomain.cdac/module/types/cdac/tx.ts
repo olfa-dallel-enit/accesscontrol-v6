@@ -6,6 +6,9 @@ import { Validity } from "../cdac/validity";
 import { Certificate } from "../cdac/certificate";
 import { IbcConnection } from "../cdac/ibc_connection";
 import { Domain } from "../cdac/domain";
+import { DomainMap } from "../cdac/domain_map";
+import { CooperationData } from "../cdac/cooperation_data";
+import { CooperationNetworkFeatures } from "../cdac/cooperation_network_features";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -371,6 +374,141 @@ export interface MsgSendModifyCooperationInterest {
 }
 
 export interface MsgSendModifyCooperationInterestResponse {}
+
+export interface MsgSendRevokeCooperation {
+  creator: string;
+  port: string;
+  channelID: string;
+  timeoutTimestamp: number;
+}
+
+export interface MsgSendRevokeCooperationResponse {}
+
+export interface MsgCreateDomainMap {
+  creator: string;
+  domainIndex: string;
+  domainList: Domain | undefined;
+}
+
+export interface MsgCreateDomainMapResponse {}
+
+export interface MsgUpdateDomainMap {
+  creator: string;
+  domainIndex: string;
+  domainList: Domain | undefined;
+}
+
+export interface MsgUpdateDomainMapResponse {}
+
+export interface MsgDeleteDomainMap {
+  creator: string;
+  domainIndex: string;
+}
+
+export interface MsgDeleteDomainMapResponse {}
+
+export interface MsgCreateCooperationNetworkFeatures {
+  creator: string;
+  depth: number;
+  cost: number;
+  interestList: string[];
+  locationList: string[];
+  lastUpdate: string;
+}
+
+export interface MsgCreateCooperationNetworkFeaturesResponse {
+  id: number;
+}
+
+export interface MsgUpdateCooperationNetworkFeatures {
+  creator: string;
+  id: number;
+  depth: number;
+  cost: number;
+  interestList: string[];
+  locationList: string[];
+  lastUpdate: string;
+}
+
+export interface MsgUpdateCooperationNetworkFeaturesResponse {}
+
+export interface MsgDeleteCooperationNetworkFeatures {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteCooperationNetworkFeaturesResponse {}
+
+export interface MsgCreateCooperationData {
+  creator: string;
+  labelIndex: string;
+  validity: Validity | undefined;
+  status: string;
+  cost: number;
+  lastUpdate: string;
+  interestList: string[];
+}
+
+export interface MsgCreateCooperationDataResponse {}
+
+export interface MsgUpdateCooperationData {
+  creator: string;
+  labelIndex: string;
+  validity: Validity | undefined;
+  status: string;
+  cost: number;
+  lastUpdate: string;
+  interestList: string[];
+}
+
+export interface MsgUpdateCooperationDataResponse {}
+
+export interface MsgDeleteCooperationData {
+  creator: string;
+  labelIndex: string;
+}
+
+export interface MsgDeleteCooperationDataResponse {}
+
+export interface MsgCreateCooperationNetwork {
+  creator: string;
+  label: string;
+  domainMapList: DomainMap | undefined;
+  cooperationDataList: CooperationData | undefined;
+  features: CooperationNetworkFeatures | undefined;
+  creationTimestamp: string;
+  updateTimestamp: string;
+}
+
+export interface MsgCreateCooperationNetworkResponse {
+  id: number;
+}
+
+export interface MsgUpdateCooperationNetwork {
+  creator: string;
+  id: number;
+  label: string;
+  domainMapList: DomainMap | undefined;
+  cooperationDataList: CooperationData | undefined;
+  features: CooperationNetworkFeatures | undefined;
+  creationTimestamp: string;
+  updateTimestamp: string;
+}
+
+export interface MsgUpdateCooperationNetworkResponse {}
+
+export interface MsgDeleteCooperationNetwork {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteCooperationNetworkResponse {}
+
+export interface MsgGenerateCooperationNetwork {
+  creator: string;
+}
+
+export interface MsgGenerateCooperationNetworkResponse {}
 
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
@@ -7192,6 +7330,2709 @@ export const MsgSendModifyCooperationInterestResponse = {
   },
 };
 
+const baseMsgSendRevokeCooperation: object = {
+  creator: "",
+  port: "",
+  channelID: "",
+  timeoutTimestamp: 0,
+};
+
+export const MsgSendRevokeCooperation = {
+  encode(
+    message: MsgSendRevokeCooperation,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.port !== "") {
+      writer.uint32(18).string(message.port);
+    }
+    if (message.channelID !== "") {
+      writer.uint32(26).string(message.channelID);
+    }
+    if (message.timeoutTimestamp !== 0) {
+      writer.uint32(32).uint64(message.timeoutTimestamp);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendRevokeCooperation {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendRevokeCooperation,
+    } as MsgSendRevokeCooperation;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.port = reader.string();
+          break;
+        case 3:
+          message.channelID = reader.string();
+          break;
+        case 4:
+          message.timeoutTimestamp = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSendRevokeCooperation {
+    const message = {
+      ...baseMsgSendRevokeCooperation,
+    } as MsgSendRevokeCooperation;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = String(object.port);
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = String(object.channelID);
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = Number(object.timeoutTimestamp);
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSendRevokeCooperation): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.port !== undefined && (obj.port = message.port);
+    message.channelID !== undefined && (obj.channelID = message.channelID);
+    message.timeoutTimestamp !== undefined &&
+      (obj.timeoutTimestamp = message.timeoutTimestamp);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSendRevokeCooperation>
+  ): MsgSendRevokeCooperation {
+    const message = {
+      ...baseMsgSendRevokeCooperation,
+    } as MsgSendRevokeCooperation;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = object.port;
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = object.channelID;
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = object.timeoutTimestamp;
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgSendRevokeCooperationResponse: object = {};
+
+export const MsgSendRevokeCooperationResponse = {
+  encode(
+    _: MsgSendRevokeCooperationResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendRevokeCooperationResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendRevokeCooperationResponse,
+    } as MsgSendRevokeCooperationResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgSendRevokeCooperationResponse {
+    const message = {
+      ...baseMsgSendRevokeCooperationResponse,
+    } as MsgSendRevokeCooperationResponse;
+    return message;
+  },
+
+  toJSON(_: MsgSendRevokeCooperationResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgSendRevokeCooperationResponse>
+  ): MsgSendRevokeCooperationResponse {
+    const message = {
+      ...baseMsgSendRevokeCooperationResponse,
+    } as MsgSendRevokeCooperationResponse;
+    return message;
+  },
+};
+
+const baseMsgCreateDomainMap: object = { creator: "", domainIndex: "" };
+
+export const MsgCreateDomainMap = {
+  encode(
+    message: MsgCreateDomainMap,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.domainIndex !== "") {
+      writer.uint32(18).string(message.domainIndex);
+    }
+    if (message.domainList !== undefined) {
+      Domain.encode(message.domainList, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateDomainMap {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.domainIndex = reader.string();
+          break;
+        case 3:
+          message.domainList = Domain.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateDomainMap {
+    const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = String(object.domainIndex);
+    } else {
+      message.domainIndex = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = Domain.fromJSON(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateDomainMap): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.domainIndex !== undefined &&
+      (obj.domainIndex = message.domainIndex);
+    message.domainList !== undefined &&
+      (obj.domainList = message.domainList
+        ? Domain.toJSON(message.domainList)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgCreateDomainMap>): MsgCreateDomainMap {
+    const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = object.domainIndex;
+    } else {
+      message.domainIndex = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = Domain.fromPartial(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateDomainMapResponse: object = {};
+
+export const MsgCreateDomainMapResponse = {
+  encode(
+    _: MsgCreateDomainMapResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateDomainMapResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateDomainMapResponse,
+    } as MsgCreateDomainMapResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgCreateDomainMapResponse {
+    const message = {
+      ...baseMsgCreateDomainMapResponse,
+    } as MsgCreateDomainMapResponse;
+    return message;
+  },
+
+  toJSON(_: MsgCreateDomainMapResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgCreateDomainMapResponse>
+  ): MsgCreateDomainMapResponse {
+    const message = {
+      ...baseMsgCreateDomainMapResponse,
+    } as MsgCreateDomainMapResponse;
+    return message;
+  },
+};
+
+const baseMsgUpdateDomainMap: object = { creator: "", domainIndex: "" };
+
+export const MsgUpdateDomainMap = {
+  encode(
+    message: MsgUpdateDomainMap,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.domainIndex !== "") {
+      writer.uint32(18).string(message.domainIndex);
+    }
+    if (message.domainList !== undefined) {
+      Domain.encode(message.domainList, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdateDomainMap {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.domainIndex = reader.string();
+          break;
+        case 3:
+          message.domainList = Domain.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateDomainMap {
+    const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = String(object.domainIndex);
+    } else {
+      message.domainIndex = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = Domain.fromJSON(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateDomainMap): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.domainIndex !== undefined &&
+      (obj.domainIndex = message.domainIndex);
+    message.domainList !== undefined &&
+      (obj.domainList = message.domainList
+        ? Domain.toJSON(message.domainList)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdateDomainMap>): MsgUpdateDomainMap {
+    const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = object.domainIndex;
+    } else {
+      message.domainIndex = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = Domain.fromPartial(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateDomainMapResponse: object = {};
+
+export const MsgUpdateDomainMapResponse = {
+  encode(
+    _: MsgUpdateDomainMapResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateDomainMapResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateDomainMapResponse,
+    } as MsgUpdateDomainMapResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateDomainMapResponse {
+    const message = {
+      ...baseMsgUpdateDomainMapResponse,
+    } as MsgUpdateDomainMapResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateDomainMapResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateDomainMapResponse>
+  ): MsgUpdateDomainMapResponse {
+    const message = {
+      ...baseMsgUpdateDomainMapResponse,
+    } as MsgUpdateDomainMapResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteDomainMap: object = { creator: "", domainIndex: "" };
+
+export const MsgDeleteDomainMap = {
+  encode(
+    message: MsgDeleteDomainMap,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.domainIndex !== "") {
+      writer.uint32(18).string(message.domainIndex);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeleteDomainMap {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeleteDomainMap } as MsgDeleteDomainMap;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.domainIndex = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteDomainMap {
+    const message = { ...baseMsgDeleteDomainMap } as MsgDeleteDomainMap;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = String(object.domainIndex);
+    } else {
+      message.domainIndex = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteDomainMap): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.domainIndex !== undefined &&
+      (obj.domainIndex = message.domainIndex);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgDeleteDomainMap>): MsgDeleteDomainMap {
+    const message = { ...baseMsgDeleteDomainMap } as MsgDeleteDomainMap;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.domainIndex !== undefined && object.domainIndex !== null) {
+      message.domainIndex = object.domainIndex;
+    } else {
+      message.domainIndex = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteDomainMapResponse: object = {};
+
+export const MsgDeleteDomainMapResponse = {
+  encode(
+    _: MsgDeleteDomainMapResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteDomainMapResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteDomainMapResponse,
+    } as MsgDeleteDomainMapResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteDomainMapResponse {
+    const message = {
+      ...baseMsgDeleteDomainMapResponse,
+    } as MsgDeleteDomainMapResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteDomainMapResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteDomainMapResponse>
+  ): MsgDeleteDomainMapResponse {
+    const message = {
+      ...baseMsgDeleteDomainMapResponse,
+    } as MsgDeleteDomainMapResponse;
+    return message;
+  },
+};
+
+const baseMsgCreateCooperationNetworkFeatures: object = {
+  creator: "",
+  depth: 0,
+  cost: 0,
+  interestList: "",
+  locationList: "",
+  lastUpdate: "",
+};
+
+export const MsgCreateCooperationNetworkFeatures = {
+  encode(
+    message: MsgCreateCooperationNetworkFeatures,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.depth !== 0) {
+      writer.uint32(16).uint64(message.depth);
+    }
+    if (message.cost !== 0) {
+      writer.uint32(24).uint64(message.cost);
+    }
+    for (const v of message.interestList) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.locationList) {
+      writer.uint32(42).string(v!);
+    }
+    if (message.lastUpdate !== "") {
+      writer.uint32(50).string(message.lastUpdate);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateCooperationNetworkFeatures {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateCooperationNetworkFeatures,
+    } as MsgCreateCooperationNetworkFeatures;
+    message.interestList = [];
+    message.locationList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.depth = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.cost = longToNumber(reader.uint64() as Long);
+          break;
+        case 4:
+          message.interestList.push(reader.string());
+          break;
+        case 5:
+          message.locationList.push(reader.string());
+          break;
+        case 6:
+          message.lastUpdate = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateCooperationNetworkFeatures {
+    const message = {
+      ...baseMsgCreateCooperationNetworkFeatures,
+    } as MsgCreateCooperationNetworkFeatures;
+    message.interestList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = Number(object.depth);
+    } else {
+      message.depth = 0;
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = Number(object.cost);
+    } else {
+      message.cost = 0;
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(String(e));
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(String(e));
+      }
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = String(object.lastUpdate);
+    } else {
+      message.lastUpdate = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateCooperationNetworkFeatures): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.depth !== undefined && (obj.depth = message.depth);
+    message.cost !== undefined && (obj.cost = message.cost);
+    if (message.interestList) {
+      obj.interestList = message.interestList.map((e) => e);
+    } else {
+      obj.interestList = [];
+    }
+    if (message.locationList) {
+      obj.locationList = message.locationList.map((e) => e);
+    } else {
+      obj.locationList = [];
+    }
+    message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateCooperationNetworkFeatures>
+  ): MsgCreateCooperationNetworkFeatures {
+    const message = {
+      ...baseMsgCreateCooperationNetworkFeatures,
+    } as MsgCreateCooperationNetworkFeatures;
+    message.interestList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = object.depth;
+    } else {
+      message.depth = 0;
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = 0;
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(e);
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(e);
+      }
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = object.lastUpdate;
+    } else {
+      message.lastUpdate = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateCooperationNetworkFeaturesResponse: object = { id: 0 };
+
+export const MsgCreateCooperationNetworkFeaturesResponse = {
+  encode(
+    message: MsgCreateCooperationNetworkFeaturesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateCooperationNetworkFeaturesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateCooperationNetworkFeaturesResponse,
+    } as MsgCreateCooperationNetworkFeaturesResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseMsgCreateCooperationNetworkFeaturesResponse,
+    } as MsgCreateCooperationNetworkFeaturesResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateCooperationNetworkFeaturesResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateCooperationNetworkFeaturesResponse>
+  ): MsgCreateCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseMsgCreateCooperationNetworkFeaturesResponse,
+    } as MsgCreateCooperationNetworkFeaturesResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateCooperationNetworkFeatures: object = {
+  creator: "",
+  id: 0,
+  depth: 0,
+  cost: 0,
+  interestList: "",
+  locationList: "",
+  lastUpdate: "",
+};
+
+export const MsgUpdateCooperationNetworkFeatures = {
+  encode(
+    message: MsgUpdateCooperationNetworkFeatures,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.depth !== 0) {
+      writer.uint32(24).uint64(message.depth);
+    }
+    if (message.cost !== 0) {
+      writer.uint32(32).uint64(message.cost);
+    }
+    for (const v of message.interestList) {
+      writer.uint32(42).string(v!);
+    }
+    for (const v of message.locationList) {
+      writer.uint32(50).string(v!);
+    }
+    if (message.lastUpdate !== "") {
+      writer.uint32(58).string(message.lastUpdate);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateCooperationNetworkFeatures {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateCooperationNetworkFeatures,
+    } as MsgUpdateCooperationNetworkFeatures;
+    message.interestList = [];
+    message.locationList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.depth = longToNumber(reader.uint64() as Long);
+          break;
+        case 4:
+          message.cost = longToNumber(reader.uint64() as Long);
+          break;
+        case 5:
+          message.interestList.push(reader.string());
+          break;
+        case 6:
+          message.locationList.push(reader.string());
+          break;
+        case 7:
+          message.lastUpdate = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateCooperationNetworkFeatures {
+    const message = {
+      ...baseMsgUpdateCooperationNetworkFeatures,
+    } as MsgUpdateCooperationNetworkFeatures;
+    message.interestList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = Number(object.depth);
+    } else {
+      message.depth = 0;
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = Number(object.cost);
+    } else {
+      message.cost = 0;
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(String(e));
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(String(e));
+      }
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = String(object.lastUpdate);
+    } else {
+      message.lastUpdate = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateCooperationNetworkFeatures): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.depth !== undefined && (obj.depth = message.depth);
+    message.cost !== undefined && (obj.cost = message.cost);
+    if (message.interestList) {
+      obj.interestList = message.interestList.map((e) => e);
+    } else {
+      obj.interestList = [];
+    }
+    if (message.locationList) {
+      obj.locationList = message.locationList.map((e) => e);
+    } else {
+      obj.locationList = [];
+    }
+    message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateCooperationNetworkFeatures>
+  ): MsgUpdateCooperationNetworkFeatures {
+    const message = {
+      ...baseMsgUpdateCooperationNetworkFeatures,
+    } as MsgUpdateCooperationNetworkFeatures;
+    message.interestList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = object.depth;
+    } else {
+      message.depth = 0;
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = 0;
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(e);
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(e);
+      }
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = object.lastUpdate;
+    } else {
+      message.lastUpdate = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateCooperationNetworkFeaturesResponse: object = {};
+
+export const MsgUpdateCooperationNetworkFeaturesResponse = {
+  encode(
+    _: MsgUpdateCooperationNetworkFeaturesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateCooperationNetworkFeaturesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateCooperationNetworkFeaturesResponse,
+    } as MsgUpdateCooperationNetworkFeaturesResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseMsgUpdateCooperationNetworkFeaturesResponse,
+    } as MsgUpdateCooperationNetworkFeaturesResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateCooperationNetworkFeaturesResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateCooperationNetworkFeaturesResponse>
+  ): MsgUpdateCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseMsgUpdateCooperationNetworkFeaturesResponse,
+    } as MsgUpdateCooperationNetworkFeaturesResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteCooperationNetworkFeatures: object = { creator: "", id: 0 };
+
+export const MsgDeleteCooperationNetworkFeatures = {
+  encode(
+    message: MsgDeleteCooperationNetworkFeatures,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteCooperationNetworkFeatures {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteCooperationNetworkFeatures,
+    } as MsgDeleteCooperationNetworkFeatures;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteCooperationNetworkFeatures {
+    const message = {
+      ...baseMsgDeleteCooperationNetworkFeatures,
+    } as MsgDeleteCooperationNetworkFeatures;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteCooperationNetworkFeatures): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteCooperationNetworkFeatures>
+  ): MsgDeleteCooperationNetworkFeatures {
+    const message = {
+      ...baseMsgDeleteCooperationNetworkFeatures,
+    } as MsgDeleteCooperationNetworkFeatures;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteCooperationNetworkFeaturesResponse: object = {};
+
+export const MsgDeleteCooperationNetworkFeaturesResponse = {
+  encode(
+    _: MsgDeleteCooperationNetworkFeaturesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteCooperationNetworkFeaturesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteCooperationNetworkFeaturesResponse,
+    } as MsgDeleteCooperationNetworkFeaturesResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseMsgDeleteCooperationNetworkFeaturesResponse,
+    } as MsgDeleteCooperationNetworkFeaturesResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteCooperationNetworkFeaturesResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteCooperationNetworkFeaturesResponse>
+  ): MsgDeleteCooperationNetworkFeaturesResponse {
+    const message = {
+      ...baseMsgDeleteCooperationNetworkFeaturesResponse,
+    } as MsgDeleteCooperationNetworkFeaturesResponse;
+    return message;
+  },
+};
+
+const baseMsgCreateCooperationData: object = {
+  creator: "",
+  labelIndex: "",
+  status: "",
+  cost: 0,
+  lastUpdate: "",
+  interestList: "",
+};
+
+export const MsgCreateCooperationData = {
+  encode(
+    message: MsgCreateCooperationData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.labelIndex !== "") {
+      writer.uint32(18).string(message.labelIndex);
+    }
+    if (message.validity !== undefined) {
+      Validity.encode(message.validity, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.status !== "") {
+      writer.uint32(34).string(message.status);
+    }
+    if (message.cost !== 0) {
+      writer.uint32(40).uint64(message.cost);
+    }
+    if (message.lastUpdate !== "") {
+      writer.uint32(50).string(message.lastUpdate);
+    }
+    for (const v of message.interestList) {
+      writer.uint32(58).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateCooperationData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateCooperationData,
+    } as MsgCreateCooperationData;
+    message.interestList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.labelIndex = reader.string();
+          break;
+        case 3:
+          message.validity = Validity.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.status = reader.string();
+          break;
+        case 5:
+          message.cost = longToNumber(reader.uint64() as Long);
+          break;
+        case 6:
+          message.lastUpdate = reader.string();
+          break;
+        case 7:
+          message.interestList.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateCooperationData {
+    const message = {
+      ...baseMsgCreateCooperationData,
+    } as MsgCreateCooperationData;
+    message.interestList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = String(object.labelIndex);
+    } else {
+      message.labelIndex = "";
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromJSON(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = String(object.status);
+    } else {
+      message.status = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = Number(object.cost);
+    } else {
+      message.cost = 0;
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = String(object.lastUpdate);
+    } else {
+      message.lastUpdate = "";
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateCooperationData): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.labelIndex !== undefined && (obj.labelIndex = message.labelIndex);
+    message.validity !== undefined &&
+      (obj.validity = message.validity
+        ? Validity.toJSON(message.validity)
+        : undefined);
+    message.status !== undefined && (obj.status = message.status);
+    message.cost !== undefined && (obj.cost = message.cost);
+    message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
+    if (message.interestList) {
+      obj.interestList = message.interestList.map((e) => e);
+    } else {
+      obj.interestList = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateCooperationData>
+  ): MsgCreateCooperationData {
+    const message = {
+      ...baseMsgCreateCooperationData,
+    } as MsgCreateCooperationData;
+    message.interestList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = object.labelIndex;
+    } else {
+      message.labelIndex = "";
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromPartial(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = 0;
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = object.lastUpdate;
+    } else {
+      message.lastUpdate = "";
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(e);
+      }
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateCooperationDataResponse: object = {};
+
+export const MsgCreateCooperationDataResponse = {
+  encode(
+    _: MsgCreateCooperationDataResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateCooperationDataResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateCooperationDataResponse,
+    } as MsgCreateCooperationDataResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgCreateCooperationDataResponse {
+    const message = {
+      ...baseMsgCreateCooperationDataResponse,
+    } as MsgCreateCooperationDataResponse;
+    return message;
+  },
+
+  toJSON(_: MsgCreateCooperationDataResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgCreateCooperationDataResponse>
+  ): MsgCreateCooperationDataResponse {
+    const message = {
+      ...baseMsgCreateCooperationDataResponse,
+    } as MsgCreateCooperationDataResponse;
+    return message;
+  },
+};
+
+const baseMsgUpdateCooperationData: object = {
+  creator: "",
+  labelIndex: "",
+  status: "",
+  cost: 0,
+  lastUpdate: "",
+  interestList: "",
+};
+
+export const MsgUpdateCooperationData = {
+  encode(
+    message: MsgUpdateCooperationData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.labelIndex !== "") {
+      writer.uint32(18).string(message.labelIndex);
+    }
+    if (message.validity !== undefined) {
+      Validity.encode(message.validity, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.status !== "") {
+      writer.uint32(34).string(message.status);
+    }
+    if (message.cost !== 0) {
+      writer.uint32(40).uint64(message.cost);
+    }
+    if (message.lastUpdate !== "") {
+      writer.uint32(50).string(message.lastUpdate);
+    }
+    for (const v of message.interestList) {
+      writer.uint32(58).string(v!);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateCooperationData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateCooperationData,
+    } as MsgUpdateCooperationData;
+    message.interestList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.labelIndex = reader.string();
+          break;
+        case 3:
+          message.validity = Validity.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.status = reader.string();
+          break;
+        case 5:
+          message.cost = longToNumber(reader.uint64() as Long);
+          break;
+        case 6:
+          message.lastUpdate = reader.string();
+          break;
+        case 7:
+          message.interestList.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateCooperationData {
+    const message = {
+      ...baseMsgUpdateCooperationData,
+    } as MsgUpdateCooperationData;
+    message.interestList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = String(object.labelIndex);
+    } else {
+      message.labelIndex = "";
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromJSON(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = String(object.status);
+    } else {
+      message.status = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = Number(object.cost);
+    } else {
+      message.cost = 0;
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = String(object.lastUpdate);
+    } else {
+      message.lastUpdate = "";
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateCooperationData): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.labelIndex !== undefined && (obj.labelIndex = message.labelIndex);
+    message.validity !== undefined &&
+      (obj.validity = message.validity
+        ? Validity.toJSON(message.validity)
+        : undefined);
+    message.status !== undefined && (obj.status = message.status);
+    message.cost !== undefined && (obj.cost = message.cost);
+    message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
+    if (message.interestList) {
+      obj.interestList = message.interestList.map((e) => e);
+    } else {
+      obj.interestList = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateCooperationData>
+  ): MsgUpdateCooperationData {
+    const message = {
+      ...baseMsgUpdateCooperationData,
+    } as MsgUpdateCooperationData;
+    message.interestList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = object.labelIndex;
+    } else {
+      message.labelIndex = "";
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromPartial(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = 0;
+    }
+    if (object.lastUpdate !== undefined && object.lastUpdate !== null) {
+      message.lastUpdate = object.lastUpdate;
+    } else {
+      message.lastUpdate = "";
+    }
+    if (object.interestList !== undefined && object.interestList !== null) {
+      for (const e of object.interestList) {
+        message.interestList.push(e);
+      }
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateCooperationDataResponse: object = {};
+
+export const MsgUpdateCooperationDataResponse = {
+  encode(
+    _: MsgUpdateCooperationDataResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateCooperationDataResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateCooperationDataResponse,
+    } as MsgUpdateCooperationDataResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateCooperationDataResponse {
+    const message = {
+      ...baseMsgUpdateCooperationDataResponse,
+    } as MsgUpdateCooperationDataResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateCooperationDataResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateCooperationDataResponse>
+  ): MsgUpdateCooperationDataResponse {
+    const message = {
+      ...baseMsgUpdateCooperationDataResponse,
+    } as MsgUpdateCooperationDataResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteCooperationData: object = { creator: "", labelIndex: "" };
+
+export const MsgDeleteCooperationData = {
+  encode(
+    message: MsgDeleteCooperationData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.labelIndex !== "") {
+      writer.uint32(18).string(message.labelIndex);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteCooperationData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteCooperationData,
+    } as MsgDeleteCooperationData;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.labelIndex = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteCooperationData {
+    const message = {
+      ...baseMsgDeleteCooperationData,
+    } as MsgDeleteCooperationData;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = String(object.labelIndex);
+    } else {
+      message.labelIndex = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteCooperationData): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.labelIndex !== undefined && (obj.labelIndex = message.labelIndex);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteCooperationData>
+  ): MsgDeleteCooperationData {
+    const message = {
+      ...baseMsgDeleteCooperationData,
+    } as MsgDeleteCooperationData;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.labelIndex !== undefined && object.labelIndex !== null) {
+      message.labelIndex = object.labelIndex;
+    } else {
+      message.labelIndex = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteCooperationDataResponse: object = {};
+
+export const MsgDeleteCooperationDataResponse = {
+  encode(
+    _: MsgDeleteCooperationDataResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteCooperationDataResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteCooperationDataResponse,
+    } as MsgDeleteCooperationDataResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteCooperationDataResponse {
+    const message = {
+      ...baseMsgDeleteCooperationDataResponse,
+    } as MsgDeleteCooperationDataResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteCooperationDataResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteCooperationDataResponse>
+  ): MsgDeleteCooperationDataResponse {
+    const message = {
+      ...baseMsgDeleteCooperationDataResponse,
+    } as MsgDeleteCooperationDataResponse;
+    return message;
+  },
+};
+
+const baseMsgCreateCooperationNetwork: object = {
+  creator: "",
+  label: "",
+  creationTimestamp: "",
+  updateTimestamp: "",
+};
+
+export const MsgCreateCooperationNetwork = {
+  encode(
+    message: MsgCreateCooperationNetwork,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.label !== "") {
+      writer.uint32(18).string(message.label);
+    }
+    if (message.domainMapList !== undefined) {
+      DomainMap.encode(
+        message.domainMapList,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.cooperationDataList !== undefined) {
+      CooperationData.encode(
+        message.cooperationDataList,
+        writer.uint32(34).fork()
+      ).ldelim();
+    }
+    if (message.features !== undefined) {
+      CooperationNetworkFeatures.encode(
+        message.features,
+        writer.uint32(42).fork()
+      ).ldelim();
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(50).string(message.creationTimestamp);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(58).string(message.updateTimestamp);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateCooperationNetwork {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateCooperationNetwork,
+    } as MsgCreateCooperationNetwork;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.label = reader.string();
+          break;
+        case 3:
+          message.domainMapList = DomainMap.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.cooperationDataList = CooperationData.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 5:
+          message.features = CooperationNetworkFeatures.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 6:
+          message.creationTimestamp = reader.string();
+          break;
+        case 7:
+          message.updateTimestamp = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateCooperationNetwork {
+    const message = {
+      ...baseMsgCreateCooperationNetwork,
+    } as MsgCreateCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = String(object.label);
+    } else {
+      message.label = "";
+    }
+    if (object.domainMapList !== undefined && object.domainMapList !== null) {
+      message.domainMapList = DomainMap.fromJSON(object.domainMapList);
+    } else {
+      message.domainMapList = undefined;
+    }
+    if (
+      object.cooperationDataList !== undefined &&
+      object.cooperationDataList !== null
+    ) {
+      message.cooperationDataList = CooperationData.fromJSON(
+        object.cooperationDataList
+      );
+    } else {
+      message.cooperationDataList = undefined;
+    }
+    if (object.features !== undefined && object.features !== null) {
+      message.features = CooperationNetworkFeatures.fromJSON(object.features);
+    } else {
+      message.features = undefined;
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateCooperationNetwork): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.label !== undefined && (obj.label = message.label);
+    message.domainMapList !== undefined &&
+      (obj.domainMapList = message.domainMapList
+        ? DomainMap.toJSON(message.domainMapList)
+        : undefined);
+    message.cooperationDataList !== undefined &&
+      (obj.cooperationDataList = message.cooperationDataList
+        ? CooperationData.toJSON(message.cooperationDataList)
+        : undefined);
+    message.features !== undefined &&
+      (obj.features = message.features
+        ? CooperationNetworkFeatures.toJSON(message.features)
+        : undefined);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateCooperationNetwork>
+  ): MsgCreateCooperationNetwork {
+    const message = {
+      ...baseMsgCreateCooperationNetwork,
+    } as MsgCreateCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = object.label;
+    } else {
+      message.label = "";
+    }
+    if (object.domainMapList !== undefined && object.domainMapList !== null) {
+      message.domainMapList = DomainMap.fromPartial(object.domainMapList);
+    } else {
+      message.domainMapList = undefined;
+    }
+    if (
+      object.cooperationDataList !== undefined &&
+      object.cooperationDataList !== null
+    ) {
+      message.cooperationDataList = CooperationData.fromPartial(
+        object.cooperationDataList
+      );
+    } else {
+      message.cooperationDataList = undefined;
+    }
+    if (object.features !== undefined && object.features !== null) {
+      message.features = CooperationNetworkFeatures.fromPartial(
+        object.features
+      );
+    } else {
+      message.features = undefined;
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateCooperationNetworkResponse: object = { id: 0 };
+
+export const MsgCreateCooperationNetworkResponse = {
+  encode(
+    message: MsgCreateCooperationNetworkResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateCooperationNetworkResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateCooperationNetworkResponse,
+    } as MsgCreateCooperationNetworkResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateCooperationNetworkResponse {
+    const message = {
+      ...baseMsgCreateCooperationNetworkResponse,
+    } as MsgCreateCooperationNetworkResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateCooperationNetworkResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateCooperationNetworkResponse>
+  ): MsgCreateCooperationNetworkResponse {
+    const message = {
+      ...baseMsgCreateCooperationNetworkResponse,
+    } as MsgCreateCooperationNetworkResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateCooperationNetwork: object = {
+  creator: "",
+  id: 0,
+  label: "",
+  creationTimestamp: "",
+  updateTimestamp: "",
+};
+
+export const MsgUpdateCooperationNetwork = {
+  encode(
+    message: MsgUpdateCooperationNetwork,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.label !== "") {
+      writer.uint32(26).string(message.label);
+    }
+    if (message.domainMapList !== undefined) {
+      DomainMap.encode(
+        message.domainMapList,
+        writer.uint32(34).fork()
+      ).ldelim();
+    }
+    if (message.cooperationDataList !== undefined) {
+      CooperationData.encode(
+        message.cooperationDataList,
+        writer.uint32(42).fork()
+      ).ldelim();
+    }
+    if (message.features !== undefined) {
+      CooperationNetworkFeatures.encode(
+        message.features,
+        writer.uint32(50).fork()
+      ).ldelim();
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(58).string(message.creationTimestamp);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(66).string(message.updateTimestamp);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateCooperationNetwork {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateCooperationNetwork,
+    } as MsgUpdateCooperationNetwork;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.label = reader.string();
+          break;
+        case 4:
+          message.domainMapList = DomainMap.decode(reader, reader.uint32());
+          break;
+        case 5:
+          message.cooperationDataList = CooperationData.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 6:
+          message.features = CooperationNetworkFeatures.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 7:
+          message.creationTimestamp = reader.string();
+          break;
+        case 8:
+          message.updateTimestamp = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateCooperationNetwork {
+    const message = {
+      ...baseMsgUpdateCooperationNetwork,
+    } as MsgUpdateCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = String(object.label);
+    } else {
+      message.label = "";
+    }
+    if (object.domainMapList !== undefined && object.domainMapList !== null) {
+      message.domainMapList = DomainMap.fromJSON(object.domainMapList);
+    } else {
+      message.domainMapList = undefined;
+    }
+    if (
+      object.cooperationDataList !== undefined &&
+      object.cooperationDataList !== null
+    ) {
+      message.cooperationDataList = CooperationData.fromJSON(
+        object.cooperationDataList
+      );
+    } else {
+      message.cooperationDataList = undefined;
+    }
+    if (object.features !== undefined && object.features !== null) {
+      message.features = CooperationNetworkFeatures.fromJSON(object.features);
+    } else {
+      message.features = undefined;
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateCooperationNetwork): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.label !== undefined && (obj.label = message.label);
+    message.domainMapList !== undefined &&
+      (obj.domainMapList = message.domainMapList
+        ? DomainMap.toJSON(message.domainMapList)
+        : undefined);
+    message.cooperationDataList !== undefined &&
+      (obj.cooperationDataList = message.cooperationDataList
+        ? CooperationData.toJSON(message.cooperationDataList)
+        : undefined);
+    message.features !== undefined &&
+      (obj.features = message.features
+        ? CooperationNetworkFeatures.toJSON(message.features)
+        : undefined);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateCooperationNetwork>
+  ): MsgUpdateCooperationNetwork {
+    const message = {
+      ...baseMsgUpdateCooperationNetwork,
+    } as MsgUpdateCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = object.label;
+    } else {
+      message.label = "";
+    }
+    if (object.domainMapList !== undefined && object.domainMapList !== null) {
+      message.domainMapList = DomainMap.fromPartial(object.domainMapList);
+    } else {
+      message.domainMapList = undefined;
+    }
+    if (
+      object.cooperationDataList !== undefined &&
+      object.cooperationDataList !== null
+    ) {
+      message.cooperationDataList = CooperationData.fromPartial(
+        object.cooperationDataList
+      );
+    } else {
+      message.cooperationDataList = undefined;
+    }
+    if (object.features !== undefined && object.features !== null) {
+      message.features = CooperationNetworkFeatures.fromPartial(
+        object.features
+      );
+    } else {
+      message.features = undefined;
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateCooperationNetworkResponse: object = {};
+
+export const MsgUpdateCooperationNetworkResponse = {
+  encode(
+    _: MsgUpdateCooperationNetworkResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateCooperationNetworkResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateCooperationNetworkResponse,
+    } as MsgUpdateCooperationNetworkResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateCooperationNetworkResponse {
+    const message = {
+      ...baseMsgUpdateCooperationNetworkResponse,
+    } as MsgUpdateCooperationNetworkResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateCooperationNetworkResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateCooperationNetworkResponse>
+  ): MsgUpdateCooperationNetworkResponse {
+    const message = {
+      ...baseMsgUpdateCooperationNetworkResponse,
+    } as MsgUpdateCooperationNetworkResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteCooperationNetwork: object = { creator: "", id: 0 };
+
+export const MsgDeleteCooperationNetwork = {
+  encode(
+    message: MsgDeleteCooperationNetwork,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteCooperationNetwork {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteCooperationNetwork,
+    } as MsgDeleteCooperationNetwork;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteCooperationNetwork {
+    const message = {
+      ...baseMsgDeleteCooperationNetwork,
+    } as MsgDeleteCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteCooperationNetwork): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteCooperationNetwork>
+  ): MsgDeleteCooperationNetwork {
+    const message = {
+      ...baseMsgDeleteCooperationNetwork,
+    } as MsgDeleteCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteCooperationNetworkResponse: object = {};
+
+export const MsgDeleteCooperationNetworkResponse = {
+  encode(
+    _: MsgDeleteCooperationNetworkResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteCooperationNetworkResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteCooperationNetworkResponse,
+    } as MsgDeleteCooperationNetworkResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteCooperationNetworkResponse {
+    const message = {
+      ...baseMsgDeleteCooperationNetworkResponse,
+    } as MsgDeleteCooperationNetworkResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteCooperationNetworkResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteCooperationNetworkResponse>
+  ): MsgDeleteCooperationNetworkResponse {
+    const message = {
+      ...baseMsgDeleteCooperationNetworkResponse,
+    } as MsgDeleteCooperationNetworkResponse;
+    return message;
+  },
+};
+
+const baseMsgGenerateCooperationNetwork: object = { creator: "" };
+
+export const MsgGenerateCooperationNetwork = {
+  encode(
+    message: MsgGenerateCooperationNetwork,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgGenerateCooperationNetwork {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgGenerateCooperationNetwork,
+    } as MsgGenerateCooperationNetwork;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgGenerateCooperationNetwork {
+    const message = {
+      ...baseMsgGenerateCooperationNetwork,
+    } as MsgGenerateCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgGenerateCooperationNetwork): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgGenerateCooperationNetwork>
+  ): MsgGenerateCooperationNetwork {
+    const message = {
+      ...baseMsgGenerateCooperationNetwork,
+    } as MsgGenerateCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgGenerateCooperationNetworkResponse: object = {};
+
+export const MsgGenerateCooperationNetworkResponse = {
+  encode(
+    _: MsgGenerateCooperationNetworkResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgGenerateCooperationNetworkResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgGenerateCooperationNetworkResponse,
+    } as MsgGenerateCooperationNetworkResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgGenerateCooperationNetworkResponse {
+    const message = {
+      ...baseMsgGenerateCooperationNetworkResponse,
+    } as MsgGenerateCooperationNetworkResponse;
+    return message;
+  },
+
+  toJSON(_: MsgGenerateCooperationNetworkResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgGenerateCooperationNetworkResponse>
+  ): MsgGenerateCooperationNetworkResponse {
+    const message = {
+      ...baseMsgGenerateCooperationNetworkResponse,
+    } as MsgGenerateCooperationNetworkResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreatePublicKey(
@@ -7293,10 +10134,52 @@ export interface Msg {
   SendModifyCooperationValidity(
     request: MsgSendModifyCooperationValidity
   ): Promise<MsgSendModifyCooperationValidityResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   SendModifyCooperationInterest(
     request: MsgSendModifyCooperationInterest
   ): Promise<MsgSendModifyCooperationInterestResponse>;
+  SendRevokeCooperation(
+    request: MsgSendRevokeCooperation
+  ): Promise<MsgSendRevokeCooperationResponse>;
+  CreateDomainMap(
+    request: MsgCreateDomainMap
+  ): Promise<MsgCreateDomainMapResponse>;
+  UpdateDomainMap(
+    request: MsgUpdateDomainMap
+  ): Promise<MsgUpdateDomainMapResponse>;
+  DeleteDomainMap(
+    request: MsgDeleteDomainMap
+  ): Promise<MsgDeleteDomainMapResponse>;
+  CreateCooperationNetworkFeatures(
+    request: MsgCreateCooperationNetworkFeatures
+  ): Promise<MsgCreateCooperationNetworkFeaturesResponse>;
+  UpdateCooperationNetworkFeatures(
+    request: MsgUpdateCooperationNetworkFeatures
+  ): Promise<MsgUpdateCooperationNetworkFeaturesResponse>;
+  DeleteCooperationNetworkFeatures(
+    request: MsgDeleteCooperationNetworkFeatures
+  ): Promise<MsgDeleteCooperationNetworkFeaturesResponse>;
+  CreateCooperationData(
+    request: MsgCreateCooperationData
+  ): Promise<MsgCreateCooperationDataResponse>;
+  UpdateCooperationData(
+    request: MsgUpdateCooperationData
+  ): Promise<MsgUpdateCooperationDataResponse>;
+  DeleteCooperationData(
+    request: MsgDeleteCooperationData
+  ): Promise<MsgDeleteCooperationDataResponse>;
+  CreateCooperationNetwork(
+    request: MsgCreateCooperationNetwork
+  ): Promise<MsgCreateCooperationNetworkResponse>;
+  UpdateCooperationNetwork(
+    request: MsgUpdateCooperationNetwork
+  ): Promise<MsgUpdateCooperationNetworkResponse>;
+  DeleteCooperationNetwork(
+    request: MsgDeleteCooperationNetwork
+  ): Promise<MsgDeleteCooperationNetworkResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  GenerateCooperationNetwork(
+    request: MsgGenerateCooperationNetwork
+  ): Promise<MsgGenerateCooperationNetworkResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -7799,6 +10682,202 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgSendModifyCooperationInterestResponse.decode(new Reader(data))
+    );
+  }
+
+  SendRevokeCooperation(
+    request: MsgSendRevokeCooperation
+  ): Promise<MsgSendRevokeCooperationResponse> {
+    const data = MsgSendRevokeCooperation.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "SendRevokeCooperation",
+      data
+    );
+    return promise.then((data) =>
+      MsgSendRevokeCooperationResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateDomainMap(
+    request: MsgCreateDomainMap
+  ): Promise<MsgCreateDomainMapResponse> {
+    const data = MsgCreateDomainMap.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateDomainMap",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateDomainMapResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateDomainMap(
+    request: MsgUpdateDomainMap
+  ): Promise<MsgUpdateDomainMapResponse> {
+    const data = MsgUpdateDomainMap.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateDomainMap",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateDomainMapResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteDomainMap(
+    request: MsgDeleteDomainMap
+  ): Promise<MsgDeleteDomainMapResponse> {
+    const data = MsgDeleteDomainMap.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteDomainMap",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteDomainMapResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateCooperationNetworkFeatures(
+    request: MsgCreateCooperationNetworkFeatures
+  ): Promise<MsgCreateCooperationNetworkFeaturesResponse> {
+    const data = MsgCreateCooperationNetworkFeatures.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateCooperationNetworkFeatures",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateCooperationNetworkFeaturesResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateCooperationNetworkFeatures(
+    request: MsgUpdateCooperationNetworkFeatures
+  ): Promise<MsgUpdateCooperationNetworkFeaturesResponse> {
+    const data = MsgUpdateCooperationNetworkFeatures.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateCooperationNetworkFeatures",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateCooperationNetworkFeaturesResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteCooperationNetworkFeatures(
+    request: MsgDeleteCooperationNetworkFeatures
+  ): Promise<MsgDeleteCooperationNetworkFeaturesResponse> {
+    const data = MsgDeleteCooperationNetworkFeatures.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteCooperationNetworkFeatures",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteCooperationNetworkFeaturesResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateCooperationData(
+    request: MsgCreateCooperationData
+  ): Promise<MsgCreateCooperationDataResponse> {
+    const data = MsgCreateCooperationData.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateCooperationData",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateCooperationDataResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateCooperationData(
+    request: MsgUpdateCooperationData
+  ): Promise<MsgUpdateCooperationDataResponse> {
+    const data = MsgUpdateCooperationData.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateCooperationData",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateCooperationDataResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteCooperationData(
+    request: MsgDeleteCooperationData
+  ): Promise<MsgDeleteCooperationDataResponse> {
+    const data = MsgDeleteCooperationData.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteCooperationData",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteCooperationDataResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateCooperationNetwork(
+    request: MsgCreateCooperationNetwork
+  ): Promise<MsgCreateCooperationNetworkResponse> {
+    const data = MsgCreateCooperationNetwork.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateCooperationNetwork",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateCooperationNetworkResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateCooperationNetwork(
+    request: MsgUpdateCooperationNetwork
+  ): Promise<MsgUpdateCooperationNetworkResponse> {
+    const data = MsgUpdateCooperationNetwork.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateCooperationNetwork",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateCooperationNetworkResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteCooperationNetwork(
+    request: MsgDeleteCooperationNetwork
+  ): Promise<MsgDeleteCooperationNetworkResponse> {
+    const data = MsgDeleteCooperationNetwork.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteCooperationNetwork",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteCooperationNetworkResponse.decode(new Reader(data))
+    );
+  }
+
+  GenerateCooperationNetwork(
+    request: MsgGenerateCooperationNetwork
+  ): Promise<MsgGenerateCooperationNetworkResponse> {
+    const data = MsgGenerateCooperationNetwork.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "GenerateCooperationNetwork",
+      data
+    );
+    return promise.then((data) =>
+      MsgGenerateCooperationNetworkResponse.decode(new Reader(data))
     );
   }
 }

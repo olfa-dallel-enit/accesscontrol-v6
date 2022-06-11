@@ -72,6 +72,28 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set forwardPolicy count
 	k.SetForwardPolicyCount(ctx, genState.ForwardPolicyCount)
+	// Set all the domainMap
+	for _, elem := range genState.DomainMapList {
+		k.SetDomainMap(ctx, elem)
+	}
+	// Set all the cooperationNetworkFeatures
+	for _, elem := range genState.CooperationNetworkFeaturesList {
+		k.SetCooperationNetworkFeatures(ctx, elem)
+	}
+
+	// Set cooperationNetworkFeatures count
+	k.SetCooperationNetworkFeaturesCount(ctx, genState.CooperationNetworkFeaturesCount)
+	// Set all the cooperationData
+	for _, elem := range genState.CooperationDataList {
+		k.SetCooperationData(ctx, elem)
+	}
+	// Set all the cooperationNetwork
+	for _, elem := range genState.CooperationNetworkList {
+		k.SetCooperationNetwork(ctx, elem)
+	}
+
+	// Set cooperationNetwork count
+	k.SetCooperationNetworkCount(ctx, genState.CooperationNetworkCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetPort(ctx, genState.PortId)
 	// Only try to bind to port if it is not already bound, since we may already own
@@ -111,6 +133,12 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.CooperationLogCount = k.GetCooperationLogCount(ctx)
 	genesis.ForwardPolicyList = k.GetAllForwardPolicy(ctx)
 	genesis.ForwardPolicyCount = k.GetForwardPolicyCount(ctx)
+	genesis.DomainMapList = k.GetAllDomainMap(ctx)
+	genesis.CooperationNetworkFeaturesList = k.GetAllCooperationNetworkFeatures(ctx)
+	genesis.CooperationNetworkFeaturesCount = k.GetCooperationNetworkFeaturesCount(ctx)
+	genesis.CooperationDataList = k.GetAllCooperationData(ctx)
+	genesis.CooperationNetworkList = k.GetAllCooperationNetwork(ctx)
+	genesis.CooperationNetworkCount = k.GetCooperationNetworkCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

@@ -76,3 +76,13 @@ const (
 	ForwardPolicyKey      = "ForwardPolicy-value-"
 	ForwardPolicyCountKey = "ForwardPolicy-count-"
 )
+
+const (
+	CooperationNetworkFeaturesKey      = "CooperationNetworkFeatures-value-"
+	CooperationNetworkFeaturesCountKey = "CooperationNetworkFeatures-count-"
+)
+
+const (
+	CooperationNetworkKey      = "CooperationNetwork-value-"
+	CooperationNetworkCountKey = "CooperationNetwork-count-"
+)

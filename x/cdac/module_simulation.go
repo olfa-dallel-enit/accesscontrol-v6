@@ -132,6 +132,58 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteForwardPolicy int = 100
 
+	opWeightMsgCreateDomainMap = "op_weight_msg_domain_map"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDomainMap int = 100
+
+	opWeightMsgUpdateDomainMap = "op_weight_msg_domain_map"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDomainMap int = 100
+
+	opWeightMsgDeleteDomainMap = "op_weight_msg_domain_map"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDomainMap int = 100
+
+	opWeightMsgCreateCooperationNetworkFeatures = "op_weight_msg_cooperation_network_features"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateCooperationNetworkFeatures int = 100
+
+	opWeightMsgUpdateCooperationNetworkFeatures = "op_weight_msg_cooperation_network_features"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateCooperationNetworkFeatures int = 100
+
+	opWeightMsgDeleteCooperationNetworkFeatures = "op_weight_msg_cooperation_network_features"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteCooperationNetworkFeatures int = 100
+
+	opWeightMsgCreateCooperationData = "op_weight_msg_cooperation_data"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateCooperationData int = 100
+
+	opWeightMsgUpdateCooperationData = "op_weight_msg_cooperation_data"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateCooperationData int = 100
+
+	opWeightMsgDeleteCooperationData = "op_weight_msg_cooperation_data"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteCooperationData int = 100
+
+	opWeightMsgCreateCooperationNetwork = "op_weight_msg_cooperation_network"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateCooperationNetwork int = 100
+
+	opWeightMsgUpdateCooperationNetwork = "op_weight_msg_cooperation_network"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateCooperationNetwork int = 100
+
+	opWeightMsgDeleteCooperationNetwork = "op_weight_msg_cooperation_network"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteCooperationNetwork int = 100
+
+	opWeightMsgGenerateCooperationNetwork = "op_weight_msg_generate_cooperation_network"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgGenerateCooperationNetwork int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -243,6 +295,48 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		ForwardPolicyCount: 2,
+		DomainMapList: []types.DomainMap{
+			{
+				Creator:     sample.AccAddress(),
+				DomainIndex: "0",
+			},
+			{
+				Creator:     sample.AccAddress(),
+				DomainIndex: "1",
+			},
+		},
+		CooperationNetworkFeaturesList: []types.CooperationNetworkFeatures{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		CooperationNetworkFeaturesCount: 2,
+		CooperationDataList: []types.CooperationData{
+			{
+				Creator:    sample.AccAddress(),
+				LabelIndex: "0",
+			},
+			{
+				Creator:    sample.AccAddress(),
+				LabelIndex: "1",
+			},
+		},
+		CooperationNetworkList: []types.CooperationNetwork{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		CooperationNetworkCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -561,6 +655,149 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteForwardPolicy,
 		cdacsimulation.SimulateMsgDeleteForwardPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDomainMap int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDomainMap, &weightMsgCreateDomainMap, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDomainMap = defaultWeightMsgCreateDomainMap
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDomainMap,
+		cdacsimulation.SimulateMsgCreateDomainMap(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDomainMap int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDomainMap, &weightMsgUpdateDomainMap, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDomainMap = defaultWeightMsgUpdateDomainMap
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDomainMap,
+		cdacsimulation.SimulateMsgUpdateDomainMap(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDomainMap int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDomainMap, &weightMsgDeleteDomainMap, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDomainMap = defaultWeightMsgDeleteDomainMap
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDomainMap,
+		cdacsimulation.SimulateMsgDeleteDomainMap(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateCooperationNetworkFeatures int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateCooperationNetworkFeatures, &weightMsgCreateCooperationNetworkFeatures, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateCooperationNetworkFeatures = defaultWeightMsgCreateCooperationNetworkFeatures
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateCooperationNetworkFeatures,
+		cdacsimulation.SimulateMsgCreateCooperationNetworkFeatures(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateCooperationNetworkFeatures int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateCooperationNetworkFeatures, &weightMsgUpdateCooperationNetworkFeatures, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateCooperationNetworkFeatures = defaultWeightMsgUpdateCooperationNetworkFeatures
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateCooperationNetworkFeatures,
+		cdacsimulation.SimulateMsgUpdateCooperationNetworkFeatures(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteCooperationNetworkFeatures int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteCooperationNetworkFeatures, &weightMsgDeleteCooperationNetworkFeatures, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteCooperationNetworkFeatures = defaultWeightMsgDeleteCooperationNetworkFeatures
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteCooperationNetworkFeatures,
+		cdacsimulation.SimulateMsgDeleteCooperationNetworkFeatures(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateCooperationData int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateCooperationData, &weightMsgCreateCooperationData, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateCooperationData = defaultWeightMsgCreateCooperationData
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateCooperationData,
+		cdacsimulation.SimulateMsgCreateCooperationData(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateCooperationData int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateCooperationData, &weightMsgUpdateCooperationData, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateCooperationData = defaultWeightMsgUpdateCooperationData
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateCooperationData,
+		cdacsimulation.SimulateMsgUpdateCooperationData(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteCooperationData int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteCooperationData, &weightMsgDeleteCooperationData, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteCooperationData = defaultWeightMsgDeleteCooperationData
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteCooperationData,
+		cdacsimulation.SimulateMsgDeleteCooperationData(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateCooperationNetwork int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateCooperationNetwork, &weightMsgCreateCooperationNetwork, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateCooperationNetwork = defaultWeightMsgCreateCooperationNetwork
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateCooperationNetwork,
+		cdacsimulation.SimulateMsgCreateCooperationNetwork(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateCooperationNetwork int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateCooperationNetwork, &weightMsgUpdateCooperationNetwork, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateCooperationNetwork = defaultWeightMsgUpdateCooperationNetwork
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateCooperationNetwork,
+		cdacsimulation.SimulateMsgUpdateCooperationNetwork(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteCooperationNetwork int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteCooperationNetwork, &weightMsgDeleteCooperationNetwork, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteCooperationNetwork = defaultWeightMsgDeleteCooperationNetwork
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteCooperationNetwork,
+		cdacsimulation.SimulateMsgDeleteCooperationNetwork(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgGenerateCooperationNetwork int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgGenerateCooperationNetwork, &weightMsgGenerateCooperationNetwork, nil,
+		func(_ *rand.Rand) {
+			weightMsgGenerateCooperationNetwork = defaultWeightMsgGenerateCooperationNetwork
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgGenerateCooperationNetwork,
+		cdacsimulation.SimulateMsgGenerateCooperationNetwork(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

@@ -95,6 +95,40 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		ForwardPolicyCount: 2,
+		DomainMapList: []types.DomainMap{
+			{
+				DomainIndex: "0",
+			},
+			{
+				DomainIndex: "1",
+			},
+		},
+		CooperationNetworkFeaturesList: []types.CooperationNetworkFeatures{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		CooperationNetworkFeaturesCount: 2,
+		CooperationDataList: []types.CooperationData{
+			{
+				LabelIndex: "0",
+			},
+			{
+				LabelIndex: "1",
+			},
+		},
+		CooperationNetworkList: []types.CooperationNetwork{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		CooperationNetworkCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -126,5 +160,11 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.CooperationLogCount, got.CooperationLogCount)
 	require.ElementsMatch(t, genesisState.ForwardPolicyList, got.ForwardPolicyList)
 	require.Equal(t, genesisState.ForwardPolicyCount, got.ForwardPolicyCount)
+	require.ElementsMatch(t, genesisState.DomainMapList, got.DomainMapList)
+	require.ElementsMatch(t, genesisState.CooperationNetworkFeaturesList, got.CooperationNetworkFeaturesList)
+	require.Equal(t, genesisState.CooperationNetworkFeaturesCount, got.CooperationNetworkFeaturesCount)
+	require.ElementsMatch(t, genesisState.CooperationDataList, got.CooperationDataList)
+	require.ElementsMatch(t, genesisState.CooperationNetworkList, got.CooperationNetworkList)
+	require.Equal(t, genesisState.CooperationNetworkCount, got.CooperationNetworkCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

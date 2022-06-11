@@ -11,16 +11,20 @@ const DefaultIndex uint64 = 1
 // DefaultGenesis returns the default Capability genesis state
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
-		PortId:                PortID,
-		PublicKeyList:         []PublicKey{},
-		ValidityList:          []Validity{},
-		CertificateList:       []Certificate{},
-		IbcConnectionList:     []IbcConnection{},
-		DomainList:            []Domain{},
-		AuthenticationLogList: []AuthenticationLog{},
-		DomainCooperationList: []DomainCooperation{},
-		CooperationLogList:    []CooperationLog{},
-		ForwardPolicyList:     []ForwardPolicy{},
+		PortId:                         PortID,
+		PublicKeyList:                  []PublicKey{},
+		ValidityList:                   []Validity{},
+		CertificateList:                []Certificate{},
+		IbcConnectionList:              []IbcConnection{},
+		DomainList:                     []Domain{},
+		AuthenticationLogList:          []AuthenticationLog{},
+		DomainCooperationList:          []DomainCooperation{},
+		CooperationLogList:             []CooperationLog{},
+		ForwardPolicyList:              []ForwardPolicy{},
+		DomainMapList:                  []DomainMap{},
+		CooperationNetworkFeaturesList: []CooperationNetworkFeatures{},
+		CooperationDataList:            []CooperationData{},
+		CooperationNetworkList:         []CooperationNetwork{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -139,6 +143,50 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("forwardPolicy id should be lower or equal than the last id")
 		}
 		forwardPolicyIdMap[elem.Id] = true
+	}
+	// Check for duplicated index in domainMap
+	domainMapIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.DomainMapList {
+		index := string(DomainMapKey(elem.DomainIndex))
+		if _, ok := domainMapIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for domainMap")
+		}
+		domainMapIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated ID in cooperationNetworkFeatures
+	cooperationNetworkFeaturesIdMap := make(map[uint64]bool)
+	cooperationNetworkFeaturesCount := gs.GetCooperationNetworkFeaturesCount()
+	for _, elem := range gs.CooperationNetworkFeaturesList {
+		if _, ok := cooperationNetworkFeaturesIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for cooperationNetworkFeatures")
+		}
+		if elem.Id >= cooperationNetworkFeaturesCount {
+			return fmt.Errorf("cooperationNetworkFeatures id should be lower or equal than the last id")
+		}
+		cooperationNetworkFeaturesIdMap[elem.Id] = true
+	}
+	// Check for duplicated index in cooperationData
+	cooperationDataIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.CooperationDataList {
+		index := string(CooperationDataKey(elem.LabelIndex))
+		if _, ok := cooperationDataIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for cooperationData")
+		}
+		cooperationDataIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated ID in cooperationNetwork
+	cooperationNetworkIdMap := make(map[uint64]bool)
+	cooperationNetworkCount := gs.GetCooperationNetworkCount()
+	for _, elem := range gs.CooperationNetworkList {
+		if _, ok := cooperationNetworkIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for cooperationNetwork")
+		}
+		if elem.Id >= cooperationNetworkCount {
+			return fmt.Errorf("cooperationNetwork id should be lower or equal than the last id")
+		}
+		cooperationNetworkIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 
