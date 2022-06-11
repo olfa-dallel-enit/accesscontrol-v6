@@ -9,6 +9,7 @@ message CdacPacketData {
     oneof packet {
         NoData noData = 1;
         // this line is used by starport scaffolding # ibc/packet/proto/field
+				ModifyCooperationValidityPacketData modifyCooperationValidityPacket = 9; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				EnableCooperationPacketData enableCooperationPacket = 8; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				DisableCooperationPacketData disableCooperationPacket = 7; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				ModifyCooperationCostPacketData modifyCooperationCostPacket = 6; // this line is used by starport scaffolding # ibc/packet/proto/field/number
@@ -108,6 +109,18 @@ message EnableCooperationPacketData {
 
 // EnableCooperationPacketAck defines a struct for the packet acknowledgment
 message EnableCooperationPacketAck {
+  string confirmation = 1;
+  string confirmedBy = 2;
+	}
+// ModifyCooperationValidityPacketData defines a struct for the packet payload
+message ModifyCooperationValidityPacketData {
+  string notBefore = 1;
+  string notAfter = 2;
+  string sender = 3;
+}
+
+// ModifyCooperationValidityPacketAck defines a struct for the packet acknowledgment
+message ModifyCooperationValidityPacketAck {
   string confirmation = 1;
   string confirmedBy = 2;
 	}

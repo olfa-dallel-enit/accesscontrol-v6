@@ -64,6 +64,7 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdSendModifyCooperationCost())
 	cmd.AddCommand(CmdSendDisableCooperation())
 	cmd.AddCommand(CmdSendEnableCooperation())
+	cmd.AddCommand(CmdSendModifyCooperationValidity())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

@@ -8,18 +8,20 @@ import (
 	clienttypes "github.com/cosmos/ibc-go/v2/modules/core/02-client/types"
 )
 
-func (k msgServer) SendEnableCooperation(goCtx context.Context, msg *types.MsgSendEnableCooperation) (*types.MsgSendEnableCooperationResponse, error) {
+func (k msgServer) SendModifyCooperationValidity(goCtx context.Context, msg *types.MsgSendModifyCooperationValidity) (*types.MsgSendModifyCooperationValidityResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// TODO: logic before transmitting the packet
 
 	// Construct the packet
-	var packet types.EnableCooperationPacketData
+	var packet types.ModifyCooperationValidityPacketData
 
+	packet.NotBefore = msg.NotBefore
+	packet.NotAfter = msg.NotAfter
 	packet.Sender = ctx.ChainID()
 
 	// Transmit the packet
-	err := k.TransmitEnableCooperationPacket(
+	err := k.TransmitModifyCooperationValidityPacket(
 		ctx,
 		packet,
 		msg.Port,
@@ -31,5 +33,5 @@ func (k msgServer) SendEnableCooperation(goCtx context.Context, msg *types.MsgSe
 		return nil, err
 	}
 
-	return &types.MsgSendEnableCooperationResponse{}, nil
+	return &types.MsgSendModifyCooperationValidityResponse{}, nil
 }
