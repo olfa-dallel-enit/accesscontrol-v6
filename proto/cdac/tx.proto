@@ -6,6 +6,7 @@ import "cdac/domain_cooperation.proto";
 import "cdac/cooperation_log.proto";
 import "cdac/forward_policy.proto";
 import "cdac/cooperation_network.proto";
+import "cdac/update_policy.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "cdac/cooperation_network_features.proto";
 import "cdac/cooperation_data.proto";
@@ -70,6 +71,9 @@ rpc CreateCooperationNetwork(MsgCreateCooperationNetwork) returns (MsgCreateCoop
   rpc UpdateCooperationNetwork(MsgUpdateCooperationNetwork) returns (MsgUpdateCooperationNetworkResponse);
   rpc DeleteCooperationNetwork(MsgDeleteCooperationNetwork) returns (MsgDeleteCooperationNetworkResponse);
   rpc GenerateCooperationNetwork(MsgGenerateCooperationNetwork) returns (MsgGenerateCooperationNetworkResponse);
+  rpc CreateUpdatePolicy(MsgCreateUpdatePolicy) returns (MsgCreateUpdatePolicyResponse);
+  rpc UpdateUpdatePolicy(MsgUpdateUpdatePolicy) returns (MsgUpdateUpdatePolicyResponse);
+  rpc DeleteUpdatePolicy(MsgDeleteUpdatePolicy) returns (MsgDeleteUpdatePolicyResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -570,4 +574,24 @@ message MsgGenerateCooperationNetwork {
 message MsgGenerateCooperationNetworkResponse {
 }
 
+message MsgCreateUpdatePolicy {
+  string creator = 1;
+  bool query = 3;
+  bool event = 4;
+  bool periodicalQuery = 5;
+}
+message MsgCreateUpdatePolicyResponse {}
+
+message MsgUpdateUpdatePolicy {
+  string creator = 1;
+  bool query = 3;
+  bool event = 4;
+  bool periodicalQuery = 5;
+}
+message MsgUpdateUpdatePolicyResponse {}
+
+message MsgDeleteUpdatePolicy {
+  string creator = 1;
+}
+message MsgDeleteUpdatePolicyResponse {}
 // this line is used by starport scaffolding # proto/tx/message

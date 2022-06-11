@@ -1,0 +1,11 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message UpdatePolicy {
+  bool query = 1; 
+  bool event = 2; 
+  bool periodicalQuery = 3; 
+  string creator = 4;
+}

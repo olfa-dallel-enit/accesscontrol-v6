@@ -25,6 +25,7 @@ func DefaultGenesis() *GenesisState {
 		CooperationNetworkFeaturesList: []CooperationNetworkFeatures{},
 		CooperationDataList:            []CooperationData{},
 		CooperationNetworkList:         []CooperationNetwork{},
+		UpdatePolicy:                   nil,
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}

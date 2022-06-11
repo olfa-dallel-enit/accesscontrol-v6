@@ -15,6 +15,7 @@ import { DomainMap } from "../cdac/domain_map";
 import { CooperationNetworkFeatures } from "../cdac/cooperation_network_features";
 import { CooperationData } from "../cdac/cooperation_data";
 import { CooperationNetwork } from "../cdac/cooperation_network";
+import { UpdatePolicy } from "../cdac/update_policy";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -45,8 +46,9 @@ export interface GenesisState {
   cooperationNetworkFeaturesCount: number;
   cooperationDataList: CooperationData[];
   cooperationNetworkList: CooperationNetwork[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   cooperationNetworkCount: number;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  updatePolicy: UpdatePolicy | undefined;
 }
 
 const baseGenesisState: object = {
@@ -143,6 +145,12 @@ export const GenesisState = {
     }
     if (message.cooperationNetworkCount !== 0) {
       writer.uint32(208).uint64(message.cooperationNetworkCount);
+    }
+    if (message.updatePolicy !== undefined) {
+      UpdatePolicy.encode(
+        message.updatePolicy,
+        writer.uint32(218).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -270,6 +278,9 @@ export const GenesisState = {
           message.cooperationNetworkCount = longToNumber(
             reader.uint64() as Long
           );
+          break;
+        case 27:
+          message.updatePolicy = UpdatePolicy.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -479,6 +490,11 @@ export const GenesisState = {
     } else {
       message.cooperationNetworkCount = 0;
     }
+    if (object.updatePolicy !== undefined && object.updatePolicy !== null) {
+      message.updatePolicy = UpdatePolicy.fromJSON(object.updatePolicy);
+    } else {
+      message.updatePolicy = undefined;
+    }
     return message;
   },
 
@@ -601,6 +617,10 @@ export const GenesisState = {
     }
     message.cooperationNetworkCount !== undefined &&
       (obj.cooperationNetworkCount = message.cooperationNetworkCount);
+    message.updatePolicy !== undefined &&
+      (obj.updatePolicy = message.updatePolicy
+        ? UpdatePolicy.toJSON(message.updatePolicy)
+        : undefined);
     return obj;
   },
 
@@ -802,6 +822,11 @@ export const GenesisState = {
       message.cooperationNetworkCount = object.cooperationNetworkCount;
     } else {
       message.cooperationNetworkCount = 0;
+    }
+    if (object.updatePolicy !== undefined && object.updatePolicy !== null) {
+      message.updatePolicy = UpdatePolicy.fromPartial(object.updatePolicy);
+    } else {
+      message.updatePolicy = undefined;
     }
     return message;
   },

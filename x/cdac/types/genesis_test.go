@@ -137,6 +137,11 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				CooperationNetworkCount: 2,
+				UpdatePolicy: &types.UpdatePolicy{
+					Query:           false,
+					Event:           false,
+					PeriodicalQuery: true,
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,

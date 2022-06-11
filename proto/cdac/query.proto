@@ -14,6 +14,7 @@ import "cdac/domain_map.proto";
 import "cdac/cooperation_network_features.proto";
 import "cdac/cooperation_data.proto";
 import "cdac/cooperation_network.proto";
+import "cdac/update_policy.proto";
 // this line is used by starport scaffolding # 1
 import "cdac/validity.proto";
 import "cdac/domain.proto";
@@ -173,6 +174,10 @@ service Query {
 		option (google.api.http).get = "/crossdomain/cdac/cooperation_network";
 	}
 
+// Queries a UpdatePolicy by index.
+	rpc UpdatePolicy(QueryGetUpdatePolicyRequest) returns (QueryGetUpdatePolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/update_policy";
+	}
 // this line is used by starport scaffolding # 2
 }
 
@@ -433,4 +438,9 @@ message QueryAllCooperationNetworkResponse {
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
+message QueryGetUpdatePolicyRequest {}
+
+message QueryGetUpdatePolicyResponse {
+	UpdatePolicy UpdatePolicy = 1 [(gogoproto.nullable) = false];
+}
 // this line is used by starport scaffolding # 3

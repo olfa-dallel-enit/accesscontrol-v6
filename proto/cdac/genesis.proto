@@ -16,6 +16,7 @@ import "cdac/domain_map.proto";
 import "cdac/cooperation_network_features.proto";
 import "cdac/cooperation_data.proto";
 import "cdac/cooperation_network.proto";
+import "cdac/update_policy.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "crossdomain/x/cdac/types";
@@ -48,5 +49,6 @@ message GenesisState {
   repeated CooperationData cooperationDataList = 24 [(gogoproto.nullable) = false];
   repeated CooperationNetwork cooperationNetworkList = 25 [(gogoproto.nullable) = false];
   uint64 cooperationNetworkCount = 26;
+  UpdatePolicy updatePolicy = 27;
   // this line is used by starport scaffolding # genesis/proto/state
 }

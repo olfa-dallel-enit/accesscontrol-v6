@@ -86,3 +86,7 @@ const (
 	CooperationNetworkKey      = "CooperationNetwork-value-"
 	CooperationNetworkCountKey = "CooperationNetwork-count-"
 )
+
+const (
+	UpdatePolicyKey = "UpdatePolicy-value-"
+)

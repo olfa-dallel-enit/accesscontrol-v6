@@ -20623,65 +20623,67 @@ paths:
                           domainIndex:
                             type: string
                           domainList:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                format: uint64
-                              name:
-                                type: string
-                              domainType:
-                                type: string
-                              location:
-                                type: string
-                              certificate:
-                                type: object
-                                properties:
-                                  id:
-                                    type: string
-                                    format: uint64
-                                  publicKey:
-                                    type: object
-                                    properties:
-                                      id:
-                                        type: string
-                                        format: uint64
-                                      'n':
-                                        type: string
-                                        format: uint64
-                                      e:
-                                        type: string
-                                        format: uint64
-                                      creator:
-                                        type: string
-                                  validity:
-                                    type: object
-                                    properties:
-                                      id:
-                                        type: string
-                                        format: uint64
-                                      notBefore:
-                                        type: string
-                                      notAfter:
-                                        type: string
-                                      creator:
-                                        type: string
-                                  creator:
-                                    type: string
-                              ibcConnection:
-                                type: object
-                                properties:
-                                  id:
-                                    type: string
-                                    format: uint64
-                                  channel:
-                                    type: string
-                                  port:
-                                    type: string
-                                  creator:
-                                    type: string
-                              creator:
-                                type: string
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                name:
+                                  type: string
+                                domainType:
+                                  type: string
+                                location:
+                                  type: string
+                                certificate:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      format: uint64
+                                    publicKey:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                          format: uint64
+                                        'n':
+                                          type: string
+                                          format: uint64
+                                        e:
+                                          type: string
+                                          format: uint64
+                                        creator:
+                                          type: string
+                                    validity:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                          format: uint64
+                                        notBefore:
+                                          type: string
+                                        notAfter:
+                                          type: string
+                                        creator:
+                                          type: string
+                                    creator:
+                                      type: string
+                                ibcConnection:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      format: uint64
+                                    channel:
+                                      type: string
+                                    port:
+                                      type: string
+                                    creator:
+                                      type: string
+                                creator:
+                                  type: string
                           creator:
                             type: string
                     cooperationDataList:
@@ -20876,65 +20878,67 @@ paths:
                         domainIndex:
                           type: string
                         domainList:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              format: uint64
-                            name:
-                              type: string
-                            domainType:
-                              type: string
-                            location:
-                              type: string
-                            certificate:
-                              type: object
-                              properties:
-                                id:
-                                  type: string
-                                  format: uint64
-                                publicKey:
-                                  type: object
-                                  properties:
-                                    id:
-                                      type: string
-                                      format: uint64
-                                    'n':
-                                      type: string
-                                      format: uint64
-                                    e:
-                                      type: string
-                                      format: uint64
-                                    creator:
-                                      type: string
-                                validity:
-                                  type: object
-                                  properties:
-                                    id:
-                                      type: string
-                                      format: uint64
-                                    notBefore:
-                                      type: string
-                                    notAfter:
-                                      type: string
-                                    creator:
-                                      type: string
-                                creator:
-                                  type: string
-                            ibcConnection:
-                              type: object
-                              properties:
-                                id:
-                                  type: string
-                                  format: uint64
-                                channel:
-                                  type: string
-                                port:
-                                  type: string
-                                creator:
-                                  type: string
-                            creator:
-                              type: string
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              name:
+                                type: string
+                              domainType:
+                                type: string
+                              location:
+                                type: string
+                              certificate:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uint64
+                                  publicKey:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uint64
+                                      'n':
+                                        type: string
+                                        format: uint64
+                                      e:
+                                        type: string
+                                        format: uint64
+                                      creator:
+                                        type: string
+                                  validity:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        format: uint64
+                                      notBefore:
+                                        type: string
+                                      notAfter:
+                                        type: string
+                                      creator:
+                                        type: string
+                                  creator:
+                                    type: string
+                              ibcConnection:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uint64
+                                  channel:
+                                    type: string
+                                  port:
+                                    type: string
+                                  creator:
+                                    type: string
+                              creator:
+                                type: string
                         creator:
                           type: string
                   cooperationDataList:
@@ -21977,65 +21981,67 @@ paths:
                     domainIndex:
                       type: string
                     domainList:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        name:
-                          type: string
-                        domainType:
-                          type: string
-                        location:
-                          type: string
-                        certificate:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              format: uint64
-                            publicKey:
-                              type: object
-                              properties:
-                                id:
-                                  type: string
-                                  format: uint64
-                                'n':
-                                  type: string
-                                  format: uint64
-                                e:
-                                  type: string
-                                  format: uint64
-                                creator:
-                                  type: string
-                            validity:
-                              type: object
-                              properties:
-                                id:
-                                  type: string
-                                  format: uint64
-                                notBefore:
-                                  type: string
-                                notAfter:
-                                  type: string
-                                creator:
-                                  type: string
-                            creator:
-                              type: string
-                        ibcConnection:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              format: uint64
-                            channel:
-                              type: string
-                            port:
-                              type: string
-                            creator:
-                              type: string
-                        creator:
-                          type: string
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          name:
+                            type: string
+                          domainType:
+                            type: string
+                          location:
+                            type: string
+                          certificate:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              publicKey:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uint64
+                                  'n':
+                                    type: string
+                                    format: uint64
+                                  e:
+                                    type: string
+                                    format: uint64
+                                  creator:
+                                    type: string
+                              validity:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uint64
+                                  notBefore:
+                                    type: string
+                                  notAfter:
+                                    type: string
+                                  creator:
+                                    type: string
+                              creator:
+                                type: string
+                          ibcConnection:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              channel:
+                                type: string
+                              port:
+                                type: string
+                              creator:
+                                type: string
+                          creator:
+                            type: string
                     creator:
                       type: string
               pagination:
@@ -22158,65 +22164,67 @@ paths:
                   domainIndex:
                     type: string
                   domainList:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        format: uint64
-                      name:
-                        type: string
-                      domainType:
-                        type: string
-                      location:
-                        type: string
-                      certificate:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            format: uint64
-                          publicKey:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                format: uint64
-                              'n':
-                                type: string
-                                format: uint64
-                              e:
-                                type: string
-                                format: uint64
-                              creator:
-                                type: string
-                          validity:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                format: uint64
-                              notBefore:
-                                type: string
-                              notAfter:
-                                type: string
-                              creator:
-                                type: string
-                          creator:
-                            type: string
-                      ibcConnection:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            format: uint64
-                          channel:
-                            type: string
-                          port:
-                            type: string
-                          creator:
-                            type: string
-                      creator:
-                        type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        name:
+                          type: string
+                        domainType:
+                          type: string
+                        location:
+                          type: string
+                        certificate:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            publicKey:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                'n':
+                                  type: string
+                                  format: uint64
+                                e:
+                                  type: string
+                                  format: uint64
+                                creator:
+                                  type: string
+                            validity:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                notBefore:
+                                  type: string
+                                notAfter:
+                                  type: string
+                                creator:
+                                  type: string
+                            creator:
+                              type: string
+                        ibcConnection:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            channel:
+                              type: string
+                            port:
+                              type: string
+                            creator:
+                              type: string
+                        creator:
+                          type: string
                   creator:
                     type: string
         default:
@@ -23042,6 +23050,47 @@ paths:
                     type: array
                     items:
                       type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /crossdomain/cdac/update_policy:
+    get:
+      summary: Queries a UpdatePolicy by index.
+      operationId: CrossdomainCdacUpdatePolicy
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              UpdatePolicy:
+                type: object
+                properties:
+                  query:
+                    type: boolean
+                  event:
+                    type: boolean
+                  periodicalQuery:
+                    type: boolean
                   creator:
                     type: string
         default:
@@ -50535,65 +50584,67 @@ definitions:
             domainIndex:
               type: string
             domainList:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uint64
-                name:
-                  type: string
-                domainType:
-                  type: string
-                location:
-                  type: string
-                certificate:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uint64
-                    publicKey:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        'n':
-                          type: string
-                          format: uint64
-                        e:
-                          type: string
-                          format: uint64
-                        creator:
-                          type: string
-                    validity:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        notBefore:
-                          type: string
-                        notAfter:
-                          type: string
-                        creator:
-                          type: string
-                    creator:
-                      type: string
-                ibcConnection:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uint64
-                    channel:
-                      type: string
-                    port:
-                      type: string
-                    creator:
-                      type: string
-                creator:
-                  type: string
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  name:
+                    type: string
+                  domainType:
+                    type: string
+                  location:
+                    type: string
+                  certificate:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      publicKey:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          'n':
+                            type: string
+                            format: uint64
+                          e:
+                            type: string
+                            format: uint64
+                          creator:
+                            type: string
+                      validity:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          notBefore:
+                            type: string
+                          notAfter:
+                            type: string
+                          creator:
+                            type: string
+                      creator:
+                        type: string
+                  ibcConnection:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      channel:
+                        type: string
+                      port:
+                        type: string
+                      creator:
+                        type: string
+                  creator:
+                    type: string
             creator:
               type: string
       cooperationDataList:
@@ -50903,65 +50954,67 @@ definitions:
       domainIndex:
         type: string
       domainList:
-        type: object
-        properties:
-          id:
-            type: string
-            format: uint64
-          name:
-            type: string
-          domainType:
-            type: string
-          location:
-            type: string
-          certificate:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uint64
-              publicKey:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uint64
-                  'n':
-                    type: string
-                    format: uint64
-                  e:
-                    type: string
-                    format: uint64
-                  creator:
-                    type: string
-              validity:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uint64
-                  notBefore:
-                    type: string
-                  notAfter:
-                    type: string
-                  creator:
-                    type: string
-              creator:
-                type: string
-          ibcConnection:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uint64
-              channel:
-                type: string
-              port:
-                type: string
-              creator:
-                type: string
-          creator:
-            type: string
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            name:
+              type: string
+            domainType:
+              type: string
+            location:
+              type: string
+            certificate:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                publicKey:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    'n':
+                      type: string
+                      format: uint64
+                    e:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+                validity:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    notBefore:
+                      type: string
+                    notAfter:
+                      type: string
+                    creator:
+                      type: string
+                creator:
+                  type: string
+            ibcConnection:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                channel:
+                  type: string
+                port:
+                  type: string
+                creator:
+                  type: string
+            creator:
+              type: string
       creator:
         type: string
   crossdomain.cdac.ForwardPolicy:
@@ -51058,6 +51111,8 @@ definitions:
       id:
         type: string
         format: uint64
+  crossdomain.cdac.MsgCreateUpdatePolicyResponse:
+    type: object
   crossdomain.cdac.MsgCreateValidityResponse:
     type: object
     properties:
@@ -51087,6 +51142,8 @@ definitions:
   crossdomain.cdac.MsgDeleteIbcConnectionResponse:
     type: object
   crossdomain.cdac.MsgDeletePublicKeyResponse:
+    type: object
+  crossdomain.cdac.MsgDeleteUpdatePolicyResponse:
     type: object
   crossdomain.cdac.MsgDeleteValidityResponse:
     type: object
@@ -51135,6 +51192,8 @@ definitions:
   crossdomain.cdac.MsgUpdateIbcConnectionResponse:
     type: object
   crossdomain.cdac.MsgUpdatePublicKeyResponse:
+    type: object
+  crossdomain.cdac.MsgUpdateUpdatePolicyResponse:
     type: object
   crossdomain.cdac.MsgUpdateValidityResponse:
     type: object
@@ -51450,65 +51509,67 @@ definitions:
                   domainIndex:
                     type: string
                   domainList:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        format: uint64
-                      name:
-                        type: string
-                      domainType:
-                        type: string
-                      location:
-                        type: string
-                      certificate:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            format: uint64
-                          publicKey:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                format: uint64
-                              'n':
-                                type: string
-                                format: uint64
-                              e:
-                                type: string
-                                format: uint64
-                              creator:
-                                type: string
-                          validity:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                format: uint64
-                              notBefore:
-                                type: string
-                              notAfter:
-                                type: string
-                              creator:
-                                type: string
-                          creator:
-                            type: string
-                      ibcConnection:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            format: uint64
-                          channel:
-                            type: string
-                          port:
-                            type: string
-                          creator:
-                            type: string
-                      creator:
-                        type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        name:
+                          type: string
+                        domainType:
+                          type: string
+                        location:
+                          type: string
+                        certificate:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            publicKey:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                'n':
+                                  type: string
+                                  format: uint64
+                                e:
+                                  type: string
+                                  format: uint64
+                                creator:
+                                  type: string
+                            validity:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                notBefore:
+                                  type: string
+                                notAfter:
+                                  type: string
+                                creator:
+                                  type: string
+                            creator:
+                              type: string
+                        ibcConnection:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            channel:
+                              type: string
+                            port:
+                              type: string
+                            creator:
+                              type: string
+                        creator:
+                          type: string
                   creator:
                     type: string
             cooperationDataList:
@@ -51794,65 +51855,67 @@ definitions:
             domainIndex:
               type: string
             domainList:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uint64
-                name:
-                  type: string
-                domainType:
-                  type: string
-                location:
-                  type: string
-                certificate:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uint64
-                    publicKey:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        'n':
-                          type: string
-                          format: uint64
-                        e:
-                          type: string
-                          format: uint64
-                        creator:
-                          type: string
-                    validity:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        notBefore:
-                          type: string
-                        notAfter:
-                          type: string
-                        creator:
-                          type: string
-                    creator:
-                      type: string
-                ibcConnection:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uint64
-                    channel:
-                      type: string
-                    port:
-                      type: string
-                    creator:
-                      type: string
-                creator:
-                  type: string
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  name:
+                    type: string
+                  domainType:
+                    type: string
+                  location:
+                    type: string
+                  certificate:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      publicKey:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          'n':
+                            type: string
+                            format: uint64
+                          e:
+                            type: string
+                            format: uint64
+                          creator:
+                            type: string
+                      validity:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          notBefore:
+                            type: string
+                          notAfter:
+                            type: string
+                          creator:
+                            type: string
+                      creator:
+                        type: string
+                  ibcConnection:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      channel:
+                        type: string
+                      port:
+                        type: string
+                      creator:
+                        type: string
+                  creator:
+                    type: string
             creator:
               type: string
       pagination:
@@ -52471,65 +52534,67 @@ definitions:
                 domainIndex:
                   type: string
                 domainList:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uint64
-                    name:
-                      type: string
-                    domainType:
-                      type: string
-                    location:
-                      type: string
-                    certificate:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        publicKey:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              format: uint64
-                            'n':
-                              type: string
-                              format: uint64
-                            e:
-                              type: string
-                              format: uint64
-                            creator:
-                              type: string
-                        validity:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              format: uint64
-                            notBefore:
-                              type: string
-                            notAfter:
-                              type: string
-                            creator:
-                              type: string
-                        creator:
-                          type: string
-                    ibcConnection:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        channel:
-                          type: string
-                        port:
-                          type: string
-                        creator:
-                          type: string
-                    creator:
-                      type: string
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      name:
+                        type: string
+                      domainType:
+                        type: string
+                      location:
+                        type: string
+                      certificate:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          publicKey:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              'n':
+                                type: string
+                                format: uint64
+                              e:
+                                type: string
+                                format: uint64
+                              creator:
+                                type: string
+                          validity:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              notBefore:
+                                type: string
+                              notAfter:
+                                type: string
+                              creator:
+                                type: string
+                          creator:
+                            type: string
+                      ibcConnection:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          channel:
+                            type: string
+                          port:
+                            type: string
+                          creator:
+                            type: string
+                      creator:
+                        type: string
                 creator:
                   type: string
           cooperationDataList:
@@ -52761,65 +52826,67 @@ definitions:
           domainIndex:
             type: string
           domainList:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uint64
-              name:
-                type: string
-              domainType:
-                type: string
-              location:
-                type: string
-              certificate:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uint64
-                  publicKey:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        format: uint64
-                      'n':
-                        type: string
-                        format: uint64
-                      e:
-                        type: string
-                        format: uint64
-                      creator:
-                        type: string
-                  validity:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        format: uint64
-                      notBefore:
-                        type: string
-                      notAfter:
-                        type: string
-                      creator:
-                        type: string
-                  creator:
-                    type: string
-              ibcConnection:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uint64
-                  channel:
-                    type: string
-                  port:
-                    type: string
-                  creator:
-                    type: string
-              creator:
-                type: string
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                name:
+                  type: string
+                domainType:
+                  type: string
+                location:
+                  type: string
+                certificate:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    publicKey:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        'n':
+                          type: string
+                          format: uint64
+                        e:
+                          type: string
+                          format: uint64
+                        creator:
+                          type: string
+                    validity:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        notBefore:
+                          type: string
+                        notAfter:
+                          type: string
+                        creator:
+                          type: string
+                    creator:
+                      type: string
+                ibcConnection:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    channel:
+                      type: string
+                    port:
+                      type: string
+                    creator:
+                      type: string
+                creator:
+                  type: string
           creator:
             type: string
   crossdomain.cdac.QueryGetDomainResponse:
@@ -52938,6 +53005,20 @@ definitions:
             format: uint64
           creator:
             type: string
+  crossdomain.cdac.QueryGetUpdatePolicyResponse:
+    type: object
+    properties:
+      UpdatePolicy:
+        type: object
+        properties:
+          query:
+            type: boolean
+          event:
+            type: boolean
+          periodicalQuery:
+            type: boolean
+          creator:
+            type: string
   crossdomain.cdac.QueryGetValidityResponse:
     type: object
     properties:
@@ -52981,6 +53062,17 @@ definitions:
               type: string
           creator:
             type: string
+  crossdomain.cdac.UpdatePolicy:
+    type: object
+    properties:
+      query:
+        type: boolean
+      event:
+        type: boolean
+      periodicalQuery:
+        type: boolean
+      creator:
+        type: string
   crossdomain.cdac.Validity:
     type: object
     properties:

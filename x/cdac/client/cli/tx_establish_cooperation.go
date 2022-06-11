@@ -107,15 +107,28 @@ func CmdSendEstablishCooperation() *cobra.Command {
 			}
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)*/
 
-			msg3 := types.NewMsgGenerateCooperationNetwork(
-				clientCtx.GetFromAddress().String(),
-			)
-			if err := msg.ValidateBasic(); err != nil {
+			//check update policy
+
+			updatePolicyQuery := types.NewQueryClient(clientCtx)
+
+			updatePolicyParams := &types.QueryGetUpdatePolicyRequest{}
+
+			updatePolicyRes, err := updatePolicyQuery.UpdatePolicy(context.Background(), updatePolicyParams)
+			if err != nil {
 				return err
 			}
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
 
-			//return nil //tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+			if updatePolicyRes.UpdatePolicy.Event {
+				msg3 := types.NewMsgGenerateCooperationNetwork(
+					clientCtx.GetFromAddress().String(),
+				)
+				if err := msg.ValidateBasic(); err != nil {
+					return err
+				}
+				return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
+			}
+
+			return nil //tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 

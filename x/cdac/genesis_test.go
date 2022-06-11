@@ -129,6 +129,11 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		CooperationNetworkCount: 2,
+		UpdatePolicy: &types.UpdatePolicy{
+			Query:           false,
+			Event:           true,
+			PeriodicalQuery: false,
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -166,5 +171,6 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.CooperationDataList, got.CooperationDataList)
 	require.ElementsMatch(t, genesisState.CooperationNetworkList, got.CooperationNetworkList)
 	require.Equal(t, genesisState.CooperationNetworkCount, got.CooperationNetworkCount)
+	require.Equal(t, genesisState.UpdatePolicy, got.UpdatePolicy)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

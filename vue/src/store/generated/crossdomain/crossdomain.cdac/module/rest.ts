@@ -109,7 +109,7 @@ export interface CdacDomainCooperation {
 
 export interface CdacDomainMap {
   domainIndex?: string;
-  domainList?: CdacDomain;
+  domainList?: CdacDomain[];
   creator?: string;
 }
 
@@ -184,6 +184,8 @@ export interface CdacMsgCreatePublicKeyResponse {
   id?: string;
 }
 
+export type CdacMsgCreateUpdatePolicyResponse = object;
+
 export interface CdacMsgCreateValidityResponse {
   /** @format uint64 */
   id?: string;
@@ -212,6 +214,8 @@ export type CdacMsgDeleteForwardPolicyResponse = object;
 export type CdacMsgDeleteIbcConnectionResponse = object;
 
 export type CdacMsgDeletePublicKeyResponse = object;
+
+export type CdacMsgDeleteUpdatePolicyResponse = object;
 
 export type CdacMsgDeleteValidityResponse = object;
 
@@ -260,6 +264,8 @@ export type CdacMsgUpdateForwardPolicyResponse = object;
 export type CdacMsgUpdateIbcConnectionResponse = object;
 
 export type CdacMsgUpdatePublicKeyResponse = object;
+
+export type CdacMsgUpdateUpdatePolicyResponse = object;
 
 export type CdacMsgUpdateValidityResponse = object;
 
@@ -533,6 +539,10 @@ export interface CdacQueryGetPublicKeyResponse {
   PublicKey?: CdacPublicKey;
 }
 
+export interface CdacQueryGetUpdatePolicyResponse {
+  UpdatePolicy?: CdacUpdatePolicy;
+}
+
 export interface CdacQueryGetValidityResponse {
   Validity?: CdacValidity;
 }
@@ -547,6 +557,13 @@ export interface CdacQueryParamsResponse {
 
 export interface CdacQueryRetrieveForwardPolicyResponse {
   forwardPolicy?: CdacForwardPolicy;
+}
+
+export interface CdacUpdatePolicy {
+  query?: boolean;
+  event?: boolean;
+  periodicalQuery?: boolean;
+  creator?: string;
 }
 
 export interface CdacValidity {
@@ -1390,6 +1407,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryRetrieveForwardPolicy = (params: RequestParams = {}) =>
     this.request<CdacQueryRetrieveForwardPolicyResponse, RpcStatus>({
       path: `/crossdomain/cdac/retrieve_forward_policy`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryUpdatePolicy
+   * @summary Queries a UpdatePolicy by index.
+   * @request GET:/crossdomain/cdac/update_policy
+   */
+  queryUpdatePolicy = (params: RequestParams = {}) =>
+    this.request<CdacQueryGetUpdatePolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/update_policy`,
       method: "GET",
       format: "json",
       ...params,

@@ -387,7 +387,7 @@ export interface MsgSendRevokeCooperationResponse {}
 export interface MsgCreateDomainMap {
   creator: string;
   domainIndex: string;
-  domainList: Domain | undefined;
+  domainList: Domain[];
 }
 
 export interface MsgCreateDomainMapResponse {}
@@ -395,7 +395,7 @@ export interface MsgCreateDomainMapResponse {}
 export interface MsgUpdateDomainMap {
   creator: string;
   domainIndex: string;
-  domainList: Domain | undefined;
+  domainList: Domain[];
 }
 
 export interface MsgUpdateDomainMapResponse {}
@@ -473,8 +473,8 @@ export interface MsgDeleteCooperationDataResponse {}
 export interface MsgCreateCooperationNetwork {
   creator: string;
   label: string;
-  domainMapList: DomainMap | undefined;
-  cooperationDataList: CooperationData | undefined;
+  domainMapList: DomainMap[];
+  cooperationDataList: CooperationData[];
   features: CooperationNetworkFeatures | undefined;
   creationTimestamp: string;
   updateTimestamp: string;
@@ -488,8 +488,8 @@ export interface MsgUpdateCooperationNetwork {
   creator: string;
   id: number;
   label: string;
-  domainMapList: DomainMap | undefined;
-  cooperationDataList: CooperationData | undefined;
+  domainMapList: DomainMap[];
+  cooperationDataList: CooperationData[];
   features: CooperationNetworkFeatures | undefined;
   creationTimestamp: string;
   updateTimestamp: string;
@@ -509,6 +509,30 @@ export interface MsgGenerateCooperationNetwork {
 }
 
 export interface MsgGenerateCooperationNetworkResponse {}
+
+export interface MsgCreateUpdatePolicy {
+  creator: string;
+  query: boolean;
+  event: boolean;
+  periodicalQuery: boolean;
+}
+
+export interface MsgCreateUpdatePolicyResponse {}
+
+export interface MsgUpdateUpdatePolicy {
+  creator: string;
+  query: boolean;
+  event: boolean;
+  periodicalQuery: boolean;
+}
+
+export interface MsgUpdateUpdatePolicyResponse {}
+
+export interface MsgDeleteUpdatePolicy {
+  creator: string;
+}
+
+export interface MsgDeleteUpdatePolicyResponse {}
 
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
@@ -7527,8 +7551,8 @@ export const MsgCreateDomainMap = {
     if (message.domainIndex !== "") {
       writer.uint32(18).string(message.domainIndex);
     }
-    if (message.domainList !== undefined) {
-      Domain.encode(message.domainList, writer.uint32(26).fork()).ldelim();
+    for (const v of message.domainList) {
+      Domain.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -7537,6 +7561,7 @@ export const MsgCreateDomainMap = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
+    message.domainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -7547,7 +7572,7 @@ export const MsgCreateDomainMap = {
           message.domainIndex = reader.string();
           break;
         case 3:
-          message.domainList = Domain.decode(reader, reader.uint32());
+          message.domainList.push(Domain.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -7559,6 +7584,7 @@ export const MsgCreateDomainMap = {
 
   fromJSON(object: any): MsgCreateDomainMap {
     const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
+    message.domainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -7570,9 +7596,9 @@ export const MsgCreateDomainMap = {
       message.domainIndex = "";
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = Domain.fromJSON(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(Domain.fromJSON(e));
+      }
     }
     return message;
   },
@@ -7582,15 +7608,19 @@ export const MsgCreateDomainMap = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.domainIndex !== undefined &&
       (obj.domainIndex = message.domainIndex);
-    message.domainList !== undefined &&
-      (obj.domainList = message.domainList
-        ? Domain.toJSON(message.domainList)
-        : undefined);
+    if (message.domainList) {
+      obj.domainList = message.domainList.map((e) =>
+        e ? Domain.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainList = [];
+    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<MsgCreateDomainMap>): MsgCreateDomainMap {
     const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
+    message.domainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -7602,9 +7632,9 @@ export const MsgCreateDomainMap = {
       message.domainIndex = "";
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = Domain.fromPartial(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(Domain.fromPartial(e));
+      }
     }
     return message;
   },
@@ -7675,8 +7705,8 @@ export const MsgUpdateDomainMap = {
     if (message.domainIndex !== "") {
       writer.uint32(18).string(message.domainIndex);
     }
-    if (message.domainList !== undefined) {
-      Domain.encode(message.domainList, writer.uint32(26).fork()).ldelim();
+    for (const v of message.domainList) {
+      Domain.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -7685,6 +7715,7 @@ export const MsgUpdateDomainMap = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
+    message.domainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -7695,7 +7726,7 @@ export const MsgUpdateDomainMap = {
           message.domainIndex = reader.string();
           break;
         case 3:
-          message.domainList = Domain.decode(reader, reader.uint32());
+          message.domainList.push(Domain.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -7707,6 +7738,7 @@ export const MsgUpdateDomainMap = {
 
   fromJSON(object: any): MsgUpdateDomainMap {
     const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
+    message.domainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -7718,9 +7750,9 @@ export const MsgUpdateDomainMap = {
       message.domainIndex = "";
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = Domain.fromJSON(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(Domain.fromJSON(e));
+      }
     }
     return message;
   },
@@ -7730,15 +7762,19 @@ export const MsgUpdateDomainMap = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.domainIndex !== undefined &&
       (obj.domainIndex = message.domainIndex);
-    message.domainList !== undefined &&
-      (obj.domainList = message.domainList
-        ? Domain.toJSON(message.domainList)
-        : undefined);
+    if (message.domainList) {
+      obj.domainList = message.domainList.map((e) =>
+        e ? Domain.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainList = [];
+    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<MsgUpdateDomainMap>): MsgUpdateDomainMap {
     const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
+    message.domainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -7750,9 +7786,9 @@ export const MsgUpdateDomainMap = {
       message.domainIndex = "";
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = Domain.fromPartial(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(Domain.fromPartial(e));
+      }
     }
     return message;
   },
@@ -9201,17 +9237,11 @@ export const MsgCreateCooperationNetwork = {
     if (message.label !== "") {
       writer.uint32(18).string(message.label);
     }
-    if (message.domainMapList !== undefined) {
-      DomainMap.encode(
-        message.domainMapList,
-        writer.uint32(26).fork()
-      ).ldelim();
+    for (const v of message.domainMapList) {
+      DomainMap.encode(v!, writer.uint32(26).fork()).ldelim();
     }
-    if (message.cooperationDataList !== undefined) {
-      CooperationData.encode(
-        message.cooperationDataList,
-        writer.uint32(34).fork()
-      ).ldelim();
+    for (const v of message.cooperationDataList) {
+      CooperationData.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     if (message.features !== undefined) {
       CooperationNetworkFeatures.encode(
@@ -9237,6 +9267,8 @@ export const MsgCreateCooperationNetwork = {
     const message = {
       ...baseMsgCreateCooperationNetwork,
     } as MsgCreateCooperationNetwork;
+    message.domainMapList = [];
+    message.cooperationDataList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -9247,12 +9279,11 @@ export const MsgCreateCooperationNetwork = {
           message.label = reader.string();
           break;
         case 3:
-          message.domainMapList = DomainMap.decode(reader, reader.uint32());
+          message.domainMapList.push(DomainMap.decode(reader, reader.uint32()));
           break;
         case 4:
-          message.cooperationDataList = CooperationData.decode(
-            reader,
-            reader.uint32()
+          message.cooperationDataList.push(
+            CooperationData.decode(reader, reader.uint32())
           );
           break;
         case 5:
@@ -9279,6 +9310,8 @@ export const MsgCreateCooperationNetwork = {
     const message = {
       ...baseMsgCreateCooperationNetwork,
     } as MsgCreateCooperationNetwork;
+    message.domainMapList = [];
+    message.cooperationDataList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -9290,19 +9323,17 @@ export const MsgCreateCooperationNetwork = {
       message.label = "";
     }
     if (object.domainMapList !== undefined && object.domainMapList !== null) {
-      message.domainMapList = DomainMap.fromJSON(object.domainMapList);
-    } else {
-      message.domainMapList = undefined;
+      for (const e of object.domainMapList) {
+        message.domainMapList.push(DomainMap.fromJSON(e));
+      }
     }
     if (
       object.cooperationDataList !== undefined &&
       object.cooperationDataList !== null
     ) {
-      message.cooperationDataList = CooperationData.fromJSON(
-        object.cooperationDataList
-      );
-    } else {
-      message.cooperationDataList = undefined;
+      for (const e of object.cooperationDataList) {
+        message.cooperationDataList.push(CooperationData.fromJSON(e));
+      }
     }
     if (object.features !== undefined && object.features !== null) {
       message.features = CooperationNetworkFeatures.fromJSON(object.features);
@@ -9332,14 +9363,20 @@ export const MsgCreateCooperationNetwork = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.label !== undefined && (obj.label = message.label);
-    message.domainMapList !== undefined &&
-      (obj.domainMapList = message.domainMapList
-        ? DomainMap.toJSON(message.domainMapList)
-        : undefined);
-    message.cooperationDataList !== undefined &&
-      (obj.cooperationDataList = message.cooperationDataList
-        ? CooperationData.toJSON(message.cooperationDataList)
-        : undefined);
+    if (message.domainMapList) {
+      obj.domainMapList = message.domainMapList.map((e) =>
+        e ? DomainMap.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainMapList = [];
+    }
+    if (message.cooperationDataList) {
+      obj.cooperationDataList = message.cooperationDataList.map((e) =>
+        e ? CooperationData.toJSON(e) : undefined
+      );
+    } else {
+      obj.cooperationDataList = [];
+    }
     message.features !== undefined &&
       (obj.features = message.features
         ? CooperationNetworkFeatures.toJSON(message.features)
@@ -9357,6 +9394,8 @@ export const MsgCreateCooperationNetwork = {
     const message = {
       ...baseMsgCreateCooperationNetwork,
     } as MsgCreateCooperationNetwork;
+    message.domainMapList = [];
+    message.cooperationDataList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -9368,19 +9407,17 @@ export const MsgCreateCooperationNetwork = {
       message.label = "";
     }
     if (object.domainMapList !== undefined && object.domainMapList !== null) {
-      message.domainMapList = DomainMap.fromPartial(object.domainMapList);
-    } else {
-      message.domainMapList = undefined;
+      for (const e of object.domainMapList) {
+        message.domainMapList.push(DomainMap.fromPartial(e));
+      }
     }
     if (
       object.cooperationDataList !== undefined &&
       object.cooperationDataList !== null
     ) {
-      message.cooperationDataList = CooperationData.fromPartial(
-        object.cooperationDataList
-      );
-    } else {
-      message.cooperationDataList = undefined;
+      for (const e of object.cooperationDataList) {
+        message.cooperationDataList.push(CooperationData.fromPartial(e));
+      }
     }
     if (object.features !== undefined && object.features !== null) {
       message.features = CooperationNetworkFeatures.fromPartial(
@@ -9500,17 +9537,11 @@ export const MsgUpdateCooperationNetwork = {
     if (message.label !== "") {
       writer.uint32(26).string(message.label);
     }
-    if (message.domainMapList !== undefined) {
-      DomainMap.encode(
-        message.domainMapList,
-        writer.uint32(34).fork()
-      ).ldelim();
+    for (const v of message.domainMapList) {
+      DomainMap.encode(v!, writer.uint32(34).fork()).ldelim();
     }
-    if (message.cooperationDataList !== undefined) {
-      CooperationData.encode(
-        message.cooperationDataList,
-        writer.uint32(42).fork()
-      ).ldelim();
+    for (const v of message.cooperationDataList) {
+      CooperationData.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     if (message.features !== undefined) {
       CooperationNetworkFeatures.encode(
@@ -9536,6 +9567,8 @@ export const MsgUpdateCooperationNetwork = {
     const message = {
       ...baseMsgUpdateCooperationNetwork,
     } as MsgUpdateCooperationNetwork;
+    message.domainMapList = [];
+    message.cooperationDataList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -9549,12 +9582,11 @@ export const MsgUpdateCooperationNetwork = {
           message.label = reader.string();
           break;
         case 4:
-          message.domainMapList = DomainMap.decode(reader, reader.uint32());
+          message.domainMapList.push(DomainMap.decode(reader, reader.uint32()));
           break;
         case 5:
-          message.cooperationDataList = CooperationData.decode(
-            reader,
-            reader.uint32()
+          message.cooperationDataList.push(
+            CooperationData.decode(reader, reader.uint32())
           );
           break;
         case 6:
@@ -9581,6 +9613,8 @@ export const MsgUpdateCooperationNetwork = {
     const message = {
       ...baseMsgUpdateCooperationNetwork,
     } as MsgUpdateCooperationNetwork;
+    message.domainMapList = [];
+    message.cooperationDataList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -9597,19 +9631,17 @@ export const MsgUpdateCooperationNetwork = {
       message.label = "";
     }
     if (object.domainMapList !== undefined && object.domainMapList !== null) {
-      message.domainMapList = DomainMap.fromJSON(object.domainMapList);
-    } else {
-      message.domainMapList = undefined;
+      for (const e of object.domainMapList) {
+        message.domainMapList.push(DomainMap.fromJSON(e));
+      }
     }
     if (
       object.cooperationDataList !== undefined &&
       object.cooperationDataList !== null
     ) {
-      message.cooperationDataList = CooperationData.fromJSON(
-        object.cooperationDataList
-      );
-    } else {
-      message.cooperationDataList = undefined;
+      for (const e of object.cooperationDataList) {
+        message.cooperationDataList.push(CooperationData.fromJSON(e));
+      }
     }
     if (object.features !== undefined && object.features !== null) {
       message.features = CooperationNetworkFeatures.fromJSON(object.features);
@@ -9640,14 +9672,20 @@ export const MsgUpdateCooperationNetwork = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.id !== undefined && (obj.id = message.id);
     message.label !== undefined && (obj.label = message.label);
-    message.domainMapList !== undefined &&
-      (obj.domainMapList = message.domainMapList
-        ? DomainMap.toJSON(message.domainMapList)
-        : undefined);
-    message.cooperationDataList !== undefined &&
-      (obj.cooperationDataList = message.cooperationDataList
-        ? CooperationData.toJSON(message.cooperationDataList)
-        : undefined);
+    if (message.domainMapList) {
+      obj.domainMapList = message.domainMapList.map((e) =>
+        e ? DomainMap.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainMapList = [];
+    }
+    if (message.cooperationDataList) {
+      obj.cooperationDataList = message.cooperationDataList.map((e) =>
+        e ? CooperationData.toJSON(e) : undefined
+      );
+    } else {
+      obj.cooperationDataList = [];
+    }
     message.features !== undefined &&
       (obj.features = message.features
         ? CooperationNetworkFeatures.toJSON(message.features)
@@ -9665,6 +9703,8 @@ export const MsgUpdateCooperationNetwork = {
     const message = {
       ...baseMsgUpdateCooperationNetwork,
     } as MsgUpdateCooperationNetwork;
+    message.domainMapList = [];
+    message.cooperationDataList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -9681,19 +9721,17 @@ export const MsgUpdateCooperationNetwork = {
       message.label = "";
     }
     if (object.domainMapList !== undefined && object.domainMapList !== null) {
-      message.domainMapList = DomainMap.fromPartial(object.domainMapList);
-    } else {
-      message.domainMapList = undefined;
+      for (const e of object.domainMapList) {
+        message.domainMapList.push(DomainMap.fromPartial(e));
+      }
     }
     if (
       object.cooperationDataList !== undefined &&
       object.cooperationDataList !== null
     ) {
-      message.cooperationDataList = CooperationData.fromPartial(
-        object.cooperationDataList
-      );
-    } else {
-      message.cooperationDataList = undefined;
+      for (const e of object.cooperationDataList) {
+        message.cooperationDataList.push(CooperationData.fromPartial(e));
+      }
     }
     if (object.features !== undefined && object.features !== null) {
       message.features = CooperationNetworkFeatures.fromPartial(
@@ -10033,6 +10071,468 @@ export const MsgGenerateCooperationNetworkResponse = {
   },
 };
 
+const baseMsgCreateUpdatePolicy: object = {
+  creator: "",
+  query: false,
+  event: false,
+  periodicalQuery: false,
+};
+
+export const MsgCreateUpdatePolicy = {
+  encode(
+    message: MsgCreateUpdatePolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.query === true) {
+      writer.uint32(24).bool(message.query);
+    }
+    if (message.event === true) {
+      writer.uint32(32).bool(message.event);
+    }
+    if (message.periodicalQuery === true) {
+      writer.uint32(40).bool(message.periodicalQuery);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateUpdatePolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateUpdatePolicy } as MsgCreateUpdatePolicy;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 3:
+          message.query = reader.bool();
+          break;
+        case 4:
+          message.event = reader.bool();
+          break;
+        case 5:
+          message.periodicalQuery = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateUpdatePolicy {
+    const message = { ...baseMsgCreateUpdatePolicy } as MsgCreateUpdatePolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.query !== undefined && object.query !== null) {
+      message.query = Boolean(object.query);
+    } else {
+      message.query = false;
+    }
+    if (object.event !== undefined && object.event !== null) {
+      message.event = Boolean(object.event);
+    } else {
+      message.event = false;
+    }
+    if (
+      object.periodicalQuery !== undefined &&
+      object.periodicalQuery !== null
+    ) {
+      message.periodicalQuery = Boolean(object.periodicalQuery);
+    } else {
+      message.periodicalQuery = false;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateUpdatePolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.query !== undefined && (obj.query = message.query);
+    message.event !== undefined && (obj.event = message.event);
+    message.periodicalQuery !== undefined &&
+      (obj.periodicalQuery = message.periodicalQuery);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateUpdatePolicy>
+  ): MsgCreateUpdatePolicy {
+    const message = { ...baseMsgCreateUpdatePolicy } as MsgCreateUpdatePolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.query !== undefined && object.query !== null) {
+      message.query = object.query;
+    } else {
+      message.query = false;
+    }
+    if (object.event !== undefined && object.event !== null) {
+      message.event = object.event;
+    } else {
+      message.event = false;
+    }
+    if (
+      object.periodicalQuery !== undefined &&
+      object.periodicalQuery !== null
+    ) {
+      message.periodicalQuery = object.periodicalQuery;
+    } else {
+      message.periodicalQuery = false;
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateUpdatePolicyResponse: object = {};
+
+export const MsgCreateUpdatePolicyResponse = {
+  encode(
+    _: MsgCreateUpdatePolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateUpdatePolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateUpdatePolicyResponse,
+    } as MsgCreateUpdatePolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgCreateUpdatePolicyResponse {
+    const message = {
+      ...baseMsgCreateUpdatePolicyResponse,
+    } as MsgCreateUpdatePolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgCreateUpdatePolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgCreateUpdatePolicyResponse>
+  ): MsgCreateUpdatePolicyResponse {
+    const message = {
+      ...baseMsgCreateUpdatePolicyResponse,
+    } as MsgCreateUpdatePolicyResponse;
+    return message;
+  },
+};
+
+const baseMsgUpdateUpdatePolicy: object = {
+  creator: "",
+  query: false,
+  event: false,
+  periodicalQuery: false,
+};
+
+export const MsgUpdateUpdatePolicy = {
+  encode(
+    message: MsgUpdateUpdatePolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.query === true) {
+      writer.uint32(24).bool(message.query);
+    }
+    if (message.event === true) {
+      writer.uint32(32).bool(message.event);
+    }
+    if (message.periodicalQuery === true) {
+      writer.uint32(40).bool(message.periodicalQuery);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdateUpdatePolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdateUpdatePolicy } as MsgUpdateUpdatePolicy;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 3:
+          message.query = reader.bool();
+          break;
+        case 4:
+          message.event = reader.bool();
+          break;
+        case 5:
+          message.periodicalQuery = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateUpdatePolicy {
+    const message = { ...baseMsgUpdateUpdatePolicy } as MsgUpdateUpdatePolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.query !== undefined && object.query !== null) {
+      message.query = Boolean(object.query);
+    } else {
+      message.query = false;
+    }
+    if (object.event !== undefined && object.event !== null) {
+      message.event = Boolean(object.event);
+    } else {
+      message.event = false;
+    }
+    if (
+      object.periodicalQuery !== undefined &&
+      object.periodicalQuery !== null
+    ) {
+      message.periodicalQuery = Boolean(object.periodicalQuery);
+    } else {
+      message.periodicalQuery = false;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateUpdatePolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.query !== undefined && (obj.query = message.query);
+    message.event !== undefined && (obj.event = message.event);
+    message.periodicalQuery !== undefined &&
+      (obj.periodicalQuery = message.periodicalQuery);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateUpdatePolicy>
+  ): MsgUpdateUpdatePolicy {
+    const message = { ...baseMsgUpdateUpdatePolicy } as MsgUpdateUpdatePolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.query !== undefined && object.query !== null) {
+      message.query = object.query;
+    } else {
+      message.query = false;
+    }
+    if (object.event !== undefined && object.event !== null) {
+      message.event = object.event;
+    } else {
+      message.event = false;
+    }
+    if (
+      object.periodicalQuery !== undefined &&
+      object.periodicalQuery !== null
+    ) {
+      message.periodicalQuery = object.periodicalQuery;
+    } else {
+      message.periodicalQuery = false;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateUpdatePolicyResponse: object = {};
+
+export const MsgUpdateUpdatePolicyResponse = {
+  encode(
+    _: MsgUpdateUpdatePolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateUpdatePolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateUpdatePolicyResponse,
+    } as MsgUpdateUpdatePolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateUpdatePolicyResponse {
+    const message = {
+      ...baseMsgUpdateUpdatePolicyResponse,
+    } as MsgUpdateUpdatePolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateUpdatePolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateUpdatePolicyResponse>
+  ): MsgUpdateUpdatePolicyResponse {
+    const message = {
+      ...baseMsgUpdateUpdatePolicyResponse,
+    } as MsgUpdateUpdatePolicyResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteUpdatePolicy: object = { creator: "" };
+
+export const MsgDeleteUpdatePolicy = {
+  encode(
+    message: MsgDeleteUpdatePolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeleteUpdatePolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeleteUpdatePolicy } as MsgDeleteUpdatePolicy;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteUpdatePolicy {
+    const message = { ...baseMsgDeleteUpdatePolicy } as MsgDeleteUpdatePolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteUpdatePolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteUpdatePolicy>
+  ): MsgDeleteUpdatePolicy {
+    const message = { ...baseMsgDeleteUpdatePolicy } as MsgDeleteUpdatePolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteUpdatePolicyResponse: object = {};
+
+export const MsgDeleteUpdatePolicyResponse = {
+  encode(
+    _: MsgDeleteUpdatePolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteUpdatePolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteUpdatePolicyResponse,
+    } as MsgDeleteUpdatePolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteUpdatePolicyResponse {
+    const message = {
+      ...baseMsgDeleteUpdatePolicyResponse,
+    } as MsgDeleteUpdatePolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteUpdatePolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteUpdatePolicyResponse>
+  ): MsgDeleteUpdatePolicyResponse {
+    const message = {
+      ...baseMsgDeleteUpdatePolicyResponse,
+    } as MsgDeleteUpdatePolicyResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreatePublicKey(
@@ -10176,10 +10676,19 @@ export interface Msg {
   DeleteCooperationNetwork(
     request: MsgDeleteCooperationNetwork
   ): Promise<MsgDeleteCooperationNetworkResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   GenerateCooperationNetwork(
     request: MsgGenerateCooperationNetwork
   ): Promise<MsgGenerateCooperationNetworkResponse>;
+  CreateUpdatePolicy(
+    request: MsgCreateUpdatePolicy
+  ): Promise<MsgCreateUpdatePolicyResponse>;
+  UpdateUpdatePolicy(
+    request: MsgUpdateUpdatePolicy
+  ): Promise<MsgUpdateUpdatePolicyResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DeleteUpdatePolicy(
+    request: MsgDeleteUpdatePolicy
+  ): Promise<MsgDeleteUpdatePolicyResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -10878,6 +11387,48 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgGenerateCooperationNetworkResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateUpdatePolicy(
+    request: MsgCreateUpdatePolicy
+  ): Promise<MsgCreateUpdatePolicyResponse> {
+    const data = MsgCreateUpdatePolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateUpdatePolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateUpdatePolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateUpdatePolicy(
+    request: MsgUpdateUpdatePolicy
+  ): Promise<MsgUpdateUpdatePolicyResponse> {
+    const data = MsgUpdateUpdatePolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateUpdatePolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateUpdatePolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteUpdatePolicy(
+    request: MsgDeleteUpdatePolicy
+  ): Promise<MsgDeleteUpdatePolicyResponse> {
+    const data = MsgDeleteUpdatePolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteUpdatePolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteUpdatePolicyResponse.decode(new Reader(data))
     );
   }
 }

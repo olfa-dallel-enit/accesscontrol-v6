@@ -6,7 +6,7 @@ export const protobufPackage = "crossdomain.cdac";
 
 export interface DomainMap {
   domainIndex: string;
-  domainList: Domain | undefined;
+  domainList: Domain[];
   creator: string;
 }
 
@@ -17,8 +17,8 @@ export const DomainMap = {
     if (message.domainIndex !== "") {
       writer.uint32(10).string(message.domainIndex);
     }
-    if (message.domainList !== undefined) {
-      Domain.encode(message.domainList, writer.uint32(18).fork()).ldelim();
+    for (const v of message.domainList) {
+      Domain.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     if (message.creator !== "") {
       writer.uint32(26).string(message.creator);
@@ -30,6 +30,7 @@ export const DomainMap = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDomainMap } as DomainMap;
+    message.domainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -37,7 +38,7 @@ export const DomainMap = {
           message.domainIndex = reader.string();
           break;
         case 2:
-          message.domainList = Domain.decode(reader, reader.uint32());
+          message.domainList.push(Domain.decode(reader, reader.uint32()));
           break;
         case 3:
           message.creator = reader.string();
@@ -52,15 +53,16 @@ export const DomainMap = {
 
   fromJSON(object: any): DomainMap {
     const message = { ...baseDomainMap } as DomainMap;
+    message.domainList = [];
     if (object.domainIndex !== undefined && object.domainIndex !== null) {
       message.domainIndex = String(object.domainIndex);
     } else {
       message.domainIndex = "";
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = Domain.fromJSON(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(Domain.fromJSON(e));
+      }
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
@@ -74,25 +76,29 @@ export const DomainMap = {
     const obj: any = {};
     message.domainIndex !== undefined &&
       (obj.domainIndex = message.domainIndex);
-    message.domainList !== undefined &&
-      (obj.domainList = message.domainList
-        ? Domain.toJSON(message.domainList)
-        : undefined);
+    if (message.domainList) {
+      obj.domainList = message.domainList.map((e) =>
+        e ? Domain.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainList = [];
+    }
     message.creator !== undefined && (obj.creator = message.creator);
     return obj;
   },
 
   fromPartial(object: DeepPartial<DomainMap>): DomainMap {
     const message = { ...baseDomainMap } as DomainMap;
+    message.domainList = [];
     if (object.domainIndex !== undefined && object.domainIndex !== null) {
       message.domainIndex = object.domainIndex;
     } else {
       message.domainIndex = "";
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = Domain.fromPartial(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(Domain.fromPartial(e));
+      }
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
