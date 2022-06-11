@@ -208,7 +208,7 @@ func (k Keeper) OnAcknowledgementModifyCooperationCostPacket(ctx sdk.Context, pa
 				Function:    "OnAcknowledgementModifyCooperationCostPacket",
 				Timestamp:   cast.ToString(time.Now()),
 				Details:     "Cooperation label: " + ctx.ChainID() + "-" + packetAck.ConfirmedBy,
-				Decision:    "Cooperation cost modification not confirmed: modify cost operation not confirmed",
+				Decision:    "Cooperation cost modification not confirmed: operation not confirmed",
 			})
 		}
 

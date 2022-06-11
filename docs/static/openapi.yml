@@ -49694,6 +49694,8 @@ definitions:
     type: object
   crossdomain.cdac.MsgSendModifyCooperationCostResponse:
     type: object
+  crossdomain.cdac.MsgSendModifyCooperationInterestResponse:
+    type: object
   crossdomain.cdac.MsgSendModifyCooperationValidityResponse:
     type: object
   crossdomain.cdac.MsgUpdateAuthenticationLogResponse:

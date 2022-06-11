@@ -216,7 +216,7 @@ func (k Keeper) OnAcknowledgementModifyCooperationValidityPacket(ctx sdk.Context
 				Function:    "OnAcknowledgementModifyCooperationValidityPacket",
 				Timestamp:   cast.ToString(time.Now()),
 				Details:     "Cooperation label: " + ctx.ChainID() + "-" + packetAck.ConfirmedBy,
-				Decision:    "Modify cooperation validity is not confirmed: modify validity operation not confirmed",
+				Decision:    "Modify cooperation validity is not confirmed: operation not confirmed",
 			})
 		}
 

@@ -36,10 +36,9 @@ crossdomaind query cdac list-domain --node tcp://localhost:26657
 
 crossdomaind query cdac list-authentication-log --node tcp://localhost:26657
 
-#####################
-establish_cooperation
-#####################
-
+#######################
+#establish_cooperation#
+#######################
 #earth-mars
 crossdomaind tx cdac send-establish-cooperation  cdac channel-0  "2022-02-03 00:00:00" "2023-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 #earth-venus
@@ -60,8 +59,6 @@ modify-cost
 ###########
 #earth-mars
 crossdomaind tx cdac send-modify-cooperation-cost  cdac channel-0  300 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
-
-
 
 crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26659
 
@@ -93,31 +90,37 @@ crossdomaind tx cdac send-disable-cooperation  cdac channel-0 --from alice --yes
 
 crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657
 
-###################
-enable_cooperation
+####################
+#enable_cooperation#
 ####################
 #earth-mars
 crossdomaind tx cdac send-enable-cooperation  cdac channel-0 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 
 crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657
 
-###################
-enable_cooperation
-####################
+
+#############################
+#modify_cooperation_validity#
+#############################
 #earth-mars
-crossdomaind tx cdac send-modify-cooperation-validity  cdaccesscontrol channel-0 "2022-01-01 00:00:00" "2026-01-01 00:00:00" --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
+crossdomaind tx cdac send-modify-cooperation-validity  cdac channel-0 "2022-01-01 00:00:00" "2026-01-01 00:00:00" --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
 
 crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657
 
 
+#############################
+#modify_cooperation_interest#
+#############################
+#earth-mars
+crossdomaind tx cdac send-modify-cooperation-interest  cdac channel-0 finance --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
+
+crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657
+
+####################
+#revoke_cooperation#
+####################
 
 
-
-
-
-crossdomaind query cdaccesscontrol list-domain-cooperation --node tcp://localhost:26657
-
-crossdomaind tx cdaccesscontrol send-modify-cooperation-interest  cdaccesscontrol channel-0 finance --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
 
 crossdomaind query cdaccesscontrol list-domain-cooperation --node tcp://localhost:26657
 

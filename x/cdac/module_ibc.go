@@ -294,6 +294,25 @@ func (am AppModule) OnRecvPacket(
 				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
 			),
 		)
+	case *types.CdacPacketData_ModifyCooperationInterestPacket:
+		packetAck, err := am.keeper.OnRecvModifyCooperationInterestPacket(ctx, modulePacket, *packet.ModifyCooperationInterestPacket)
+		if err != nil {
+			ack = channeltypes.NewErrorAcknowledgement(err.Error())
+		} else {
+			// Encode packet acknowledgment
+			packetAckBytes, err := types.ModuleCdc.MarshalJSON(&packetAck)
+			if err != nil {
+				return channeltypes.NewErrorAcknowledgement(sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error()).Error())
+			}
+			ack = channeltypes.NewResultAcknowledgement(sdk.MustSortJSON(packetAckBytes))
+		}
+		ctx.EventManager().EmitEvent(
+			sdk.NewEvent(
+				types.EventTypeModifyCooperationInterestPacket,
+				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
+				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
+			),
+		)
 		// this line is used by starport scaffolding # ibc/packet/module/recv
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s packet type: %T", types.ModuleName, packet)
@@ -375,6 +394,12 @@ func (am AppModule) OnAcknowledgementPacket(
 			return err
 		}
 		eventType = types.EventTypeModifyCooperationValidityPacket
+	case *types.CdacPacketData_ModifyCooperationInterestPacket:
+		err := am.keeper.OnAcknowledgementModifyCooperationInterestPacket(ctx, modulePacket, *packet.ModifyCooperationInterestPacket, ack)
+		if err != nil {
+			return err
+		}
+		eventType = types.EventTypeModifyCooperationInterestPacket
 		// this line is used by starport scaffolding # ibc/packet/module/ack
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s packet type: %T", types.ModuleName, packet)
@@ -459,6 +484,11 @@ func (am AppModule) OnTimeoutPacket(
 		}
 	case *types.CdacPacketData_ModifyCooperationValidityPacket:
 		err := am.keeper.OnTimeoutModifyCooperationValidityPacket(ctx, modulePacket, *packet.ModifyCooperationValidityPacket)
+		if err != nil {
+			return err
+		}
+	case *types.CdacPacketData_ModifyCooperationInterestPacket:
+		err := am.keeper.OnTimeoutModifyCooperationInterestPacket(ctx, modulePacket, *packet.ModifyCooperationInterestPacket)
 		if err != nil {
 			return err
 		}

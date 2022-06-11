@@ -208,7 +208,7 @@ func (k Keeper) OnAcknowledgementEnableCooperationPacket(ctx sdk.Context, packet
 				Function:    "OnAcknowledgementEnableCooperationPacket",
 				Timestamp:   cast.ToString(time.Now()),
 				Details:     "Cooperation label: " + ctx.ChainID() + "-" + packetAck.ConfirmedBy,
-				Decision:    "Enable cooperation is not confirmed: enable cooperation operation not confirmed",
+				Decision:    "Enable cooperation is not confirmed: operation not confirmed",
 			})
 		}
 

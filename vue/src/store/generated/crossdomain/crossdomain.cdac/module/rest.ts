@@ -162,6 +162,8 @@ export type CdacMsgSendForwardCooperationDataResponse = object;
 
 export type CdacMsgSendModifyCooperationCostResponse = object;
 
+export type CdacMsgSendModifyCooperationInterestResponse = object;
+
 export type CdacMsgSendModifyCooperationValidityResponse = object;
 
 export type CdacMsgUpdateAuthenticationLogResponse = object;
