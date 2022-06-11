@@ -10,6 +10,7 @@ import { Domain } from "../cdac/domain";
 import { AuthenticationLog } from "../cdac/authentication_log";
 import { DomainCooperation } from "../cdac/domain_cooperation";
 import { CooperationLog } from "../cdac/cooperation_log";
+import { ForwardPolicy } from "../cdac/forward_policy";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -32,8 +33,10 @@ export interface GenesisState {
   domainCooperationList: DomainCooperation[];
   domainCooperationCount: number;
   cooperationLogList: CooperationLog[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   cooperationLogCount: number;
+  forwardPolicyList: ForwardPolicy[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  forwardPolicyCount: number;
 }
 
 const baseGenesisState: object = {
@@ -46,6 +49,7 @@ const baseGenesisState: object = {
   authenticationLogCount: 0,
   domainCooperationCount: 0,
   cooperationLogCount: 0,
+  forwardPolicyCount: 0,
 };
 
 export const GenesisState = {
@@ -104,6 +108,12 @@ export const GenesisState = {
     if (message.cooperationLogCount !== 0) {
       writer.uint32(144).uint64(message.cooperationLogCount);
     }
+    for (const v of message.forwardPolicyList) {
+      ForwardPolicy.encode(v!, writer.uint32(154).fork()).ldelim();
+    }
+    if (message.forwardPolicyCount !== 0) {
+      writer.uint32(160).uint64(message.forwardPolicyCount);
+    }
     return writer;
   },
 
@@ -119,6 +129,7 @@ export const GenesisState = {
     message.authenticationLogList = [];
     message.domainCooperationList = [];
     message.cooperationLogList = [];
+    message.forwardPolicyList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -190,6 +201,14 @@ export const GenesisState = {
         case 18:
           message.cooperationLogCount = longToNumber(reader.uint64() as Long);
           break;
+        case 19:
+          message.forwardPolicyList.push(
+            ForwardPolicy.decode(reader, reader.uint32())
+          );
+          break;
+        case 20:
+          message.forwardPolicyCount = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -208,6 +227,7 @@ export const GenesisState = {
     message.authenticationLogList = [];
     message.domainCooperationList = [];
     message.cooperationLogList = [];
+    message.forwardPolicyList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -328,6 +348,22 @@ export const GenesisState = {
     } else {
       message.cooperationLogCount = 0;
     }
+    if (
+      object.forwardPolicyList !== undefined &&
+      object.forwardPolicyList !== null
+    ) {
+      for (const e of object.forwardPolicyList) {
+        message.forwardPolicyList.push(ForwardPolicy.fromJSON(e));
+      }
+    }
+    if (
+      object.forwardPolicyCount !== undefined &&
+      object.forwardPolicyCount !== null
+    ) {
+      message.forwardPolicyCount = Number(object.forwardPolicyCount);
+    } else {
+      message.forwardPolicyCount = 0;
+    }
     return message;
   },
 
@@ -408,6 +444,15 @@ export const GenesisState = {
     }
     message.cooperationLogCount !== undefined &&
       (obj.cooperationLogCount = message.cooperationLogCount);
+    if (message.forwardPolicyList) {
+      obj.forwardPolicyList = message.forwardPolicyList.map((e) =>
+        e ? ForwardPolicy.toJSON(e) : undefined
+      );
+    } else {
+      obj.forwardPolicyList = [];
+    }
+    message.forwardPolicyCount !== undefined &&
+      (obj.forwardPolicyCount = message.forwardPolicyCount);
     return obj;
   },
 
@@ -421,6 +466,7 @@ export const GenesisState = {
     message.authenticationLogList = [];
     message.domainCooperationList = [];
     message.cooperationLogList = [];
+    message.forwardPolicyList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -540,6 +586,22 @@ export const GenesisState = {
       message.cooperationLogCount = object.cooperationLogCount;
     } else {
       message.cooperationLogCount = 0;
+    }
+    if (
+      object.forwardPolicyList !== undefined &&
+      object.forwardPolicyList !== null
+    ) {
+      for (const e of object.forwardPolicyList) {
+        message.forwardPolicyList.push(ForwardPolicy.fromPartial(e));
+      }
+    }
+    if (
+      object.forwardPolicyCount !== undefined &&
+      object.forwardPolicyCount !== null
+    ) {
+      message.forwardPolicyCount = object.forwardPolicyCount;
+    } else {
+      message.forwardPolicyCount = 0;
     }
     return message;
   },

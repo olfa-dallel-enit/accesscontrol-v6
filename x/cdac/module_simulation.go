@@ -120,6 +120,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteCooperationLog int = 100
 
+	opWeightMsgCreateForwardPolicy = "op_weight_msg_forward_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateForwardPolicy int = 100
+
+	opWeightMsgUpdateForwardPolicy = "op_weight_msg_forward_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateForwardPolicy int = 100
+
+	opWeightMsgDeleteForwardPolicy = "op_weight_msg_forward_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteForwardPolicy int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -220,6 +232,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		CooperationLogCount: 2,
+		ForwardPolicyList: []types.ForwardPolicy{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		ForwardPolicyCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -505,6 +528,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteCooperationLog,
 		cdacsimulation.SimulateMsgDeleteCooperationLog(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateForwardPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateForwardPolicy, &weightMsgCreateForwardPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateForwardPolicy = defaultWeightMsgCreateForwardPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateForwardPolicy,
+		cdacsimulation.SimulateMsgCreateForwardPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateForwardPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateForwardPolicy, &weightMsgUpdateForwardPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateForwardPolicy = defaultWeightMsgUpdateForwardPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateForwardPolicy,
+		cdacsimulation.SimulateMsgUpdateForwardPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteForwardPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteForwardPolicy, &weightMsgDeleteForwardPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteForwardPolicy = defaultWeightMsgDeleteForwardPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteForwardPolicy,
+		cdacsimulation.SimulateMsgDeleteForwardPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

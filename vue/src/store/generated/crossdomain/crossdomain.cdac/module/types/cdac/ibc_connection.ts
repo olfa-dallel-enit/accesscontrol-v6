@@ -7,10 +7,11 @@ export const protobufPackage = "crossdomain.cdac";
 export interface IbcConnection {
   id: number;
   channel: string;
+  port: string;
   creator: string;
 }
 
-const baseIbcConnection: object = { id: 0, channel: "", creator: "" };
+const baseIbcConnection: object = { id: 0, channel: "", port: "", creator: "" };
 
 export const IbcConnection = {
   encode(message: IbcConnection, writer: Writer = Writer.create()): Writer {
@@ -20,8 +21,11 @@ export const IbcConnection = {
     if (message.channel !== "") {
       writer.uint32(18).string(message.channel);
     }
+    if (message.port !== "") {
+      writer.uint32(26).string(message.port);
+    }
     if (message.creator !== "") {
-      writer.uint32(26).string(message.creator);
+      writer.uint32(34).string(message.creator);
     }
     return writer;
   },
@@ -40,6 +44,9 @@ export const IbcConnection = {
           message.channel = reader.string();
           break;
         case 3:
+          message.port = reader.string();
+          break;
+        case 4:
           message.creator = reader.string();
           break;
         default:
@@ -62,6 +69,11 @@ export const IbcConnection = {
     } else {
       message.channel = "";
     }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = String(object.port);
+    } else {
+      message.port = "";
+    }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -74,6 +86,7 @@ export const IbcConnection = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.channel !== undefined && (obj.channel = message.channel);
+    message.port !== undefined && (obj.port = message.port);
     message.creator !== undefined && (obj.creator = message.creator);
     return obj;
   },
@@ -89,6 +102,11 @@ export const IbcConnection = {
       message.channel = object.channel;
     } else {
       message.channel = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = object.port;
+    } else {
+      message.port = "";
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;

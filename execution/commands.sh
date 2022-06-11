@@ -7,26 +7,64 @@ crossdomaind tx cdac send-establish-cooperation  cdac channel-0  "2022-02-03 00:
 
 crossdomaind tx cdac send-establish-cooperation  cdac channel-0  "2022-02-03 00:00:00" "2025-02-03 00:00:00" "computing" 200 --from aliceVenus --yes --home ~/.venus --chain-id venus --node tcp://localhost:26663 --gas=auto --gas-adjustment=1.15
 
-#######
+############################################
+bash execution/globalConfiguration.sh
 
+#earth-mars
 crossdomaind tx cdac send-authenticate-domain cdac channel-0  --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
-
+#earth-venus
+#crossdomaind tx cdac send-authenticate-domain cdac channel-1  --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#earth-neptune
+#crossdomaind tx cdac send-authenticate-domain cdac channel-1 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#earth-jupiter
+#crossdomaind tx cdac send-authenticate-domain cdac channel-2  --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#mars-venus
 crossdomaind tx cdac send-authenticate-domain cdac channel-1  --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
+#mars-neptune
+crossdomaind tx cdac send-authenticate-domain cdac channel-2 --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
+#mars-jupiter
+crossdomaind tx cdac send-authenticate-domain cdac channel-3  --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
 
 
-crossdomaind tx cdac send-authenticate-domain cdac channel-1  --from alice --yes --home ~/.venus --chain-id venus --node tcp://localhost:26663 --gas=auto --gas-adjustment=1.15
+#crossdomaind tx cdac send-authenticate-domain cdac channel-1  --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
+#crossdomaind tx cdac send-authenticate-domain cdac channel-1  --from alice --yes --home ~/.venus --chain-id venus --node tcp://localhost:26663 --gas=auto --gas-adjustment=1.15
 
 
 crossdomaind query cdac list-domain --node tcp://localhost:26657
 
 crossdomaind query cdac list-authentication-log --node tcp://localhost:26657
+#earth-mars
+crossdomaind tx cdac send-establish-cooperation  cdac channel-0  "2022-02-03 00:00:00" "2023-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#earth-venus
+#crossdomaind tx cdac send-establish-cooperation  cdac channel-1  "2022-02-03 00:00:00" "2024-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#earth-neptune
+#crossdomaind tx cdac send-establish-cooperation  cdac channel-1  "2022-02-03 00:00:00" "2025-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#earth-jupiter
+#crossdomaind tx cdac send-establish-cooperation  cdac channel-2  "2022-02-03 00:00:00" "2026-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#mars-venus
+crossdomaind tx cdac send-establish-cooperation  cdac channel-1  "2022-02-03 00:00:00" "2024-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
+#mars-neptune
+crossdomaind tx cdac send-establish-cooperation  cdac channel-2  "2022-02-03 00:00:00" "2025-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
+#mars-jupiter
+crossdomaind tx cdac send-establish-cooperation  cdac channel-3  "2022-02-03 00:00:00" "2026-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
 
-crossdomaind tx cdac send-establish-cooperation  cdac channel-0  "2022-02-03 00:00:00" "2025-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+
+#earth-mars
+crossdomaind tx cdac send-modify-cooperation-cost  cdac channel-0  300 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+
+
+
+crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26659
+
+crossdomaind query cdac list-cooperation-log --node tcp://localhost:26657
 
 crossdomaind tx cdac send-establish-cooperation  cdac channel-0  "2022-02-03 00:00:00" "2025-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.venus --chain-id venus --node tcp://localhost:26663 --gas=auto --gas-adjustment=1.15
 
 
 crossdomaind tx cdaccesscontrol send-establish-cooperation  cdaccesscontrol channel-0  "2022-02-03 00:00:00" "2025-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.neptune --chain-id neptune --node tcp://localhost:26670 --gas=auto --gas-adjustment=1.15
+
+
+crossdomaind tx cdac send-forward-cooperation-data  cdac channel-0   --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 
 
 crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657

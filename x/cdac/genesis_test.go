@@ -86,6 +86,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		CooperationLogCount: 2,
+		ForwardPolicyList: []types.ForwardPolicy{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		ForwardPolicyCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -115,5 +124,7 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.DomainCooperationCount, got.DomainCooperationCount)
 	require.ElementsMatch(t, genesisState.CooperationLogList, got.CooperationLogList)
 	require.Equal(t, genesisState.CooperationLogCount, got.CooperationLogCount)
+	require.ElementsMatch(t, genesisState.ForwardPolicyList, got.ForwardPolicyList)
+	require.Equal(t, genesisState.ForwardPolicyCount, got.ForwardPolicyCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

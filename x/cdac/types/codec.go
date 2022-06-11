@@ -35,6 +35,12 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgDeleteCooperationLog{}, "cdac/DeleteCooperationLog", nil)
 	cdc.RegisterConcrete(&MsgSendEstablishCooperation{}, "cdac/SendEstablishCooperation", nil)
 	cdc.RegisterConcrete(&MsgSendForwardCooperationData{}, "cdac/SendForwardCooperationData", nil)
+	cdc.RegisterConcrete(&MsgCreateForwardPolicy{}, "cdac/CreateForwardPolicy", nil)
+	cdc.RegisterConcrete(&MsgUpdateForwardPolicy{}, "cdac/UpdateForwardPolicy", nil)
+	cdc.RegisterConcrete(&MsgDeleteForwardPolicy{}, "cdac/DeleteForwardPolicy", nil)
+	cdc.RegisterConcrete(&MsgSendExchangeCooperationData{}, "cdac/SendExchangeCooperationData", nil)
+	cdc.RegisterConcrete(&MsgSendModifyCooperationCost{}, "cdac/SendModifyCooperationCost", nil)
+	cdc.RegisterConcrete(&MsgSendDisableCooperation{}, "cdac/SendDisableCooperation", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -87,6 +93,20 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSendForwardCooperationData{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateForwardPolicy{},
+		&MsgUpdateForwardPolicy{},
+		&MsgDeleteForwardPolicy{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSendExchangeCooperationData{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSendModifyCooperationCost{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSendDisableCooperation{},
 	)
 	// this line is used by starport scaffolding # 3
 

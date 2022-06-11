@@ -65,12 +65,23 @@ export interface CdacDomainCooperation {
   creationTimestamp?: string;
   updateTimestamp?: string;
   creator?: string;
+  status?: string;
+}
+
+export interface CdacForwardPolicy {
+  /** @format uint64 */
+  id?: string;
+  mode?: string;
+  domainList?: string[];
+  locationList?: string[];
+  creator?: string;
 }
 
 export interface CdacIbcConnection {
   /** @format uint64 */
   id?: string;
   channel?: string;
+  port?: string;
   creator?: string;
 }
 
@@ -95,6 +106,11 @@ export interface CdacMsgCreateDomainCooperationResponse {
 }
 
 export interface CdacMsgCreateDomainResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
+export interface CdacMsgCreateForwardPolicyResponse {
   /** @format uint64 */
   id?: string;
 }
@@ -124,6 +140,8 @@ export type CdacMsgDeleteDomainCooperationResponse = object;
 
 export type CdacMsgDeleteDomainResponse = object;
 
+export type CdacMsgDeleteForwardPolicyResponse = object;
+
 export type CdacMsgDeleteIbcConnectionResponse = object;
 
 export type CdacMsgDeletePublicKeyResponse = object;
@@ -132,9 +150,15 @@ export type CdacMsgDeleteValidityResponse = object;
 
 export type CdacMsgSendAuthenticateDomainResponse = object;
 
+export type CdacMsgSendDisableCooperationResponse = object;
+
 export type CdacMsgSendEstablishCooperationResponse = object;
 
+export type CdacMsgSendExchangeCooperationDataResponse = object;
+
 export type CdacMsgSendForwardCooperationDataResponse = object;
+
+export type CdacMsgSendModifyCooperationCostResponse = object;
 
 export type CdacMsgUpdateAuthenticationLogResponse = object;
 
@@ -145,6 +169,8 @@ export type CdacMsgUpdateCooperationLogResponse = object;
 export type CdacMsgUpdateDomainCooperationResponse = object;
 
 export type CdacMsgUpdateDomainResponse = object;
+
+export type CdacMsgUpdateForwardPolicyResponse = object;
 
 export type CdacMsgUpdateIbcConnectionResponse = object;
 
@@ -244,6 +270,21 @@ export interface CdacQueryAllDomainResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryAllForwardPolicyResponse {
+  ForwardPolicy?: CdacForwardPolicy[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CdacQueryAllIbcConnectionResponse {
   IbcConnection?: CdacIbcConnection[];
 
@@ -289,6 +330,16 @@ export interface CdacQueryAllValidityResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryCheckEstablishedCooperationByChannelResponse {
+  label?: string;
+  found?: boolean;
+}
+
+export interface CdacQueryEstablishedCooperationByChannelResponse {
+  domainCooperation?: CdacDomainCooperation;
+  found?: boolean;
+}
+
 export interface CdacQueryGetAuthenticationLogResponse {
   AuthenticationLog?: CdacAuthenticationLog;
 }
@@ -309,6 +360,10 @@ export interface CdacQueryGetDomainResponse {
   Domain?: CdacDomain;
 }
 
+export interface CdacQueryGetForwardPolicyResponse {
+  ForwardPolicy?: CdacForwardPolicy;
+}
+
 export interface CdacQueryGetIbcConnectionResponse {
   IbcConnection?: CdacIbcConnection;
 }
@@ -327,6 +382,10 @@ export interface CdacQueryGetValidityResponse {
 export interface CdacQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: CdacParams;
+}
+
+export interface CdacQueryRetrieveForwardPolicyResponse {
+  forwardPolicy?: CdacForwardPolicy;
 }
 
 export interface CdacValidity {
@@ -695,6 +754,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryCheckEstablishedCooperationByChannel
+   * @summary Queries a list of CheckEstablishedCooperationByChannel items.
+   * @request GET:/crossdomain/cdac/check_established_cooperation_by_channel/{channel}
+   */
+  queryCheckEstablishedCooperationByChannel = (channel: string, params: RequestParams = {}) =>
+    this.request<CdacQueryCheckEstablishedCooperationByChannelResponse, RpcStatus>({
+      path: `/crossdomain/cdac/check_established_cooperation_by_channel/${channel}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryCooperationLogAll
    * @summary Queries a list of CooperationLog items.
    * @request GET:/crossdomain/cdac/cooperation_log
@@ -821,6 +896,64 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryEstablishedCooperationByChannel
+   * @summary Queries a list of EstablishedCooperationByChannel items.
+   * @request GET:/crossdomain/cdac/established_cooperation_by_channel/{channel}
+   */
+  queryEstablishedCooperationByChannel = (channel: string, params: RequestParams = {}) =>
+    this.request<CdacQueryEstablishedCooperationByChannelResponse, RpcStatus>({
+      path: `/crossdomain/cdac/established_cooperation_by_channel/${channel}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryForwardPolicyAll
+   * @summary Queries a list of ForwardPolicy items.
+   * @request GET:/crossdomain/cdac/forward_policy
+   */
+  queryForwardPolicyAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllForwardPolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/forward_policy`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryForwardPolicy
+   * @summary Queries a ForwardPolicy by id.
+   * @request GET:/crossdomain/cdac/forward_policy/{id}
+   */
+  queryForwardPolicy = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetForwardPolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/forward_policy/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryIbcConnectionAll
    * @summary Queries a list of IbcConnection items.
    * @request GET:/crossdomain/cdac/ibc_connection
@@ -912,6 +1045,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryPublicKey = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetPublicKeyResponse, RpcStatus>({
       path: `/crossdomain/cdac/public_key/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryRetrieveForwardPolicy
+   * @summary Queries a list of RetrieveForwardPolicy items.
+   * @request GET:/crossdomain/cdac/retrieve_forward_policy
+   */
+  queryRetrieveForwardPolicy = (params: RequestParams = {}) =>
+    this.request<CdacQueryRetrieveForwardPolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/retrieve_forward_policy`,
       method: "GET",
       format: "json",
       ...params,

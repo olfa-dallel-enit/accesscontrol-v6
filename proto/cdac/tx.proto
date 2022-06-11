@@ -4,6 +4,7 @@ package crossdomain.cdac;
 import "cdac/authentication_log.proto";
 import "cdac/domain_cooperation.proto";
 import "cdac/cooperation_log.proto";
+import "cdac/forward_policy.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "cdac/validity.proto";
 import "cdac/domain.proto";
@@ -42,6 +43,12 @@ rpc CreateCooperationLog(MsgCreateCooperationLog) returns (MsgCreateCooperationL
   rpc DeleteCooperationLog(MsgDeleteCooperationLog) returns (MsgDeleteCooperationLogResponse);
   rpc SendEstablishCooperation(MsgSendEstablishCooperation) returns (MsgSendEstablishCooperationResponse);
   rpc SendForwardCooperationData(MsgSendForwardCooperationData) returns (MsgSendForwardCooperationDataResponse);
+rpc CreateForwardPolicy(MsgCreateForwardPolicy) returns (MsgCreateForwardPolicyResponse);
+  rpc UpdateForwardPolicy(MsgUpdateForwardPolicy) returns (MsgUpdateForwardPolicyResponse);
+  rpc DeleteForwardPolicy(MsgDeleteForwardPolicy) returns (MsgDeleteForwardPolicyResponse);
+  rpc SendExchangeCooperationData(MsgSendExchangeCooperationData) returns (MsgSendExchangeCooperationDataResponse);
+  rpc SendModifyCooperationCost(MsgSendModifyCooperationCost) returns (MsgSendModifyCooperationCostResponse);
+  rpc SendDisableCooperation(MsgSendDisableCooperation) returns (MsgSendDisableCooperationResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -310,8 +317,72 @@ message MsgSendForwardCooperationData {
   string port = 2;
   string channelID = 3;
   uint64 timeoutTimestamp = 4;
+  string notBefore = 5;
+	string notAfter = 6;
+  string interest = 7;
+	string cost = 8;
+	string domain1Name = 9;
+	string domain2Name = 10;
+	string domain1Location = 11;
+	string domain2Location = 12;
 }
 
 message MsgSendForwardCooperationDataResponse {
+}
+message MsgCreateForwardPolicy {
+  string creator = 1;
+  string mode = 2;
+  repeated string domainList = 3;
+  repeated string locationList = 4;
+}
+
+message MsgCreateForwardPolicyResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateForwardPolicy {
+  string creator = 1;
+  uint64 id = 2;
+  string mode = 3;
+  repeated string domainList = 4;
+  repeated string locationList = 5;
+}
+
+message MsgUpdateForwardPolicyResponse {}
+
+message MsgDeleteForwardPolicy {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteForwardPolicyResponse {}
+
+message MsgSendExchangeCooperationData {
+  string creator = 1;
+  string port = 2;
+  string channelID = 3;
+  uint64 timeoutTimestamp = 4;
+}
+
+message MsgSendExchangeCooperationDataResponse {
+}
+message MsgSendModifyCooperationCost {
+  string creator = 1;
+  string port = 2;
+  string channelID = 3;
+  uint64 timeoutTimestamp = 4;
+  string cost = 5;
+}
+
+message MsgSendModifyCooperationCostResponse {
+}
+message MsgSendDisableCooperation {
+  string creator = 1;
+  string port = 2;
+  string channelID = 3;
+  uint64 timeoutTimestamp = 4;
+}
+
+message MsgSendDisableCooperationResponse {
 }
 // this line is used by starport scaffolding # proto/tx/message

@@ -14,12 +14,28 @@ func NewMsgSendForwardCooperationData(
 	port string,
 	channelID string,
 	timeoutTimestamp uint64,
+	notBefore string,
+	notAfter string,
+	interest string,
+	cost string,
+	domain1Name string,
+	domain2Name string,
+	domain1Location string,
+	domain2Location string,
 ) *MsgSendForwardCooperationData {
 	return &MsgSendForwardCooperationData{
 		Creator:          creator,
 		Port:             port,
 		ChannelID:        channelID,
 		TimeoutTimestamp: timeoutTimestamp,
+		NotBefore:        notBefore,
+		NotAfter:         notAfter,
+		Interest:         interest,
+		Cost:             cost,
+		Domain1Name:      domain1Name,
+		Domain2Name:      domain2Name,
+		Domain1Location:  domain1Location,
+		Domain2Location:  domain2Location,
 	}
 }
 

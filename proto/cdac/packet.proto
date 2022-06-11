@@ -9,6 +9,9 @@ message CdacPacketData {
     oneof packet {
         NoData noData = 1;
         // this line is used by starport scaffolding # ibc/packet/proto/field
+				DisableCooperationPacketData disableCooperationPacket = 7; // this line is used by starport scaffolding # ibc/packet/proto/field/number
+				ModifyCooperationCostPacketData modifyCooperationCostPacket = 6; // this line is used by starport scaffolding # ibc/packet/proto/field/number
+				ExchangeCooperationDataPacketData exchangeCooperationDataPacket = 5; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				ForwardCooperationDataPacketData forwardCooperationDataPacket = 4; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				EstablishCooperationPacketData establishCooperationPacket = 3; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				AuthenticateDomainPacketData authenticateDomainPacket = 2; // this line is used by starport scaffolding # ibc/packet/proto/field/number
@@ -67,5 +70,31 @@ message ForwardCooperationDataPacketData {
 
 // ForwardCooperationDataPacketAck defines a struct for the packet acknowledgment
 message ForwardCooperationDataPacketAck {
+	}
+// ExchangeCooperationDataPacketData defines a struct for the packet payload
+message ExchangeCooperationDataPacketData {
+  string sender = 1;
+}
+
+// ExchangeCooperationDataPacketAck defines a struct for the packet acknowledgment
+message ExchangeCooperationDataPacketAck {
+	}
+// ModifyCooperationCostPacketData defines a struct for the packet payload
+message ModifyCooperationCostPacketData {
+  string cost = 1;
+  string sender = 2;
+}
+
+// ModifyCooperationCostPacketAck defines a struct for the packet acknowledgment
+message ModifyCooperationCostPacketAck {
+  string confirmation = 1;
+  string confirmedBy = 2;
+	}
+// DisableCooperationPacketData defines a struct for the packet payload
+message DisableCooperationPacketData {
+}
+
+// DisableCooperationPacketAck defines a struct for the packet acknowledgment
+message DisableCooperationPacketAck {
 	}
 // this line is used by starport scaffolding # ibc/packet/proto/message

@@ -65,6 +65,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set cooperationLog count
 	k.SetCooperationLogCount(ctx, genState.CooperationLogCount)
+	// Set all the forwardPolicy
+	for _, elem := range genState.ForwardPolicyList {
+		k.SetForwardPolicy(ctx, elem)
+	}
+
+	// Set forwardPolicy count
+	k.SetForwardPolicyCount(ctx, genState.ForwardPolicyCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetPort(ctx, genState.PortId)
 	// Only try to bind to port if it is not already bound, since we may already own
@@ -102,6 +109,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.DomainCooperationCount = k.GetDomainCooperationCount(ctx)
 	genesis.CooperationLogList = k.GetAllCooperationLog(ctx)
 	genesis.CooperationLogCount = k.GetCooperationLogCount(ctx)
+	genesis.ForwardPolicyList = k.GetAllForwardPolicy(ctx)
+	genesis.ForwardPolicyCount = k.GetForwardPolicyCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

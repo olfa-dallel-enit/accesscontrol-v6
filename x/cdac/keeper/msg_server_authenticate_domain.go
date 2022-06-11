@@ -51,6 +51,5 @@ func (k msgServer) SendAuthenticateDomain(goCtx context.Context, msg *types.MsgS
 		}
 	}
 
-
 	return &types.MsgSendAuthenticateDomainResponse{}, nil
 }

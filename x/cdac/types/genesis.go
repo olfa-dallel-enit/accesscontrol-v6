@@ -20,6 +20,7 @@ func DefaultGenesis() *GenesisState {
 		AuthenticationLogList: []AuthenticationLog{},
 		DomainCooperationList: []DomainCooperation{},
 		CooperationLogList:    []CooperationLog{},
+		ForwardPolicyList:     []ForwardPolicy{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -126,6 +127,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("cooperationLog id should be lower or equal than the last id")
 		}
 		cooperationLogIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in forwardPolicy
+	forwardPolicyIdMap := make(map[uint64]bool)
+	forwardPolicyCount := gs.GetForwardPolicyCount()
+	for _, elem := range gs.ForwardPolicyList {
+		if _, ok := forwardPolicyIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for forwardPolicy")
+		}
+		if elem.Id >= forwardPolicyCount {
+			return fmt.Errorf("forwardPolicy id should be lower or equal than the last id")
+		}
+		forwardPolicyIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

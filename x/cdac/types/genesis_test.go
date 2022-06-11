@@ -94,6 +94,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				CooperationLogCount: 2,
+				ForwardPolicyList: []types.ForwardPolicy{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				ForwardPolicyCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -303,6 +312,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				CooperationLogCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated forwardPolicy",
+			genState: &types.GenesisState{
+				ForwardPolicyList: []types.ForwardPolicy{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid forwardPolicy count",
+			genState: &types.GenesisState{
+				ForwardPolicyList: []types.ForwardPolicy{
+					{
+						Id: 1,
+					},
+				},
+				ForwardPolicyCount: 0,
 			},
 			valid: false,
 		},

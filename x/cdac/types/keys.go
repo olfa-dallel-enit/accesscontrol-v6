@@ -71,3 +71,8 @@ const (
 	CooperationLogKey      = "CooperationLog-value-"
 	CooperationLogCountKey = "CooperationLog-count-"
 )
+
+const (
+	ForwardPolicyKey      = "ForwardPolicy-value-"
+	ForwardPolicyCountKey = "ForwardPolicy-count-"
+)

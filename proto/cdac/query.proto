@@ -11,9 +11,10 @@ import "cdac/certificate.proto";
 import "cdac/ibc_connection.proto";
 import "cdac/domain.proto";
 import "cdac/authentication_log.proto";
-import "cdac/domain_cooperation.proto";
 import "cdac/cooperation_log.proto";
 // this line is used by starport scaffolding # 1
+import "cdac/forward_policy.proto";
+import "cdac/domain_cooperation.proto";
 
 option go_package = "crossdomain/x/cdac/types";
 
@@ -101,6 +102,31 @@ service Query {
 	// Queries a list of CooperationLog items.
 	rpc CooperationLogAll(QueryAllCooperationLogRequest) returns (QueryAllCooperationLogResponse) {
 		option (google.api.http).get = "/crossdomain/cdac/cooperation_log";
+	}
+
+// Queries a list of CheckEstablishedCooperationByChannel items.
+	rpc CheckEstablishedCooperationByChannel(QueryCheckEstablishedCooperationByChannelRequest) returns (QueryCheckEstablishedCooperationByChannelResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/check_established_cooperation_by_channel/{channel}";
+	}
+
+// Queries a list of EstablishedCooperationByChannel items.
+	rpc EstablishedCooperationByChannel(QueryEstablishedCooperationByChannelRequest) returns (QueryEstablishedCooperationByChannelResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/established_cooperation_by_channel/{channel}";
+	}
+
+// Queries a ForwardPolicy by id.
+	rpc ForwardPolicy(QueryGetForwardPolicyRequest) returns (QueryGetForwardPolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/forward_policy/{id}";
+	}
+
+	// Queries a list of ForwardPolicy items.
+	rpc ForwardPolicyAll(QueryAllForwardPolicyRequest) returns (QueryAllForwardPolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/forward_policy";
+	}
+
+// Queries a list of RetrieveForwardPolicy items.
+	rpc RetrieveForwardPolicy(QueryRetrieveForwardPolicyRequest) returns (QueryRetrieveForwardPolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/retrieve_forward_policy";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -249,6 +275,48 @@ message QueryAllCooperationLogRequest {
 message QueryAllCooperationLogResponse {
 	repeated CooperationLog CooperationLog = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryCheckEstablishedCooperationByChannelRequest {
+  string channel = 1;
+}
+
+message QueryCheckEstablishedCooperationByChannelResponse {
+  string label = 1;
+  bool found = 2;
+}
+
+message QueryEstablishedCooperationByChannelRequest {
+  string channel = 1;
+}
+
+message QueryEstablishedCooperationByChannelResponse {
+  DomainCooperation domainCooperation = 1;
+  bool found = 2;
+}
+
+message QueryGetForwardPolicyRequest {
+	uint64 id = 1;
+}
+
+message QueryGetForwardPolicyResponse {
+	ForwardPolicy ForwardPolicy = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllForwardPolicyRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllForwardPolicyResponse {
+	repeated ForwardPolicy ForwardPolicy = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryRetrieveForwardPolicyRequest {
+}
+
+message QueryRetrieveForwardPolicyResponse {
+  ForwardPolicy forwardPolicy = 1;
 }
 
 // this line is used by starport scaffolding # 3

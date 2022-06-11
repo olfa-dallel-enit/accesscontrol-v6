@@ -1,0 +1,12 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message ForwardPolicy {
+  uint64 id = 1;
+  string mode = 2; 
+  repeated string domainList = 3; 
+  repeated string locationList = 4; 
+  string creator = 5;
+}

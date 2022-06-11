@@ -168,7 +168,6 @@ func (k Keeper) OnRecvAuthenticateDomainPacket(ctx sdk.Context, packet channelty
 		})
 	}
 
-
 	return packetAck, nil
 }
 
@@ -236,7 +235,6 @@ func (k Keeper) OnAcknowledgementAuthenticateDomainPacket(ctx sdk.Context, packe
 				Function:    "authenticate_domain: OnAcknowledgementAuthenticateDomainPacket",
 			})
 		}
-
 
 		return nil
 	default:

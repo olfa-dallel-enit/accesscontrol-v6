@@ -274,9 +274,73 @@ export interface MsgSendForwardCooperationData {
   port: string;
   channelID: string;
   timeoutTimestamp: number;
+  notBefore: string;
+  notAfter: string;
+  interest: string;
+  cost: string;
+  domain1Name: string;
+  domain2Name: string;
+  domain1Location: string;
+  domain2Location: string;
 }
 
 export interface MsgSendForwardCooperationDataResponse {}
+
+export interface MsgCreateForwardPolicy {
+  creator: string;
+  mode: string;
+  domainList: string[];
+  locationList: string[];
+}
+
+export interface MsgCreateForwardPolicyResponse {
+  id: number;
+}
+
+export interface MsgUpdateForwardPolicy {
+  creator: string;
+  id: number;
+  mode: string;
+  domainList: string[];
+  locationList: string[];
+}
+
+export interface MsgUpdateForwardPolicyResponse {}
+
+export interface MsgDeleteForwardPolicy {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteForwardPolicyResponse {}
+
+export interface MsgSendExchangeCooperationData {
+  creator: string;
+  port: string;
+  channelID: string;
+  timeoutTimestamp: number;
+}
+
+export interface MsgSendExchangeCooperationDataResponse {}
+
+export interface MsgSendModifyCooperationCost {
+  creator: string;
+  port: string;
+  channelID: string;
+  timeoutTimestamp: number;
+  cost: string;
+}
+
+export interface MsgSendModifyCooperationCostResponse {}
+
+export interface MsgSendDisableCooperation {
+  creator: string;
+  port: string;
+  channelID: string;
+  timeoutTimestamp: number;
+}
+
+export interface MsgSendDisableCooperationResponse {}
 
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
@@ -5055,6 +5119,14 @@ const baseMsgSendForwardCooperationData: object = {
   port: "",
   channelID: "",
   timeoutTimestamp: 0,
+  notBefore: "",
+  notAfter: "",
+  interest: "",
+  cost: "",
+  domain1Name: "",
+  domain2Name: "",
+  domain1Location: "",
+  domain2Location: "",
 };
 
 export const MsgSendForwardCooperationData = {
@@ -5073,6 +5145,30 @@ export const MsgSendForwardCooperationData = {
     }
     if (message.timeoutTimestamp !== 0) {
       writer.uint32(32).uint64(message.timeoutTimestamp);
+    }
+    if (message.notBefore !== "") {
+      writer.uint32(42).string(message.notBefore);
+    }
+    if (message.notAfter !== "") {
+      writer.uint32(50).string(message.notAfter);
+    }
+    if (message.interest !== "") {
+      writer.uint32(58).string(message.interest);
+    }
+    if (message.cost !== "") {
+      writer.uint32(66).string(message.cost);
+    }
+    if (message.domain1Name !== "") {
+      writer.uint32(74).string(message.domain1Name);
+    }
+    if (message.domain2Name !== "") {
+      writer.uint32(82).string(message.domain2Name);
+    }
+    if (message.domain1Location !== "") {
+      writer.uint32(90).string(message.domain1Location);
+    }
+    if (message.domain2Location !== "") {
+      writer.uint32(98).string(message.domain2Location);
     }
     return writer;
   },
@@ -5100,6 +5196,30 @@ export const MsgSendForwardCooperationData = {
           break;
         case 4:
           message.timeoutTimestamp = longToNumber(reader.uint64() as Long);
+          break;
+        case 5:
+          message.notBefore = reader.string();
+          break;
+        case 6:
+          message.notAfter = reader.string();
+          break;
+        case 7:
+          message.interest = reader.string();
+          break;
+        case 8:
+          message.cost = reader.string();
+          break;
+        case 9:
+          message.domain1Name = reader.string();
+          break;
+        case 10:
+          message.domain2Name = reader.string();
+          break;
+        case 11:
+          message.domain1Location = reader.string();
+          break;
+        case 12:
+          message.domain2Location = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -5136,6 +5256,52 @@ export const MsgSendForwardCooperationData = {
     } else {
       message.timeoutTimestamp = 0;
     }
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = String(object.notBefore);
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = String(object.notAfter);
+    } else {
+      message.notAfter = "";
+    }
+    if (object.interest !== undefined && object.interest !== null) {
+      message.interest = String(object.interest);
+    } else {
+      message.interest = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = String(object.cost);
+    } else {
+      message.cost = "";
+    }
+    if (object.domain1Name !== undefined && object.domain1Name !== null) {
+      message.domain1Name = String(object.domain1Name);
+    } else {
+      message.domain1Name = "";
+    }
+    if (object.domain2Name !== undefined && object.domain2Name !== null) {
+      message.domain2Name = String(object.domain2Name);
+    } else {
+      message.domain2Name = "";
+    }
+    if (
+      object.domain1Location !== undefined &&
+      object.domain1Location !== null
+    ) {
+      message.domain1Location = String(object.domain1Location);
+    } else {
+      message.domain1Location = "";
+    }
+    if (
+      object.domain2Location !== undefined &&
+      object.domain2Location !== null
+    ) {
+      message.domain2Location = String(object.domain2Location);
+    } else {
+      message.domain2Location = "";
+    }
     return message;
   },
 
@@ -5146,6 +5312,18 @@ export const MsgSendForwardCooperationData = {
     message.channelID !== undefined && (obj.channelID = message.channelID);
     message.timeoutTimestamp !== undefined &&
       (obj.timeoutTimestamp = message.timeoutTimestamp);
+    message.notBefore !== undefined && (obj.notBefore = message.notBefore);
+    message.notAfter !== undefined && (obj.notAfter = message.notAfter);
+    message.interest !== undefined && (obj.interest = message.interest);
+    message.cost !== undefined && (obj.cost = message.cost);
+    message.domain1Name !== undefined &&
+      (obj.domain1Name = message.domain1Name);
+    message.domain2Name !== undefined &&
+      (obj.domain2Name = message.domain2Name);
+    message.domain1Location !== undefined &&
+      (obj.domain1Location = message.domain1Location);
+    message.domain2Location !== undefined &&
+      (obj.domain2Location = message.domain2Location);
     return obj;
   },
 
@@ -5177,6 +5355,52 @@ export const MsgSendForwardCooperationData = {
       message.timeoutTimestamp = object.timeoutTimestamp;
     } else {
       message.timeoutTimestamp = 0;
+    }
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = object.notBefore;
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = object.notAfter;
+    } else {
+      message.notAfter = "";
+    }
+    if (object.interest !== undefined && object.interest !== null) {
+      message.interest = object.interest;
+    } else {
+      message.interest = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = "";
+    }
+    if (object.domain1Name !== undefined && object.domain1Name !== null) {
+      message.domain1Name = object.domain1Name;
+    } else {
+      message.domain1Name = "";
+    }
+    if (object.domain2Name !== undefined && object.domain2Name !== null) {
+      message.domain2Name = object.domain2Name;
+    } else {
+      message.domain2Name = "";
+    }
+    if (
+      object.domain1Location !== undefined &&
+      object.domain1Location !== null
+    ) {
+      message.domain1Location = object.domain1Location;
+    } else {
+      message.domain1Location = "";
+    }
+    if (
+      object.domain2Location !== undefined &&
+      object.domain2Location !== null
+    ) {
+      message.domain2Location = object.domain2Location;
+    } else {
+      message.domain2Location = "";
     }
     return message;
   },
@@ -5230,6 +5454,1104 @@ export const MsgSendForwardCooperationDataResponse = {
     const message = {
       ...baseMsgSendForwardCooperationDataResponse,
     } as MsgSendForwardCooperationDataResponse;
+    return message;
+  },
+};
+
+const baseMsgCreateForwardPolicy: object = {
+  creator: "",
+  mode: "",
+  domainList: "",
+  locationList: "",
+};
+
+export const MsgCreateForwardPolicy = {
+  encode(
+    message: MsgCreateForwardPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.mode !== "") {
+      writer.uint32(18).string(message.mode);
+    }
+    for (const v of message.domainList) {
+      writer.uint32(26).string(v!);
+    }
+    for (const v of message.locationList) {
+      writer.uint32(34).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateForwardPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateForwardPolicy } as MsgCreateForwardPolicy;
+    message.domainList = [];
+    message.locationList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.mode = reader.string();
+          break;
+        case 3:
+          message.domainList.push(reader.string());
+          break;
+        case 4:
+          message.locationList.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateForwardPolicy {
+    const message = { ...baseMsgCreateForwardPolicy } as MsgCreateForwardPolicy;
+    message.domainList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.mode !== undefined && object.mode !== null) {
+      message.mode = String(object.mode);
+    } else {
+      message.mode = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      for (const e of object.domainList) {
+        message.domainList.push(String(e));
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateForwardPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.mode !== undefined && (obj.mode = message.mode);
+    if (message.domainList) {
+      obj.domainList = message.domainList.map((e) => e);
+    } else {
+      obj.domainList = [];
+    }
+    if (message.locationList) {
+      obj.locationList = message.locationList.map((e) => e);
+    } else {
+      obj.locationList = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateForwardPolicy>
+  ): MsgCreateForwardPolicy {
+    const message = { ...baseMsgCreateForwardPolicy } as MsgCreateForwardPolicy;
+    message.domainList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.mode !== undefined && object.mode !== null) {
+      message.mode = object.mode;
+    } else {
+      message.mode = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      for (const e of object.domainList) {
+        message.domainList.push(e);
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(e);
+      }
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateForwardPolicyResponse: object = { id: 0 };
+
+export const MsgCreateForwardPolicyResponse = {
+  encode(
+    message: MsgCreateForwardPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateForwardPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateForwardPolicyResponse,
+    } as MsgCreateForwardPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateForwardPolicyResponse {
+    const message = {
+      ...baseMsgCreateForwardPolicyResponse,
+    } as MsgCreateForwardPolicyResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateForwardPolicyResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateForwardPolicyResponse>
+  ): MsgCreateForwardPolicyResponse {
+    const message = {
+      ...baseMsgCreateForwardPolicyResponse,
+    } as MsgCreateForwardPolicyResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateForwardPolicy: object = {
+  creator: "",
+  id: 0,
+  mode: "",
+  domainList: "",
+  locationList: "",
+};
+
+export const MsgUpdateForwardPolicy = {
+  encode(
+    message: MsgUpdateForwardPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.mode !== "") {
+      writer.uint32(26).string(message.mode);
+    }
+    for (const v of message.domainList) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.locationList) {
+      writer.uint32(42).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdateForwardPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdateForwardPolicy } as MsgUpdateForwardPolicy;
+    message.domainList = [];
+    message.locationList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.mode = reader.string();
+          break;
+        case 4:
+          message.domainList.push(reader.string());
+          break;
+        case 5:
+          message.locationList.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateForwardPolicy {
+    const message = { ...baseMsgUpdateForwardPolicy } as MsgUpdateForwardPolicy;
+    message.domainList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.mode !== undefined && object.mode !== null) {
+      message.mode = String(object.mode);
+    } else {
+      message.mode = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      for (const e of object.domainList) {
+        message.domainList.push(String(e));
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateForwardPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.mode !== undefined && (obj.mode = message.mode);
+    if (message.domainList) {
+      obj.domainList = message.domainList.map((e) => e);
+    } else {
+      obj.domainList = [];
+    }
+    if (message.locationList) {
+      obj.locationList = message.locationList.map((e) => e);
+    } else {
+      obj.locationList = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateForwardPolicy>
+  ): MsgUpdateForwardPolicy {
+    const message = { ...baseMsgUpdateForwardPolicy } as MsgUpdateForwardPolicy;
+    message.domainList = [];
+    message.locationList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.mode !== undefined && object.mode !== null) {
+      message.mode = object.mode;
+    } else {
+      message.mode = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      for (const e of object.domainList) {
+        message.domainList.push(e);
+      }
+    }
+    if (object.locationList !== undefined && object.locationList !== null) {
+      for (const e of object.locationList) {
+        message.locationList.push(e);
+      }
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateForwardPolicyResponse: object = {};
+
+export const MsgUpdateForwardPolicyResponse = {
+  encode(
+    _: MsgUpdateForwardPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateForwardPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateForwardPolicyResponse,
+    } as MsgUpdateForwardPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateForwardPolicyResponse {
+    const message = {
+      ...baseMsgUpdateForwardPolicyResponse,
+    } as MsgUpdateForwardPolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateForwardPolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateForwardPolicyResponse>
+  ): MsgUpdateForwardPolicyResponse {
+    const message = {
+      ...baseMsgUpdateForwardPolicyResponse,
+    } as MsgUpdateForwardPolicyResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteForwardPolicy: object = { creator: "", id: 0 };
+
+export const MsgDeleteForwardPolicy = {
+  encode(
+    message: MsgDeleteForwardPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeleteForwardPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeleteForwardPolicy } as MsgDeleteForwardPolicy;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteForwardPolicy {
+    const message = { ...baseMsgDeleteForwardPolicy } as MsgDeleteForwardPolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteForwardPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteForwardPolicy>
+  ): MsgDeleteForwardPolicy {
+    const message = { ...baseMsgDeleteForwardPolicy } as MsgDeleteForwardPolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteForwardPolicyResponse: object = {};
+
+export const MsgDeleteForwardPolicyResponse = {
+  encode(
+    _: MsgDeleteForwardPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteForwardPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteForwardPolicyResponse,
+    } as MsgDeleteForwardPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteForwardPolicyResponse {
+    const message = {
+      ...baseMsgDeleteForwardPolicyResponse,
+    } as MsgDeleteForwardPolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteForwardPolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteForwardPolicyResponse>
+  ): MsgDeleteForwardPolicyResponse {
+    const message = {
+      ...baseMsgDeleteForwardPolicyResponse,
+    } as MsgDeleteForwardPolicyResponse;
+    return message;
+  },
+};
+
+const baseMsgSendExchangeCooperationData: object = {
+  creator: "",
+  port: "",
+  channelID: "",
+  timeoutTimestamp: 0,
+};
+
+export const MsgSendExchangeCooperationData = {
+  encode(
+    message: MsgSendExchangeCooperationData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.port !== "") {
+      writer.uint32(18).string(message.port);
+    }
+    if (message.channelID !== "") {
+      writer.uint32(26).string(message.channelID);
+    }
+    if (message.timeoutTimestamp !== 0) {
+      writer.uint32(32).uint64(message.timeoutTimestamp);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendExchangeCooperationData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendExchangeCooperationData,
+    } as MsgSendExchangeCooperationData;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.port = reader.string();
+          break;
+        case 3:
+          message.channelID = reader.string();
+          break;
+        case 4:
+          message.timeoutTimestamp = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSendExchangeCooperationData {
+    const message = {
+      ...baseMsgSendExchangeCooperationData,
+    } as MsgSendExchangeCooperationData;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = String(object.port);
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = String(object.channelID);
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = Number(object.timeoutTimestamp);
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSendExchangeCooperationData): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.port !== undefined && (obj.port = message.port);
+    message.channelID !== undefined && (obj.channelID = message.channelID);
+    message.timeoutTimestamp !== undefined &&
+      (obj.timeoutTimestamp = message.timeoutTimestamp);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSendExchangeCooperationData>
+  ): MsgSendExchangeCooperationData {
+    const message = {
+      ...baseMsgSendExchangeCooperationData,
+    } as MsgSendExchangeCooperationData;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = object.port;
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = object.channelID;
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = object.timeoutTimestamp;
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgSendExchangeCooperationDataResponse: object = {};
+
+export const MsgSendExchangeCooperationDataResponse = {
+  encode(
+    _: MsgSendExchangeCooperationDataResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendExchangeCooperationDataResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendExchangeCooperationDataResponse,
+    } as MsgSendExchangeCooperationDataResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgSendExchangeCooperationDataResponse {
+    const message = {
+      ...baseMsgSendExchangeCooperationDataResponse,
+    } as MsgSendExchangeCooperationDataResponse;
+    return message;
+  },
+
+  toJSON(_: MsgSendExchangeCooperationDataResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgSendExchangeCooperationDataResponse>
+  ): MsgSendExchangeCooperationDataResponse {
+    const message = {
+      ...baseMsgSendExchangeCooperationDataResponse,
+    } as MsgSendExchangeCooperationDataResponse;
+    return message;
+  },
+};
+
+const baseMsgSendModifyCooperationCost: object = {
+  creator: "",
+  port: "",
+  channelID: "",
+  timeoutTimestamp: 0,
+  cost: "",
+};
+
+export const MsgSendModifyCooperationCost = {
+  encode(
+    message: MsgSendModifyCooperationCost,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.port !== "") {
+      writer.uint32(18).string(message.port);
+    }
+    if (message.channelID !== "") {
+      writer.uint32(26).string(message.channelID);
+    }
+    if (message.timeoutTimestamp !== 0) {
+      writer.uint32(32).uint64(message.timeoutTimestamp);
+    }
+    if (message.cost !== "") {
+      writer.uint32(42).string(message.cost);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendModifyCooperationCost {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendModifyCooperationCost,
+    } as MsgSendModifyCooperationCost;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.port = reader.string();
+          break;
+        case 3:
+          message.channelID = reader.string();
+          break;
+        case 4:
+          message.timeoutTimestamp = longToNumber(reader.uint64() as Long);
+          break;
+        case 5:
+          message.cost = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSendModifyCooperationCost {
+    const message = {
+      ...baseMsgSendModifyCooperationCost,
+    } as MsgSendModifyCooperationCost;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = String(object.port);
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = String(object.channelID);
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = Number(object.timeoutTimestamp);
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = String(object.cost);
+    } else {
+      message.cost = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSendModifyCooperationCost): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.port !== undefined && (obj.port = message.port);
+    message.channelID !== undefined && (obj.channelID = message.channelID);
+    message.timeoutTimestamp !== undefined &&
+      (obj.timeoutTimestamp = message.timeoutTimestamp);
+    message.cost !== undefined && (obj.cost = message.cost);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSendModifyCooperationCost>
+  ): MsgSendModifyCooperationCost {
+    const message = {
+      ...baseMsgSendModifyCooperationCost,
+    } as MsgSendModifyCooperationCost;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = object.port;
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = object.channelID;
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = object.timeoutTimestamp;
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSendModifyCooperationCostResponse: object = {};
+
+export const MsgSendModifyCooperationCostResponse = {
+  encode(
+    _: MsgSendModifyCooperationCostResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendModifyCooperationCostResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendModifyCooperationCostResponse,
+    } as MsgSendModifyCooperationCostResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgSendModifyCooperationCostResponse {
+    const message = {
+      ...baseMsgSendModifyCooperationCostResponse,
+    } as MsgSendModifyCooperationCostResponse;
+    return message;
+  },
+
+  toJSON(_: MsgSendModifyCooperationCostResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgSendModifyCooperationCostResponse>
+  ): MsgSendModifyCooperationCostResponse {
+    const message = {
+      ...baseMsgSendModifyCooperationCostResponse,
+    } as MsgSendModifyCooperationCostResponse;
+    return message;
+  },
+};
+
+const baseMsgSendDisableCooperation: object = {
+  creator: "",
+  port: "",
+  channelID: "",
+  timeoutTimestamp: 0,
+};
+
+export const MsgSendDisableCooperation = {
+  encode(
+    message: MsgSendDisableCooperation,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.port !== "") {
+      writer.uint32(18).string(message.port);
+    }
+    if (message.channelID !== "") {
+      writer.uint32(26).string(message.channelID);
+    }
+    if (message.timeoutTimestamp !== 0) {
+      writer.uint32(32).uint64(message.timeoutTimestamp);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendDisableCooperation {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendDisableCooperation,
+    } as MsgSendDisableCooperation;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.port = reader.string();
+          break;
+        case 3:
+          message.channelID = reader.string();
+          break;
+        case 4:
+          message.timeoutTimestamp = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSendDisableCooperation {
+    const message = {
+      ...baseMsgSendDisableCooperation,
+    } as MsgSendDisableCooperation;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = String(object.port);
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = String(object.channelID);
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = Number(object.timeoutTimestamp);
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSendDisableCooperation): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.port !== undefined && (obj.port = message.port);
+    message.channelID !== undefined && (obj.channelID = message.channelID);
+    message.timeoutTimestamp !== undefined &&
+      (obj.timeoutTimestamp = message.timeoutTimestamp);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSendDisableCooperation>
+  ): MsgSendDisableCooperation {
+    const message = {
+      ...baseMsgSendDisableCooperation,
+    } as MsgSendDisableCooperation;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.port !== undefined && object.port !== null) {
+      message.port = object.port;
+    } else {
+      message.port = "";
+    }
+    if (object.channelID !== undefined && object.channelID !== null) {
+      message.channelID = object.channelID;
+    } else {
+      message.channelID = "";
+    }
+    if (
+      object.timeoutTimestamp !== undefined &&
+      object.timeoutTimestamp !== null
+    ) {
+      message.timeoutTimestamp = object.timeoutTimestamp;
+    } else {
+      message.timeoutTimestamp = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgSendDisableCooperationResponse: object = {};
+
+export const MsgSendDisableCooperationResponse = {
+  encode(
+    _: MsgSendDisableCooperationResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSendDisableCooperationResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSendDisableCooperationResponse,
+    } as MsgSendDisableCooperationResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgSendDisableCooperationResponse {
+    const message = {
+      ...baseMsgSendDisableCooperationResponse,
+    } as MsgSendDisableCooperationResponse;
+    return message;
+  },
+
+  toJSON(_: MsgSendDisableCooperationResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgSendDisableCooperationResponse>
+  ): MsgSendDisableCooperationResponse {
+    const message = {
+      ...baseMsgSendDisableCooperationResponse,
+    } as MsgSendDisableCooperationResponse;
     return message;
   },
 };
@@ -5308,10 +6630,28 @@ export interface Msg {
   SendEstablishCooperation(
     request: MsgSendEstablishCooperation
   ): Promise<MsgSendEstablishCooperationResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   SendForwardCooperationData(
     request: MsgSendForwardCooperationData
   ): Promise<MsgSendForwardCooperationDataResponse>;
+  CreateForwardPolicy(
+    request: MsgCreateForwardPolicy
+  ): Promise<MsgCreateForwardPolicyResponse>;
+  UpdateForwardPolicy(
+    request: MsgUpdateForwardPolicy
+  ): Promise<MsgUpdateForwardPolicyResponse>;
+  DeleteForwardPolicy(
+    request: MsgDeleteForwardPolicy
+  ): Promise<MsgDeleteForwardPolicyResponse>;
+  SendExchangeCooperationData(
+    request: MsgSendExchangeCooperationData
+  ): Promise<MsgSendExchangeCooperationDataResponse>;
+  SendModifyCooperationCost(
+    request: MsgSendModifyCooperationCost
+  ): Promise<MsgSendModifyCooperationCostResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SendDisableCooperation(
+    request: MsgSendDisableCooperation
+  ): Promise<MsgSendDisableCooperationResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -5688,6 +7028,90 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgSendForwardCooperationDataResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateForwardPolicy(
+    request: MsgCreateForwardPolicy
+  ): Promise<MsgCreateForwardPolicyResponse> {
+    const data = MsgCreateForwardPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateForwardPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateForwardPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateForwardPolicy(
+    request: MsgUpdateForwardPolicy
+  ): Promise<MsgUpdateForwardPolicyResponse> {
+    const data = MsgUpdateForwardPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateForwardPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateForwardPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteForwardPolicy(
+    request: MsgDeleteForwardPolicy
+  ): Promise<MsgDeleteForwardPolicyResponse> {
+    const data = MsgDeleteForwardPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteForwardPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteForwardPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  SendExchangeCooperationData(
+    request: MsgSendExchangeCooperationData
+  ): Promise<MsgSendExchangeCooperationDataResponse> {
+    const data = MsgSendExchangeCooperationData.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "SendExchangeCooperationData",
+      data
+    );
+    return promise.then((data) =>
+      MsgSendExchangeCooperationDataResponse.decode(new Reader(data))
+    );
+  }
+
+  SendModifyCooperationCost(
+    request: MsgSendModifyCooperationCost
+  ): Promise<MsgSendModifyCooperationCostResponse> {
+    const data = MsgSendModifyCooperationCost.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "SendModifyCooperationCost",
+      data
+    );
+    return promise.then((data) =>
+      MsgSendModifyCooperationCostResponse.decode(new Reader(data))
+    );
+  }
+
+  SendDisableCooperation(
+    request: MsgSendDisableCooperation
+  ): Promise<MsgSendDisableCooperationResponse> {
+    const data = MsgSendDisableCooperation.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "SendDisableCooperation",
+      data
+    );
+    return promise.then((data) =>
+      MsgSendDisableCooperationResponse.decode(new Reader(data))
     );
   }
 }

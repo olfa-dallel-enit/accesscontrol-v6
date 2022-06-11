@@ -15,6 +15,15 @@ func (k msgServer) SendForwardCooperationData(goCtx context.Context, msg *types.
 
 	// Construct the packet
 	var packet types.ForwardCooperationDataPacketData
+	packet.NotBefore = msg.NotBefore
+	packet.NotAfter = msg.NotAfter
+	packet.Interest = msg.Interest
+	packet.Cost = msg.Cost
+	packet.Domain1Name = msg.Domain1Name
+	packet.Domain2Name = msg.Domain2Name
+	packet.Domain1Location = msg.Domain1Location
+	packet.Domain2Location = msg.Domain2Location
+	packet.Sender = ctx.ChainID()
 
 	// Transmit the packet
 	err := k.TransmitForwardCooperationDataPacket(

@@ -181,15 +181,7 @@ func (am AppModule) OnRecvPacket(
 			),
 		)
 	case *types.CdacPacketData_ForwardCooperationDataPacket:
-		am.keeper.OnRecvForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket)
-		/*ctx.EventManager().EmitEvent(
-			sdk.NewEvent(
-				types.EventTypeForwardCooperationDataPacket,
-				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
-			),
-		)*/
-		
-		/*packetAck, err := am.keeper.OnRecvForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket)
+		packetAck, err := am.keeper.OnRecvForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket)
 		if err != nil {
 			ack = channeltypes.NewErrorAcknowledgement(err.Error())
 		} else {
@@ -206,7 +198,64 @@ func (am AppModule) OnRecvPacket(
 				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
 				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
 			),
-		)*/
+		)
+	case *types.CdacPacketData_ExchangeCooperationDataPacket:
+		packetAck, err := am.keeper.OnRecvExchangeCooperationDataPacket(ctx, modulePacket, *packet.ExchangeCooperationDataPacket)
+		if err != nil {
+			ack = channeltypes.NewErrorAcknowledgement(err.Error())
+		} else {
+			// Encode packet acknowledgment
+			packetAckBytes, err := types.ModuleCdc.MarshalJSON(&packetAck)
+			if err != nil {
+				return channeltypes.NewErrorAcknowledgement(sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error()).Error())
+			}
+			ack = channeltypes.NewResultAcknowledgement(sdk.MustSortJSON(packetAckBytes))
+		}
+		ctx.EventManager().EmitEvent(
+			sdk.NewEvent(
+				types.EventTypeExchangeCooperationDataPacket,
+				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
+				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
+			),
+		)
+	case *types.CdacPacketData_ModifyCooperationCostPacket:
+		packetAck, err := am.keeper.OnRecvModifyCooperationCostPacket(ctx, modulePacket, *packet.ModifyCooperationCostPacket)
+		if err != nil {
+			ack = channeltypes.NewErrorAcknowledgement(err.Error())
+		} else {
+			// Encode packet acknowledgment
+			packetAckBytes, err := types.ModuleCdc.MarshalJSON(&packetAck)
+			if err != nil {
+				return channeltypes.NewErrorAcknowledgement(sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error()).Error())
+			}
+			ack = channeltypes.NewResultAcknowledgement(sdk.MustSortJSON(packetAckBytes))
+		}
+		ctx.EventManager().EmitEvent(
+			sdk.NewEvent(
+				types.EventTypeModifyCooperationCostPacket,
+				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
+				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
+			),
+		)
+	case *types.CdacPacketData_DisableCooperationPacket:
+		packetAck, err := am.keeper.OnRecvDisableCooperationPacket(ctx, modulePacket, *packet.DisableCooperationPacket)
+		if err != nil {
+			ack = channeltypes.NewErrorAcknowledgement(err.Error())
+		} else {
+			// Encode packet acknowledgment
+			packetAckBytes, err := types.ModuleCdc.MarshalJSON(&packetAck)
+			if err != nil {
+				return channeltypes.NewErrorAcknowledgement(sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error()).Error())
+			}
+			ack = channeltypes.NewResultAcknowledgement(sdk.MustSortJSON(packetAckBytes))
+		}
+		ctx.EventManager().EmitEvent(
+			sdk.NewEvent(
+				types.EventTypeDisableCooperationPacket,
+				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
+				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
+			),
+		)
 		// this line is used by starport scaffolding # ibc/packet/module/recv
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s packet type: %T", types.ModuleName, packet)
@@ -253,11 +302,29 @@ func (am AppModule) OnAcknowledgementPacket(
 		}
 		eventType = types.EventTypeEstablishCooperationPacket
 	case *types.CdacPacketData_ForwardCooperationDataPacket:
-		/*err := am.keeper.OnAcknowledgementForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket, ack)
+		err := am.keeper.OnAcknowledgementForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket, ack)
 		if err != nil {
 			return err
 		}
-		eventType = types.EventTypeForwardCooperationDataPacket*/
+		eventType = types.EventTypeForwardCooperationDataPacket
+	case *types.CdacPacketData_ExchangeCooperationDataPacket:
+		err := am.keeper.OnAcknowledgementExchangeCooperationDataPacket(ctx, modulePacket, *packet.ExchangeCooperationDataPacket, ack)
+		if err != nil {
+			return err
+		}
+		eventType = types.EventTypeExchangeCooperationDataPacket
+	case *types.CdacPacketData_ModifyCooperationCostPacket:
+		err := am.keeper.OnAcknowledgementModifyCooperationCostPacket(ctx, modulePacket, *packet.ModifyCooperationCostPacket, ack)
+		if err != nil {
+			return err
+		}
+		eventType = types.EventTypeModifyCooperationCostPacket
+	case *types.CdacPacketData_DisableCooperationPacket:
+		err := am.keeper.OnAcknowledgementDisableCooperationPacket(ctx, modulePacket, *packet.DisableCooperationPacket, ack)
+		if err != nil {
+			return err
+		}
+		eventType = types.EventTypeDisableCooperationPacket
 		// this line is used by starport scaffolding # ibc/packet/module/ack
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s packet type: %T", types.ModuleName, packet)
@@ -280,13 +347,13 @@ func (am AppModule) OnAcknowledgementPacket(
 				sdk.NewAttribute(types.AttributeKeyAckSuccess, string(resp.Result)),
 			),
 		)
-	/*case *channeltypes.Acknowledgement_Error:
+	case *channeltypes.Acknowledgement_Error:
 		ctx.EventManager().EmitEvent(
 			sdk.NewEvent(
 				eventType,
 				sdk.NewAttribute(types.AttributeKeyAckError, resp.Error),
 			),
-		)*/
+		)
 	}
 
 	return nil
@@ -317,6 +384,21 @@ func (am AppModule) OnTimeoutPacket(
 		}
 	case *types.CdacPacketData_ForwardCooperationDataPacket:
 		err := am.keeper.OnTimeoutForwardCooperationDataPacket(ctx, modulePacket, *packet.ForwardCooperationDataPacket)
+		if err != nil {
+			return err
+		}
+	case *types.CdacPacketData_ExchangeCooperationDataPacket:
+		err := am.keeper.OnTimeoutExchangeCooperationDataPacket(ctx, modulePacket, *packet.ExchangeCooperationDataPacket)
+		if err != nil {
+			return err
+		}
+	case *types.CdacPacketData_ModifyCooperationCostPacket:
+		err := am.keeper.OnTimeoutModifyCooperationCostPacket(ctx, modulePacket, *packet.ModifyCooperationCostPacket)
+		if err != nil {
+			return err
+		}
+	case *types.CdacPacketData_DisableCooperationPacket:
+		err := am.keeper.OnTimeoutDisableCooperationPacket(ctx, modulePacket, *packet.DisableCooperationPacket)
 		if err != nil {
 			return err
 		}

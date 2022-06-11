@@ -107,7 +107,6 @@ func GetDomainCooperationIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
-
 func (k Keeper) FindDomainCooperationByDomainName(ctx sdk.Context, domainName string) (found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainCooperationKey))
 	iterator := sdk.KVStorePrefixIterator(store, []byte{})
@@ -229,4 +228,38 @@ func (k Keeper) RemoveDomainCooperationByRemoteDomainName(ctx sdk.Context, remot
 		}
 	}
 	k.RemoveDomainCooperation(ctx, id)
+}
+
+func (k Keeper) GetEstablishedCooperationByChannel(ctx sdk.Context, channel string) (label string, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainCooperationKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.DomainCooperation
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.SourceDomain.IbcConnection.Channel == channel {
+			return val.Label, true
+		}
+	}
+
+	return label, false
+}
+
+func (k Keeper) GetCooperationByChannel(ctx sdk.Context, channel string) (domainCooperation types.DomainCooperation, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainCooperationKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.DomainCooperation
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.SourceDomain.IbcConnection.Channel == channel {
+			return val, true
+		}
+	}
+
+	return domainCooperation, false
 }

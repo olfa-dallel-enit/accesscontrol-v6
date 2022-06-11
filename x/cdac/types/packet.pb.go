@@ -25,6 +25,9 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type CdacPacketData struct {
 	// Types that are valid to be assigned to Packet:
 	//	*CdacPacketData_NoData
+	//	*CdacPacketData_DisableCooperationPacket
+	//	*CdacPacketData_ModifyCooperationCostPacket
+	//	*CdacPacketData_ExchangeCooperationDataPacket
 	//	*CdacPacketData_ForwardCooperationDataPacket
 	//	*CdacPacketData_EstablishCooperationPacket
 	//	*CdacPacketData_AuthenticateDomainPacket
@@ -73,6 +76,15 @@ type isCdacPacketData_Packet interface {
 type CdacPacketData_NoData struct {
 	NoData *NoData `protobuf:"bytes,1,opt,name=noData,proto3,oneof" json:"noData,omitempty"`
 }
+type CdacPacketData_DisableCooperationPacket struct {
+	DisableCooperationPacket *DisableCooperationPacketData `protobuf:"bytes,7,opt,name=disableCooperationPacket,proto3,oneof" json:"disableCooperationPacket,omitempty"`
+}
+type CdacPacketData_ModifyCooperationCostPacket struct {
+	ModifyCooperationCostPacket *ModifyCooperationCostPacketData `protobuf:"bytes,6,opt,name=modifyCooperationCostPacket,proto3,oneof" json:"modifyCooperationCostPacket,omitempty"`
+}
+type CdacPacketData_ExchangeCooperationDataPacket struct {
+	ExchangeCooperationDataPacket *ExchangeCooperationDataPacketData `protobuf:"bytes,5,opt,name=exchangeCooperationDataPacket,proto3,oneof" json:"exchangeCooperationDataPacket,omitempty"`
+}
 type CdacPacketData_ForwardCooperationDataPacket struct {
 	ForwardCooperationDataPacket *ForwardCooperationDataPacketData `protobuf:"bytes,4,opt,name=forwardCooperationDataPacket,proto3,oneof" json:"forwardCooperationDataPacket,omitempty"`
 }
@@ -83,10 +95,13 @@ type CdacPacketData_AuthenticateDomainPacket struct {
 	AuthenticateDomainPacket *AuthenticateDomainPacketData `protobuf:"bytes,2,opt,name=authenticateDomainPacket,proto3,oneof" json:"authenticateDomainPacket,omitempty"`
 }
 
-func (*CdacPacketData_NoData) isCdacPacketData_Packet()                       {}
-func (*CdacPacketData_ForwardCooperationDataPacket) isCdacPacketData_Packet() {}
-func (*CdacPacketData_EstablishCooperationPacket) isCdacPacketData_Packet()   {}
-func (*CdacPacketData_AuthenticateDomainPacket) isCdacPacketData_Packet()     {}
+func (*CdacPacketData_NoData) isCdacPacketData_Packet()                        {}
+func (*CdacPacketData_DisableCooperationPacket) isCdacPacketData_Packet()      {}
+func (*CdacPacketData_ModifyCooperationCostPacket) isCdacPacketData_Packet()   {}
+func (*CdacPacketData_ExchangeCooperationDataPacket) isCdacPacketData_Packet() {}
+func (*CdacPacketData_ForwardCooperationDataPacket) isCdacPacketData_Packet()  {}
+func (*CdacPacketData_EstablishCooperationPacket) isCdacPacketData_Packet()    {}
+func (*CdacPacketData_AuthenticateDomainPacket) isCdacPacketData_Packet()      {}
 
 func (m *CdacPacketData) GetPacket() isCdacPacketData_Packet {
 	if m != nil {
@@ -98,6 +113,27 @@ func (m *CdacPacketData) GetPacket() isCdacPacketData_Packet {
 func (m *CdacPacketData) GetNoData() *NoData {
 	if x, ok := m.GetPacket().(*CdacPacketData_NoData); ok {
 		return x.NoData
+	}
+	return nil
+}
+
+func (m *CdacPacketData) GetDisableCooperationPacket() *DisableCooperationPacketData {
+	if x, ok := m.GetPacket().(*CdacPacketData_DisableCooperationPacket); ok {
+		return x.DisableCooperationPacket
+	}
+	return nil
+}
+
+func (m *CdacPacketData) GetModifyCooperationCostPacket() *ModifyCooperationCostPacketData {
+	if x, ok := m.GetPacket().(*CdacPacketData_ModifyCooperationCostPacket); ok {
+		return x.ModifyCooperationCostPacket
+	}
+	return nil
+}
+
+func (m *CdacPacketData) GetExchangeCooperationDataPacket() *ExchangeCooperationDataPacketData {
+	if x, ok := m.GetPacket().(*CdacPacketData_ExchangeCooperationDataPacket); ok {
+		return x.ExchangeCooperationDataPacket
 	}
 	return nil
 }
@@ -127,6 +163,9 @@ func (m *CdacPacketData) GetAuthenticateDomainPacket() *AuthenticateDomainPacket
 func (*CdacPacketData) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
 		(*CdacPacketData_NoData)(nil),
+		(*CdacPacketData_DisableCooperationPacket)(nil),
+		(*CdacPacketData_ModifyCooperationCostPacket)(nil),
+		(*CdacPacketData_ExchangeCooperationDataPacket)(nil),
 		(*CdacPacketData_ForwardCooperationDataPacket)(nil),
 		(*CdacPacketData_EstablishCooperationPacket)(nil),
 		(*CdacPacketData_AuthenticateDomainPacket)(nil),
@@ -623,6 +662,268 @@ func (m *ForwardCooperationDataPacketAck) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ForwardCooperationDataPacketAck proto.InternalMessageInfo
 
+// ExchangeCooperationDataPacketData defines a struct for the packet payload
+type ExchangeCooperationDataPacketData struct {
+	Sender string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
+}
+
+func (m *ExchangeCooperationDataPacketData) Reset()         { *m = ExchangeCooperationDataPacketData{} }
+func (m *ExchangeCooperationDataPacketData) String() string { return proto.CompactTextString(m) }
+func (*ExchangeCooperationDataPacketData) ProtoMessage()    {}
+func (*ExchangeCooperationDataPacketData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d7821588041dde76, []int{8}
+}
+func (m *ExchangeCooperationDataPacketData) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ExchangeCooperationDataPacketData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ExchangeCooperationDataPacketData.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ExchangeCooperationDataPacketData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExchangeCooperationDataPacketData.Merge(m, src)
+}
+func (m *ExchangeCooperationDataPacketData) XXX_Size() int {
+	return m.Size()
+}
+func (m *ExchangeCooperationDataPacketData) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExchangeCooperationDataPacketData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExchangeCooperationDataPacketData proto.InternalMessageInfo
+
+func (m *ExchangeCooperationDataPacketData) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
+// ExchangeCooperationDataPacketAck defines a struct for the packet acknowledgment
+type ExchangeCooperationDataPacketAck struct {
+}
+
+func (m *ExchangeCooperationDataPacketAck) Reset()         { *m = ExchangeCooperationDataPacketAck{} }
+func (m *ExchangeCooperationDataPacketAck) String() string { return proto.CompactTextString(m) }
+func (*ExchangeCooperationDataPacketAck) ProtoMessage()    {}
+func (*ExchangeCooperationDataPacketAck) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d7821588041dde76, []int{9}
+}
+func (m *ExchangeCooperationDataPacketAck) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ExchangeCooperationDataPacketAck) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ExchangeCooperationDataPacketAck.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ExchangeCooperationDataPacketAck) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExchangeCooperationDataPacketAck.Merge(m, src)
+}
+func (m *ExchangeCooperationDataPacketAck) XXX_Size() int {
+	return m.Size()
+}
+func (m *ExchangeCooperationDataPacketAck) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExchangeCooperationDataPacketAck.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExchangeCooperationDataPacketAck proto.InternalMessageInfo
+
+// ModifyCooperationCostPacketData defines a struct for the packet payload
+type ModifyCooperationCostPacketData struct {
+	Cost   string `protobuf:"bytes,1,opt,name=cost,proto3" json:"cost,omitempty"`
+	Sender string `protobuf:"bytes,2,opt,name=sender,proto3" json:"sender,omitempty"`
+}
+
+func (m *ModifyCooperationCostPacketData) Reset()         { *m = ModifyCooperationCostPacketData{} }
+func (m *ModifyCooperationCostPacketData) String() string { return proto.CompactTextString(m) }
+func (*ModifyCooperationCostPacketData) ProtoMessage()    {}
+func (*ModifyCooperationCostPacketData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d7821588041dde76, []int{10}
+}
+func (m *ModifyCooperationCostPacketData) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ModifyCooperationCostPacketData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ModifyCooperationCostPacketData.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ModifyCooperationCostPacketData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ModifyCooperationCostPacketData.Merge(m, src)
+}
+func (m *ModifyCooperationCostPacketData) XXX_Size() int {
+	return m.Size()
+}
+func (m *ModifyCooperationCostPacketData) XXX_DiscardUnknown() {
+	xxx_messageInfo_ModifyCooperationCostPacketData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ModifyCooperationCostPacketData proto.InternalMessageInfo
+
+func (m *ModifyCooperationCostPacketData) GetCost() string {
+	if m != nil {
+		return m.Cost
+	}
+	return ""
+}
+
+func (m *ModifyCooperationCostPacketData) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
+// ModifyCooperationCostPacketAck defines a struct for the packet acknowledgment
+type ModifyCooperationCostPacketAck struct {
+	Confirmation string `protobuf:"bytes,1,opt,name=confirmation,proto3" json:"confirmation,omitempty"`
+	ConfirmedBy  string `protobuf:"bytes,2,opt,name=confirmedBy,proto3" json:"confirmedBy,omitempty"`
+}
+
+func (m *ModifyCooperationCostPacketAck) Reset()         { *m = ModifyCooperationCostPacketAck{} }
+func (m *ModifyCooperationCostPacketAck) String() string { return proto.CompactTextString(m) }
+func (*ModifyCooperationCostPacketAck) ProtoMessage()    {}
+func (*ModifyCooperationCostPacketAck) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d7821588041dde76, []int{11}
+}
+func (m *ModifyCooperationCostPacketAck) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ModifyCooperationCostPacketAck) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ModifyCooperationCostPacketAck.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ModifyCooperationCostPacketAck) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ModifyCooperationCostPacketAck.Merge(m, src)
+}
+func (m *ModifyCooperationCostPacketAck) XXX_Size() int {
+	return m.Size()
+}
+func (m *ModifyCooperationCostPacketAck) XXX_DiscardUnknown() {
+	xxx_messageInfo_ModifyCooperationCostPacketAck.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ModifyCooperationCostPacketAck proto.InternalMessageInfo
+
+func (m *ModifyCooperationCostPacketAck) GetConfirmation() string {
+	if m != nil {
+		return m.Confirmation
+	}
+	return ""
+}
+
+func (m *ModifyCooperationCostPacketAck) GetConfirmedBy() string {
+	if m != nil {
+		return m.ConfirmedBy
+	}
+	return ""
+}
+
+// DisableCooperationPacketData defines a struct for the packet payload
+type DisableCooperationPacketData struct {
+}
+
+func (m *DisableCooperationPacketData) Reset()         { *m = DisableCooperationPacketData{} }
+func (m *DisableCooperationPacketData) String() string { return proto.CompactTextString(m) }
+func (*DisableCooperationPacketData) ProtoMessage()    {}
+func (*DisableCooperationPacketData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d7821588041dde76, []int{12}
+}
+func (m *DisableCooperationPacketData) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DisableCooperationPacketData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DisableCooperationPacketData.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DisableCooperationPacketData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DisableCooperationPacketData.Merge(m, src)
+}
+func (m *DisableCooperationPacketData) XXX_Size() int {
+	return m.Size()
+}
+func (m *DisableCooperationPacketData) XXX_DiscardUnknown() {
+	xxx_messageInfo_DisableCooperationPacketData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DisableCooperationPacketData proto.InternalMessageInfo
+
+// DisableCooperationPacketAck defines a struct for the packet acknowledgment
+type DisableCooperationPacketAck struct {
+}
+
+func (m *DisableCooperationPacketAck) Reset()         { *m = DisableCooperationPacketAck{} }
+func (m *DisableCooperationPacketAck) String() string { return proto.CompactTextString(m) }
+func (*DisableCooperationPacketAck) ProtoMessage()    {}
+func (*DisableCooperationPacketAck) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d7821588041dde76, []int{13}
+}
+func (m *DisableCooperationPacketAck) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DisableCooperationPacketAck) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DisableCooperationPacketAck.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DisableCooperationPacketAck) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DisableCooperationPacketAck.Merge(m, src)
+}
+func (m *DisableCooperationPacketAck) XXX_Size() int {
+	return m.Size()
+}
+func (m *DisableCooperationPacketAck) XXX_DiscardUnknown() {
+	xxx_messageInfo_DisableCooperationPacketAck.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DisableCooperationPacketAck proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*CdacPacketData)(nil), "crossdomain.cdac.CdacPacketData")
 	proto.RegisterType((*NoData)(nil), "crossdomain.cdac.NoData")
@@ -632,46 +933,59 @@ func init() {
 	proto.RegisterType((*EstablishCooperationPacketAck)(nil), "crossdomain.cdac.EstablishCooperationPacketAck")
 	proto.RegisterType((*ForwardCooperationDataPacketData)(nil), "crossdomain.cdac.ForwardCooperationDataPacketData")
 	proto.RegisterType((*ForwardCooperationDataPacketAck)(nil), "crossdomain.cdac.ForwardCooperationDataPacketAck")
+	proto.RegisterType((*ExchangeCooperationDataPacketData)(nil), "crossdomain.cdac.ExchangeCooperationDataPacketData")
+	proto.RegisterType((*ExchangeCooperationDataPacketAck)(nil), "crossdomain.cdac.ExchangeCooperationDataPacketAck")
+	proto.RegisterType((*ModifyCooperationCostPacketData)(nil), "crossdomain.cdac.ModifyCooperationCostPacketData")
+	proto.RegisterType((*ModifyCooperationCostPacketAck)(nil), "crossdomain.cdac.ModifyCooperationCostPacketAck")
+	proto.RegisterType((*DisableCooperationPacketData)(nil), "crossdomain.cdac.DisableCooperationPacketData")
+	proto.RegisterType((*DisableCooperationPacketAck)(nil), "crossdomain.cdac.DisableCooperationPacketAck")
 }
 
 func init() { proto.RegisterFile("cdac/packet.proto", fileDescriptor_d7821588041dde76) }
 
 var fileDescriptor_d7821588041dde76 = []byte{
-	// 529 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xbd, 0x8e, 0xd3, 0x40,
-	0x10, 0x8e, 0xf3, 0x63, 0xe2, 0x09, 0x82, 0x63, 0x0b, 0x64, 0x1d, 0xc1, 0x04, 0x57, 0x57, 0x39,
-	0x60, 0x9e, 0x20, 0xb9, 0x03, 0x51, 0xa0, 0x13, 0x4a, 0x49, 0xb7, 0xb7, 0xde, 0xe8, 0xac, 0x24,
-	0xbb, 0xd6, 0x7a, 0x11, 0x77, 0x6f, 0xc1, 0x33, 0x50, 0x52, 0xf1, 0x00, 0x3c, 0x00, 0xe5, 0x95,
-	0x34, 0x48, 0x28, 0x79, 0x11, 0xe4, 0xf1, 0x3a, 0xb1, 0x63, 0xd9, 0x34, 0x88, 0x6e, 0x67, 0xe6,
-	0x9b, 0xef, 0x9b, 0x9f, 0xb5, 0x17, 0x1e, 0xb1, 0x88, 0xb2, 0x69, 0x42, 0xd9, 0x8a, 0xeb, 0x20,
-	0x51, 0x52, 0x4b, 0x72, 0xc2, 0x94, 0x4c, 0xd3, 0x48, 0x6e, 0x68, 0x2c, 0x82, 0x2c, 0xec, 0x7f,
-	0xed, 0xc1, 0x83, 0xf3, 0x88, 0xb2, 0xf7, 0x08, 0xbb, 0xa0, 0x9a, 0x92, 0x10, 0x6c, 0x21, 0xb3,
-	0x93, 0x6b, 0x4d, 0xac, 0xb3, 0x51, 0xe8, 0x06, 0xc7, 0x59, 0xc1, 0x25, 0xc6, 0xdf, 0x76, 0x16,
-	0x06, 0x49, 0x6e, 0x60, 0xbc, 0x94, 0xea, 0x13, 0x55, 0xd1, 0xb9, 0x94, 0x09, 0x57, 0x54, 0xc7,
-	0x52, 0x64, 0x91, 0x9c, 0xd7, 0xed, 0x23, 0x53, 0x58, 0x67, 0x7a, 0xd3, 0x92, 0x65, 0x34, 0x5a,
-	0x99, 0x89, 0x82, 0x53, 0x9e, 0x6a, 0x7a, 0xb5, 0x8e, 0xd3, 0xeb, 0x12, 0xc2, 0xe8, 0xf6, 0x50,
-	0xf7, 0x45, 0x5d, 0xf7, 0x75, 0x63, 0x8e, 0x51, 0x6d, 0x61, 0x25, 0x6b, 0x70, 0xe9, 0x47, 0x7d,
-	0xcd, 0x85, 0x8e, 0x19, 0xd5, 0xfc, 0x02, 0x79, 0x8d, 0x62, 0x17, 0x15, 0x83, 0xba, 0xe2, 0xac,
-	0x21, 0xc3, 0xe8, 0x35, 0x32, 0xce, 0x87, 0x60, 0xe7, 0x4b, 0xf4, 0x87, 0x60, 0xe7, 0x93, 0xf7,
-	0xbf, 0x59, 0x30, 0x6e, 0x23, 0x24, 0x8f, 0xc1, 0x4e, 0xb9, 0x88, 0xb8, 0xc2, 0x25, 0x3a, 0x0b,
-	0x63, 0x91, 0x13, 0xe8, 0x25, 0x2b, 0x8e, 0x55, 0x3a, 0x8b, 0xec, 0x98, 0x7b, 0x04, 0x4e, 0x0a,
-	0x3d, 0x82, 0x8c, 0xc1, 0x11, 0x52, 0xcf, 0xf9, 0x52, 0x2a, 0x8e, 0x9b, 0x73, 0x16, 0x07, 0x07,
-	0x39, 0x85, 0xa1, 0x90, 0x7a, 0xb6, 0xd4, 0x5c, 0xb9, 0x03, 0x0c, 0xee, 0xed, 0x2c, 0xb6, 0x96,
-	0x0c, 0x47, 0xe5, 0xda, 0x79, 0xac, 0xb0, 0xfd, 0x5f, 0x16, 0x3c, 0x69, 0x2a, 0x79, 0xc6, 0x56,
-	0xc4, 0x87, 0xfb, 0x4c, 0x8a, 0x65, 0xac, 0x36, 0x79, 0x7e, 0x5e, 0x77, 0xc5, 0x47, 0x26, 0x30,
-	0x32, 0x36, 0x8f, 0xe6, 0xb7, 0xa6, 0x8b, 0xb2, 0xab, 0x52, 0x41, 0xaf, 0x5a, 0x41, 0xd1, 0x7b,
-	0xbf, 0xd6, 0xfb, 0xa0, 0xa1, 0x77, 0xbb, 0xad, 0xf7, 0x7b, 0xd5, 0xde, 0xfd, 0x2f, 0x16, 0x78,
-	0xed, 0xb7, 0xaa, 0x4a, 0x6e, 0xb5, 0x91, 0x77, 0xeb, 0x83, 0x8d, 0x85, 0xe6, 0x8a, 0xa7, 0xba,
-	0x68, 0xab, 0xb0, 0x09, 0x81, 0x3e, 0x93, 0xa9, 0x36, 0x7d, 0xe1, 0xb9, 0xb4, 0xfe, 0x41, 0x79,
-	0xfd, 0x3e, 0x87, 0xa7, 0xcd, 0x35, 0xfe, 0xb3, 0x2d, 0xf8, 0xdf, 0xbb, 0x30, 0xf9, 0xdb, 0x97,
-	0xfd, 0x1f, 0xa7, 0x31, 0x81, 0x51, 0xfe, 0x25, 0xbe, 0xbc, 0xa4, 0x1b, 0x6e, 0x46, 0x52, 0x76,
-	0x1d, 0x10, 0x21, 0x22, 0xec, 0x32, 0x02, 0x5d, 0xe4, 0x0c, 0x1e, 0x9a, 0x84, 0x77, 0xc5, 0xfd,
-	0xca, 0x6f, 0xc0, 0xb1, 0xfb, 0x80, 0x0c, 0xf7, 0xc8, 0x61, 0x19, 0xb9, 0x77, 0x97, 0xb6, 0xe4,
-	0x54, 0xb6, 0xf4, 0x1c, 0x9e, 0xb5, 0x4d, 0x6f, 0xc6, 0x56, 0xf3, 0xf0, 0xc7, 0xd6, 0xb3, 0xee,
-	0xb6, 0x9e, 0xf5, 0x7b, 0xeb, 0x59, 0x9f, 0x77, 0x5e, 0xe7, 0x6e, 0xe7, 0x75, 0x7e, 0xee, 0xbc,
-	0xce, 0x07, 0xb7, 0xf4, 0xe7, 0x99, 0xde, 0x4c, 0xf1, 0x11, 0xd0, 0xb7, 0x09, 0x4f, 0xaf, 0x6c,
-	0x7c, 0x04, 0x5e, 0xfd, 0x09, 0x00, 0x00, 0xff, 0xff, 0xeb, 0xcb, 0x50, 0x81, 0x19, 0x06, 0x00,
-	0x00,
+	// 656 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0x3f, 0x6e, 0xdb, 0x3e,
+	0x14, 0xb6, 0x9c, 0x44, 0xb1, 0x5e, 0x7e, 0xf8, 0x35, 0xe5, 0x50, 0x18, 0x89, 0xa3, 0x38, 0x9c,
+	0x32, 0x39, 0x8d, 0x32, 0x76, 0xb2, 0x93, 0x16, 0x1d, 0x9a, 0xa0, 0xd0, 0xd8, 0x8d, 0xa1, 0xa8,
+	0x46, 0xb0, 0x4d, 0x1a, 0x12, 0x83, 0x26, 0xe8, 0x15, 0x3a, 0xf4, 0x0c, 0x3d, 0x41, 0x0f, 0xd0,
+	0x03, 0x74, 0xcc, 0xd8, 0xa5, 0x40, 0x61, 0x5f, 0xa4, 0x10, 0x45, 0xdb, 0x52, 0x64, 0xd2, 0x4b,
+	0xd0, 0x8d, 0x7c, 0x7c, 0xef, 0xfb, 0xde, 0x9f, 0x8f, 0x94, 0xe0, 0x39, 0x8d, 0x08, 0x3d, 0x99,
+	0x10, 0x3a, 0x64, 0xb2, 0x37, 0x49, 0x85, 0x14, 0x68, 0x97, 0xa6, 0x22, 0xcb, 0x22, 0x31, 0x26,
+	0x09, 0xef, 0xe5, 0xc7, 0xf8, 0x8b, 0x0b, 0xff, 0x9f, 0x47, 0x84, 0xbe, 0x57, 0x6e, 0x17, 0x44,
+	0x12, 0x14, 0x80, 0xcb, 0x45, 0xbe, 0x6a, 0x3b, 0x5d, 0xe7, 0x78, 0x27, 0x68, 0xf7, 0x1e, 0x47,
+	0xf5, 0xae, 0xd4, 0xf9, 0xdb, 0x46, 0xa8, 0x3d, 0xd1, 0x08, 0xda, 0x51, 0x92, 0x91, 0xeb, 0x11,
+	0x3b, 0x17, 0x62, 0xc2, 0x52, 0x22, 0x13, 0xc1, 0x0b, 0xcc, 0xf6, 0xb6, 0x42, 0xe9, 0xd5, 0x51,
+	0x2e, 0x0c, 0x11, 0x1a, 0xdb, 0x88, 0x88, 0x6e, 0x61, 0x7f, 0x2c, 0xa2, 0x24, 0xbe, 0x2f, 0x1d,
+	0x9d, 0x8b, 0x4c, 0x6a, 0x42, 0x57, 0x11, 0x9e, 0xd6, 0x09, 0x2f, 0xcd, 0x41, 0x9a, 0xd3, 0x86,
+	0x8b, 0x3e, 0xc3, 0x01, 0xbb, 0xa3, 0x37, 0x84, 0x7f, 0x2c, 0xe7, 0x94, 0x47, 0x6a, 0xe2, 0x2d,
+	0x45, 0x7c, 0x56, 0x27, 0x7e, 0x6d, 0x0b, 0xd3, 0xd4, 0x76, 0x6c, 0x74, 0x07, 0x9d, 0x58, 0xa4,
+	0x9f, 0x48, 0x1a, 0xad, 0xe6, 0xde, 0x54, 0xdc, 0x41, 0x9d, 0xfb, 0x8d, 0x25, 0x4a, 0x53, 0x5b,
+	0x91, 0x51, 0x0a, 0x7b, 0x2c, 0x93, 0xe4, 0x7a, 0x94, 0x64, 0x37, 0xf5, 0xe9, 0x6e, 0x28, 0xde,
+	0x97, 0x2b, 0x6a, 0x36, 0xc6, 0x68, 0x56, 0x0b, 0x6a, 0xae, 0x27, 0x72, 0x2b, 0x6f, 0x18, 0x97,
+	0x09, 0x25, 0x92, 0x5d, 0x28, 0x5c, 0xcd, 0xd8, 0x34, 0xe9, 0xa9, 0x6f, 0x88, 0x98, 0xeb, 0xc9,
+	0x84, 0x38, 0x68, 0x81, 0x5b, 0x5c, 0x13, 0xdc, 0x02, 0xb7, 0xd0, 0x36, 0xfe, 0xee, 0x40, 0xc7,
+	0x06, 0x88, 0x5e, 0x80, 0x9b, 0x31, 0x1e, 0xb1, 0x54, 0x5d, 0x13, 0x2f, 0xd4, 0x3b, 0xb4, 0x0b,
+	0x1b, 0x93, 0x21, 0x53, 0x59, 0x7a, 0x61, 0xbe, 0x2c, 0x2c, 0x5c, 0x75, 0x4a, 0x59, 0x38, 0xea,
+	0x80, 0xc7, 0x85, 0x1c, 0xb0, 0x58, 0xa4, 0x4c, 0x4d, 0xce, 0x0b, 0x97, 0x06, 0xb4, 0x07, 0x2d,
+	0x2e, 0x64, 0x3f, 0x96, 0x2c, 0x55, 0x92, 0xf2, 0xc2, 0xc5, 0x3e, 0x3f, 0x1b, 0x09, 0xaa, 0x5a,
+	0xa5, 0x74, 0xee, 0x85, 0x8b, 0x3d, 0xfe, 0xed, 0xc0, 0xbe, 0x29, 0xe5, 0x3e, 0x1d, 0x22, 0x0c,
+	0xff, 0x51, 0xc1, 0xe3, 0x24, 0x1d, 0x17, 0xf1, 0x45, 0xde, 0x15, 0x1b, 0xea, 0xc2, 0x8e, 0xde,
+	0xb3, 0x68, 0x70, 0xaf, 0xab, 0x28, 0x9b, 0x2a, 0x19, 0x6c, 0x54, 0x33, 0x98, 0xd7, 0xbe, 0x59,
+	0xab, 0x7d, 0xcb, 0x50, 0xbb, 0x6b, 0xab, 0x7d, 0xbb, 0x5a, 0x3b, 0xfe, 0xe6, 0x80, 0x6f, 0x57,
+	0x55, 0x15, 0xdc, 0xb1, 0x81, 0x37, 0xeb, 0x8d, 0x4d, 0xb8, 0x64, 0x29, 0xcb, 0xe4, 0xbc, 0xac,
+	0xf9, 0x1e, 0x21, 0xd8, 0xa4, 0x22, 0x93, 0xba, 0x2e, 0xb5, 0x2e, 0x8d, 0x7f, 0xab, 0x3c, 0x7e,
+	0xcc, 0xe0, 0xc0, 0x9c, 0xe3, 0x93, 0x4d, 0x01, 0xff, 0x68, 0x42, 0x77, 0xdd, 0xcd, 0xfe, 0x87,
+	0xdd, 0xe8, 0xc2, 0x4e, 0x71, 0x13, 0x4f, 0xaf, 0xc8, 0x98, 0xe9, 0x96, 0x94, 0x4d, 0x4b, 0x8f,
+	0x40, 0x79, 0xb8, 0x65, 0x0f, 0x65, 0x42, 0xc7, 0xf0, 0x4c, 0x07, 0xbc, 0x9b, 0xeb, 0xab, 0x50,
+	0xc0, 0x63, 0xf3, 0xd2, 0x33, 0x58, 0x78, 0xb6, 0xca, 0x9e, 0x0b, 0x73, 0x69, 0x4a, 0x5e, 0x65,
+	0x4a, 0x47, 0x70, 0x68, 0xeb, 0x5e, 0x9f, 0x0e, 0xf1, 0x2b, 0x38, 0x5a, 0xfb, 0x6c, 0x9b, 0x1e,
+	0x01, 0x8c, 0xa1, 0x6b, 0x0d, 0xce, 0x09, 0x2e, 0xe1, 0x70, 0xcd, 0x07, 0x69, 0xd1, 0x6a, 0x67,
+	0xa5, 0xf0, 0x9a, 0x15, 0xca, 0x18, 0x7c, 0x0b, 0xdc, 0xd3, 0x29, 0xcf, 0x87, 0x8e, 0xed, 0xc3,
+	0x8d, 0x0f, 0x60, 0xdf, 0x74, 0xde, 0xa7, 0xc3, 0x41, 0xf0, 0x73, 0xea, 0x3b, 0x0f, 0x53, 0xdf,
+	0xf9, 0x33, 0xf5, 0x9d, 0xaf, 0x33, 0xbf, 0xf1, 0x30, 0xf3, 0x1b, 0xbf, 0x66, 0x7e, 0xe3, 0x43,
+	0xbb, 0xf4, 0xa0, 0x9f, 0xdc, 0x9d, 0xa8, 0xbf, 0x17, 0x79, 0x3f, 0x61, 0xd9, 0xb5, 0xab, 0xfe,
+	0x5e, 0xce, 0xfe, 0x06, 0x00, 0x00, 0xff, 0xff, 0xdc, 0x3c, 0x2f, 0x75, 0xd2, 0x08, 0x00, 0x00,
 }
 
 func (m *CdacPacketData) Marshal() (dAtA []byte, err error) {
@@ -787,6 +1101,69 @@ func (m *CdacPacketData_ForwardCooperationDataPacket) MarshalToSizedBuffer(dAtA 
 		}
 		i--
 		dAtA[i] = 0x22
+	}
+	return len(dAtA) - i, nil
+}
+func (m *CdacPacketData_ExchangeCooperationDataPacket) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CdacPacketData_ExchangeCooperationDataPacket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.ExchangeCooperationDataPacket != nil {
+		{
+			size, err := m.ExchangeCooperationDataPacket.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPacket(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *CdacPacketData_ModifyCooperationCostPacket) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CdacPacketData_ModifyCooperationCostPacket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.ModifyCooperationCostPacket != nil {
+		{
+			size, err := m.ModifyCooperationCostPacket.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPacket(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	return len(dAtA) - i, nil
+}
+func (m *CdacPacketData_DisableCooperationPacket) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CdacPacketData_DisableCooperationPacket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.DisableCooperationPacket != nil {
+		{
+			size, err := m.DisableCooperationPacket.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPacket(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
 	}
 	return len(dAtA) - i, nil
 }
@@ -1154,6 +1531,179 @@ func (m *ForwardCooperationDataPacketAck) MarshalToSizedBuffer(dAtA []byte) (int
 	return len(dAtA) - i, nil
 }
 
+func (m *ExchangeCooperationDataPacketData) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ExchangeCooperationDataPacketData) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ExchangeCooperationDataPacketData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ExchangeCooperationDataPacketAck) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ExchangeCooperationDataPacketAck) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ExchangeCooperationDataPacketAck) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *ModifyCooperationCostPacketData) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ModifyCooperationCostPacketData) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ModifyCooperationCostPacketData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Cost) > 0 {
+		i -= len(m.Cost)
+		copy(dAtA[i:], m.Cost)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Cost)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ModifyCooperationCostPacketAck) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ModifyCooperationCostPacketAck) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ModifyCooperationCostPacketAck) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.ConfirmedBy) > 0 {
+		i -= len(m.ConfirmedBy)
+		copy(dAtA[i:], m.ConfirmedBy)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.ConfirmedBy)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Confirmation) > 0 {
+		i -= len(m.Confirmation)
+		copy(dAtA[i:], m.Confirmation)
+		i = encodeVarintPacket(dAtA, i, uint64(len(m.Confirmation)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DisableCooperationPacketData) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DisableCooperationPacketData) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DisableCooperationPacketData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *DisableCooperationPacketAck) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DisableCooperationPacketAck) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DisableCooperationPacketAck) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintPacket(dAtA []byte, offset int, v uint64) int {
 	offset -= sovPacket(v)
 	base := offset
@@ -1221,6 +1771,42 @@ func (m *CdacPacketData_ForwardCooperationDataPacket) Size() (n int) {
 	_ = l
 	if m.ForwardCooperationDataPacket != nil {
 		l = m.ForwardCooperationDataPacket.Size()
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
+func (m *CdacPacketData_ExchangeCooperationDataPacket) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ExchangeCooperationDataPacket != nil {
+		l = m.ExchangeCooperationDataPacket.Size()
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
+func (m *CdacPacketData_ModifyCooperationCostPacket) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ModifyCooperationCostPacket != nil {
+		l = m.ModifyCooperationCostPacket.Size()
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
+func (m *CdacPacketData_DisableCooperationPacket) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.DisableCooperationPacket != nil {
+		l = m.DisableCooperationPacket.Size()
 		n += 1 + l + sovPacket(uint64(l))
 	}
 	return n
@@ -1404,6 +1990,80 @@ func (m *ForwardCooperationDataPacketAck) Size() (n int) {
 	return n
 }
 
+func (m *ExchangeCooperationDataPacketData) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
+
+func (m *ExchangeCooperationDataPacketAck) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *ModifyCooperationCostPacketData) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Cost)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
+
+func (m *ModifyCooperationCostPacketAck) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Confirmation)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	l = len(m.ConfirmedBy)
+	if l > 0 {
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
+
+func (m *DisableCooperationPacketData) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *DisableCooperationPacketAck) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
 func sovPacket(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
@@ -1578,6 +2238,111 @@ func (m *CdacPacketData) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			m.Packet = &CdacPacketData_ForwardCooperationDataPacket{v}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExchangeCooperationDataPacket", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &ExchangeCooperationDataPacketData{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Packet = &CdacPacketData_ExchangeCooperationDataPacket{v}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ModifyCooperationCostPacket", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &ModifyCooperationCostPacketData{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Packet = &CdacPacketData_ModifyCooperationCostPacket{v}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DisableCooperationPacket", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &DisableCooperationPacketData{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Packet = &CdacPacketData_DisableCooperationPacket{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2855,6 +3620,466 @@ func (m *ForwardCooperationDataPacketAck) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: ForwardCooperationDataPacketAck: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ExchangeCooperationDataPacketData) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExchangeCooperationDataPacketData: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExchangeCooperationDataPacketData: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ExchangeCooperationDataPacketAck) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExchangeCooperationDataPacketAck: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExchangeCooperationDataPacketAck: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ModifyCooperationCostPacketData) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ModifyCooperationCostPacketData: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ModifyCooperationCostPacketData: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Cost", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Cost = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ModifyCooperationCostPacketAck) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ModifyCooperationCostPacketAck: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ModifyCooperationCostPacketAck: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Confirmation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Confirmation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConfirmedBy", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ConfirmedBy = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DisableCooperationPacketData) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DisableCooperationPacketData: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DisableCooperationPacketData: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DisableCooperationPacketAck) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DisableCooperationPacketAck: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DisableCooperationPacketAck: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

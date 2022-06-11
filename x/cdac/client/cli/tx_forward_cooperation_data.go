@@ -41,7 +41,7 @@ func CmdSendForwardCooperationData() *cobra.Command {
 				timeoutTimestamp = consensusState.GetTimestamp() + timeoutTimestamp
 			}
 
-			msg := types.NewMsgSendForwardCooperationData(creator, srcPort, srcChannel, timeoutTimestamp)
+			msg := types.NewMsgSendForwardCooperationData(creator, srcPort, srcChannel, timeoutTimestamp, "", "", "", "", "", "", "", "")
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

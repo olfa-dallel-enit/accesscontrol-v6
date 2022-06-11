@@ -6,6 +6,12 @@ export const protobufPackage = "crossdomain.cdac";
 export interface CdacPacketData {
   noData: NoData | undefined;
   /** this line is used by starport scaffolding # ibc/packet/proto/field */
+  disableCooperationPacket: DisableCooperationPacketData | undefined;
+  /** this line is used by starport scaffolding # ibc/packet/proto/field/number */
+  modifyCooperationCostPacket: ModifyCooperationCostPacketData | undefined;
+  /** this line is used by starport scaffolding # ibc/packet/proto/field/number */
+  exchangeCooperationDataPacket: ExchangeCooperationDataPacketData | undefined;
+  /** this line is used by starport scaffolding # ibc/packet/proto/field/number */
   forwardCooperationDataPacket: ForwardCooperationDataPacketData | undefined;
   /** this line is used by starport scaffolding # ibc/packet/proto/field/number */
   establishCooperationPacket: EstablishCooperationPacketData | undefined;
@@ -16,10 +22,25 @@ export interface CdacPacketData {
 export interface NoData {}
 
 /** AuthenticateDomainPacketData defines a struct for the packet payload */
-export interface AuthenticateDomainPacketData {}
+export interface AuthenticateDomainPacketData {
+  sender: string;
+  pke: string;
+  pkn: string;
+  notBefore: string;
+  notAfter: string;
+  location: string;
+}
 
 /** AuthenticateDomainPacketAck defines a struct for the packet acknowledgment */
-export interface AuthenticateDomainPacketAck {}
+export interface AuthenticateDomainPacketAck {
+  confirmation: string;
+  confirmedBy: string;
+  location: string;
+  pke: string;
+  pkn: string;
+  notBefore: string;
+  notAfter: string;
+}
 
 /** EstablishCooperationPacketData defines a struct for the packet payload */
 export interface EstablishCooperationPacketData {
@@ -27,16 +48,56 @@ export interface EstablishCooperationPacketData {
   notAfter: string;
   interest: string;
   cost: string;
+  sender: string;
 }
 
 /** EstablishCooperationPacketAck defines a struct for the packet acknowledgment */
-export interface EstablishCooperationPacketAck {}
+export interface EstablishCooperationPacketAck {
+  confirmation: string;
+  confirmedBy: string;
+}
 
 /** ForwardCooperationDataPacketData defines a struct for the packet payload */
-export interface ForwardCooperationDataPacketData {}
+export interface ForwardCooperationDataPacketData {
+  notBefore: string;
+  notAfter: string;
+  interest: string;
+  cost: string;
+  domain1Name: string;
+  domain2Name: string;
+  domain1Location: string;
+  domain2Location: string;
+  sender: string;
+}
 
 /** ForwardCooperationDataPacketAck defines a struct for the packet acknowledgment */
 export interface ForwardCooperationDataPacketAck {}
+
+/** ExchangeCooperationDataPacketData defines a struct for the packet payload */
+export interface ExchangeCooperationDataPacketData {
+  sender: string;
+}
+
+/** ExchangeCooperationDataPacketAck defines a struct for the packet acknowledgment */
+export interface ExchangeCooperationDataPacketAck {}
+
+/** ModifyCooperationCostPacketData defines a struct for the packet payload */
+export interface ModifyCooperationCostPacketData {
+  cost: string;
+  sender: string;
+}
+
+/** ModifyCooperationCostPacketAck defines a struct for the packet acknowledgment */
+export interface ModifyCooperationCostPacketAck {
+  confirmation: string;
+  confirmedBy: string;
+}
+
+/** DisableCooperationPacketData defines a struct for the packet payload */
+export interface DisableCooperationPacketData {}
+
+/** DisableCooperationPacketAck defines a struct for the packet acknowledgment */
+export interface DisableCooperationPacketAck {}
 
 const baseCdacPacketData: object = {};
 
@@ -44,6 +105,24 @@ export const CdacPacketData = {
   encode(message: CdacPacketData, writer: Writer = Writer.create()): Writer {
     if (message.noData !== undefined) {
       NoData.encode(message.noData, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.disableCooperationPacket !== undefined) {
+      DisableCooperationPacketData.encode(
+        message.disableCooperationPacket,
+        writer.uint32(58).fork()
+      ).ldelim();
+    }
+    if (message.modifyCooperationCostPacket !== undefined) {
+      ModifyCooperationCostPacketData.encode(
+        message.modifyCooperationCostPacket,
+        writer.uint32(50).fork()
+      ).ldelim();
+    }
+    if (message.exchangeCooperationDataPacket !== undefined) {
+      ExchangeCooperationDataPacketData.encode(
+        message.exchangeCooperationDataPacket,
+        writer.uint32(42).fork()
+      ).ldelim();
     }
     if (message.forwardCooperationDataPacket !== undefined) {
       ForwardCooperationDataPacketData.encode(
@@ -75,6 +154,24 @@ export const CdacPacketData = {
       switch (tag >>> 3) {
         case 1:
           message.noData = NoData.decode(reader, reader.uint32());
+          break;
+        case 7:
+          message.disableCooperationPacket = DisableCooperationPacketData.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 6:
+          message.modifyCooperationCostPacket = ModifyCooperationCostPacketData.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 5:
+          message.exchangeCooperationDataPacket = ExchangeCooperationDataPacketData.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 4:
           message.forwardCooperationDataPacket = ForwardCooperationDataPacketData.decode(
@@ -108,6 +205,36 @@ export const CdacPacketData = {
       message.noData = NoData.fromJSON(object.noData);
     } else {
       message.noData = undefined;
+    }
+    if (
+      object.disableCooperationPacket !== undefined &&
+      object.disableCooperationPacket !== null
+    ) {
+      message.disableCooperationPacket = DisableCooperationPacketData.fromJSON(
+        object.disableCooperationPacket
+      );
+    } else {
+      message.disableCooperationPacket = undefined;
+    }
+    if (
+      object.modifyCooperationCostPacket !== undefined &&
+      object.modifyCooperationCostPacket !== null
+    ) {
+      message.modifyCooperationCostPacket = ModifyCooperationCostPacketData.fromJSON(
+        object.modifyCooperationCostPacket
+      );
+    } else {
+      message.modifyCooperationCostPacket = undefined;
+    }
+    if (
+      object.exchangeCooperationDataPacket !== undefined &&
+      object.exchangeCooperationDataPacket !== null
+    ) {
+      message.exchangeCooperationDataPacket = ExchangeCooperationDataPacketData.fromJSON(
+        object.exchangeCooperationDataPacket
+      );
+    } else {
+      message.exchangeCooperationDataPacket = undefined;
     }
     if (
       object.forwardCooperationDataPacket !== undefined &&
@@ -146,6 +273,22 @@ export const CdacPacketData = {
     const obj: any = {};
     message.noData !== undefined &&
       (obj.noData = message.noData ? NoData.toJSON(message.noData) : undefined);
+    message.disableCooperationPacket !== undefined &&
+      (obj.disableCooperationPacket = message.disableCooperationPacket
+        ? DisableCooperationPacketData.toJSON(message.disableCooperationPacket)
+        : undefined);
+    message.modifyCooperationCostPacket !== undefined &&
+      (obj.modifyCooperationCostPacket = message.modifyCooperationCostPacket
+        ? ModifyCooperationCostPacketData.toJSON(
+            message.modifyCooperationCostPacket
+          )
+        : undefined);
+    message.exchangeCooperationDataPacket !== undefined &&
+      (obj.exchangeCooperationDataPacket = message.exchangeCooperationDataPacket
+        ? ExchangeCooperationDataPacketData.toJSON(
+            message.exchangeCooperationDataPacket
+          )
+        : undefined);
     message.forwardCooperationDataPacket !== undefined &&
       (obj.forwardCooperationDataPacket = message.forwardCooperationDataPacket
         ? ForwardCooperationDataPacketData.toJSON(
@@ -171,6 +314,36 @@ export const CdacPacketData = {
       message.noData = NoData.fromPartial(object.noData);
     } else {
       message.noData = undefined;
+    }
+    if (
+      object.disableCooperationPacket !== undefined &&
+      object.disableCooperationPacket !== null
+    ) {
+      message.disableCooperationPacket = DisableCooperationPacketData.fromPartial(
+        object.disableCooperationPacket
+      );
+    } else {
+      message.disableCooperationPacket = undefined;
+    }
+    if (
+      object.modifyCooperationCostPacket !== undefined &&
+      object.modifyCooperationCostPacket !== null
+    ) {
+      message.modifyCooperationCostPacket = ModifyCooperationCostPacketData.fromPartial(
+        object.modifyCooperationCostPacket
+      );
+    } else {
+      message.modifyCooperationCostPacket = undefined;
+    }
+    if (
+      object.exchangeCooperationDataPacket !== undefined &&
+      object.exchangeCooperationDataPacket !== null
+    ) {
+      message.exchangeCooperationDataPacket = ExchangeCooperationDataPacketData.fromPartial(
+        object.exchangeCooperationDataPacket
+      );
+    } else {
+      message.exchangeCooperationDataPacket = undefined;
     }
     if (
       object.forwardCooperationDataPacket !== undefined &&
@@ -244,13 +417,38 @@ export const NoData = {
   },
 };
 
-const baseAuthenticateDomainPacketData: object = {};
+const baseAuthenticateDomainPacketData: object = {
+  sender: "",
+  pke: "",
+  pkn: "",
+  notBefore: "",
+  notAfter: "",
+  location: "",
+};
 
 export const AuthenticateDomainPacketData = {
   encode(
-    _: AuthenticateDomainPacketData,
+    message: AuthenticateDomainPacketData,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    if (message.pke !== "") {
+      writer.uint32(18).string(message.pke);
+    }
+    if (message.pkn !== "") {
+      writer.uint32(26).string(message.pkn);
+    }
+    if (message.notBefore !== "") {
+      writer.uint32(34).string(message.notBefore);
+    }
+    if (message.notAfter !== "") {
+      writer.uint32(42).string(message.notAfter);
+    }
+    if (message.location !== "") {
+      writer.uint32(50).string(message.location);
+    }
     return writer;
   },
 
@@ -266,6 +464,24 @@ export const AuthenticateDomainPacketData = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.sender = reader.string();
+          break;
+        case 2:
+          message.pke = reader.string();
+          break;
+        case 3:
+          message.pkn = reader.string();
+          break;
+        case 4:
+          message.notBefore = reader.string();
+          break;
+        case 5:
+          message.notAfter = reader.string();
+          break;
+        case 6:
+          message.location = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -274,35 +490,130 @@ export const AuthenticateDomainPacketData = {
     return message;
   },
 
-  fromJSON(_: any): AuthenticateDomainPacketData {
+  fromJSON(object: any): AuthenticateDomainPacketData {
     const message = {
       ...baseAuthenticateDomainPacketData,
     } as AuthenticateDomainPacketData;
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = String(object.sender);
+    } else {
+      message.sender = "";
+    }
+    if (object.pke !== undefined && object.pke !== null) {
+      message.pke = String(object.pke);
+    } else {
+      message.pke = "";
+    }
+    if (object.pkn !== undefined && object.pkn !== null) {
+      message.pkn = String(object.pkn);
+    } else {
+      message.pkn = "";
+    }
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = String(object.notBefore);
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = String(object.notAfter);
+    } else {
+      message.notAfter = "";
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = String(object.location);
+    } else {
+      message.location = "";
+    }
     return message;
   },
 
-  toJSON(_: AuthenticateDomainPacketData): unknown {
+  toJSON(message: AuthenticateDomainPacketData): unknown {
     const obj: any = {};
+    message.sender !== undefined && (obj.sender = message.sender);
+    message.pke !== undefined && (obj.pke = message.pke);
+    message.pkn !== undefined && (obj.pkn = message.pkn);
+    message.notBefore !== undefined && (obj.notBefore = message.notBefore);
+    message.notAfter !== undefined && (obj.notAfter = message.notAfter);
+    message.location !== undefined && (obj.location = message.location);
     return obj;
   },
 
   fromPartial(
-    _: DeepPartial<AuthenticateDomainPacketData>
+    object: DeepPartial<AuthenticateDomainPacketData>
   ): AuthenticateDomainPacketData {
     const message = {
       ...baseAuthenticateDomainPacketData,
     } as AuthenticateDomainPacketData;
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = object.sender;
+    } else {
+      message.sender = "";
+    }
+    if (object.pke !== undefined && object.pke !== null) {
+      message.pke = object.pke;
+    } else {
+      message.pke = "";
+    }
+    if (object.pkn !== undefined && object.pkn !== null) {
+      message.pkn = object.pkn;
+    } else {
+      message.pkn = "";
+    }
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = object.notBefore;
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = object.notAfter;
+    } else {
+      message.notAfter = "";
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = object.location;
+    } else {
+      message.location = "";
+    }
     return message;
   },
 };
 
-const baseAuthenticateDomainPacketAck: object = {};
+const baseAuthenticateDomainPacketAck: object = {
+  confirmation: "",
+  confirmedBy: "",
+  location: "",
+  pke: "",
+  pkn: "",
+  notBefore: "",
+  notAfter: "",
+};
 
 export const AuthenticateDomainPacketAck = {
   encode(
-    _: AuthenticateDomainPacketAck,
+    message: AuthenticateDomainPacketAck,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.confirmation !== "") {
+      writer.uint32(10).string(message.confirmation);
+    }
+    if (message.confirmedBy !== "") {
+      writer.uint32(18).string(message.confirmedBy);
+    }
+    if (message.location !== "") {
+      writer.uint32(26).string(message.location);
+    }
+    if (message.pke !== "") {
+      writer.uint32(34).string(message.pke);
+    }
+    if (message.pkn !== "") {
+      writer.uint32(42).string(message.pkn);
+    }
+    if (message.notBefore !== "") {
+      writer.uint32(50).string(message.notBefore);
+    }
+    if (message.notAfter !== "") {
+      writer.uint32(58).string(message.notAfter);
+    }
     return writer;
   },
 
@@ -318,6 +629,27 @@ export const AuthenticateDomainPacketAck = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.confirmation = reader.string();
+          break;
+        case 2:
+          message.confirmedBy = reader.string();
+          break;
+        case 3:
+          message.location = reader.string();
+          break;
+        case 4:
+          message.pke = reader.string();
+          break;
+        case 5:
+          message.pkn = reader.string();
+          break;
+        case 6:
+          message.notBefore = reader.string();
+          break;
+        case 7:
+          message.notAfter = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -326,24 +658,103 @@ export const AuthenticateDomainPacketAck = {
     return message;
   },
 
-  fromJSON(_: any): AuthenticateDomainPacketAck {
+  fromJSON(object: any): AuthenticateDomainPacketAck {
     const message = {
       ...baseAuthenticateDomainPacketAck,
     } as AuthenticateDomainPacketAck;
+    if (object.confirmation !== undefined && object.confirmation !== null) {
+      message.confirmation = String(object.confirmation);
+    } else {
+      message.confirmation = "";
+    }
+    if (object.confirmedBy !== undefined && object.confirmedBy !== null) {
+      message.confirmedBy = String(object.confirmedBy);
+    } else {
+      message.confirmedBy = "";
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = String(object.location);
+    } else {
+      message.location = "";
+    }
+    if (object.pke !== undefined && object.pke !== null) {
+      message.pke = String(object.pke);
+    } else {
+      message.pke = "";
+    }
+    if (object.pkn !== undefined && object.pkn !== null) {
+      message.pkn = String(object.pkn);
+    } else {
+      message.pkn = "";
+    }
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = String(object.notBefore);
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = String(object.notAfter);
+    } else {
+      message.notAfter = "";
+    }
     return message;
   },
 
-  toJSON(_: AuthenticateDomainPacketAck): unknown {
+  toJSON(message: AuthenticateDomainPacketAck): unknown {
     const obj: any = {};
+    message.confirmation !== undefined &&
+      (obj.confirmation = message.confirmation);
+    message.confirmedBy !== undefined &&
+      (obj.confirmedBy = message.confirmedBy);
+    message.location !== undefined && (obj.location = message.location);
+    message.pke !== undefined && (obj.pke = message.pke);
+    message.pkn !== undefined && (obj.pkn = message.pkn);
+    message.notBefore !== undefined && (obj.notBefore = message.notBefore);
+    message.notAfter !== undefined && (obj.notAfter = message.notAfter);
     return obj;
   },
 
   fromPartial(
-    _: DeepPartial<AuthenticateDomainPacketAck>
+    object: DeepPartial<AuthenticateDomainPacketAck>
   ): AuthenticateDomainPacketAck {
     const message = {
       ...baseAuthenticateDomainPacketAck,
     } as AuthenticateDomainPacketAck;
+    if (object.confirmation !== undefined && object.confirmation !== null) {
+      message.confirmation = object.confirmation;
+    } else {
+      message.confirmation = "";
+    }
+    if (object.confirmedBy !== undefined && object.confirmedBy !== null) {
+      message.confirmedBy = object.confirmedBy;
+    } else {
+      message.confirmedBy = "";
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = object.location;
+    } else {
+      message.location = "";
+    }
+    if (object.pke !== undefined && object.pke !== null) {
+      message.pke = object.pke;
+    } else {
+      message.pke = "";
+    }
+    if (object.pkn !== undefined && object.pkn !== null) {
+      message.pkn = object.pkn;
+    } else {
+      message.pkn = "";
+    }
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = object.notBefore;
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = object.notAfter;
+    } else {
+      message.notAfter = "";
+    }
     return message;
   },
 };
@@ -353,6 +764,7 @@ const baseEstablishCooperationPacketData: object = {
   notAfter: "",
   interest: "",
   cost: "",
+  sender: "",
 };
 
 export const EstablishCooperationPacketData = {
@@ -371,6 +783,9 @@ export const EstablishCooperationPacketData = {
     }
     if (message.cost !== "") {
       writer.uint32(34).string(message.cost);
+    }
+    if (message.sender !== "") {
+      writer.uint32(42).string(message.sender);
     }
     return writer;
   },
@@ -398,6 +813,9 @@ export const EstablishCooperationPacketData = {
           break;
         case 4:
           message.cost = reader.string();
+          break;
+        case 5:
+          message.sender = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -431,6 +849,11 @@ export const EstablishCooperationPacketData = {
     } else {
       message.cost = "";
     }
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = String(object.sender);
+    } else {
+      message.sender = "";
+    }
     return message;
   },
 
@@ -440,6 +863,7 @@ export const EstablishCooperationPacketData = {
     message.notAfter !== undefined && (obj.notAfter = message.notAfter);
     message.interest !== undefined && (obj.interest = message.interest);
     message.cost !== undefined && (obj.cost = message.cost);
+    message.sender !== undefined && (obj.sender = message.sender);
     return obj;
   },
 
@@ -469,17 +893,31 @@ export const EstablishCooperationPacketData = {
     } else {
       message.cost = "";
     }
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = object.sender;
+    } else {
+      message.sender = "";
+    }
     return message;
   },
 };
 
-const baseEstablishCooperationPacketAck: object = {};
+const baseEstablishCooperationPacketAck: object = {
+  confirmation: "",
+  confirmedBy: "",
+};
 
 export const EstablishCooperationPacketAck = {
   encode(
-    _: EstablishCooperationPacketAck,
+    message: EstablishCooperationPacketAck,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.confirmation !== "") {
+      writer.uint32(10).string(message.confirmation);
+    }
+    if (message.confirmedBy !== "") {
+      writer.uint32(18).string(message.confirmedBy);
+    }
     return writer;
   },
 
@@ -495,6 +933,12 @@ export const EstablishCooperationPacketAck = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.confirmation = reader.string();
+          break;
+        case 2:
+          message.confirmedBy = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -503,35 +947,96 @@ export const EstablishCooperationPacketAck = {
     return message;
   },
 
-  fromJSON(_: any): EstablishCooperationPacketAck {
+  fromJSON(object: any): EstablishCooperationPacketAck {
     const message = {
       ...baseEstablishCooperationPacketAck,
     } as EstablishCooperationPacketAck;
+    if (object.confirmation !== undefined && object.confirmation !== null) {
+      message.confirmation = String(object.confirmation);
+    } else {
+      message.confirmation = "";
+    }
+    if (object.confirmedBy !== undefined && object.confirmedBy !== null) {
+      message.confirmedBy = String(object.confirmedBy);
+    } else {
+      message.confirmedBy = "";
+    }
     return message;
   },
 
-  toJSON(_: EstablishCooperationPacketAck): unknown {
+  toJSON(message: EstablishCooperationPacketAck): unknown {
     const obj: any = {};
+    message.confirmation !== undefined &&
+      (obj.confirmation = message.confirmation);
+    message.confirmedBy !== undefined &&
+      (obj.confirmedBy = message.confirmedBy);
     return obj;
   },
 
   fromPartial(
-    _: DeepPartial<EstablishCooperationPacketAck>
+    object: DeepPartial<EstablishCooperationPacketAck>
   ): EstablishCooperationPacketAck {
     const message = {
       ...baseEstablishCooperationPacketAck,
     } as EstablishCooperationPacketAck;
+    if (object.confirmation !== undefined && object.confirmation !== null) {
+      message.confirmation = object.confirmation;
+    } else {
+      message.confirmation = "";
+    }
+    if (object.confirmedBy !== undefined && object.confirmedBy !== null) {
+      message.confirmedBy = object.confirmedBy;
+    } else {
+      message.confirmedBy = "";
+    }
     return message;
   },
 };
 
-const baseForwardCooperationDataPacketData: object = {};
+const baseForwardCooperationDataPacketData: object = {
+  notBefore: "",
+  notAfter: "",
+  interest: "",
+  cost: "",
+  domain1Name: "",
+  domain2Name: "",
+  domain1Location: "",
+  domain2Location: "",
+  sender: "",
+};
 
 export const ForwardCooperationDataPacketData = {
   encode(
-    _: ForwardCooperationDataPacketData,
+    message: ForwardCooperationDataPacketData,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.notBefore !== "") {
+      writer.uint32(10).string(message.notBefore);
+    }
+    if (message.notAfter !== "") {
+      writer.uint32(18).string(message.notAfter);
+    }
+    if (message.interest !== "") {
+      writer.uint32(26).string(message.interest);
+    }
+    if (message.cost !== "") {
+      writer.uint32(34).string(message.cost);
+    }
+    if (message.domain1Name !== "") {
+      writer.uint32(42).string(message.domain1Name);
+    }
+    if (message.domain2Name !== "") {
+      writer.uint32(50).string(message.domain2Name);
+    }
+    if (message.domain1Location !== "") {
+      writer.uint32(58).string(message.domain1Location);
+    }
+    if (message.domain2Location !== "") {
+      writer.uint32(66).string(message.domain2Location);
+    }
+    if (message.sender !== "") {
+      writer.uint32(74).string(message.sender);
+    }
     return writer;
   },
 
@@ -547,6 +1052,33 @@ export const ForwardCooperationDataPacketData = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.notBefore = reader.string();
+          break;
+        case 2:
+          message.notAfter = reader.string();
+          break;
+        case 3:
+          message.interest = reader.string();
+          break;
+        case 4:
+          message.cost = reader.string();
+          break;
+        case 5:
+          message.domain1Name = reader.string();
+          break;
+        case 6:
+          message.domain2Name = reader.string();
+          break;
+        case 7:
+          message.domain1Location = reader.string();
+          break;
+        case 8:
+          message.domain2Location = reader.string();
+          break;
+        case 9:
+          message.sender = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -555,24 +1087,139 @@ export const ForwardCooperationDataPacketData = {
     return message;
   },
 
-  fromJSON(_: any): ForwardCooperationDataPacketData {
+  fromJSON(object: any): ForwardCooperationDataPacketData {
     const message = {
       ...baseForwardCooperationDataPacketData,
     } as ForwardCooperationDataPacketData;
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = String(object.notBefore);
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = String(object.notAfter);
+    } else {
+      message.notAfter = "";
+    }
+    if (object.interest !== undefined && object.interest !== null) {
+      message.interest = String(object.interest);
+    } else {
+      message.interest = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = String(object.cost);
+    } else {
+      message.cost = "";
+    }
+    if (object.domain1Name !== undefined && object.domain1Name !== null) {
+      message.domain1Name = String(object.domain1Name);
+    } else {
+      message.domain1Name = "";
+    }
+    if (object.domain2Name !== undefined && object.domain2Name !== null) {
+      message.domain2Name = String(object.domain2Name);
+    } else {
+      message.domain2Name = "";
+    }
+    if (
+      object.domain1Location !== undefined &&
+      object.domain1Location !== null
+    ) {
+      message.domain1Location = String(object.domain1Location);
+    } else {
+      message.domain1Location = "";
+    }
+    if (
+      object.domain2Location !== undefined &&
+      object.domain2Location !== null
+    ) {
+      message.domain2Location = String(object.domain2Location);
+    } else {
+      message.domain2Location = "";
+    }
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = String(object.sender);
+    } else {
+      message.sender = "";
+    }
     return message;
   },
 
-  toJSON(_: ForwardCooperationDataPacketData): unknown {
+  toJSON(message: ForwardCooperationDataPacketData): unknown {
     const obj: any = {};
+    message.notBefore !== undefined && (obj.notBefore = message.notBefore);
+    message.notAfter !== undefined && (obj.notAfter = message.notAfter);
+    message.interest !== undefined && (obj.interest = message.interest);
+    message.cost !== undefined && (obj.cost = message.cost);
+    message.domain1Name !== undefined &&
+      (obj.domain1Name = message.domain1Name);
+    message.domain2Name !== undefined &&
+      (obj.domain2Name = message.domain2Name);
+    message.domain1Location !== undefined &&
+      (obj.domain1Location = message.domain1Location);
+    message.domain2Location !== undefined &&
+      (obj.domain2Location = message.domain2Location);
+    message.sender !== undefined && (obj.sender = message.sender);
     return obj;
   },
 
   fromPartial(
-    _: DeepPartial<ForwardCooperationDataPacketData>
+    object: DeepPartial<ForwardCooperationDataPacketData>
   ): ForwardCooperationDataPacketData {
     const message = {
       ...baseForwardCooperationDataPacketData,
     } as ForwardCooperationDataPacketData;
+    if (object.notBefore !== undefined && object.notBefore !== null) {
+      message.notBefore = object.notBefore;
+    } else {
+      message.notBefore = "";
+    }
+    if (object.notAfter !== undefined && object.notAfter !== null) {
+      message.notAfter = object.notAfter;
+    } else {
+      message.notAfter = "";
+    }
+    if (object.interest !== undefined && object.interest !== null) {
+      message.interest = object.interest;
+    } else {
+      message.interest = "";
+    }
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = "";
+    }
+    if (object.domain1Name !== undefined && object.domain1Name !== null) {
+      message.domain1Name = object.domain1Name;
+    } else {
+      message.domain1Name = "";
+    }
+    if (object.domain2Name !== undefined && object.domain2Name !== null) {
+      message.domain2Name = object.domain2Name;
+    } else {
+      message.domain2Name = "";
+    }
+    if (
+      object.domain1Location !== undefined &&
+      object.domain1Location !== null
+    ) {
+      message.domain1Location = object.domain1Location;
+    } else {
+      message.domain1Location = "";
+    }
+    if (
+      object.domain2Location !== undefined &&
+      object.domain2Location !== null
+    ) {
+      message.domain2Location = object.domain2Location;
+    } else {
+      message.domain2Location = "";
+    }
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = object.sender;
+    } else {
+      message.sender = "";
+    }
     return message;
   },
 };
@@ -625,6 +1272,408 @@ export const ForwardCooperationDataPacketAck = {
     const message = {
       ...baseForwardCooperationDataPacketAck,
     } as ForwardCooperationDataPacketAck;
+    return message;
+  },
+};
+
+const baseExchangeCooperationDataPacketData: object = { sender: "" };
+
+export const ExchangeCooperationDataPacketData = {
+  encode(
+    message: ExchangeCooperationDataPacketData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.sender !== "") {
+      writer.uint32(10).string(message.sender);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): ExchangeCooperationDataPacketData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseExchangeCooperationDataPacketData,
+    } as ExchangeCooperationDataPacketData;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.sender = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ExchangeCooperationDataPacketData {
+    const message = {
+      ...baseExchangeCooperationDataPacketData,
+    } as ExchangeCooperationDataPacketData;
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = String(object.sender);
+    } else {
+      message.sender = "";
+    }
+    return message;
+  },
+
+  toJSON(message: ExchangeCooperationDataPacketData): unknown {
+    const obj: any = {};
+    message.sender !== undefined && (obj.sender = message.sender);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<ExchangeCooperationDataPacketData>
+  ): ExchangeCooperationDataPacketData {
+    const message = {
+      ...baseExchangeCooperationDataPacketData,
+    } as ExchangeCooperationDataPacketData;
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = object.sender;
+    } else {
+      message.sender = "";
+    }
+    return message;
+  },
+};
+
+const baseExchangeCooperationDataPacketAck: object = {};
+
+export const ExchangeCooperationDataPacketAck = {
+  encode(
+    _: ExchangeCooperationDataPacketAck,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): ExchangeCooperationDataPacketAck {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseExchangeCooperationDataPacketAck,
+    } as ExchangeCooperationDataPacketAck;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): ExchangeCooperationDataPacketAck {
+    const message = {
+      ...baseExchangeCooperationDataPacketAck,
+    } as ExchangeCooperationDataPacketAck;
+    return message;
+  },
+
+  toJSON(_: ExchangeCooperationDataPacketAck): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<ExchangeCooperationDataPacketAck>
+  ): ExchangeCooperationDataPacketAck {
+    const message = {
+      ...baseExchangeCooperationDataPacketAck,
+    } as ExchangeCooperationDataPacketAck;
+    return message;
+  },
+};
+
+const baseModifyCooperationCostPacketData: object = { cost: "", sender: "" };
+
+export const ModifyCooperationCostPacketData = {
+  encode(
+    message: ModifyCooperationCostPacketData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.cost !== "") {
+      writer.uint32(10).string(message.cost);
+    }
+    if (message.sender !== "") {
+      writer.uint32(18).string(message.sender);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): ModifyCooperationCostPacketData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseModifyCooperationCostPacketData,
+    } as ModifyCooperationCostPacketData;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.cost = reader.string();
+          break;
+        case 2:
+          message.sender = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ModifyCooperationCostPacketData {
+    const message = {
+      ...baseModifyCooperationCostPacketData,
+    } as ModifyCooperationCostPacketData;
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = String(object.cost);
+    } else {
+      message.cost = "";
+    }
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = String(object.sender);
+    } else {
+      message.sender = "";
+    }
+    return message;
+  },
+
+  toJSON(message: ModifyCooperationCostPacketData): unknown {
+    const obj: any = {};
+    message.cost !== undefined && (obj.cost = message.cost);
+    message.sender !== undefined && (obj.sender = message.sender);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<ModifyCooperationCostPacketData>
+  ): ModifyCooperationCostPacketData {
+    const message = {
+      ...baseModifyCooperationCostPacketData,
+    } as ModifyCooperationCostPacketData;
+    if (object.cost !== undefined && object.cost !== null) {
+      message.cost = object.cost;
+    } else {
+      message.cost = "";
+    }
+    if (object.sender !== undefined && object.sender !== null) {
+      message.sender = object.sender;
+    } else {
+      message.sender = "";
+    }
+    return message;
+  },
+};
+
+const baseModifyCooperationCostPacketAck: object = {
+  confirmation: "",
+  confirmedBy: "",
+};
+
+export const ModifyCooperationCostPacketAck = {
+  encode(
+    message: ModifyCooperationCostPacketAck,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.confirmation !== "") {
+      writer.uint32(10).string(message.confirmation);
+    }
+    if (message.confirmedBy !== "") {
+      writer.uint32(18).string(message.confirmedBy);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): ModifyCooperationCostPacketAck {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseModifyCooperationCostPacketAck,
+    } as ModifyCooperationCostPacketAck;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.confirmation = reader.string();
+          break;
+        case 2:
+          message.confirmedBy = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ModifyCooperationCostPacketAck {
+    const message = {
+      ...baseModifyCooperationCostPacketAck,
+    } as ModifyCooperationCostPacketAck;
+    if (object.confirmation !== undefined && object.confirmation !== null) {
+      message.confirmation = String(object.confirmation);
+    } else {
+      message.confirmation = "";
+    }
+    if (object.confirmedBy !== undefined && object.confirmedBy !== null) {
+      message.confirmedBy = String(object.confirmedBy);
+    } else {
+      message.confirmedBy = "";
+    }
+    return message;
+  },
+
+  toJSON(message: ModifyCooperationCostPacketAck): unknown {
+    const obj: any = {};
+    message.confirmation !== undefined &&
+      (obj.confirmation = message.confirmation);
+    message.confirmedBy !== undefined &&
+      (obj.confirmedBy = message.confirmedBy);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<ModifyCooperationCostPacketAck>
+  ): ModifyCooperationCostPacketAck {
+    const message = {
+      ...baseModifyCooperationCostPacketAck,
+    } as ModifyCooperationCostPacketAck;
+    if (object.confirmation !== undefined && object.confirmation !== null) {
+      message.confirmation = object.confirmation;
+    } else {
+      message.confirmation = "";
+    }
+    if (object.confirmedBy !== undefined && object.confirmedBy !== null) {
+      message.confirmedBy = object.confirmedBy;
+    } else {
+      message.confirmedBy = "";
+    }
+    return message;
+  },
+};
+
+const baseDisableCooperationPacketData: object = {};
+
+export const DisableCooperationPacketData = {
+  encode(
+    _: DisableCooperationPacketData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): DisableCooperationPacketData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseDisableCooperationPacketData,
+    } as DisableCooperationPacketData;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): DisableCooperationPacketData {
+    const message = {
+      ...baseDisableCooperationPacketData,
+    } as DisableCooperationPacketData;
+    return message;
+  },
+
+  toJSON(_: DisableCooperationPacketData): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<DisableCooperationPacketData>
+  ): DisableCooperationPacketData {
+    const message = {
+      ...baseDisableCooperationPacketData,
+    } as DisableCooperationPacketData;
+    return message;
+  },
+};
+
+const baseDisableCooperationPacketAck: object = {};
+
+export const DisableCooperationPacketAck = {
+  encode(
+    _: DisableCooperationPacketAck,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): DisableCooperationPacketAck {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseDisableCooperationPacketAck,
+    } as DisableCooperationPacketAck;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): DisableCooperationPacketAck {
+    const message = {
+      ...baseDisableCooperationPacketAck,
+    } as DisableCooperationPacketAck;
+    return message;
+  },
+
+  toJSON(_: DisableCooperationPacketAck): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<DisableCooperationPacketAck>
+  ): DisableCooperationPacketAck {
+    const message = {
+      ...baseDisableCooperationPacketAck,
+    } as DisableCooperationPacketAck;
     return message;
   },
 };

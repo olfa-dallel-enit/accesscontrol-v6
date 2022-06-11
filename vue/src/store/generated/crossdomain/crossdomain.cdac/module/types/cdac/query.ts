@@ -14,6 +14,7 @@ import { Domain } from "../cdac/domain";
 import { AuthenticationLog } from "../cdac/authentication_log";
 import { DomainCooperation } from "../cdac/domain_cooperation";
 import { CooperationLog } from "../cdac/cooperation_log";
+import { ForwardPolicy } from "../cdac/forward_policy";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -160,6 +161,47 @@ export interface QueryAllCooperationLogRequest {
 export interface QueryAllCooperationLogResponse {
   CooperationLog: CooperationLog[];
   pagination: PageResponse | undefined;
+}
+
+export interface QueryCheckEstablishedCooperationByChannelRequest {
+  channel: string;
+}
+
+export interface QueryCheckEstablishedCooperationByChannelResponse {
+  label: string;
+  found: boolean;
+}
+
+export interface QueryEstablishedCooperationByChannelRequest {
+  channel: string;
+}
+
+export interface QueryEstablishedCooperationByChannelResponse {
+  domainCooperation: DomainCooperation | undefined;
+  found: boolean;
+}
+
+export interface QueryGetForwardPolicyRequest {
+  id: number;
+}
+
+export interface QueryGetForwardPolicyResponse {
+  ForwardPolicy: ForwardPolicy | undefined;
+}
+
+export interface QueryAllForwardPolicyRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllForwardPolicyResponse {
+  ForwardPolicy: ForwardPolicy[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryRetrieveForwardPolicyRequest {}
+
+export interface QueryRetrieveForwardPolicyResponse {
+  forwardPolicy: ForwardPolicy | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -2793,6 +2835,788 @@ export const QueryAllCooperationLogResponse = {
   },
 };
 
+const baseQueryCheckEstablishedCooperationByChannelRequest: object = {
+  channel: "",
+};
+
+export const QueryCheckEstablishedCooperationByChannelRequest = {
+  encode(
+    message: QueryCheckEstablishedCooperationByChannelRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.channel !== "") {
+      writer.uint32(10).string(message.channel);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryCheckEstablishedCooperationByChannelRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryCheckEstablishedCooperationByChannelRequest,
+    } as QueryCheckEstablishedCooperationByChannelRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.channel = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryCheckEstablishedCooperationByChannelRequest {
+    const message = {
+      ...baseQueryCheckEstablishedCooperationByChannelRequest,
+    } as QueryCheckEstablishedCooperationByChannelRequest;
+    if (object.channel !== undefined && object.channel !== null) {
+      message.channel = String(object.channel);
+    } else {
+      message.channel = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryCheckEstablishedCooperationByChannelRequest): unknown {
+    const obj: any = {};
+    message.channel !== undefined && (obj.channel = message.channel);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryCheckEstablishedCooperationByChannelRequest>
+  ): QueryCheckEstablishedCooperationByChannelRequest {
+    const message = {
+      ...baseQueryCheckEstablishedCooperationByChannelRequest,
+    } as QueryCheckEstablishedCooperationByChannelRequest;
+    if (object.channel !== undefined && object.channel !== null) {
+      message.channel = object.channel;
+    } else {
+      message.channel = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryCheckEstablishedCooperationByChannelResponse: object = {
+  label: "",
+  found: false,
+};
+
+export const QueryCheckEstablishedCooperationByChannelResponse = {
+  encode(
+    message: QueryCheckEstablishedCooperationByChannelResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.label !== "") {
+      writer.uint32(10).string(message.label);
+    }
+    if (message.found === true) {
+      writer.uint32(16).bool(message.found);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryCheckEstablishedCooperationByChannelResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryCheckEstablishedCooperationByChannelResponse,
+    } as QueryCheckEstablishedCooperationByChannelResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.label = reader.string();
+          break;
+        case 2:
+          message.found = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryCheckEstablishedCooperationByChannelResponse {
+    const message = {
+      ...baseQueryCheckEstablishedCooperationByChannelResponse,
+    } as QueryCheckEstablishedCooperationByChannelResponse;
+    if (object.label !== undefined && object.label !== null) {
+      message.label = String(object.label);
+    } else {
+      message.label = "";
+    }
+    if (object.found !== undefined && object.found !== null) {
+      message.found = Boolean(object.found);
+    } else {
+      message.found = false;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryCheckEstablishedCooperationByChannelResponse): unknown {
+    const obj: any = {};
+    message.label !== undefined && (obj.label = message.label);
+    message.found !== undefined && (obj.found = message.found);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryCheckEstablishedCooperationByChannelResponse>
+  ): QueryCheckEstablishedCooperationByChannelResponse {
+    const message = {
+      ...baseQueryCheckEstablishedCooperationByChannelResponse,
+    } as QueryCheckEstablishedCooperationByChannelResponse;
+    if (object.label !== undefined && object.label !== null) {
+      message.label = object.label;
+    } else {
+      message.label = "";
+    }
+    if (object.found !== undefined && object.found !== null) {
+      message.found = object.found;
+    } else {
+      message.found = false;
+    }
+    return message;
+  },
+};
+
+const baseQueryEstablishedCooperationByChannelRequest: object = { channel: "" };
+
+export const QueryEstablishedCooperationByChannelRequest = {
+  encode(
+    message: QueryEstablishedCooperationByChannelRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.channel !== "") {
+      writer.uint32(10).string(message.channel);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryEstablishedCooperationByChannelRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryEstablishedCooperationByChannelRequest,
+    } as QueryEstablishedCooperationByChannelRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.channel = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryEstablishedCooperationByChannelRequest {
+    const message = {
+      ...baseQueryEstablishedCooperationByChannelRequest,
+    } as QueryEstablishedCooperationByChannelRequest;
+    if (object.channel !== undefined && object.channel !== null) {
+      message.channel = String(object.channel);
+    } else {
+      message.channel = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryEstablishedCooperationByChannelRequest): unknown {
+    const obj: any = {};
+    message.channel !== undefined && (obj.channel = message.channel);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryEstablishedCooperationByChannelRequest>
+  ): QueryEstablishedCooperationByChannelRequest {
+    const message = {
+      ...baseQueryEstablishedCooperationByChannelRequest,
+    } as QueryEstablishedCooperationByChannelRequest;
+    if (object.channel !== undefined && object.channel !== null) {
+      message.channel = object.channel;
+    } else {
+      message.channel = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryEstablishedCooperationByChannelResponse: object = {
+  found: false,
+};
+
+export const QueryEstablishedCooperationByChannelResponse = {
+  encode(
+    message: QueryEstablishedCooperationByChannelResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.domainCooperation !== undefined) {
+      DomainCooperation.encode(
+        message.domainCooperation,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.found === true) {
+      writer.uint32(16).bool(message.found);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryEstablishedCooperationByChannelResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryEstablishedCooperationByChannelResponse,
+    } as QueryEstablishedCooperationByChannelResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.domainCooperation = DomainCooperation.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.found = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryEstablishedCooperationByChannelResponse {
+    const message = {
+      ...baseQueryEstablishedCooperationByChannelResponse,
+    } as QueryEstablishedCooperationByChannelResponse;
+    if (
+      object.domainCooperation !== undefined &&
+      object.domainCooperation !== null
+    ) {
+      message.domainCooperation = DomainCooperation.fromJSON(
+        object.domainCooperation
+      );
+    } else {
+      message.domainCooperation = undefined;
+    }
+    if (object.found !== undefined && object.found !== null) {
+      message.found = Boolean(object.found);
+    } else {
+      message.found = false;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryEstablishedCooperationByChannelResponse): unknown {
+    const obj: any = {};
+    message.domainCooperation !== undefined &&
+      (obj.domainCooperation = message.domainCooperation
+        ? DomainCooperation.toJSON(message.domainCooperation)
+        : undefined);
+    message.found !== undefined && (obj.found = message.found);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryEstablishedCooperationByChannelResponse>
+  ): QueryEstablishedCooperationByChannelResponse {
+    const message = {
+      ...baseQueryEstablishedCooperationByChannelResponse,
+    } as QueryEstablishedCooperationByChannelResponse;
+    if (
+      object.domainCooperation !== undefined &&
+      object.domainCooperation !== null
+    ) {
+      message.domainCooperation = DomainCooperation.fromPartial(
+        object.domainCooperation
+      );
+    } else {
+      message.domainCooperation = undefined;
+    }
+    if (object.found !== undefined && object.found !== null) {
+      message.found = object.found;
+    } else {
+      message.found = false;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetForwardPolicyRequest: object = { id: 0 };
+
+export const QueryGetForwardPolicyRequest = {
+  encode(
+    message: QueryGetForwardPolicyRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetForwardPolicyRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetForwardPolicyRequest,
+    } as QueryGetForwardPolicyRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetForwardPolicyRequest {
+    const message = {
+      ...baseQueryGetForwardPolicyRequest,
+    } as QueryGetForwardPolicyRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetForwardPolicyRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetForwardPolicyRequest>
+  ): QueryGetForwardPolicyRequest {
+    const message = {
+      ...baseQueryGetForwardPolicyRequest,
+    } as QueryGetForwardPolicyRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetForwardPolicyResponse: object = {};
+
+export const QueryGetForwardPolicyResponse = {
+  encode(
+    message: QueryGetForwardPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.ForwardPolicy !== undefined) {
+      ForwardPolicy.encode(
+        message.ForwardPolicy,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetForwardPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetForwardPolicyResponse,
+    } as QueryGetForwardPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.ForwardPolicy = ForwardPolicy.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetForwardPolicyResponse {
+    const message = {
+      ...baseQueryGetForwardPolicyResponse,
+    } as QueryGetForwardPolicyResponse;
+    if (object.ForwardPolicy !== undefined && object.ForwardPolicy !== null) {
+      message.ForwardPolicy = ForwardPolicy.fromJSON(object.ForwardPolicy);
+    } else {
+      message.ForwardPolicy = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetForwardPolicyResponse): unknown {
+    const obj: any = {};
+    message.ForwardPolicy !== undefined &&
+      (obj.ForwardPolicy = message.ForwardPolicy
+        ? ForwardPolicy.toJSON(message.ForwardPolicy)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetForwardPolicyResponse>
+  ): QueryGetForwardPolicyResponse {
+    const message = {
+      ...baseQueryGetForwardPolicyResponse,
+    } as QueryGetForwardPolicyResponse;
+    if (object.ForwardPolicy !== undefined && object.ForwardPolicy !== null) {
+      message.ForwardPolicy = ForwardPolicy.fromPartial(object.ForwardPolicy);
+    } else {
+      message.ForwardPolicy = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllForwardPolicyRequest: object = {};
+
+export const QueryAllForwardPolicyRequest = {
+  encode(
+    message: QueryAllForwardPolicyRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllForwardPolicyRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllForwardPolicyRequest,
+    } as QueryAllForwardPolicyRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllForwardPolicyRequest {
+    const message = {
+      ...baseQueryAllForwardPolicyRequest,
+    } as QueryAllForwardPolicyRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllForwardPolicyRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllForwardPolicyRequest>
+  ): QueryAllForwardPolicyRequest {
+    const message = {
+      ...baseQueryAllForwardPolicyRequest,
+    } as QueryAllForwardPolicyRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllForwardPolicyResponse: object = {};
+
+export const QueryAllForwardPolicyResponse = {
+  encode(
+    message: QueryAllForwardPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.ForwardPolicy) {
+      ForwardPolicy.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllForwardPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllForwardPolicyResponse,
+    } as QueryAllForwardPolicyResponse;
+    message.ForwardPolicy = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.ForwardPolicy.push(
+            ForwardPolicy.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllForwardPolicyResponse {
+    const message = {
+      ...baseQueryAllForwardPolicyResponse,
+    } as QueryAllForwardPolicyResponse;
+    message.ForwardPolicy = [];
+    if (object.ForwardPolicy !== undefined && object.ForwardPolicy !== null) {
+      for (const e of object.ForwardPolicy) {
+        message.ForwardPolicy.push(ForwardPolicy.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllForwardPolicyResponse): unknown {
+    const obj: any = {};
+    if (message.ForwardPolicy) {
+      obj.ForwardPolicy = message.ForwardPolicy.map((e) =>
+        e ? ForwardPolicy.toJSON(e) : undefined
+      );
+    } else {
+      obj.ForwardPolicy = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllForwardPolicyResponse>
+  ): QueryAllForwardPolicyResponse {
+    const message = {
+      ...baseQueryAllForwardPolicyResponse,
+    } as QueryAllForwardPolicyResponse;
+    message.ForwardPolicy = [];
+    if (object.ForwardPolicy !== undefined && object.ForwardPolicy !== null) {
+      for (const e of object.ForwardPolicy) {
+        message.ForwardPolicy.push(ForwardPolicy.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryRetrieveForwardPolicyRequest: object = {};
+
+export const QueryRetrieveForwardPolicyRequest = {
+  encode(
+    _: QueryRetrieveForwardPolicyRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryRetrieveForwardPolicyRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryRetrieveForwardPolicyRequest,
+    } as QueryRetrieveForwardPolicyRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryRetrieveForwardPolicyRequest {
+    const message = {
+      ...baseQueryRetrieveForwardPolicyRequest,
+    } as QueryRetrieveForwardPolicyRequest;
+    return message;
+  },
+
+  toJSON(_: QueryRetrieveForwardPolicyRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryRetrieveForwardPolicyRequest>
+  ): QueryRetrieveForwardPolicyRequest {
+    const message = {
+      ...baseQueryRetrieveForwardPolicyRequest,
+    } as QueryRetrieveForwardPolicyRequest;
+    return message;
+  },
+};
+
+const baseQueryRetrieveForwardPolicyResponse: object = {};
+
+export const QueryRetrieveForwardPolicyResponse = {
+  encode(
+    message: QueryRetrieveForwardPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.forwardPolicy !== undefined) {
+      ForwardPolicy.encode(
+        message.forwardPolicy,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryRetrieveForwardPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryRetrieveForwardPolicyResponse,
+    } as QueryRetrieveForwardPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.forwardPolicy = ForwardPolicy.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryRetrieveForwardPolicyResponse {
+    const message = {
+      ...baseQueryRetrieveForwardPolicyResponse,
+    } as QueryRetrieveForwardPolicyResponse;
+    if (object.forwardPolicy !== undefined && object.forwardPolicy !== null) {
+      message.forwardPolicy = ForwardPolicy.fromJSON(object.forwardPolicy);
+    } else {
+      message.forwardPolicy = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryRetrieveForwardPolicyResponse): unknown {
+    const obj: any = {};
+    message.forwardPolicy !== undefined &&
+      (obj.forwardPolicy = message.forwardPolicy
+        ? ForwardPolicy.toJSON(message.forwardPolicy)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryRetrieveForwardPolicyResponse>
+  ): QueryRetrieveForwardPolicyResponse {
+    const message = {
+      ...baseQueryRetrieveForwardPolicyResponse,
+    } as QueryRetrieveForwardPolicyResponse;
+    if (object.forwardPolicy !== undefined && object.forwardPolicy !== null) {
+      message.forwardPolicy = ForwardPolicy.fromPartial(object.forwardPolicy);
+    } else {
+      message.forwardPolicy = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -2855,6 +3679,26 @@ export interface Query {
   CooperationLogAll(
     request: QueryAllCooperationLogRequest
   ): Promise<QueryAllCooperationLogResponse>;
+  /** Queries a list of CheckEstablishedCooperationByChannel items. */
+  CheckEstablishedCooperationByChannel(
+    request: QueryCheckEstablishedCooperationByChannelRequest
+  ): Promise<QueryCheckEstablishedCooperationByChannelResponse>;
+  /** Queries a list of EstablishedCooperationByChannel items. */
+  EstablishedCooperationByChannel(
+    request: QueryEstablishedCooperationByChannelRequest
+  ): Promise<QueryEstablishedCooperationByChannelResponse>;
+  /** Queries a ForwardPolicy by id. */
+  ForwardPolicy(
+    request: QueryGetForwardPolicyRequest
+  ): Promise<QueryGetForwardPolicyResponse>;
+  /** Queries a list of ForwardPolicy items. */
+  ForwardPolicyAll(
+    request: QueryAllForwardPolicyRequest
+  ): Promise<QueryAllForwardPolicyResponse>;
+  /** Queries a list of RetrieveForwardPolicy items. */
+  RetrieveForwardPolicy(
+    request: QueryRetrieveForwardPolicyRequest
+  ): Promise<QueryRetrieveForwardPolicyResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -3081,6 +3925,80 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllCooperationLogResponse.decode(new Reader(data))
+    );
+  }
+
+  CheckEstablishedCooperationByChannel(
+    request: QueryCheckEstablishedCooperationByChannelRequest
+  ): Promise<QueryCheckEstablishedCooperationByChannelResponse> {
+    const data = QueryCheckEstablishedCooperationByChannelRequest.encode(
+      request
+    ).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "CheckEstablishedCooperationByChannel",
+      data
+    );
+    return promise.then((data) =>
+      QueryCheckEstablishedCooperationByChannelResponse.decode(new Reader(data))
+    );
+  }
+
+  EstablishedCooperationByChannel(
+    request: QueryEstablishedCooperationByChannelRequest
+  ): Promise<QueryEstablishedCooperationByChannelResponse> {
+    const data = QueryEstablishedCooperationByChannelRequest.encode(
+      request
+    ).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "EstablishedCooperationByChannel",
+      data
+    );
+    return promise.then((data) =>
+      QueryEstablishedCooperationByChannelResponse.decode(new Reader(data))
+    );
+  }
+
+  ForwardPolicy(
+    request: QueryGetForwardPolicyRequest
+  ): Promise<QueryGetForwardPolicyResponse> {
+    const data = QueryGetForwardPolicyRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "ForwardPolicy",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetForwardPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  ForwardPolicyAll(
+    request: QueryAllForwardPolicyRequest
+  ): Promise<QueryAllForwardPolicyResponse> {
+    const data = QueryAllForwardPolicyRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "ForwardPolicyAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllForwardPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  RetrieveForwardPolicy(
+    request: QueryRetrieveForwardPolicyRequest
+  ): Promise<QueryRetrieveForwardPolicyResponse> {
+    const data = QueryRetrieveForwardPolicyRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "RetrieveForwardPolicy",
+      data
+    );
+    return promise.then((data) =>
+      QueryRetrieveForwardPolicyResponse.decode(new Reader(data))
     );
   }
 }
