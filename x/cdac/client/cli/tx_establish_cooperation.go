@@ -101,8 +101,16 @@ func CmdSendEstablishCooperation() *cobra.Command {
 				}
 			}
 
-			msg3 := types.NewMsgSendExchangeCooperationData(creator, srcPort, srcChannel, timeoutTimestamp)
+			/*msg3 := types.NewMsgSendExchangeCooperationData(creator, srcPort, srcChannel, timeoutTimestamp)
 			if err := msg3.ValidateBasic(); err != nil {
+				return err
+			}
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)*/
+
+			msg3 := types.NewMsgGenerateCooperationNetwork(
+				clientCtx.GetFromAddress().String(),
+			)
+			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
