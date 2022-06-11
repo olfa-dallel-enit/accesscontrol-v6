@@ -9,15 +9,12 @@ import (
 	clienttypes "github.com/cosmos/ibc-go/v2/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v2/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v2/modules/core/24-host"
-
-	"github.com/spf13/cast"
-	"time"
 )
 
-// TransmitDisableCooperationPacket transmits the packet over IBC with the specified source port and source channel
-func (k Keeper) TransmitDisableCooperationPacket(
+// TransmitEnableCooperationPacket transmits the packet over IBC with the specified source port and source channel
+func (k Keeper) TransmitEnableCooperationPacket(
 	ctx sdk.Context,
-	packetData types.DisableCooperationPacketData,
+	packetData types.EnableCooperationPacketData,
 	sourcePort,
 	sourceChannel string,
 	timeoutHeight clienttypes.Height,
@@ -69,8 +66,8 @@ func (k Keeper) TransmitDisableCooperationPacket(
 	return nil
 }
 
-// OnRecvDisableCooperationPacket processes packet reception
-func (k Keeper) OnRecvDisableCooperationPacket(ctx sdk.Context, packet channeltypes.Packet, data types.DisableCooperationPacketData) (packetAck types.DisableCooperationPacketAck, err error) {
+// OnRecvEnableCooperationPacket processes packet reception
+func (k Keeper) OnRecvEnableCooperationPacket(ctx sdk.Context, packet channeltypes.Packet, data types.EnableCooperationPacketData) (packetAck types.EnableCooperationPacketAck, err error) {
 	// validate packet data upon receiving
 	if err := data.ValidateBasic(); err != nil {
 		return packetAck, err
@@ -80,41 +77,53 @@ func (k Keeper) OnRecvDisableCooperationPacket(ctx sdk.Context, packet channelty
 	domainCooperation, found := k.GetDomainCooperationByDomainName(ctx, data.Sender)
 	if found {
 		if k.IsAuthenticated(ctx, data.Sender) {
-			k.SetDomainCooperation(ctx, types.DomainCooperation{
-				Id:                domainCooperation.Id,
-				Creator:           ctx.ChainID(),
-				Label:             domainCooperation.Label,
-				CooperationType:   domainCooperation.CooperationType,
-				SourceDomain:      domainCooperation.SourceDomain,
-				RemoteDomain:      domainCooperation.RemoteDomain,
-				Validity:          domainCooperation.Validity,
-				Interest:          domainCooperation.Interest,
-				Cost:              domainCooperation.Cost,
-				CreationTimestamp: domainCooperation.CreationTimestamp,
-				UpdateTimestamp:   cast.ToString(time.Now()),
-				Status:            "Disabled",
-			})
-			packetAck.Confirmation = "Confirmed"
-			packetAck.ConfirmedBy = ctx.ChainID()
-
-			k.AppendCooperationLog(ctx, types.CooperationLog{
-				Creator:     ctx.ChainID(),
-				Transaction: "send-disable-cooperation",
-				Function:    "OnRecvDisableCooperationPacket",
-				Timestamp:   cast.ToString(time.Now()),
-				Details:     "Cooperation label: " + domainCooperation.Label,
-				Decision:    "Disable cooperation is confirmed",
-			})
+			if cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+				k.SetDomainCooperation(ctx, types.DomainCooperation{
+					Id:                domainCooperation.Id,
+					Creator:           ctx.ChainID(),
+					Label:             domainCooperation.Label,
+					CooperationType:   domainCooperation.CooperationType,
+					SourceDomain:      domainCooperation.SourceDomain,
+					RemoteDomain:      domainCooperation.RemoteDomain,
+					Validity:          domainCooperation.Validity,
+					Interest:          domainCooperation.Interest,
+					Cost:              domainCooperation.Cost,
+					CreationTimestamp: domainCooperation.CreationTimestamp,
+					UpdateTimestamp:   cast.ToString(time.Now()),
+					Status:            "Enabled",
+				})
+				packetAck.Confirmation = "Confirmed"
+				packetAck.ConfirmedBy = ctx.ChainID()
+				k.AppendCooperationLog(ctx, types.CooperationLog{
+					Creator:     ctx.ChainID(),
+					Transaction: "send-enable-cooperation",
+					Function:    "OnRecvEnableCooperationPacket",
+					Timestamp:   cast.ToString(time.Now()),
+					Details:     "Cooperation label: " + domainCooperation.Label,
+					Decision:    "Enable cooperation is confirmed",
+				})
+			} else {
+				packetAck.Confirmation = "Not confirmed"
+				packetAck.ConfirmedBy = ctx.ChainID()
+				k.AppendCooperationLog(ctx, types.CooperationLog{
+					Creator:     ctx.ChainID(),
+					Transaction: "send-enable-cooperation",
+					Function:    "OnRecvEnableCooperationPacket",
+					Timestamp:   cast.ToString(time.Now()),
+					Details:     "Cooperation label: " + domainCooperation.Label,
+					Decision:    "Enable cooperation is not confirmed: cooperation not valid",
+				})
+			}
 		} else {
 			packetAck.Confirmation = "Not confirmed"
 			packetAck.ConfirmedBy = ctx.ChainID()
 			k.AppendCooperationLog(ctx, types.CooperationLog{
 				Creator:     ctx.ChainID(),
-				Transaction: "send-disable-cooperation",
-				Function:    "OnRecvDisableCooperationPacket",
+				Transaction: "send-enable-cooperation",
+				Function:    "OnRecvEnableCooperationPacket",
 				Timestamp:   cast.ToString(time.Now()),
 				Details:     "Cooperation label: " + domainCooperation.Label,
-				Decision:    "Disable cooperation is not confirmed: domain not authenticated",
+				Decision:    "Enable cooperation is not confirmed: domain not authenticated",
 			})
 		}
 	} else {
@@ -122,20 +131,20 @@ func (k Keeper) OnRecvDisableCooperationPacket(ctx sdk.Context, packet channelty
 		packetAck.ConfirmedBy = ctx.ChainID()
 		k.AppendCooperationLog(ctx, types.CooperationLog{
 			Creator:     ctx.ChainID(),
-			Transaction: "send-disable-cooperation",
-			Function:    "OnRecvDisableCooperationPacket",
+			Transaction: "send-enable-cooperation",
+			Function:    "OnRecvEnableCooperationPacket",
 			Timestamp:   cast.ToString(time.Now()),
 			Details:     "Cooperation label: " + domainCooperation.Label,
-			Decision:    "Disable cooperation is not confirmed: cooperation not found",
+			Decision:    "Enable cooperation is not confirmed: cooperation not found",
 		})
 	}
 
 	return packetAck, nil
 }
 
-// OnAcknowledgementDisableCooperationPacket responds to the the success or failure of a packet
+// OnAcknowledgementEnableCooperationPacket responds to the the success or failure of a packet
 // acknowledgement written on the receiving chain.
-func (k Keeper) OnAcknowledgementDisableCooperationPacket(ctx sdk.Context, packet channeltypes.Packet, data types.DisableCooperationPacketData, ack channeltypes.Acknowledgement) error {
+func (k Keeper) OnAcknowledgementEnableCooperationPacket(ctx sdk.Context, packet channeltypes.Packet, data types.EnableCooperationPacketData, ack channeltypes.Acknowledgement) error {
 	switch dispatchedAck := ack.Response.(type) {
 	case *channeltypes.Acknowledgement_Error:
 
@@ -145,7 +154,7 @@ func (k Keeper) OnAcknowledgementDisableCooperationPacket(ctx sdk.Context, packe
 		return nil
 	case *channeltypes.Acknowledgement_Result:
 		// Decode the packet acknowledgment
-		var packetAck types.DisableCooperationPacketAck
+		var packetAck types.EnableCooperationPacketAck
 
 		if err := types.ModuleCdc.UnmarshalJSON(dispatchedAck.Result, &packetAck); err != nil {
 			// The counter-party module doesn't implement the correct acknowledgment format
@@ -168,35 +177,35 @@ func (k Keeper) OnAcknowledgementDisableCooperationPacket(ctx sdk.Context, packe
 					Cost:              domainCooperation.Cost,
 					CreationTimestamp: domainCooperation.CreationTimestamp,
 					UpdateTimestamp:   cast.ToString(time.Now()),
-					Status:            "Disabled",
+					Status:            "Enabled",
 				})
 
 				k.AppendCooperationLog(ctx, types.CooperationLog{
 					Creator:     ctx.ChainID(),
-					Transaction: "send-disable-cooperation",
-					Function:    "OnAcknowledgementDisableCooperationPacket",
+					Transaction: "send-enable-cooperation",
+					Function:    "OnAcknowledgementEnableCooperationPacket",
 					Timestamp:   cast.ToString(time.Now()),
 					Details:     "Cooperation label: " + domainCooperation.Label,
-					Decision:    "Disable cooperation is confirmed",
+					Decision:    "Enable cooperation is confirmed",
 				})
 			} else {
 				k.AppendCooperationLog(ctx, types.CooperationLog{
 					Creator:     ctx.ChainID(),
-					Transaction: "send-disable-cooperation",
-					Function:    "OnAcknowledgementDisableCooperationPacket",
+					Transaction: "send-enable-cooperation",
+					Function:    "OnAcknowledgementEnableCooperationPacket",
 					Timestamp:   cast.ToString(time.Now()),
 					Details:     "Cooperation label: " + ctx.ChainID() + "-" + packetAck.ConfirmedBy,
-					Decision:    "Disable cooperation is not confirmed: cooperation not found ",
+					Decision:    "Enable cooperation is not confirmed: cooperation not found ",
 				})
 			}
 		} else {
 			k.AppendCooperationLog(ctx, types.CooperationLog{
 				Creator:     ctx.ChainID(),
-				Transaction: "send-disable-cooperation",
-				Function:    "OnAcknowledgementDisableCooperationPacket",
+				Transaction: "send-enable-cooperation",
+				Function:    "OnAcknowledgementEnableCooperationPacket",
 				Timestamp:   cast.ToString(time.Now()),
 				Details:     "Cooperation label: " + ctx.ChainID() + "-" + packetAck.ConfirmedBy,
-				Decision:    "Disable cooperation is not confirmed:  disable cooperation operation not confirmed",
+				Decision:    "Enable cooperation is not confirmed: enable cooperation operation not confirmed",
 			})
 		}
 
@@ -207,8 +216,8 @@ func (k Keeper) OnAcknowledgementDisableCooperationPacket(ctx sdk.Context, packe
 	}
 }
 
-// OnTimeoutDisableCooperationPacket responds to the case where a packet has not been transmitted because of a timeout
-func (k Keeper) OnTimeoutDisableCooperationPacket(ctx sdk.Context, packet channeltypes.Packet, data types.DisableCooperationPacketData) error {
+// OnTimeoutEnableCooperationPacket responds to the case where a packet has not been transmitted because of a timeout
+func (k Keeper) OnTimeoutEnableCooperationPacket(ctx sdk.Context, packet channeltypes.Packet, data types.EnableCooperationPacketData) error {
 
 	// TODO: packet timeout logic
 

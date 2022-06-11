@@ -49684,6 +49684,8 @@ definitions:
     type: object
   crossdomain.cdac.MsgSendDisableCooperationResponse:
     type: object
+  crossdomain.cdac.MsgSendEnableCooperationResponse:
+    type: object
   crossdomain.cdac.MsgSendEstablishCooperationResponse:
     type: object
   crossdomain.cdac.MsgSendExchangeCooperationDataResponse:

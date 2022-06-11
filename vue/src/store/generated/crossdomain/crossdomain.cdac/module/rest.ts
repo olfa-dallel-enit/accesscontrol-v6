@@ -152,6 +152,8 @@ export type CdacMsgSendAuthenticateDomainResponse = object;
 
 export type CdacMsgSendDisableCooperationResponse = object;
 
+export type CdacMsgSendEnableCooperationResponse = object;
+
 export type CdacMsgSendEstablishCooperationResponse = object;
 
 export type CdacMsgSendExchangeCooperationDataResponse = object;
