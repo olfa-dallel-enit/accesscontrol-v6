@@ -16,6 +16,7 @@ type CrossdomainKeeper interface {
 	GetDecisionPolicy(ctx sdk.Context) (val crossdomainTypes.DecisionPolicy, found bool)
 	GetForwardPolicy(ctx sdk.Context) (val crossdomainTypes.ForwardPolicy, found bool)
 	ForwardPolicy(c context.Context, req *crossdomainTypes.QueryGetForwardPolicyRequest) (*crossdomainTypes.QueryGetForwardPolicyResponse, error)
+	GetCooperationNetworkFeatures(ctx sdk.Context) (val crossdomainTypes.CooperationNetworkFeatures, found bool)
 }
 
 // AccountKeeper defines the expected account keeper used for simulations (noalias)
