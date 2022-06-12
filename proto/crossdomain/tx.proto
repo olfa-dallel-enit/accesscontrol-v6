@@ -225,6 +225,7 @@ message MsgCreateCooperationNetworkFeatures {
   repeated string interestList = 5;
   repeated string locationList = 6;
   string lastUpdate = 7;
+  Validity validity = 8;
 }
 message MsgCreateCooperationNetworkFeaturesResponse {}
 
@@ -235,6 +236,7 @@ message MsgUpdateCooperationNetworkFeatures {
   repeated string interestList = 5;
   repeated string locationList = 6;
   string lastUpdate = 7;
+  Validity validity = 8;
 }
 message MsgUpdateCooperationNetworkFeaturesResponse {}
 

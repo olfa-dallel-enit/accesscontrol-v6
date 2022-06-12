@@ -2,6 +2,7 @@ syntax = "proto3";
 package crossdomain.crossdomain;
 
 option go_package = "crossdomain/x/crossdomain/types";
+import "crossdomain/validity.proto";
 
 message CooperationNetworkFeatures {
   uint64 depth = 1; 
@@ -9,5 +10,6 @@ message CooperationNetworkFeatures {
   repeated string interestList = 3; 
   repeated string locationList = 4; 
   string lastUpdate = 5; 
-  string creator = 6;
+  Validity validity = 6;
+  string creator = 7;
 }

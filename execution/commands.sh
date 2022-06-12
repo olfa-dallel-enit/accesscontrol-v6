@@ -49,6 +49,8 @@ crossdomaind tx cdac send-establish-cooperation  cdac channel-2 "2022-02-03 00:0
 #earth-jupiter
 crossdomaind tx cdac send-establish-cooperation  cdac channel-3  "2022-02-03 00:00:00" "2026-02-03 00:00:00" "computing" 200 --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 
+crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657
+
 crossdomaind query cdac list-cooperation-network --node tcp://localhost:26657
 
 #mars-venus

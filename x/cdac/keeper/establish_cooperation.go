@@ -209,8 +209,8 @@ func (k Keeper) OnAcknowledgementEstablishCooperationPacket(ctx sdk.Context, pac
 				},
 				Interest:          data.Interest,
 				Cost:              cast.ToUint64(data.Cost),
-				CreationTimestamp: cast.ToString(time.Now().UnixNano()),
-				UpdateTimestamp:   cast.ToString(time.Now().UnixNano()),
+				CreationTimestamp: cast.ToString(time.Now()),
+				UpdateTimestamp:   cast.ToString(time.Now()),
 				Status:            "Enabled",
 			})
 			k.AppendCooperationLog(ctx, types.CooperationLog{

@@ -8,6 +8,7 @@ import (
 
 	"github.com/spf13/cast"
 	"time"
+	"strings"
 )
 
 func (k msgServer) GenerateCooperationNetwork(goCtx context.Context, msg *types.MsgGenerateCooperationNetwork) (*types.MsgGenerateCooperationNetworkResponse, error) {
@@ -15,25 +16,144 @@ func (k msgServer) GenerateCooperationNetwork(goCtx context.Context, msg *types.
 
 	// TODO: Handling the message
 	_ = ctx
-	k.GenerateCostBasedCooperationNetwork(ctx)
+
+	cooperationNewtorkFeatures, _ := k.crossdomainKeeper.GetCooperationNetworkFeatures(ctx)
+
+	if len(cooperationNewtorkFeatures.LastUpdate) > 0{
+		cooperationNewtorkFeatures, _ := k.crossdomainKeeper.GetCooperationNetworkFeatures(ctx)
+
+	var domainMapList []*types.DomainMap
+
+	var directCooperativeDomains []*types.Domain
+
+	var test string
+
+	for _, domainCooperation := range k.GetAllDirectDomainCooperations(ctx) {
+		sr := strings.Split(domainCooperation.UpdateTimestamp, " +")
+		test = cast.ToString(cast.ToTime(sr[0]).UnixNano())+ " "+ cast.ToString(cast.ToTime(cooperationNewtorkFeatures.LastUpdate).UnixNano())
+		if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+			
+			if cast.ToTime(sr[0]).UnixNano() >= cast.ToTime(cooperationNewtorkFeatures.LastUpdate).UnixNano(){
+				directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			}
+			/*if CheckLastUpdate(domainCooperation.UpdateTimestamp, cooperationNewtorkFeatures.LastUpdate){
+				directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			}*/
+		}
+	}
+
+	localDomainMap := types.DomainMap{
+		Creator:     ctx.ChainID(),
+		DomainIndex: ctx.ChainID(),
+		DomainList:  directCooperativeDomains,
+	}
+
+	domainMapList = append(domainMapList, &localDomainMap)
+
+	k.SetDomainMap(ctx, localDomainMap)
+
+	i := 0
+	l := len(domainMapList)
+	for i < l {
+		domainMap := domainMapList[i]
+		for _, remoteDomain := range domainMap.DomainList {
+			var remoteCooperativeDomains []*types.Domain
+			for _, remoteDomainCooperation := range k.GetAllDomainCooperationsByRemoteDomainName(ctx, remoteDomain.Name) {
+				if CheckLastUpdate(remoteDomainCooperation.UpdateTimestamp, cooperationNewtorkFeatures.LastUpdate){
+					remoteCooperativeDomains = append(remoteCooperativeDomains, remoteDomainCooperation.RemoteDomain)
+				}
+			}
+			remoteDomainMap := types.DomainMap{
+				Creator:     ctx.ChainID(),
+				DomainIndex: remoteDomain.Name,
+				DomainList:  remoteCooperativeDomains,
+			}
+			domainMapList = append(domainMapList, &remoteDomainMap)
+			k.SetDomainMap(ctx, remoteDomainMap)
+		}
+		l = len(domainMapList)
+		i = i + 1
+	}
+
+	cooperationNetwork := types.CooperationNetwork{
+		Creator:             ctx.ChainID(),
+		Label:               "cooperation-network-" + cast.ToString(time.Now().UnixNano()),
+		DomainMapList:       domainMapList,
+		CreationTimestamp:   cast.ToString(time.Now()),
+		UpdateTimestamp:     cast.ToString(time.Now())+" test:"+test,
+		CooperationDataList: nil,
+		Features:            nil,
+	}
+
+	k.AppendCooperationNetwork(ctx, cooperationNetwork)
+		//k.GenerateLastUpdateBasedCooperationNetwork(ctx)
+	} 
+
+	//k.GenerateValidityBasedCooperationNetwork(ctx)
 	
 	return &types.MsgGenerateCooperationNetworkResponse{}, nil
 }
 
-func CheckCostCooperation(cooperationCost uint64, costFeature uint64) (bool){
-	if cooperationCost <= costFeature{
-		return true
+//constraintless
+func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context){
+
+	var domainMapList []*types.DomainMap
+
+	var directCooperativeDomains []*types.Domain
+
+	for _, domainCooperation := range k.GetAllDirectDomainCooperations(ctx) {
+		if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+			directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+		}
 	}
-	return false
+
+	localDomainMap := types.DomainMap{
+		Creator:     ctx.ChainID(),
+		DomainIndex: ctx.ChainID(),
+		DomainList:  directCooperativeDomains,
+	}
+
+	domainMapList = append(domainMapList, &localDomainMap)
+
+	k.SetDomainMap(ctx, localDomainMap)
+
+	i := 0
+	l := len(domainMapList)
+	for i < l {
+		domainMap := domainMapList[i]
+		for _, remoteDomain := range domainMap.DomainList {
+			var remoteCooperativeDomains []*types.Domain
+			for _, remoteDomainCooperation := range k.GetAllDomainCooperationsByRemoteDomainName(ctx, remoteDomain.Name) {
+				remoteCooperativeDomains = append(remoteCooperativeDomains, remoteDomainCooperation.RemoteDomain)
+			}
+			remoteDomainMap := types.DomainMap{
+				Creator:     ctx.ChainID(),
+				DomainIndex: remoteDomain.Name,
+				DomainList:  remoteCooperativeDomains,
+			}
+			domainMapList = append(domainMapList, &remoteDomainMap)
+			k.SetDomainMap(ctx, remoteDomainMap)
+		}
+		l = len(domainMapList)
+		i = i + 1
+	}
+
+	cooperationNetwork := types.CooperationNetwork{
+		Creator:             ctx.ChainID(),
+		Label:               "cooperation-network-" + cast.ToString(time.Now().UnixNano()),
+		DomainMapList:       domainMapList,
+		CreationTimestamp:   cast.ToString(time.Now()),
+		UpdateTimestamp:     cast.ToString(time.Now()),
+		CooperationDataList: nil,
+		Features:            nil,
+	}
+
+	k.AppendCooperationNetwork(ctx, cooperationNetwork)
 }
 
-func CheckLastUpdate(cooperationLastUpdate string, lastUpdateFeature string) (bool){
-	if cast.ToTime(cooperationLastUpdate).UnixNano() >= cast.ToTime(lastUpdateFeature).UnixNano(){
-		return true
-	}
-	return false
-}
+//DepthBased
 
+//CostBased
 func (k Keeper) GenerateCostBasedCooperationNetwork(ctx sdk.Context){
 	cooperationNewtorkFeatures, _ := k.crossdomainKeeper.GetCooperationNetworkFeatures(ctx)
 
@@ -95,7 +215,9 @@ func (k Keeper) GenerateCostBasedCooperationNetwork(ctx sdk.Context){
 	k.AppendCooperationNetwork(ctx, cooperationNetwork)
 }
 
-func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context){
+//LocationBased
+func (k Keeper) GenerateLocationBasedCooperationNetwork(ctx sdk.Context){
+	cooperationNewtorkFeatures, _ := k.crossdomainKeeper.GetCooperationNetworkFeatures(ctx)
 
 	var domainMapList []*types.DomainMap
 
@@ -103,7 +225,9 @@ func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context){
 
 	for _, domainCooperation := range k.GetAllDirectDomainCooperations(ctx) {
 		if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
-			directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			if FindString(domainCooperation.RemoteDomain.Location, cooperationNewtorkFeatures.LocationList){
+				directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			}
 		}
 	}
 
@@ -124,7 +248,9 @@ func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context){
 		for _, remoteDomain := range domainMap.DomainList {
 			var remoteCooperativeDomains []*types.Domain
 			for _, remoteDomainCooperation := range k.GetAllDomainCooperationsByRemoteDomainName(ctx, remoteDomain.Name) {
-				remoteCooperativeDomains = append(remoteCooperativeDomains, remoteDomainCooperation.RemoteDomain)
+				if FindString(remoteDomainCooperation.RemoteDomain.Location, cooperationNewtorkFeatures.LocationList){
+					remoteCooperativeDomains = append(remoteCooperativeDomains, remoteDomainCooperation.RemoteDomain)
+				}
 			}
 			remoteDomainMap := types.DomainMap{
 				Creator:     ctx.ChainID(),
@@ -150,3 +276,212 @@ func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context){
 
 	k.AppendCooperationNetwork(ctx, cooperationNetwork)
 }
+
+//InterestBased
+func (k Keeper) GenerateInterestBasedCooperationNetwork(ctx sdk.Context){
+	cooperationNewtorkFeatures, _ := k.crossdomainKeeper.GetCooperationNetworkFeatures(ctx)
+
+	var domainMapList []*types.DomainMap
+
+	var directCooperativeDomains []*types.Domain
+
+	for _, domainCooperation := range k.GetAllDirectDomainCooperations(ctx) {
+		if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+			if FindString(domainCooperation.Interest, cooperationNewtorkFeatures.InterestList){
+				directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			}
+		}
+	}
+
+	localDomainMap := types.DomainMap{
+		Creator:     ctx.ChainID(),
+		DomainIndex: ctx.ChainID(),
+		DomainList:  directCooperativeDomains,
+	}
+
+	domainMapList = append(domainMapList, &localDomainMap)
+
+	k.SetDomainMap(ctx, localDomainMap)
+
+	i := 0
+	l := len(domainMapList)
+	for i < l {
+		domainMap := domainMapList[i]
+		for _, remoteDomain := range domainMap.DomainList {
+			var remoteCooperativeDomains []*types.Domain
+			for _, remoteDomainCooperation := range k.GetAllDomainCooperationsByRemoteDomainName(ctx, remoteDomain.Name) {
+				if FindString(remoteDomainCooperation.Interest, cooperationNewtorkFeatures.InterestList){
+					remoteCooperativeDomains = append(remoteCooperativeDomains, remoteDomainCooperation.RemoteDomain)
+				}
+			}
+			remoteDomainMap := types.DomainMap{
+				Creator:     ctx.ChainID(),
+				DomainIndex: remoteDomain.Name,
+				DomainList:  remoteCooperativeDomains,
+			}
+			domainMapList = append(domainMapList, &remoteDomainMap)
+			k.SetDomainMap(ctx, remoteDomainMap)
+		}
+		l = len(domainMapList)
+		i = i + 1
+	}
+
+	cooperationNetwork := types.CooperationNetwork{
+		Creator:             ctx.ChainID(),
+		Label:               "cooperation-network-" + cast.ToString(time.Now().UnixNano()),
+		DomainMapList:       domainMapList,
+		CreationTimestamp:   cast.ToString(time.Now()),
+		UpdateTimestamp:     cast.ToString(time.Now()),
+		CooperationDataList: nil,
+		Features:            nil,
+	}
+
+	k.AppendCooperationNetwork(ctx, cooperationNetwork)
+}
+
+//ValidityBased
+func (k Keeper) GenerateValidityBasedCooperationNetwork(ctx sdk.Context){
+	cooperationNewtorkFeatures, _ := k.crossdomainKeeper.GetCooperationNetworkFeatures(ctx)
+
+	var domainMapList []*types.DomainMap
+
+	var directCooperativeDomains []*types.Domain
+
+	for _, domainCooperation := range k.GetAllDirectDomainCooperations(ctx) {
+		if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+			if cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() >= cast.ToTime(cooperationNewtorkFeatures.Validity.NotBefore).UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() <= cast.ToTime(cooperationNewtorkFeatures.Validity.NotAfter).UnixNano(){
+				directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			}
+		}
+	}
+
+	localDomainMap := types.DomainMap{
+		Creator:     ctx.ChainID(),
+		DomainIndex: ctx.ChainID(),
+		DomainList:  directCooperativeDomains,
+	}
+
+	domainMapList = append(domainMapList, &localDomainMap)
+
+	k.SetDomainMap(ctx, localDomainMap)
+
+	i := 0
+	l := len(domainMapList)
+	for i < l {
+		domainMap := domainMapList[i]
+		for _, remoteDomain := range domainMap.DomainList {
+			var remoteCooperativeDomains []*types.Domain
+			for _, remoteDomainCooperation := range k.GetAllDomainCooperationsByRemoteDomainName(ctx, remoteDomain.Name) {
+				if cast.ToTime(remoteDomainCooperation.Validity.NotBefore).UnixNano() >= cast.ToTime(cooperationNewtorkFeatures.Validity.NotBefore).UnixNano() && cast.ToTime(remoteDomainCooperation.Validity.NotAfter).UnixNano() <= cast.ToTime(cooperationNewtorkFeatures.Validity.NotAfter).UnixNano(){
+					remoteCooperativeDomains = append(remoteCooperativeDomains, remoteDomainCooperation.RemoteDomain)
+				}
+			}
+			remoteDomainMap := types.DomainMap{
+				Creator:     ctx.ChainID(),
+				DomainIndex: remoteDomain.Name,
+				DomainList:  remoteCooperativeDomains,
+			}
+			domainMapList = append(domainMapList, &remoteDomainMap)
+			k.SetDomainMap(ctx, remoteDomainMap)
+		}
+		l = len(domainMapList)
+		i = i + 1
+	}
+
+	cooperationNetwork := types.CooperationNetwork{
+		Creator:             ctx.ChainID(),
+		Label:               "cooperation-network-" + cast.ToString(time.Now().UnixNano()),
+		DomainMapList:       domainMapList,
+		CreationTimestamp:   cast.ToString(time.Now()),
+		UpdateTimestamp:     cast.ToString(time.Now()),
+		CooperationDataList: nil,
+		Features:            nil,
+	}
+
+	k.AppendCooperationNetwork(ctx, cooperationNetwork)
+}
+
+func CheckCostCooperation(cooperationCost uint64, costFeature uint64) (bool){
+	if cooperationCost <= costFeature{
+		return true
+	}
+	return false
+}
+
+func CheckLastUpdate(cooperationLastUpdate string, lastUpdateFeature string) (bool){
+	if cast.ToTime(cooperationLastUpdate).UnixNano() >= cast.ToTime(lastUpdateFeature).UnixNano(){
+		return true
+	}
+	return false
+}
+
+
+
+func (k Keeper) GenerateLastUpdateBasedCooperationNetwork(ctx sdk.Context){
+	cooperationNewtorkFeatures, _ := k.crossdomainKeeper.GetCooperationNetworkFeatures(ctx)
+
+	var domainMapList []*types.DomainMap
+
+	var directCooperativeDomains []*types.Domain
+
+	var test string
+
+	for _, domainCooperation := range k.GetAllDirectDomainCooperations(ctx) {
+		//test = cast.ToString(cast.ToTime(domainCooperation.UpdateTimestamp).UnixNano()) + " "+ cast.ToString(cast.ToTime(cooperationNewtorkFeatures.LastUpdate).UnixNano())
+		if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+			if cast.ToUint64(cast.ToTime(domainCooperation.UpdateTimestamp)) >= cast.ToUint64(cast.ToTime(cooperationNewtorkFeatures.LastUpdate)){
+				directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			}
+			/*if CheckLastUpdate(domainCooperation.UpdateTimestamp, cooperationNewtorkFeatures.LastUpdate){
+				directCooperativeDomains = append(directCooperativeDomains, domainCooperation.RemoteDomain)
+			}*/
+		}
+	}
+
+	localDomainMap := types.DomainMap{
+		Creator:     ctx.ChainID(),
+		DomainIndex: ctx.ChainID(),
+		DomainList:  directCooperativeDomains,
+	}
+
+	domainMapList = append(domainMapList, &localDomainMap)
+
+	k.SetDomainMap(ctx, localDomainMap)
+
+	i := 0
+	l := len(domainMapList)
+	for i < l {
+		domainMap := domainMapList[i]
+		for _, remoteDomain := range domainMap.DomainList {
+			var remoteCooperativeDomains []*types.Domain
+			for _, remoteDomainCooperation := range k.GetAllDomainCooperationsByRemoteDomainName(ctx, remoteDomain.Name) {
+				if CheckLastUpdate(remoteDomainCooperation.UpdateTimestamp, cooperationNewtorkFeatures.LastUpdate){
+					remoteCooperativeDomains = append(remoteCooperativeDomains, remoteDomainCooperation.RemoteDomain)
+				}
+			}
+			remoteDomainMap := types.DomainMap{
+				Creator:     ctx.ChainID(),
+				DomainIndex: remoteDomain.Name,
+				DomainList:  remoteCooperativeDomains,
+			}
+			domainMapList = append(domainMapList, &remoteDomainMap)
+			k.SetDomainMap(ctx, remoteDomainMap)
+		}
+		l = len(domainMapList)
+		i = i + 1
+	}
+
+	cooperationNetwork := types.CooperationNetwork{
+		Creator:             ctx.ChainID(),
+		Label:               "cooperation-network-" + cast.ToString(time.Now().UnixNano()),
+		DomainMapList:       domainMapList,
+		CreationTimestamp:   cast.ToString(time.Now()),
+		UpdateTimestamp:     cast.ToString(time.Now())+" test:"+test,
+		CooperationDataList: nil,
+		Features:            nil,
+	}
+
+	k.AppendCooperationNetwork(ctx, cooperationNetwork)
+}
+
+

@@ -13,7 +13,7 @@ const (
 
 var _ sdk.Msg = &MsgCreateCooperationNetworkFeatures{}
 
-func NewMsgCreateCooperationNetworkFeatures(creator string, depth uint64, cost uint64, interestList []string, locationList []string, lastUpdate string) *MsgCreateCooperationNetworkFeatures {
+func NewMsgCreateCooperationNetworkFeatures(creator string, depth uint64, cost uint64, interestList []string, locationList []string, lastUpdate string, validity *Validity) *MsgCreateCooperationNetworkFeatures {
 	return &MsgCreateCooperationNetworkFeatures{
 		Creator:      creator,
 		Depth:        depth,
@@ -21,6 +21,7 @@ func NewMsgCreateCooperationNetworkFeatures(creator string, depth uint64, cost u
 		InterestList: interestList,
 		LocationList: locationList,
 		LastUpdate:   lastUpdate,
+		Validity: validity,
 	}
 }
 
@@ -55,7 +56,7 @@ func (msg *MsgCreateCooperationNetworkFeatures) ValidateBasic() error {
 
 var _ sdk.Msg = &MsgUpdateCooperationNetworkFeatures{}
 
-func NewMsgUpdateCooperationNetworkFeatures(creator string, depth uint64, cost uint64, interestList []string, locationList []string, lastUpdate string) *MsgUpdateCooperationNetworkFeatures {
+func NewMsgUpdateCooperationNetworkFeatures(creator string, depth uint64, cost uint64, interestList []string, locationList []string, lastUpdate string, validity *Validity) *MsgUpdateCooperationNetworkFeatures {
 	return &MsgUpdateCooperationNetworkFeatures{
 		Creator:      creator,
 		Depth:        depth,
@@ -63,6 +64,7 @@ func NewMsgUpdateCooperationNetworkFeatures(creator string, depth uint64, cost u
 		InterestList: interestList,
 		LocationList: locationList,
 		LastUpdate:   lastUpdate,
+		Validity: validity,
 	}
 }
 

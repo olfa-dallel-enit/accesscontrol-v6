@@ -8,13 +8,15 @@ import (
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 	"strings"
+
+	"encoding/json"
 )
 
 func CmdCreateCooperationNetworkFeatures() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-cooperation-network-features [depth] [cost] [interest-list] [location-list] [last-update]",
+		Use:   "create-cooperation-network-features [depth] [cost] [interest-list] [location-list] [last-update] [validity]",
 		Short: "Create cooperationNetworkFeatures",
-		Args:  cobra.ExactArgs(5),
+		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argDepth, err := cast.ToUint64E(args[0])
 			if err != nil {
@@ -28,12 +30,18 @@ func CmdCreateCooperationNetworkFeatures() *cobra.Command {
 			argLocationList := strings.Split(args[3], listSeparator)
 			argLastUpdate := args[4]
 
+			argValidity := new(types.Validity)
+			err = json.Unmarshal([]byte(args[5]), argValidity)
+			if err != nil {
+				return err
+			}
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgCreateCooperationNetworkFeatures(clientCtx.GetFromAddress().String(), argDepth, argCost, argInterestList, argLocationList, argLastUpdate)
+			msg := types.NewMsgCreateCooperationNetworkFeatures(clientCtx.GetFromAddress().String(), argDepth, argCost, argInterestList, argLocationList, argLastUpdate, argValidity)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -48,9 +56,9 @@ func CmdCreateCooperationNetworkFeatures() *cobra.Command {
 
 func CmdUpdateCooperationNetworkFeatures() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update-cooperation-network-features [depth] [cost] [interest-list] [location-list] [last-update]",
+		Use:   "update-cooperation-network-features [depth] [cost] [interest-list] [location-list] [last-update] [validity]",
 		Short: "Update cooperationNetworkFeatures",
-		Args:  cobra.ExactArgs(5),
+		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argDepth, err := cast.ToUint64E(args[0])
 			if err != nil {
@@ -64,12 +72,18 @@ func CmdUpdateCooperationNetworkFeatures() *cobra.Command {
 			argLocationList := strings.Split(args[3], listSeparator)
 			argLastUpdate := args[4]
 
+			argValidity := new(types.Validity)
+			err = json.Unmarshal([]byte(args[5]), argValidity)
+			if err != nil {
+				return err
+			}
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgUpdateCooperationNetworkFeatures(clientCtx.GetFromAddress().String(), argDepth, argCost, argInterestList, argLocationList, argLastUpdate)
+			msg := types.NewMsgUpdateCooperationNetworkFeatures(clientCtx.GetFromAddress().String(), argDepth, argCost, argInterestList, argLocationList, argLastUpdate, argValidity)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
