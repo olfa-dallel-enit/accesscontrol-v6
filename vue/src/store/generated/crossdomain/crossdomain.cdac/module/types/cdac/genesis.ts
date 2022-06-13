@@ -19,6 +19,8 @@ import { UpdatePolicy } from "../cdac/update_policy";
 import { CooperativeDomain } from "../cdac/cooperative_domain";
 import { DelegationPath } from "../cdac/delegation_path";
 import { Path } from "../cdac/path";
+import { TimeCalculation } from "../cdac/time_calculation";
+import { CalculationTime } from "../cdac/calculation_time";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -56,8 +58,12 @@ export interface GenesisState {
   delegationPathList: DelegationPath[];
   delegationPathCount: number;
   pathList: Path[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   pathCount: number;
+  timeCalculationList: TimeCalculation[];
+  timeCalculationCount: number;
+  calculationTimeList: CalculationTime[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  calculationTimeCount: number;
 }
 
 const baseGenesisState: object = {
@@ -76,6 +82,8 @@ const baseGenesisState: object = {
   cooperativeDomainCount: 0,
   delegationPathCount: 0,
   pathCount: 0,
+  timeCalculationCount: 0,
+  calculationTimeCount: 0,
 };
 
 export const GenesisState = {
@@ -182,6 +190,18 @@ export const GenesisState = {
     if (message.pathCount !== 0) {
       writer.uint32(264).uint64(message.pathCount);
     }
+    for (const v of message.timeCalculationList) {
+      TimeCalculation.encode(v!, writer.uint32(274).fork()).ldelim();
+    }
+    if (message.timeCalculationCount !== 0) {
+      writer.uint32(280).uint64(message.timeCalculationCount);
+    }
+    for (const v of message.calculationTimeList) {
+      CalculationTime.encode(v!, writer.uint32(290).fork()).ldelim();
+    }
+    if (message.calculationTimeCount !== 0) {
+      writer.uint32(296).uint64(message.calculationTimeCount);
+    }
     return writer;
   },
 
@@ -205,6 +225,8 @@ export const GenesisState = {
     message.cooperativeDomainList = [];
     message.delegationPathList = [];
     message.pathList = [];
+    message.timeCalculationList = [];
+    message.calculationTimeList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -339,6 +361,22 @@ export const GenesisState = {
         case 33:
           message.pathCount = longToNumber(reader.uint64() as Long);
           break;
+        case 34:
+          message.timeCalculationList.push(
+            TimeCalculation.decode(reader, reader.uint32())
+          );
+          break;
+        case 35:
+          message.timeCalculationCount = longToNumber(reader.uint64() as Long);
+          break;
+        case 36:
+          message.calculationTimeList.push(
+            CalculationTime.decode(reader, reader.uint32())
+          );
+          break;
+        case 37:
+          message.calculationTimeCount = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -365,6 +403,8 @@ export const GenesisState = {
     message.cooperativeDomainList = [];
     message.delegationPathList = [];
     message.pathList = [];
+    message.timeCalculationList = [];
+    message.calculationTimeList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -597,6 +637,38 @@ export const GenesisState = {
     } else {
       message.pathCount = 0;
     }
+    if (
+      object.timeCalculationList !== undefined &&
+      object.timeCalculationList !== null
+    ) {
+      for (const e of object.timeCalculationList) {
+        message.timeCalculationList.push(TimeCalculation.fromJSON(e));
+      }
+    }
+    if (
+      object.timeCalculationCount !== undefined &&
+      object.timeCalculationCount !== null
+    ) {
+      message.timeCalculationCount = Number(object.timeCalculationCount);
+    } else {
+      message.timeCalculationCount = 0;
+    }
+    if (
+      object.calculationTimeList !== undefined &&
+      object.calculationTimeList !== null
+    ) {
+      for (const e of object.calculationTimeList) {
+        message.calculationTimeList.push(CalculationTime.fromJSON(e));
+      }
+    }
+    if (
+      object.calculationTimeCount !== undefined &&
+      object.calculationTimeCount !== null
+    ) {
+      message.calculationTimeCount = Number(object.calculationTimeCount);
+    } else {
+      message.calculationTimeCount = 0;
+    }
     return message;
   },
 
@@ -749,6 +821,24 @@ export const GenesisState = {
       obj.pathList = [];
     }
     message.pathCount !== undefined && (obj.pathCount = message.pathCount);
+    if (message.timeCalculationList) {
+      obj.timeCalculationList = message.timeCalculationList.map((e) =>
+        e ? TimeCalculation.toJSON(e) : undefined
+      );
+    } else {
+      obj.timeCalculationList = [];
+    }
+    message.timeCalculationCount !== undefined &&
+      (obj.timeCalculationCount = message.timeCalculationCount);
+    if (message.calculationTimeList) {
+      obj.calculationTimeList = message.calculationTimeList.map((e) =>
+        e ? CalculationTime.toJSON(e) : undefined
+      );
+    } else {
+      obj.calculationTimeList = [];
+    }
+    message.calculationTimeCount !== undefined &&
+      (obj.calculationTimeCount = message.calculationTimeCount);
     return obj;
   },
 
@@ -770,6 +860,8 @@ export const GenesisState = {
     message.cooperativeDomainList = [];
     message.delegationPathList = [];
     message.pathList = [];
+    message.timeCalculationList = [];
+    message.calculationTimeList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -1000,6 +1092,38 @@ export const GenesisState = {
       message.pathCount = object.pathCount;
     } else {
       message.pathCount = 0;
+    }
+    if (
+      object.timeCalculationList !== undefined &&
+      object.timeCalculationList !== null
+    ) {
+      for (const e of object.timeCalculationList) {
+        message.timeCalculationList.push(TimeCalculation.fromPartial(e));
+      }
+    }
+    if (
+      object.timeCalculationCount !== undefined &&
+      object.timeCalculationCount !== null
+    ) {
+      message.timeCalculationCount = object.timeCalculationCount;
+    } else {
+      message.timeCalculationCount = 0;
+    }
+    if (
+      object.calculationTimeList !== undefined &&
+      object.calculationTimeList !== null
+    ) {
+      for (const e of object.calculationTimeList) {
+        message.calculationTimeList.push(CalculationTime.fromPartial(e));
+      }
+    }
+    if (
+      object.calculationTimeCount !== undefined &&
+      object.calculationTimeCount !== null
+    ) {
+      message.calculationTimeCount = object.calculationTimeCount;
+    } else {
+      message.calculationTimeCount = 0;
     }
     return message;
   },

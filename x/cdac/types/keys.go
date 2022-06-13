@@ -105,3 +105,13 @@ const (
 	PathKey      = "Path-value-"
 	PathCountKey = "Path-count-"
 )
+
+const (
+	TimeCalculationKey      = "TimeCalculation-value-"
+	TimeCalculationCountKey = "TimeCalculation-count-"
+)
+
+const (
+	CalculationTimeKey      = "CalculationTime-value-"
+	CalculationTimeCountKey = "CalculationTime-count-"
+)

@@ -54,11 +54,11 @@ var _ sdk.Msg = &MsgUpdateDelegationPath{}
 
 func NewMsgUpdateDelegationPath(creator string, id uint64, delegator *CooperativeDomain, delegatee *CooperativeDomain, pathList []*Path) *MsgUpdateDelegationPath {
 	return &MsgUpdateDelegationPath{
-		Id:         id,
-		Creator:    creator,
-		Delegator:  delegator,
-		Delegatee:  delegatee,
-		PathList: pathList,
+		Id:        id,
+		Creator:   creator,
+		Delegator: delegator,
+		Delegatee: delegatee,
+		PathList:  pathList,
 	}
 }
 

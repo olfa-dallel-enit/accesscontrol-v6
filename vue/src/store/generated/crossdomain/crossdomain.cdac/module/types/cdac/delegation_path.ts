@@ -2,6 +2,7 @@
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import { CooperativeDomain } from "../cdac/cooperative_domain";
+import { Path } from "../cdac/path";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -9,7 +10,7 @@ export interface DelegationPath {
   id: number;
   delegator: CooperativeDomain | undefined;
   delegatee: CooperativeDomain | undefined;
-  domainList: CooperativeDomain[];
+  pathList: Path[];
   creator: string;
   label: string;
 }
@@ -33,8 +34,8 @@ export const DelegationPath = {
         writer.uint32(26).fork()
       ).ldelim();
     }
-    for (const v of message.domainList) {
-      CooperativeDomain.encode(v!, writer.uint32(34).fork()).ldelim();
+    for (const v of message.pathList) {
+      Path.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     if (message.creator !== "") {
       writer.uint32(42).string(message.creator);
@@ -49,7 +50,7 @@ export const DelegationPath = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDelegationPath } as DelegationPath;
-    message.domainList = [];
+    message.pathList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -63,9 +64,7 @@ export const DelegationPath = {
           message.delegatee = CooperativeDomain.decode(reader, reader.uint32());
           break;
         case 4:
-          message.domainList.push(
-            CooperativeDomain.decode(reader, reader.uint32())
-          );
+          message.pathList.push(Path.decode(reader, reader.uint32()));
           break;
         case 5:
           message.creator = reader.string();
@@ -83,7 +82,7 @@ export const DelegationPath = {
 
   fromJSON(object: any): DelegationPath {
     const message = { ...baseDelegationPath } as DelegationPath;
-    message.domainList = [];
+    message.pathList = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = Number(object.id);
     } else {
@@ -99,9 +98,9 @@ export const DelegationPath = {
     } else {
       message.delegatee = undefined;
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(CooperativeDomain.fromJSON(e));
+    if (object.pathList !== undefined && object.pathList !== null) {
+      for (const e of object.pathList) {
+        message.pathList.push(Path.fromJSON(e));
       }
     }
     if (object.creator !== undefined && object.creator !== null) {
@@ -128,12 +127,12 @@ export const DelegationPath = {
       (obj.delegatee = message.delegatee
         ? CooperativeDomain.toJSON(message.delegatee)
         : undefined);
-    if (message.domainList) {
-      obj.domainList = message.domainList.map((e) =>
-        e ? CooperativeDomain.toJSON(e) : undefined
+    if (message.pathList) {
+      obj.pathList = message.pathList.map((e) =>
+        e ? Path.toJSON(e) : undefined
       );
     } else {
-      obj.domainList = [];
+      obj.pathList = [];
     }
     message.creator !== undefined && (obj.creator = message.creator);
     message.label !== undefined && (obj.label = message.label);
@@ -142,7 +141,7 @@ export const DelegationPath = {
 
   fromPartial(object: DeepPartial<DelegationPath>): DelegationPath {
     const message = { ...baseDelegationPath } as DelegationPath;
-    message.domainList = [];
+    message.pathList = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = object.id;
     } else {
@@ -158,9 +157,9 @@ export const DelegationPath = {
     } else {
       message.delegatee = undefined;
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(CooperativeDomain.fromPartial(e));
+    if (object.pathList !== undefined && object.pathList !== null) {
+      for (const e of object.pathList) {
+        message.pathList.push(Path.fromPartial(e));
       }
     }
     if (object.creator !== undefined && object.creator !== null) {

@@ -119,6 +119,20 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set path count
 	k.SetPathCount(ctx, genState.PathCount)
+	// Set all the timeCalculation
+	for _, elem := range genState.TimeCalculationList {
+		k.SetTimeCalculation(ctx, elem)
+	}
+
+	// Set timeCalculation count
+	k.SetTimeCalculationCount(ctx, genState.TimeCalculationCount)
+	// Set all the calculationTime
+	for _, elem := range genState.CalculationTimeList {
+		k.SetCalculationTime(ctx, elem)
+	}
+
+	// Set calculationTime count
+	k.SetCalculationTimeCount(ctx, genState.CalculationTimeCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetPort(ctx, genState.PortId)
 	// Only try to bind to port if it is not already bound, since we may already own
@@ -175,6 +189,10 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.DelegationPathCount = k.GetDelegationPathCount(ctx)
 	genesis.PathList = k.GetAllPath(ctx)
 	genesis.PathCount = k.GetPathCount(ctx)
+	genesis.TimeCalculationList = k.GetAllTimeCalculation(ctx)
+	genesis.TimeCalculationCount = k.GetTimeCalculationCount(ctx)
+	genesis.CalculationTimeList = k.GetAllCalculationTime(ctx)
+	genesis.CalculationTimeCount = k.GetCalculationTimeCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

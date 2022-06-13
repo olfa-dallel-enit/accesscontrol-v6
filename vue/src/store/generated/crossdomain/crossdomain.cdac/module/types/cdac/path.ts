@@ -7,7 +7,7 @@ export const protobufPackage = "crossdomain.cdac";
 
 export interface Path {
   id: number;
-  domainList: CooperativeDomain | undefined;
+  domainList: CooperativeDomain[];
   creator: string;
 }
 
@@ -18,11 +18,8 @@ export const Path = {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
     }
-    if (message.domainList !== undefined) {
-      CooperativeDomain.encode(
-        message.domainList,
-        writer.uint32(18).fork()
-      ).ldelim();
+    for (const v of message.domainList) {
+      CooperativeDomain.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     if (message.creator !== "") {
       writer.uint32(26).string(message.creator);
@@ -34,6 +31,7 @@ export const Path = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...basePath } as Path;
+    message.domainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -41,9 +39,8 @@ export const Path = {
           message.id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
-          message.domainList = CooperativeDomain.decode(
-            reader,
-            reader.uint32()
+          message.domainList.push(
+            CooperativeDomain.decode(reader, reader.uint32())
           );
           break;
         case 3:
@@ -59,15 +56,16 @@ export const Path = {
 
   fromJSON(object: any): Path {
     const message = { ...basePath } as Path;
+    message.domainList = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = Number(object.id);
     } else {
       message.id = 0;
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = CooperativeDomain.fromJSON(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(CooperativeDomain.fromJSON(e));
+      }
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
@@ -80,25 +78,29 @@ export const Path = {
   toJSON(message: Path): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
-    message.domainList !== undefined &&
-      (obj.domainList = message.domainList
-        ? CooperativeDomain.toJSON(message.domainList)
-        : undefined);
+    if (message.domainList) {
+      obj.domainList = message.domainList.map((e) =>
+        e ? CooperativeDomain.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainList = [];
+    }
     message.creator !== undefined && (obj.creator = message.creator);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Path>): Path {
     const message = { ...basePath } as Path;
+    message.domainList = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = object.id;
     } else {
       message.id = 0;
     }
     if (object.domainList !== undefined && object.domainList !== null) {
-      message.domainList = CooperativeDomain.fromPartial(object.domainList);
-    } else {
-      message.domainList = undefined;
+      for (const e of object.domainList) {
+        message.domainList.push(CooperativeDomain.fromPartial(e));
+      }
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;

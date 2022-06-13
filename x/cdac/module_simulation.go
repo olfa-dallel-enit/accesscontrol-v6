@@ -232,6 +232,30 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeletePath int = 100
 
+	opWeightMsgCreateTimeCalculation = "op_weight_msg_time_calculation"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateTimeCalculation int = 100
+
+	opWeightMsgUpdateTimeCalculation = "op_weight_msg_time_calculation"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateTimeCalculation int = 100
+
+	opWeightMsgDeleteTimeCalculation = "op_weight_msg_time_calculation"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteTimeCalculation int = 100
+
+	opWeightMsgCreateCalculationTime = "op_weight_msg_calculation_time"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateCalculationTime int = 100
+
+	opWeightMsgUpdateCalculationTime = "op_weight_msg_calculation_time"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateCalculationTime int = 100
+
+	opWeightMsgDeleteCalculationTime = "op_weight_msg_calculation_time"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteCalculationTime int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -418,6 +442,28 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		PathCount: 2,
+		TimeCalculationList: []types.TimeCalculation{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		TimeCalculationCount: 2,
+		CalculationTimeList: []types.CalculationTime{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		CalculationTimeCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -1011,6 +1057,72 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeletePath,
 		cdacsimulation.SimulateMsgDeletePath(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateTimeCalculation int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateTimeCalculation, &weightMsgCreateTimeCalculation, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateTimeCalculation = defaultWeightMsgCreateTimeCalculation
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateTimeCalculation,
+		cdacsimulation.SimulateMsgCreateTimeCalculation(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateTimeCalculation int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateTimeCalculation, &weightMsgUpdateTimeCalculation, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateTimeCalculation = defaultWeightMsgUpdateTimeCalculation
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateTimeCalculation,
+		cdacsimulation.SimulateMsgUpdateTimeCalculation(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteTimeCalculation int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteTimeCalculation, &weightMsgDeleteTimeCalculation, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteTimeCalculation = defaultWeightMsgDeleteTimeCalculation
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteTimeCalculation,
+		cdacsimulation.SimulateMsgDeleteTimeCalculation(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateCalculationTime int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateCalculationTime, &weightMsgCreateCalculationTime, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateCalculationTime = defaultWeightMsgCreateCalculationTime
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateCalculationTime,
+		cdacsimulation.SimulateMsgCreateCalculationTime(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateCalculationTime int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateCalculationTime, &weightMsgUpdateCalculationTime, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateCalculationTime = defaultWeightMsgUpdateCalculationTime
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateCalculationTime,
+		cdacsimulation.SimulateMsgUpdateCalculationTime(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteCalculationTime int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteCalculationTime, &weightMsgDeleteCalculationTime, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteCalculationTime = defaultWeightMsgDeleteCalculationTime
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteCalculationTime,
+		cdacsimulation.SimulateMsgDeleteCalculationTime(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

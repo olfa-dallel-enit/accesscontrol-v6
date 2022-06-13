@@ -1,0 +1,13 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message TimeCalculation {
+  uint64 id = 1;
+  string operation = 2; 
+  string startTimestamp = 3; 
+  string endTimestamp = 4; 
+  uint64 timing = 5; 
+  string creator = 6;
+}

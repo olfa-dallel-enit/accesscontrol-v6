@@ -20,6 +20,18 @@ export interface CdacAuthenticationLog {
   creator?: string;
 }
 
+export interface CdacCalculationTime {
+  /** @format uint64 */
+  id?: string;
+  operation?: string;
+  startTimestamp?: string;
+  endTimestamp?: string;
+
+  /** @format uint64 */
+  duration?: string;
+  creator?: string;
+}
+
 export interface CdacCertificate {
   /** @format uint64 */
   id?: string;
@@ -92,7 +104,7 @@ export interface CdacDelegationPath {
   id?: string;
   delegator?: CdacCooperativeDomain;
   delegatee?: CdacCooperativeDomain;
-  domainList?: CdacCooperativeDomain[];
+  pathList?: CdacPath[];
   creator?: string;
   label?: string;
 }
@@ -152,6 +164,11 @@ export interface CdacIbcConnection {
 }
 
 export interface CdacMsgCreateAuthenticationLogResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
+export interface CdacMsgCreateCalculationTimeResponse {
   /** @format uint64 */
   id?: string;
 }
@@ -220,6 +237,11 @@ export interface CdacMsgCreatePublicKeyResponse {
   id?: string;
 }
 
+export interface CdacMsgCreateTimeCalculationResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
 export type CdacMsgCreateUpdatePolicyResponse = object;
 
 export interface CdacMsgCreateValidityResponse {
@@ -228,6 +250,8 @@ export interface CdacMsgCreateValidityResponse {
 }
 
 export type CdacMsgDeleteAuthenticationLogResponse = object;
+
+export type CdacMsgDeleteCalculationTimeResponse = object;
 
 export type CdacMsgDeleteCertificateResponse = object;
 
@@ -257,6 +281,8 @@ export type CdacMsgDeletePathResponse = object;
 
 export type CdacMsgDeletePublicKeyResponse = object;
 
+export type CdacMsgDeleteTimeCalculationResponse = object;
+
 export type CdacMsgDeleteUpdatePolicyResponse = object;
 
 export type CdacMsgDeleteValidityResponse = object;
@@ -284,6 +310,8 @@ export type CdacMsgSendModifyCooperationValidityResponse = object;
 export type CdacMsgSendRevokeCooperationResponse = object;
 
 export type CdacMsgUpdateAuthenticationLogResponse = object;
+
+export type CdacMsgUpdateCalculationTimeResponse = object;
 
 export type CdacMsgUpdateCertificateResponse = object;
 
@@ -313,6 +341,8 @@ export type CdacMsgUpdatePathResponse = object;
 
 export type CdacMsgUpdatePublicKeyResponse = object;
 
+export type CdacMsgUpdateTimeCalculationResponse = object;
+
 export type CdacMsgUpdateUpdatePolicyResponse = object;
 
 export type CdacMsgUpdateValidityResponse = object;
@@ -325,7 +355,7 @@ export type CdacParams = object;
 export interface CdacPath {
   /** @format uint64 */
   id?: string;
-  domainList?: CdacCooperativeDomain;
+  domainList?: CdacCooperativeDomain[];
   creator?: string;
 }
 
@@ -343,6 +373,21 @@ export interface CdacPublicKey {
 
 export interface CdacQueryAllAuthenticationLogResponse {
   AuthenticationLog?: CdacAuthenticationLog[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface CdacQueryAllCalculationTimeResponse {
+  CalculationTime?: CdacCalculationTime[];
 
   /**
    * PageResponse is to be embedded in gRPC response messages where the
@@ -566,6 +611,21 @@ export interface CdacQueryAllPublicKeyResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryAllTimeCalculationResponse {
+  TimeCalculation?: CdacTimeCalculation[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CdacQueryAllValidityResponse {
   Validity?: CdacValidity[];
 
@@ -593,6 +653,10 @@ export interface CdacQueryEstablishedCooperationByChannelResponse {
 
 export interface CdacQueryGetAuthenticationLogResponse {
   AuthenticationLog?: CdacAuthenticationLog;
+}
+
+export interface CdacQueryGetCalculationTimeResponse {
+  CalculationTime?: CdacCalculationTime;
 }
 
 export interface CdacQueryGetCertificateResponse {
@@ -651,6 +715,10 @@ export interface CdacQueryGetPublicKeyResponse {
   PublicKey?: CdacPublicKey;
 }
 
+export interface CdacQueryGetTimeCalculationResponse {
+  TimeCalculation?: CdacTimeCalculation;
+}
+
 export interface CdacQueryGetUpdatePolicyResponse {
   UpdatePolicy?: CdacUpdatePolicy;
 }
@@ -669,6 +737,18 @@ export interface CdacQueryParamsResponse {
 
 export interface CdacQueryRetrieveForwardPolicyResponse {
   forwardPolicy?: CdacForwardPolicy;
+}
+
+export interface CdacTimeCalculation {
+  /** @format uint64 */
+  id?: string;
+  operation?: string;
+  startTimestamp?: string;
+  endTimestamp?: string;
+
+  /** @format uint64 */
+  timing?: string;
+  creator?: string;
 }
 
 export interface CdacUpdatePolicy {
@@ -993,6 +1073,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryAuthenticationLog = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetAuthenticationLogResponse, RpcStatus>({
       path: `/crossdomain/cdac/authentication_log/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCalculationTimeAll
+   * @summary Queries a list of CalculationTime items.
+   * @request GET:/crossdomain/cdac/calculation_time
+   */
+  queryCalculationTimeAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllCalculationTimeResponse, RpcStatus>({
+      path: `/crossdomain/cdac/calculation_time`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCalculationTime
+   * @summary Queries a CalculationTime by id.
+   * @request GET:/crossdomain/cdac/calculation_time/{id}
+   */
+  queryCalculationTime = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetCalculationTimeResponse, RpcStatus>({
+      path: `/crossdomain/cdac/calculation_time/${id}`,
       method: "GET",
       format: "json",
       ...params,
@@ -1645,6 +1767,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryRetrieveForwardPolicy = (params: RequestParams = {}) =>
     this.request<CdacQueryRetrieveForwardPolicyResponse, RpcStatus>({
       path: `/crossdomain/cdac/retrieve_forward_policy`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryTimeCalculationAll
+   * @summary Queries a list of TimeCalculation items.
+   * @request GET:/crossdomain/cdac/time_calculation
+   */
+  queryTimeCalculationAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllTimeCalculationResponse, RpcStatus>({
+      path: `/crossdomain/cdac/time_calculation`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryTimeCalculation
+   * @summary Queries a TimeCalculation by id.
+   * @request GET:/crossdomain/cdac/time_calculation/{id}
+   */
+  queryTimeCalculation = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetTimeCalculationResponse, RpcStatus>({
+      path: `/crossdomain/cdac/time_calculation/${id}`,
       method: "GET",
       format: "json",
       ...params,

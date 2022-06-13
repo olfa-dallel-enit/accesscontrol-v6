@@ -23,3 +23,5 @@ crossdomaind tx cdac create-delegation-path '{"name":"mars.1","domainType":"Remo
 crossdomaind tx cdac create-delegation-path '{"name":"mars.2.1","domainType":"Remote","location":"france"}' '{"name":"mars.4.1","domainType":"Remote","location":"france"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 
 crossdomaind query cdac list-delegation-path --node tcp://localhost:26657
+
+crossdomaind query cdac list-calculation-time  --node tcp://localhost:26657

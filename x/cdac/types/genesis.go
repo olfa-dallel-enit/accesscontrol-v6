@@ -29,6 +29,8 @@ func DefaultGenesis() *GenesisState {
 		CooperativeDomainList:          []CooperativeDomain{},
 		DelegationPathList:             []DelegationPath{},
 		PathList:                       []Path{},
+		TimeCalculationList:            []TimeCalculation{},
+		CalculationTimeList:            []CalculationTime{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -227,6 +229,30 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("path id should be lower or equal than the last id")
 		}
 		pathIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in timeCalculation
+	timeCalculationIdMap := make(map[uint64]bool)
+	timeCalculationCount := gs.GetTimeCalculationCount()
+	for _, elem := range gs.TimeCalculationList {
+		if _, ok := timeCalculationIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for timeCalculation")
+		}
+		if elem.Id >= timeCalculationCount {
+			return fmt.Errorf("timeCalculation id should be lower or equal than the last id")
+		}
+		timeCalculationIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in calculationTime
+	calculationTimeIdMap := make(map[uint64]bool)
+	calculationTimeCount := gs.GetCalculationTimeCount()
+	for _, elem := range gs.CalculationTimeList {
+		if _, ok := calculationTimeIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for calculationTime")
+		}
+		if elem.Id >= calculationTimeCount {
+			return fmt.Errorf("calculationTime id should be lower or equal than the last id")
+		}
+		calculationTimeIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

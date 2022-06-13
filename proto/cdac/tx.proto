@@ -9,6 +9,8 @@ import "cdac/cooperation_network.proto";
 import "cdac/update_policy.proto";
 import "cdac/delegation_path.proto";
 import "cdac/path.proto";
+import "cdac/time_calculation.proto";
+import "cdac/calculation_time.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "cdac/cooperative_domain.proto";
 import "cdac/cooperation_network_features.proto";
@@ -86,6 +88,12 @@ rpc CreateDelegationPath(MsgCreateDelegationPath) returns (MsgCreateDelegationPa
 rpc CreatePath(MsgCreatePath) returns (MsgCreatePathResponse);
   rpc UpdatePath(MsgUpdatePath) returns (MsgUpdatePathResponse);
   rpc DeletePath(MsgDeletePath) returns (MsgDeletePathResponse);
+rpc CreateTimeCalculation(MsgCreateTimeCalculation) returns (MsgCreateTimeCalculationResponse);
+  rpc UpdateTimeCalculation(MsgUpdateTimeCalculation) returns (MsgUpdateTimeCalculationResponse);
+  rpc DeleteTimeCalculation(MsgDeleteTimeCalculation) returns (MsgDeleteTimeCalculationResponse);
+rpc CreateCalculationTime(MsgCreateCalculationTime) returns (MsgCreateCalculationTimeResponse);
+  rpc UpdateCalculationTime(MsgUpdateCalculationTime) returns (MsgUpdateCalculationTimeResponse);
+  rpc DeleteCalculationTime(MsgDeleteCalculationTime) returns (MsgDeleteCalculationTimeResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -691,5 +699,65 @@ message MsgDeletePath {
 }
 
 message MsgDeletePathResponse {}
+
+message MsgCreateTimeCalculation {
+  string creator = 1;
+  string operation = 2;
+  string startTimestamp = 3;
+  string endTimestamp = 4;
+  uint64 timing = 5;
+}
+
+message MsgCreateTimeCalculationResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateTimeCalculation {
+  string creator = 1;
+  uint64 id = 2;
+  string operation = 3;
+  string startTimestamp = 4;
+  string endTimestamp = 5;
+  uint64 timing = 6;
+}
+
+message MsgUpdateTimeCalculationResponse {}
+
+message MsgDeleteTimeCalculation {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteTimeCalculationResponse {}
+
+message MsgCreateCalculationTime {
+  string creator = 1;
+  string operation = 2;
+  string startTimestamp = 3;
+  string endTimestamp = 4;
+  uint64 duration = 5;
+}
+
+message MsgCreateCalculationTimeResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateCalculationTime {
+  string creator = 1;
+  uint64 id = 2;
+  string operation = 3;
+  string startTimestamp = 4;
+  string endTimestamp = 5;
+  uint64 duration = 6;
+}
+
+message MsgUpdateCalculationTimeResponse {}
+
+message MsgDeleteCalculationTime {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteCalculationTimeResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

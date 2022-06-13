@@ -18,6 +18,8 @@ import "cdac/update_policy.proto";
 import "cdac/cooperative_domain.proto";
 import "cdac/delegation_path.proto";
 import "cdac/path.proto";
+import "cdac/time_calculation.proto";
+import "cdac/calculation_time.proto";
 // this line is used by starport scaffolding # 1
 import "cdac/validity.proto";
 import "cdac/domain.proto";
@@ -209,6 +211,26 @@ service Query {
 	// Queries a list of Path items.
 	rpc PathAll(QueryAllPathRequest) returns (QueryAllPathResponse) {
 		option (google.api.http).get = "/crossdomain/cdac/path";
+	}
+
+// Queries a TimeCalculation by id.
+	rpc TimeCalculation(QueryGetTimeCalculationRequest) returns (QueryGetTimeCalculationResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/time_calculation/{id}";
+	}
+
+	// Queries a list of TimeCalculation items.
+	rpc TimeCalculationAll(QueryAllTimeCalculationRequest) returns (QueryAllTimeCalculationResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/time_calculation";
+	}
+
+// Queries a CalculationTime by id.
+	rpc CalculationTime(QueryGetCalculationTimeRequest) returns (QueryGetCalculationTimeResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/calculation_time/{id}";
+	}
+
+	// Queries a list of CalculationTime items.
+	rpc CalculationTimeAll(QueryAllCalculationTimeRequest) returns (QueryAllCalculationTimeResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/calculation_time";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -524,6 +546,40 @@ message QueryAllPathRequest {
 
 message QueryAllPathResponse {
 	repeated Path Path = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetTimeCalculationRequest {
+	uint64 id = 1;
+}
+
+message QueryGetTimeCalculationResponse {
+	TimeCalculation TimeCalculation = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTimeCalculationRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTimeCalculationResponse {
+	repeated TimeCalculation TimeCalculation = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCalculationTimeRequest {
+	uint64 id = 1;
+}
+
+message QueryGetCalculationTimeResponse {
+	CalculationTime CalculationTime = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCalculationTimeRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCalculationTimeResponse {
+	repeated CalculationTime CalculationTime = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

@@ -169,6 +169,24 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				PathCount: 2,
+				TimeCalculationList: []types.TimeCalculation{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				TimeCalculationCount: 2,
+				CalculationTimeList: []types.CalculationTime{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				CalculationTimeCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -562,6 +580,58 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				PathCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated timeCalculation",
+			genState: &types.GenesisState{
+				TimeCalculationList: []types.TimeCalculation{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid timeCalculation count",
+			genState: &types.GenesisState{
+				TimeCalculationList: []types.TimeCalculation{
+					{
+						Id: 1,
+					},
+				},
+				TimeCalculationCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated calculationTime",
+			genState: &types.GenesisState{
+				CalculationTimeList: []types.CalculationTime{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid calculationTime count",
+			genState: &types.GenesisState{
+				CalculationTimeList: []types.CalculationTime{
+					{
+						Id: 1,
+					},
+				},
+				CalculationTimeCount: 0,
 			},
 			valid: false,
 		},

@@ -19937,6 +19937,192 @@ paths:
           format: uint64
       tags:
         - Query
+  /crossdomain/cdac/calculation_time:
+    get:
+      summary: Queries a list of CalculationTime items.
+      operationId: CrossdomainCdacCalculationTimeAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              CalculationTime:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    operation:
+                      type: string
+                    startTimestamp:
+                      type: string
+                    endTimestamp:
+                      type: string
+                    duration:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/calculation_time/{id}':
+    get:
+      summary: Queries a CalculationTime by id.
+      operationId: CrossdomainCdacCalculationTime
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              CalculationTime:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  operation:
+                    type: string
+                  startTimestamp:
+                    type: string
+                  endTimestamp:
+                    type: string
+                  duration:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
   /crossdomain/cdac/certificate:
     get:
       summary: Queries a list of Certificate items.
@@ -21355,7 +21541,7 @@ paths:
                           type: string
                         creator:
                           type: string
-                    domainList:
+                    pathList:
                       type: array
                       items:
                         type: object
@@ -21363,12 +21549,22 @@ paths:
                           id:
                             type: string
                             format: uint64
-                          name:
-                            type: string
-                          domainType:
-                            type: string
-                          location:
-                            type: string
+                          domainList:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                name:
+                                  type: string
+                                domainType:
+                                  type: string
+                                location:
+                                  type: string
+                                creator:
+                                  type: string
                           creator:
                             type: string
                     creator:
@@ -21523,7 +21719,7 @@ paths:
                         type: string
                       creator:
                         type: string
-                  domainList:
+                  pathList:
                     type: array
                     items:
                       type: object
@@ -21531,12 +21727,22 @@ paths:
                         id:
                           type: string
                           format: uint64
-                        name:
-                          type: string
-                        domainType:
-                          type: string
-                        location:
-                          type: string
+                        domainList:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              name:
+                                type: string
+                              domainType:
+                                type: string
+                              location:
+                                type: string
+                              creator:
+                                type: string
                         creator:
                           type: string
                   creator:
@@ -23123,19 +23329,21 @@ paths:
                       type: string
                       format: uint64
                     domainList:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        name:
-                          type: string
-                        domainType:
-                          type: string
-                        location:
-                          type: string
-                        creator:
-                          type: string
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          name:
+                            type: string
+                          domainType:
+                            type: string
+                          location:
+                            type: string
+                          creator:
+                            type: string
                     creator:
                       type: string
               pagination:
@@ -23259,19 +23467,21 @@ paths:
                     type: string
                     format: uint64
                   domainList:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        format: uint64
-                      name:
-                        type: string
-                      domainType:
-                        type: string
-                      location:
-                        type: string
-                      creator:
-                        type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        name:
+                          type: string
+                        domainType:
+                          type: string
+                        location:
+                          type: string
+                        creator:
+                          type: string
                   creator:
                     type: string
         default:
@@ -23526,6 +23736,192 @@ paths:
                     '@type':
                       type: string
                   additionalProperties: {}
+      tags:
+        - Query
+  /crossdomain/cdac/time_calculation:
+    get:
+      summary: Queries a list of TimeCalculation items.
+      operationId: CrossdomainCdacTimeCalculationAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              TimeCalculation:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    operation:
+                      type: string
+                    startTimestamp:
+                      type: string
+                    endTimestamp:
+                      type: string
+                    timing:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/time_calculation/{id}':
+    get:
+      summary: Queries a TimeCalculation by id.
+      operationId: CrossdomainCdacTimeCalculation
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              TimeCalculation:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  operation:
+                    type: string
+                  startTimestamp:
+                    type: string
+                  endTimestamp:
+                    type: string
+                  timing:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
       tags:
         - Query
   /crossdomain/cdac/update_policy:
@@ -50954,6 +51350,23 @@ definitions:
         type: string
       creator:
         type: string
+  crossdomain.cdac.CalculationTime:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      operation:
+        type: string
+      startTimestamp:
+        type: string
+      endTimestamp:
+        type: string
+      duration:
+        type: string
+        format: uint64
+      creator:
+        type: string
   crossdomain.cdac.Certificate:
     type: object
     properties:
@@ -51199,7 +51612,7 @@ definitions:
             type: string
           creator:
             type: string
-      domainList:
+      pathList:
         type: array
         items:
           type: object
@@ -51207,12 +51620,22 @@ definitions:
             id:
               type: string
               format: uint64
-            name:
-              type: string
-            domainType:
-              type: string
-            location:
-              type: string
+            domainList:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  name:
+                    type: string
+                  domainType:
+                    type: string
+                  location:
+                    type: string
+                  creator:
+                    type: string
             creator:
               type: string
       creator:
@@ -51497,6 +51920,12 @@ definitions:
       id:
         type: string
         format: uint64
+  crossdomain.cdac.MsgCreateCalculationTimeResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
   crossdomain.cdac.MsgCreateCertificateResponse:
     type: object
     properties:
@@ -51573,6 +52002,12 @@ definitions:
       id:
         type: string
         format: uint64
+  crossdomain.cdac.MsgCreateTimeCalculationResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
   crossdomain.cdac.MsgCreateUpdatePolicyResponse:
     type: object
   crossdomain.cdac.MsgCreateValidityResponse:
@@ -51582,6 +52017,8 @@ definitions:
         type: string
         format: uint64
   crossdomain.cdac.MsgDeleteAuthenticationLogResponse:
+    type: object
+  crossdomain.cdac.MsgDeleteCalculationTimeResponse:
     type: object
   crossdomain.cdac.MsgDeleteCertificateResponse:
     type: object
@@ -51611,6 +52048,8 @@ definitions:
     type: object
   crossdomain.cdac.MsgDeletePublicKeyResponse:
     type: object
+  crossdomain.cdac.MsgDeleteTimeCalculationResponse:
+    type: object
   crossdomain.cdac.MsgDeleteUpdatePolicyResponse:
     type: object
   crossdomain.cdac.MsgDeleteValidityResponse:
@@ -51638,6 +52077,8 @@ definitions:
   crossdomain.cdac.MsgSendRevokeCooperationResponse:
     type: object
   crossdomain.cdac.MsgUpdateAuthenticationLogResponse:
+    type: object
+  crossdomain.cdac.MsgUpdateCalculationTimeResponse:
     type: object
   crossdomain.cdac.MsgUpdateCertificateResponse:
     type: object
@@ -51667,6 +52108,8 @@ definitions:
     type: object
   crossdomain.cdac.MsgUpdatePublicKeyResponse:
     type: object
+  crossdomain.cdac.MsgUpdateTimeCalculationResponse:
+    type: object
   crossdomain.cdac.MsgUpdateUpdatePolicyResponse:
     type: object
   crossdomain.cdac.MsgUpdateValidityResponse:
@@ -51681,19 +52124,21 @@ definitions:
         type: string
         format: uint64
       domainList:
-        type: object
-        properties:
-          id:
-            type: string
-            format: uint64
-          name:
-            type: string
-          domainType:
-            type: string
-          location:
-            type: string
-          creator:
-            type: string
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            name:
+              type: string
+            domainType:
+              type: string
+            location:
+              type: string
+            creator:
+              type: string
       creator:
         type: string
   crossdomain.cdac.PublicKey:
@@ -51731,6 +52176,53 @@ definitions:
               type: string
             function:
               type: string
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllCalculationTimeResponse:
+    type: object
+    properties:
+      CalculationTime:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            operation:
+              type: string
+            startTimestamp:
+              type: string
+            endTimestamp:
+              type: string
+            duration:
+              type: string
+              format: uint64
             creator:
               type: string
       pagination:
@@ -52188,7 +52680,7 @@ definitions:
                   type: string
                 creator:
                   type: string
-            domainList:
+            pathList:
               type: array
               items:
                 type: object
@@ -52196,12 +52688,22 @@ definitions:
                   id:
                     type: string
                     format: uint64
-                  name:
-                    type: string
-                  domainType:
-                    type: string
-                  location:
-                    type: string
+                  domainList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        name:
+                          type: string
+                        domainType:
+                          type: string
+                        location:
+                          type: string
+                        creator:
+                          type: string
                   creator:
                     type: string
             creator:
@@ -52667,19 +53169,21 @@ definitions:
               type: string
               format: uint64
             domainList:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uint64
-                name:
-                  type: string
-                domainType:
-                  type: string
-                location:
-                  type: string
-                creator:
-                  type: string
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  name:
+                    type: string
+                  domainType:
+                    type: string
+                  location:
+                    type: string
+                  creator:
+                    type: string
             creator:
               type: string
       pagination:
@@ -52722,6 +53226,53 @@ definitions:
               type: string
               format: uint64
             e:
+              type: string
+              format: uint64
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllTimeCalculationResponse:
+    type: object
+    properties:
+      TimeCalculation:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            operation:
+              type: string
+            startTimestamp:
+              type: string
+            endTimestamp:
+              type: string
+            timing:
               type: string
               format: uint64
             creator:
@@ -52983,6 +53534,26 @@ definitions:
             type: string
           function:
             type: string
+          creator:
+            type: string
+  crossdomain.cdac.QueryGetCalculationTimeResponse:
+    type: object
+    properties:
+      CalculationTime:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          operation:
+            type: string
+          startTimestamp:
+            type: string
+          endTimestamp:
+            type: string
+          duration:
+            type: string
+            format: uint64
           creator:
             type: string
   crossdomain.cdac.QueryGetCertificateResponse:
@@ -53251,7 +53822,7 @@ definitions:
                 type: string
               creator:
                 type: string
-          domainList:
+          pathList:
             type: array
             items:
               type: object
@@ -53259,12 +53830,22 @@ definitions:
                 id:
                   type: string
                   format: uint64
-                name:
-                  type: string
-                domainType:
-                  type: string
-                location:
-                  type: string
+                domainList:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      name:
+                        type: string
+                      domainType:
+                        type: string
+                      location:
+                        type: string
+                      creator:
+                        type: string
                 creator:
                   type: string
           creator:
@@ -53568,19 +54149,21 @@ definitions:
             type: string
             format: uint64
           domainList:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uint64
-              name:
-                type: string
-              domainType:
-                type: string
-              location:
-                type: string
-              creator:
-                type: string
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                name:
+                  type: string
+                domainType:
+                  type: string
+                location:
+                  type: string
+                creator:
+                  type: string
           creator:
             type: string
   crossdomain.cdac.QueryGetPublicKeyResponse:
@@ -53596,6 +54179,26 @@ definitions:
             type: string
             format: uint64
           e:
+            type: string
+            format: uint64
+          creator:
+            type: string
+  crossdomain.cdac.QueryGetTimeCalculationResponse:
+    type: object
+    properties:
+      TimeCalculation:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          operation:
+            type: string
+          startTimestamp:
+            type: string
+          endTimestamp:
+            type: string
+          timing:
             type: string
             format: uint64
           creator:
@@ -53657,6 +54260,23 @@ definitions:
               type: string
           creator:
             type: string
+  crossdomain.cdac.TimeCalculation:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      operation:
+        type: string
+      startTimestamp:
+        type: string
+      endTimestamp:
+        type: string
+      timing:
+        type: string
+        format: uint64
+      creator:
+        type: string
   crossdomain.cdac.UpdatePolicy:
     type: object
     properties:

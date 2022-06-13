@@ -70,6 +70,12 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreatePath{}, "cdac/CreatePath", nil)
 	cdc.RegisterConcrete(&MsgUpdatePath{}, "cdac/UpdatePath", nil)
 	cdc.RegisterConcrete(&MsgDeletePath{}, "cdac/DeletePath", nil)
+	cdc.RegisterConcrete(&MsgCreateTimeCalculation{}, "cdac/CreateTimeCalculation", nil)
+	cdc.RegisterConcrete(&MsgUpdateTimeCalculation{}, "cdac/UpdateTimeCalculation", nil)
+	cdc.RegisterConcrete(&MsgDeleteTimeCalculation{}, "cdac/DeleteTimeCalculation", nil)
+	cdc.RegisterConcrete(&MsgCreateCalculationTime{}, "cdac/CreateCalculationTime", nil)
+	cdc.RegisterConcrete(&MsgUpdateCalculationTime{}, "cdac/UpdateCalculationTime", nil)
+	cdc.RegisterConcrete(&MsgDeleteCalculationTime{}, "cdac/DeleteCalculationTime", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -191,6 +197,16 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreatePath{},
 		&MsgUpdatePath{},
 		&MsgDeletePath{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateTimeCalculation{},
+		&MsgUpdateTimeCalculation{},
+		&MsgDeleteTimeCalculation{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateCalculationTime{},
+		&MsgUpdateCalculationTime{},
+		&MsgDeleteCalculationTime{},
 	)
 	// this line is used by starport scaffolding # 3
 
