@@ -208,6 +208,30 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteCooperativeDomain int = 100
 
+	opWeightMsgCreateDelegationPath = "op_weight_msg_delegation_path"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDelegationPath int = 100
+
+	opWeightMsgUpdateDelegationPath = "op_weight_msg_delegation_path"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDelegationPath int = 100
+
+	opWeightMsgDeleteDelegationPath = "op_weight_msg_delegation_path"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDelegationPath int = 100
+
+	opWeightMsgCreatePath = "op_weight_msg_path"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreatePath int = 100
+
+	opWeightMsgUpdatePath = "op_weight_msg_path"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdatePath int = 100
+
+	opWeightMsgDeletePath = "op_weight_msg_path"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeletePath int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -372,6 +396,28 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		CooperativeDomainCount: 2,
+		DelegationPathList: []types.DelegationPath{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		DelegationPathCount: 2,
+		PathList: []types.Path{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		PathCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -899,6 +945,72 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteCooperativeDomain,
 		cdacsimulation.SimulateMsgDeleteCooperativeDomain(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDelegationPath int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDelegationPath, &weightMsgCreateDelegationPath, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDelegationPath = defaultWeightMsgCreateDelegationPath
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDelegationPath,
+		cdacsimulation.SimulateMsgCreateDelegationPath(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDelegationPath int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDelegationPath, &weightMsgUpdateDelegationPath, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDelegationPath = defaultWeightMsgUpdateDelegationPath
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDelegationPath,
+		cdacsimulation.SimulateMsgUpdateDelegationPath(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDelegationPath int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDelegationPath, &weightMsgDeleteDelegationPath, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDelegationPath = defaultWeightMsgDeleteDelegationPath
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDelegationPath,
+		cdacsimulation.SimulateMsgDeleteDelegationPath(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreatePath int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreatePath, &weightMsgCreatePath, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreatePath = defaultWeightMsgCreatePath
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreatePath,
+		cdacsimulation.SimulateMsgCreatePath(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdatePath int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdatePath, &weightMsgUpdatePath, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdatePath = defaultWeightMsgUpdatePath
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdatePath,
+		cdacsimulation.SimulateMsgUpdatePath(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeletePath int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeletePath, &weightMsgDeletePath, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeletePath = defaultWeightMsgDeletePath
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeletePath,
+		cdacsimulation.SimulateMsgDeletePath(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

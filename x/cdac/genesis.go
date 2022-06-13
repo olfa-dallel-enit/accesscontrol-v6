@@ -105,6 +105,20 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set cooperativeDomain count
 	k.SetCooperativeDomainCount(ctx, genState.CooperativeDomainCount)
+	// Set all the delegationPath
+	for _, elem := range genState.DelegationPathList {
+		k.SetDelegationPath(ctx, elem)
+	}
+
+	// Set delegationPath count
+	k.SetDelegationPathCount(ctx, genState.DelegationPathCount)
+	// Set all the path
+	for _, elem := range genState.PathList {
+		k.SetPath(ctx, elem)
+	}
+
+	// Set path count
+	k.SetPathCount(ctx, genState.PathCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetPort(ctx, genState.PortId)
 	// Only try to bind to port if it is not already bound, since we may already own
@@ -157,6 +171,10 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	}
 	genesis.CooperativeDomainList = k.GetAllCooperativeDomain(ctx)
 	genesis.CooperativeDomainCount = k.GetCooperativeDomainCount(ctx)
+	genesis.DelegationPathList = k.GetAllDelegationPath(ctx)
+	genesis.DelegationPathCount = k.GetDelegationPathCount(ctx)
+	genesis.PathList = k.GetAllPath(ctx)
+	genesis.PathCount = k.GetPathCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

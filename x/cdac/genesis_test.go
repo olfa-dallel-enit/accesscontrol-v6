@@ -143,6 +143,24 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		CooperativeDomainCount: 2,
+		DelegationPathList: []types.DelegationPath{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		DelegationPathCount: 2,
+		PathList: []types.Path{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		PathCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -183,5 +201,9 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.UpdatePolicy, got.UpdatePolicy)
 	require.ElementsMatch(t, genesisState.CooperativeDomainList, got.CooperativeDomainList)
 	require.Equal(t, genesisState.CooperativeDomainCount, got.CooperativeDomainCount)
+	require.ElementsMatch(t, genesisState.DelegationPathList, got.DelegationPathList)
+	require.Equal(t, genesisState.DelegationPathCount, got.DelegationPathCount)
+	require.ElementsMatch(t, genesisState.PathList, got.PathList)
+	require.Equal(t, genesisState.PathCount, got.PathCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

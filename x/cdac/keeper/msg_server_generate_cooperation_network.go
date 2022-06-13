@@ -41,9 +41,9 @@ func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context, coopera
 		if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
 			cooperativeDomain := types.CooperativeDomain{
 				Creator:    ctx.ChainID(),
-				Name: domainCooperation.RemoteDomain.Name,
+				Name:       domainCooperation.RemoteDomain.Name,
 				DomainType: domainCooperation.RemoteDomain.DomainType,
-				Location: domainCooperation.RemoteDomain.Location,
+				Location:   domainCooperation.RemoteDomain.Location,
 			}
 			directCooperativeDomains = append(directCooperativeDomains, &cooperativeDomain)
 			cooperationData := types.CooperationData{
@@ -60,9 +60,9 @@ func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context, coopera
 	}
 
 	localDomainMap := types.DomainMap{
-		Creator:     ctx.ChainID(),
-		DomainIndex: ctx.ChainID(),
-		CooperativeDomainList:  directCooperativeDomains,
+		Creator:               ctx.ChainID(),
+		DomainIndex:           ctx.ChainID(),
+		CooperativeDomainList: directCooperativeDomains,
 	}
 
 	domainMapList = append(domainMapList, &localDomainMap)
@@ -78,9 +78,9 @@ func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context, coopera
 			for _, remoteDomainCooperation := range k.GetAllDomainCooperationsByRemoteDomainName(ctx, remoteDomain.Name) {
 				remoteCooperativeDomain := types.CooperativeDomain{
 					Creator:    ctx.ChainID(),
-					Name: remoteDomainCooperation.RemoteDomain.Name,
+					Name:       remoteDomainCooperation.RemoteDomain.Name,
 					DomainType: remoteDomainCooperation.RemoteDomain.DomainType,
-					Location: remoteDomainCooperation.RemoteDomain.Location,
+					Location:   remoteDomainCooperation.RemoteDomain.Location,
 				}
 				remoteCooperativeDomains = append(remoteCooperativeDomains, &remoteCooperativeDomain)
 				cooperationData := types.CooperationData{
@@ -95,9 +95,9 @@ func (k Keeper) GenerateConstrainlessCooperationNetwork(ctx sdk.Context, coopera
 				cooperationDataList = append(cooperationDataList, &cooperationData)
 			}
 			remoteDomainMap := types.DomainMap{
-				Creator:     ctx.ChainID(),
-				DomainIndex: remoteDomain.Name,
-				CooperativeDomainList:  remoteCooperativeDomains,
+				Creator:               ctx.ChainID(),
+				DomainIndex:           remoteDomain.Name,
+				CooperativeDomainList: remoteCooperativeDomains,
 			}
 			domainMapList = append(domainMapList, &remoteDomainMap)
 			k.SetDomainMap(ctx, remoteDomainMap)

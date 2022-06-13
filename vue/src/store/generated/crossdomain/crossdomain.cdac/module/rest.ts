@@ -87,6 +87,16 @@ export interface CdacCooperativeDomain {
   creator?: string;
 }
 
+export interface CdacDelegationPath {
+  /** @format uint64 */
+  id?: string;
+  delegator?: CdacCooperativeDomain;
+  delegatee?: CdacCooperativeDomain;
+  domainList?: CdacCooperativeDomain[];
+  creator?: string;
+  label?: string;
+}
+
 export interface CdacDomain {
   /** @format uint64 */
   id?: string;
@@ -120,7 +130,7 @@ export interface CdacDomainCooperation {
 
 export interface CdacDomainMap {
   domainIndex?: string;
-  domainList?: CdacDomain[];
+  cooperativeDomainList?: CdacCooperativeDomain[];
   creator?: string;
 }
 
@@ -173,6 +183,11 @@ export interface CdacMsgCreateCooperativeDomainResponse {
   id?: string;
 }
 
+export interface CdacMsgCreateDelegationPathResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
 export interface CdacMsgCreateDomainCooperationResponse {
   /** @format uint64 */
   id?: string;
@@ -191,6 +206,11 @@ export interface CdacMsgCreateForwardPolicyResponse {
 }
 
 export interface CdacMsgCreateIbcConnectionResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
+export interface CdacMsgCreatePathResponse {
   /** @format uint64 */
   id?: string;
 }
@@ -221,6 +241,8 @@ export type CdacMsgDeleteCooperationNetworkResponse = object;
 
 export type CdacMsgDeleteCooperativeDomainResponse = object;
 
+export type CdacMsgDeleteDelegationPathResponse = object;
+
 export type CdacMsgDeleteDomainCooperationResponse = object;
 
 export type CdacMsgDeleteDomainMapResponse = object;
@@ -230,6 +252,8 @@ export type CdacMsgDeleteDomainResponse = object;
 export type CdacMsgDeleteForwardPolicyResponse = object;
 
 export type CdacMsgDeleteIbcConnectionResponse = object;
+
+export type CdacMsgDeletePathResponse = object;
 
 export type CdacMsgDeletePublicKeyResponse = object;
 
@@ -273,6 +297,8 @@ export type CdacMsgUpdateCooperationNetworkResponse = object;
 
 export type CdacMsgUpdateCooperativeDomainResponse = object;
 
+export type CdacMsgUpdateDelegationPathResponse = object;
+
 export type CdacMsgUpdateDomainCooperationResponse = object;
 
 export type CdacMsgUpdateDomainMapResponse = object;
@@ -282,6 +308,8 @@ export type CdacMsgUpdateDomainResponse = object;
 export type CdacMsgUpdateForwardPolicyResponse = object;
 
 export type CdacMsgUpdateIbcConnectionResponse = object;
+
+export type CdacMsgUpdatePathResponse = object;
 
 export type CdacMsgUpdatePublicKeyResponse = object;
 
@@ -293,6 +321,13 @@ export type CdacMsgUpdateValidityResponse = object;
  * Params defines the parameters for the module.
  */
 export type CdacParams = object;
+
+export interface CdacPath {
+  /** @format uint64 */
+  id?: string;
+  domainList?: CdacCooperativeDomain;
+  creator?: string;
+}
 
 export interface CdacPublicKey {
   /** @format uint64 */
@@ -411,6 +446,21 @@ export interface CdacQueryAllCooperativeDomainResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryAllDelegationPathResponse {
+  DelegationPath?: CdacDelegationPath[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CdacQueryAllDomainCooperationResponse {
   DomainCooperation?: CdacDomainCooperation[];
 
@@ -473,6 +523,21 @@ export interface CdacQueryAllForwardPolicyResponse {
 
 export interface CdacQueryAllIbcConnectionResponse {
   IbcConnection?: CdacIbcConnection[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface CdacQueryAllPathResponse {
+  Path?: CdacPath[];
 
   /**
    * PageResponse is to be embedded in gRPC response messages where the
@@ -554,6 +619,10 @@ export interface CdacQueryGetCooperativeDomainResponse {
   CooperativeDomain?: CdacCooperativeDomain;
 }
 
+export interface CdacQueryGetDelegationPathResponse {
+  DelegationPath?: CdacDelegationPath;
+}
+
 export interface CdacQueryGetDomainCooperationResponse {
   DomainCooperation?: CdacDomainCooperation;
 }
@@ -572,6 +641,10 @@ export interface CdacQueryGetForwardPolicyResponse {
 
 export interface CdacQueryGetIbcConnectionResponse {
   IbcConnection?: CdacIbcConnection;
+}
+
+export interface CdacQueryGetPathResponse {
+  Path?: CdacPath;
 }
 
 export interface CdacQueryGetPublicKeyResponse {
@@ -1197,6 +1270,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryDelegationPathAll
+   * @summary Queries a list of DelegationPath items.
+   * @request GET:/crossdomain/cdac/delegation_path
+   */
+  queryDelegationPathAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllDelegationPathResponse, RpcStatus>({
+      path: `/crossdomain/cdac/delegation_path`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDelegationPath
+   * @summary Queries a DelegationPath by id.
+   * @request GET:/crossdomain/cdac/delegation_path/{id}
+   */
+  queryDelegationPath = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetDelegationPathResponse, RpcStatus>({
+      path: `/crossdomain/cdac/delegation_path/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryDomainAll
    * @summary Queries a list of Domain items.
    * @request GET:/crossdomain/cdac/domain
@@ -1430,6 +1545,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryParams = (params: RequestParams = {}) =>
     this.request<CdacQueryParamsResponse, RpcStatus>({
       path: `/crossdomain/cdac/params`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryPathAll
+   * @summary Queries a list of Path items.
+   * @request GET:/crossdomain/cdac/path
+   */
+  queryPathAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllPathResponse, RpcStatus>({
+      path: `/crossdomain/cdac/path`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryPath
+   * @summary Queries a Path by id.
+   * @request GET:/crossdomain/cdac/path/{id}
+   */
+  queryPath = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetPathResponse, RpcStatus>({
+      path: `/crossdomain/cdac/path/${id}`,
       method: "GET",
       format: "json",
       ...params,

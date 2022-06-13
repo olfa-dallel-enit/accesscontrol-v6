@@ -95,3 +95,13 @@ const (
 	CooperativeDomainKey      = "CooperativeDomain-value-"
 	CooperativeDomainCountKey = "CooperativeDomain-count-"
 )
+
+const (
+	DelegationPathKey      = "DelegationPath-value-"
+	DelegationPathCountKey = "DelegationPath-count-"
+)
+
+const (
+	PathKey      = "Path-value-"
+	PathCountKey = "Path-count-"
+)

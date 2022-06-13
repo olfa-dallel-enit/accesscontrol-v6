@@ -7,8 +7,10 @@ import "cdac/cooperation_log.proto";
 import "cdac/forward_policy.proto";
 import "cdac/cooperation_network.proto";
 import "cdac/update_policy.proto";
-import "cdac/cooperative_domain.proto";
+import "cdac/delegation_path.proto";
+import "cdac/path.proto";
 // this line is used by starport scaffolding # proto/tx/import
+import "cdac/cooperative_domain.proto";
 import "cdac/cooperation_network_features.proto";
 import "cdac/cooperation_data.proto";
 import "cdac/domain_map.proto";
@@ -78,6 +80,12 @@ rpc CreateCooperationNetwork(MsgCreateCooperationNetwork) returns (MsgCreateCoop
 rpc CreateCooperativeDomain(MsgCreateCooperativeDomain) returns (MsgCreateCooperativeDomainResponse);
   rpc UpdateCooperativeDomain(MsgUpdateCooperativeDomain) returns (MsgUpdateCooperativeDomainResponse);
   rpc DeleteCooperativeDomain(MsgDeleteCooperativeDomain) returns (MsgDeleteCooperativeDomainResponse);
+rpc CreateDelegationPath(MsgCreateDelegationPath) returns (MsgCreateDelegationPathResponse);
+  rpc UpdateDelegationPath(MsgUpdateDelegationPath) returns (MsgUpdateDelegationPathResponse);
+  rpc DeleteDelegationPath(MsgDeleteDelegationPath) returns (MsgDeleteDelegationPathResponse);
+rpc CreatePath(MsgCreatePath) returns (MsgCreatePathResponse);
+  rpc UpdatePath(MsgUpdatePath) returns (MsgUpdatePathResponse);
+  rpc DeletePath(MsgDeletePath) returns (MsgDeletePathResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -632,5 +640,56 @@ message MsgDeleteCooperativeDomain {
 }
 
 message MsgDeleteCooperativeDomainResponse {}
+
+message MsgCreateDelegationPath {
+  string creator = 1;
+  CooperativeDomain delegator = 2;
+  CooperativeDomain delegatee = 3;
+}
+
+message MsgCreateDelegationPathResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateDelegationPath {
+  string creator = 1;
+  uint64 id = 2;
+  CooperativeDomain delegator = 3;
+  CooperativeDomain delegatee = 4;
+  repeated Path pathList = 5; 
+}
+
+message MsgUpdateDelegationPathResponse {}
+
+message MsgDeleteDelegationPath {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteDelegationPathResponse {}
+
+message MsgCreatePath {
+  string creator = 1;
+  repeated CooperativeDomain domainList = 2;
+}
+
+message MsgCreatePathResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdatePath {
+  string creator = 1;
+  uint64 id = 2;
+  repeated CooperativeDomain domainList = 3;
+}
+
+message MsgUpdatePathResponse {}
+
+message MsgDeletePath {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeletePathResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

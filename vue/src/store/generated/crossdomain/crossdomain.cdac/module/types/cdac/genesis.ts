@@ -17,6 +17,8 @@ import { CooperationData } from "../cdac/cooperation_data";
 import { CooperationNetwork } from "../cdac/cooperation_network";
 import { UpdatePolicy } from "../cdac/update_policy";
 import { CooperativeDomain } from "../cdac/cooperative_domain";
+import { DelegationPath } from "../cdac/delegation_path";
+import { Path } from "../cdac/path";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -50,8 +52,12 @@ export interface GenesisState {
   cooperationNetworkCount: number;
   updatePolicy: UpdatePolicy | undefined;
   cooperativeDomainList: CooperativeDomain[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   cooperativeDomainCount: number;
+  delegationPathList: DelegationPath[];
+  delegationPathCount: number;
+  pathList: Path[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  pathCount: number;
 }
 
 const baseGenesisState: object = {
@@ -68,6 +74,8 @@ const baseGenesisState: object = {
   cooperationNetworkFeaturesCount: 0,
   cooperationNetworkCount: 0,
   cooperativeDomainCount: 0,
+  delegationPathCount: 0,
+  pathCount: 0,
 };
 
 export const GenesisState = {
@@ -162,6 +170,18 @@ export const GenesisState = {
     if (message.cooperativeDomainCount !== 0) {
       writer.uint32(232).uint64(message.cooperativeDomainCount);
     }
+    for (const v of message.delegationPathList) {
+      DelegationPath.encode(v!, writer.uint32(242).fork()).ldelim();
+    }
+    if (message.delegationPathCount !== 0) {
+      writer.uint32(248).uint64(message.delegationPathCount);
+    }
+    for (const v of message.pathList) {
+      Path.encode(v!, writer.uint32(258).fork()).ldelim();
+    }
+    if (message.pathCount !== 0) {
+      writer.uint32(264).uint64(message.pathCount);
+    }
     return writer;
   },
 
@@ -183,6 +203,8 @@ export const GenesisState = {
     message.cooperationDataList = [];
     message.cooperationNetworkList = [];
     message.cooperativeDomainList = [];
+    message.delegationPathList = [];
+    message.pathList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -303,6 +325,20 @@ export const GenesisState = {
             reader.uint64() as Long
           );
           break;
+        case 30:
+          message.delegationPathList.push(
+            DelegationPath.decode(reader, reader.uint32())
+          );
+          break;
+        case 31:
+          message.delegationPathCount = longToNumber(reader.uint64() as Long);
+          break;
+        case 32:
+          message.pathList.push(Path.decode(reader, reader.uint32()));
+          break;
+        case 33:
+          message.pathCount = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -327,6 +363,8 @@ export const GenesisState = {
     message.cooperationDataList = [];
     message.cooperationNetworkList = [];
     message.cooperativeDomainList = [];
+    message.delegationPathList = [];
+    message.pathList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -533,6 +571,32 @@ export const GenesisState = {
     } else {
       message.cooperativeDomainCount = 0;
     }
+    if (
+      object.delegationPathList !== undefined &&
+      object.delegationPathList !== null
+    ) {
+      for (const e of object.delegationPathList) {
+        message.delegationPathList.push(DelegationPath.fromJSON(e));
+      }
+    }
+    if (
+      object.delegationPathCount !== undefined &&
+      object.delegationPathCount !== null
+    ) {
+      message.delegationPathCount = Number(object.delegationPathCount);
+    } else {
+      message.delegationPathCount = 0;
+    }
+    if (object.pathList !== undefined && object.pathList !== null) {
+      for (const e of object.pathList) {
+        message.pathList.push(Path.fromJSON(e));
+      }
+    }
+    if (object.pathCount !== undefined && object.pathCount !== null) {
+      message.pathCount = Number(object.pathCount);
+    } else {
+      message.pathCount = 0;
+    }
     return message;
   },
 
@@ -668,6 +732,23 @@ export const GenesisState = {
     }
     message.cooperativeDomainCount !== undefined &&
       (obj.cooperativeDomainCount = message.cooperativeDomainCount);
+    if (message.delegationPathList) {
+      obj.delegationPathList = message.delegationPathList.map((e) =>
+        e ? DelegationPath.toJSON(e) : undefined
+      );
+    } else {
+      obj.delegationPathList = [];
+    }
+    message.delegationPathCount !== undefined &&
+      (obj.delegationPathCount = message.delegationPathCount);
+    if (message.pathList) {
+      obj.pathList = message.pathList.map((e) =>
+        e ? Path.toJSON(e) : undefined
+      );
+    } else {
+      obj.pathList = [];
+    }
+    message.pathCount !== undefined && (obj.pathCount = message.pathCount);
     return obj;
   },
 
@@ -687,6 +768,8 @@ export const GenesisState = {
     message.cooperationDataList = [];
     message.cooperationNetworkList = [];
     message.cooperativeDomainList = [];
+    message.delegationPathList = [];
+    message.pathList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -891,6 +974,32 @@ export const GenesisState = {
       message.cooperativeDomainCount = object.cooperativeDomainCount;
     } else {
       message.cooperativeDomainCount = 0;
+    }
+    if (
+      object.delegationPathList !== undefined &&
+      object.delegationPathList !== null
+    ) {
+      for (const e of object.delegationPathList) {
+        message.delegationPathList.push(DelegationPath.fromPartial(e));
+      }
+    }
+    if (
+      object.delegationPathCount !== undefined &&
+      object.delegationPathCount !== null
+    ) {
+      message.delegationPathCount = object.delegationPathCount;
+    } else {
+      message.delegationPathCount = 0;
+    }
+    if (object.pathList !== undefined && object.pathList !== null) {
+      for (const e of object.pathList) {
+        message.pathList.push(Path.fromPartial(e));
+      }
+    }
+    if (object.pathCount !== undefined && object.pathCount !== null) {
+      message.pathCount = object.pathCount;
+    } else {
+      message.pathCount = 0;
     }
     return message;
   },

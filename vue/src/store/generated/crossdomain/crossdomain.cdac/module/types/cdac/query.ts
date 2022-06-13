@@ -21,6 +21,8 @@ import { CooperationData } from "../cdac/cooperation_data";
 import { CooperationNetwork } from "../cdac/cooperation_network";
 import { UpdatePolicy } from "../cdac/update_policy";
 import { CooperativeDomain } from "../cdac/cooperative_domain";
+import { DelegationPath } from "../cdac/delegation_path";
+import { Path } from "../cdac/path";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -298,6 +300,40 @@ export interface QueryAllCooperativeDomainRequest {
 
 export interface QueryAllCooperativeDomainResponse {
   CooperativeDomain: CooperativeDomain[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetDelegationPathRequest {
+  id: number;
+}
+
+export interface QueryGetDelegationPathResponse {
+  DelegationPath: DelegationPath | undefined;
+}
+
+export interface QueryAllDelegationPathRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllDelegationPathResponse {
+  DelegationPath: DelegationPath[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetPathRequest {
+  id: number;
+}
+
+export interface QueryGetPathResponse {
+  Path: Path | undefined;
+}
+
+export interface QueryAllPathRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllPathResponse {
+  Path: Path[];
   pagination: PageResponse | undefined;
 }
 
@@ -5512,6 +5548,596 @@ export const QueryAllCooperativeDomainResponse = {
   },
 };
 
+const baseQueryGetDelegationPathRequest: object = { id: 0 };
+
+export const QueryGetDelegationPathRequest = {
+  encode(
+    message: QueryGetDelegationPathRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetDelegationPathRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetDelegationPathRequest,
+    } as QueryGetDelegationPathRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetDelegationPathRequest {
+    const message = {
+      ...baseQueryGetDelegationPathRequest,
+    } as QueryGetDelegationPathRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetDelegationPathRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetDelegationPathRequest>
+  ): QueryGetDelegationPathRequest {
+    const message = {
+      ...baseQueryGetDelegationPathRequest,
+    } as QueryGetDelegationPathRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetDelegationPathResponse: object = {};
+
+export const QueryGetDelegationPathResponse = {
+  encode(
+    message: QueryGetDelegationPathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.DelegationPath !== undefined) {
+      DelegationPath.encode(
+        message.DelegationPath,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetDelegationPathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetDelegationPathResponse,
+    } as QueryGetDelegationPathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.DelegationPath = DelegationPath.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetDelegationPathResponse {
+    const message = {
+      ...baseQueryGetDelegationPathResponse,
+    } as QueryGetDelegationPathResponse;
+    if (object.DelegationPath !== undefined && object.DelegationPath !== null) {
+      message.DelegationPath = DelegationPath.fromJSON(object.DelegationPath);
+    } else {
+      message.DelegationPath = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetDelegationPathResponse): unknown {
+    const obj: any = {};
+    message.DelegationPath !== undefined &&
+      (obj.DelegationPath = message.DelegationPath
+        ? DelegationPath.toJSON(message.DelegationPath)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetDelegationPathResponse>
+  ): QueryGetDelegationPathResponse {
+    const message = {
+      ...baseQueryGetDelegationPathResponse,
+    } as QueryGetDelegationPathResponse;
+    if (object.DelegationPath !== undefined && object.DelegationPath !== null) {
+      message.DelegationPath = DelegationPath.fromPartial(
+        object.DelegationPath
+      );
+    } else {
+      message.DelegationPath = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllDelegationPathRequest: object = {};
+
+export const QueryAllDelegationPathRequest = {
+  encode(
+    message: QueryAllDelegationPathRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllDelegationPathRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllDelegationPathRequest,
+    } as QueryAllDelegationPathRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllDelegationPathRequest {
+    const message = {
+      ...baseQueryAllDelegationPathRequest,
+    } as QueryAllDelegationPathRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllDelegationPathRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllDelegationPathRequest>
+  ): QueryAllDelegationPathRequest {
+    const message = {
+      ...baseQueryAllDelegationPathRequest,
+    } as QueryAllDelegationPathRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllDelegationPathResponse: object = {};
+
+export const QueryAllDelegationPathResponse = {
+  encode(
+    message: QueryAllDelegationPathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.DelegationPath) {
+      DelegationPath.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllDelegationPathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllDelegationPathResponse,
+    } as QueryAllDelegationPathResponse;
+    message.DelegationPath = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.DelegationPath.push(
+            DelegationPath.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllDelegationPathResponse {
+    const message = {
+      ...baseQueryAllDelegationPathResponse,
+    } as QueryAllDelegationPathResponse;
+    message.DelegationPath = [];
+    if (object.DelegationPath !== undefined && object.DelegationPath !== null) {
+      for (const e of object.DelegationPath) {
+        message.DelegationPath.push(DelegationPath.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllDelegationPathResponse): unknown {
+    const obj: any = {};
+    if (message.DelegationPath) {
+      obj.DelegationPath = message.DelegationPath.map((e) =>
+        e ? DelegationPath.toJSON(e) : undefined
+      );
+    } else {
+      obj.DelegationPath = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllDelegationPathResponse>
+  ): QueryAllDelegationPathResponse {
+    const message = {
+      ...baseQueryAllDelegationPathResponse,
+    } as QueryAllDelegationPathResponse;
+    message.DelegationPath = [];
+    if (object.DelegationPath !== undefined && object.DelegationPath !== null) {
+      for (const e of object.DelegationPath) {
+        message.DelegationPath.push(DelegationPath.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetPathRequest: object = { id: 0 };
+
+export const QueryGetPathRequest = {
+  encode(
+    message: QueryGetPathRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetPathRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetPathRequest } as QueryGetPathRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetPathRequest {
+    const message = { ...baseQueryGetPathRequest } as QueryGetPathRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetPathRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryGetPathRequest>): QueryGetPathRequest {
+    const message = { ...baseQueryGetPathRequest } as QueryGetPathRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetPathResponse: object = {};
+
+export const QueryGetPathResponse = {
+  encode(
+    message: QueryGetPathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.Path !== undefined) {
+      Path.encode(message.Path, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetPathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetPathResponse } as QueryGetPathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Path = Path.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetPathResponse {
+    const message = { ...baseQueryGetPathResponse } as QueryGetPathResponse;
+    if (object.Path !== undefined && object.Path !== null) {
+      message.Path = Path.fromJSON(object.Path);
+    } else {
+      message.Path = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetPathResponse): unknown {
+    const obj: any = {};
+    message.Path !== undefined &&
+      (obj.Path = message.Path ? Path.toJSON(message.Path) : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryGetPathResponse>): QueryGetPathResponse {
+    const message = { ...baseQueryGetPathResponse } as QueryGetPathResponse;
+    if (object.Path !== undefined && object.Path !== null) {
+      message.Path = Path.fromPartial(object.Path);
+    } else {
+      message.Path = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllPathRequest: object = {};
+
+export const QueryAllPathRequest = {
+  encode(
+    message: QueryAllPathRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllPathRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryAllPathRequest } as QueryAllPathRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllPathRequest {
+    const message = { ...baseQueryAllPathRequest } as QueryAllPathRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllPathRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryAllPathRequest>): QueryAllPathRequest {
+    const message = { ...baseQueryAllPathRequest } as QueryAllPathRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllPathResponse: object = {};
+
+export const QueryAllPathResponse = {
+  encode(
+    message: QueryAllPathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.Path) {
+      Path.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllPathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryAllPathResponse } as QueryAllPathResponse;
+    message.Path = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Path.push(Path.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllPathResponse {
+    const message = { ...baseQueryAllPathResponse } as QueryAllPathResponse;
+    message.Path = [];
+    if (object.Path !== undefined && object.Path !== null) {
+      for (const e of object.Path) {
+        message.Path.push(Path.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllPathResponse): unknown {
+    const obj: any = {};
+    if (message.Path) {
+      obj.Path = message.Path.map((e) => (e ? Path.toJSON(e) : undefined));
+    } else {
+      obj.Path = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryAllPathResponse>): QueryAllPathResponse {
+    const message = { ...baseQueryAllPathResponse } as QueryAllPathResponse;
+    message.Path = [];
+    if (object.Path !== undefined && object.Path !== null) {
+      for (const e of object.Path) {
+        message.Path.push(Path.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -5638,6 +6264,18 @@ export interface Query {
   CooperativeDomainAll(
     request: QueryAllCooperativeDomainRequest
   ): Promise<QueryAllCooperativeDomainResponse>;
+  /** Queries a DelegationPath by id. */
+  DelegationPath(
+    request: QueryGetDelegationPathRequest
+  ): Promise<QueryGetDelegationPathResponse>;
+  /** Queries a list of DelegationPath items. */
+  DelegationPathAll(
+    request: QueryAllDelegationPathRequest
+  ): Promise<QueryAllDelegationPathResponse>;
+  /** Queries a Path by id. */
+  Path(request: QueryGetPathRequest): Promise<QueryGetPathResponse>;
+  /** Queries a list of Path items. */
+  PathAll(request: QueryAllPathRequest): Promise<QueryAllPathResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -6096,6 +6734,50 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllCooperativeDomainResponse.decode(new Reader(data))
+    );
+  }
+
+  DelegationPath(
+    request: QueryGetDelegationPathRequest
+  ): Promise<QueryGetDelegationPathResponse> {
+    const data = QueryGetDelegationPathRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "DelegationPath",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetDelegationPathResponse.decode(new Reader(data))
+    );
+  }
+
+  DelegationPathAll(
+    request: QueryAllDelegationPathRequest
+  ): Promise<QueryAllDelegationPathResponse> {
+    const data = QueryAllDelegationPathRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "DelegationPathAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllDelegationPathResponse.decode(new Reader(data))
+    );
+  }
+
+  Path(request: QueryGetPathRequest): Promise<QueryGetPathResponse> {
+    const data = QueryGetPathRequest.encode(request).finish();
+    const promise = this.rpc.request("crossdomain.cdac.Query", "Path", data);
+    return promise.then((data) =>
+      QueryGetPathResponse.decode(new Reader(data))
+    );
+  }
+
+  PathAll(request: QueryAllPathRequest): Promise<QueryAllPathResponse> {
+    const data = QueryAllPathRequest.encode(request).finish();
+    const promise = this.rpc.request("crossdomain.cdac.Query", "PathAll", data);
+    return promise.then((data) =>
+      QueryAllPathResponse.decode(new Reader(data))
     );
   }
 }

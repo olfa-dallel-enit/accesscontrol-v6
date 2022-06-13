@@ -151,6 +151,24 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				CooperativeDomainCount: 2,
+				DelegationPathList: []types.DelegationPath{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DelegationPathCount: 2,
+				PathList: []types.Path{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				PathCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -492,6 +510,58 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				CooperativeDomainCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated delegationPath",
+			genState: &types.GenesisState{
+				DelegationPathList: []types.DelegationPath{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid delegationPath count",
+			genState: &types.GenesisState{
+				DelegationPathList: []types.DelegationPath{
+					{
+						Id: 1,
+					},
+				},
+				DelegationPathCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated path",
+			genState: &types.GenesisState{
+				PathList: []types.Path{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid path count",
+			genState: &types.GenesisState{
+				PathList: []types.Path{
+					{
+						Id: 1,
+					},
+				},
+				PathCount: 0,
 			},
 			valid: false,
 		},

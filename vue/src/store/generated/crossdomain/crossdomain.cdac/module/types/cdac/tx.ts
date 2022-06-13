@@ -6,6 +6,7 @@ import { Validity } from "../cdac/validity";
 import { Certificate } from "../cdac/certificate";
 import { IbcConnection } from "../cdac/ibc_connection";
 import { Domain } from "../cdac/domain";
+import { CooperativeDomain } from "../cdac/cooperative_domain";
 import { DomainMap } from "../cdac/domain_map";
 import { CooperationData } from "../cdac/cooperation_data";
 import { CooperationNetworkFeatures } from "../cdac/cooperation_network_features";
@@ -393,7 +394,7 @@ export interface MsgSendRevokeCooperationResponse {}
 export interface MsgCreateDomainMap {
   creator: string;
   domainIndex: string;
-  domainList: Domain[];
+  cooperativeDomainList: CooperativeDomain[];
 }
 
 export interface MsgCreateDomainMapResponse {}
@@ -401,7 +402,7 @@ export interface MsgCreateDomainMapResponse {}
 export interface MsgUpdateDomainMap {
   creator: string;
   domainIndex: string;
-  domainList: Domain[];
+  cooperativeDomainList: CooperativeDomain[];
 }
 
 export interface MsgUpdateDomainMapResponse {}
@@ -567,6 +568,57 @@ export interface MsgDeleteCooperativeDomain {
 }
 
 export interface MsgDeleteCooperativeDomainResponse {}
+
+export interface MsgCreateDelegationPath {
+  creator: string;
+  delegator: CooperativeDomain | undefined;
+  delegatee: CooperativeDomain | undefined;
+}
+
+export interface MsgCreateDelegationPathResponse {
+  id: number;
+}
+
+export interface MsgUpdateDelegationPath {
+  creator: string;
+  id: number;
+  delegator: CooperativeDomain | undefined;
+  delegatee: CooperativeDomain | undefined;
+  domainList: CooperativeDomain[];
+}
+
+export interface MsgUpdateDelegationPathResponse {}
+
+export interface MsgDeleteDelegationPath {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteDelegationPathResponse {}
+
+export interface MsgCreatePath {
+  creator: string;
+  domainList: CooperativeDomain | undefined;
+}
+
+export interface MsgCreatePathResponse {
+  id: number;
+}
+
+export interface MsgUpdatePath {
+  creator: string;
+  id: number;
+  domainList: CooperativeDomain | undefined;
+}
+
+export interface MsgUpdatePathResponse {}
+
+export interface MsgDeletePath {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeletePathResponse {}
 
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
@@ -7695,8 +7747,8 @@ export const MsgCreateDomainMap = {
     if (message.domainIndex !== "") {
       writer.uint32(18).string(message.domainIndex);
     }
-    for (const v of message.domainList) {
-      Domain.encode(v!, writer.uint32(26).fork()).ldelim();
+    for (const v of message.cooperativeDomainList) {
+      CooperativeDomain.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -7705,7 +7757,7 @@ export const MsgCreateDomainMap = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -7716,7 +7768,9 @@ export const MsgCreateDomainMap = {
           message.domainIndex = reader.string();
           break;
         case 3:
-          message.domainList.push(Domain.decode(reader, reader.uint32()));
+          message.cooperativeDomainList.push(
+            CooperativeDomain.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -7728,7 +7782,7 @@ export const MsgCreateDomainMap = {
 
   fromJSON(object: any): MsgCreateDomainMap {
     const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -7739,9 +7793,12 @@ export const MsgCreateDomainMap = {
     } else {
       message.domainIndex = "";
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(Domain.fromJSON(e));
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromJSON(e));
       }
     }
     return message;
@@ -7752,19 +7809,19 @@ export const MsgCreateDomainMap = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.domainIndex !== undefined &&
       (obj.domainIndex = message.domainIndex);
-    if (message.domainList) {
-      obj.domainList = message.domainList.map((e) =>
-        e ? Domain.toJSON(e) : undefined
+    if (message.cooperativeDomainList) {
+      obj.cooperativeDomainList = message.cooperativeDomainList.map((e) =>
+        e ? CooperativeDomain.toJSON(e) : undefined
       );
     } else {
-      obj.domainList = [];
+      obj.cooperativeDomainList = [];
     }
     return obj;
   },
 
   fromPartial(object: DeepPartial<MsgCreateDomainMap>): MsgCreateDomainMap {
     const message = { ...baseMsgCreateDomainMap } as MsgCreateDomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -7775,9 +7832,12 @@ export const MsgCreateDomainMap = {
     } else {
       message.domainIndex = "";
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(Domain.fromPartial(e));
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromPartial(e));
       }
     }
     return message;
@@ -7849,8 +7909,8 @@ export const MsgUpdateDomainMap = {
     if (message.domainIndex !== "") {
       writer.uint32(18).string(message.domainIndex);
     }
-    for (const v of message.domainList) {
-      Domain.encode(v!, writer.uint32(26).fork()).ldelim();
+    for (const v of message.cooperativeDomainList) {
+      CooperativeDomain.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -7859,7 +7919,7 @@ export const MsgUpdateDomainMap = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -7870,7 +7930,9 @@ export const MsgUpdateDomainMap = {
           message.domainIndex = reader.string();
           break;
         case 3:
-          message.domainList.push(Domain.decode(reader, reader.uint32()));
+          message.cooperativeDomainList.push(
+            CooperativeDomain.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -7882,7 +7944,7 @@ export const MsgUpdateDomainMap = {
 
   fromJSON(object: any): MsgUpdateDomainMap {
     const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -7893,9 +7955,12 @@ export const MsgUpdateDomainMap = {
     } else {
       message.domainIndex = "";
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(Domain.fromJSON(e));
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromJSON(e));
       }
     }
     return message;
@@ -7906,19 +7971,19 @@ export const MsgUpdateDomainMap = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.domainIndex !== undefined &&
       (obj.domainIndex = message.domainIndex);
-    if (message.domainList) {
-      obj.domainList = message.domainList.map((e) =>
-        e ? Domain.toJSON(e) : undefined
+    if (message.cooperativeDomainList) {
+      obj.cooperativeDomainList = message.cooperativeDomainList.map((e) =>
+        e ? CooperativeDomain.toJSON(e) : undefined
       );
     } else {
-      obj.domainList = [];
+      obj.cooperativeDomainList = [];
     }
     return obj;
   },
 
   fromPartial(object: DeepPartial<MsgUpdateDomainMap>): MsgUpdateDomainMap {
     const message = { ...baseMsgUpdateDomainMap } as MsgUpdateDomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -7929,9 +7994,12 @@ export const MsgUpdateDomainMap = {
     } else {
       message.domainIndex = "";
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(Domain.fromPartial(e));
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromPartial(e));
       }
     }
     return message;
@@ -11190,6 +11258,918 @@ export const MsgDeleteCooperativeDomainResponse = {
   },
 };
 
+const baseMsgCreateDelegationPath: object = { creator: "" };
+
+export const MsgCreateDelegationPath = {
+  encode(
+    message: MsgCreateDelegationPath,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.delegator !== undefined) {
+      CooperativeDomain.encode(
+        message.delegator,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.delegatee !== undefined) {
+      CooperativeDomain.encode(
+        message.delegatee,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateDelegationPath {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateDelegationPath,
+    } as MsgCreateDelegationPath;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.delegator = CooperativeDomain.decode(reader, reader.uint32());
+          break;
+        case 3:
+          message.delegatee = CooperativeDomain.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateDelegationPath {
+    const message = {
+      ...baseMsgCreateDelegationPath,
+    } as MsgCreateDelegationPath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.delegator !== undefined && object.delegator !== null) {
+      message.delegator = CooperativeDomain.fromJSON(object.delegator);
+    } else {
+      message.delegator = undefined;
+    }
+    if (object.delegatee !== undefined && object.delegatee !== null) {
+      message.delegatee = CooperativeDomain.fromJSON(object.delegatee);
+    } else {
+      message.delegatee = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateDelegationPath): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.delegator !== undefined &&
+      (obj.delegator = message.delegator
+        ? CooperativeDomain.toJSON(message.delegator)
+        : undefined);
+    message.delegatee !== undefined &&
+      (obj.delegatee = message.delegatee
+        ? CooperativeDomain.toJSON(message.delegatee)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateDelegationPath>
+  ): MsgCreateDelegationPath {
+    const message = {
+      ...baseMsgCreateDelegationPath,
+    } as MsgCreateDelegationPath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.delegator !== undefined && object.delegator !== null) {
+      message.delegator = CooperativeDomain.fromPartial(object.delegator);
+    } else {
+      message.delegator = undefined;
+    }
+    if (object.delegatee !== undefined && object.delegatee !== null) {
+      message.delegatee = CooperativeDomain.fromPartial(object.delegatee);
+    } else {
+      message.delegatee = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateDelegationPathResponse: object = { id: 0 };
+
+export const MsgCreateDelegationPathResponse = {
+  encode(
+    message: MsgCreateDelegationPathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateDelegationPathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateDelegationPathResponse,
+    } as MsgCreateDelegationPathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateDelegationPathResponse {
+    const message = {
+      ...baseMsgCreateDelegationPathResponse,
+    } as MsgCreateDelegationPathResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateDelegationPathResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateDelegationPathResponse>
+  ): MsgCreateDelegationPathResponse {
+    const message = {
+      ...baseMsgCreateDelegationPathResponse,
+    } as MsgCreateDelegationPathResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateDelegationPath: object = { creator: "", id: 0 };
+
+export const MsgUpdateDelegationPath = {
+  encode(
+    message: MsgUpdateDelegationPath,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.delegator !== undefined) {
+      CooperativeDomain.encode(
+        message.delegator,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.delegatee !== undefined) {
+      CooperativeDomain.encode(
+        message.delegatee,
+        writer.uint32(34).fork()
+      ).ldelim();
+    }
+    for (const v of message.domainList) {
+      CooperativeDomain.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdateDelegationPath {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateDelegationPath,
+    } as MsgUpdateDelegationPath;
+    message.domainList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.delegator = CooperativeDomain.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.delegatee = CooperativeDomain.decode(reader, reader.uint32());
+          break;
+        case 5:
+          message.domainList.push(
+            CooperativeDomain.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateDelegationPath {
+    const message = {
+      ...baseMsgUpdateDelegationPath,
+    } as MsgUpdateDelegationPath;
+    message.domainList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.delegator !== undefined && object.delegator !== null) {
+      message.delegator = CooperativeDomain.fromJSON(object.delegator);
+    } else {
+      message.delegator = undefined;
+    }
+    if (object.delegatee !== undefined && object.delegatee !== null) {
+      message.delegatee = CooperativeDomain.fromJSON(object.delegatee);
+    } else {
+      message.delegatee = undefined;
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      for (const e of object.domainList) {
+        message.domainList.push(CooperativeDomain.fromJSON(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateDelegationPath): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.delegator !== undefined &&
+      (obj.delegator = message.delegator
+        ? CooperativeDomain.toJSON(message.delegator)
+        : undefined);
+    message.delegatee !== undefined &&
+      (obj.delegatee = message.delegatee
+        ? CooperativeDomain.toJSON(message.delegatee)
+        : undefined);
+    if (message.domainList) {
+      obj.domainList = message.domainList.map((e) =>
+        e ? CooperativeDomain.toJSON(e) : undefined
+      );
+    } else {
+      obj.domainList = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateDelegationPath>
+  ): MsgUpdateDelegationPath {
+    const message = {
+      ...baseMsgUpdateDelegationPath,
+    } as MsgUpdateDelegationPath;
+    message.domainList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.delegator !== undefined && object.delegator !== null) {
+      message.delegator = CooperativeDomain.fromPartial(object.delegator);
+    } else {
+      message.delegator = undefined;
+    }
+    if (object.delegatee !== undefined && object.delegatee !== null) {
+      message.delegatee = CooperativeDomain.fromPartial(object.delegatee);
+    } else {
+      message.delegatee = undefined;
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      for (const e of object.domainList) {
+        message.domainList.push(CooperativeDomain.fromPartial(e));
+      }
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateDelegationPathResponse: object = {};
+
+export const MsgUpdateDelegationPathResponse = {
+  encode(
+    _: MsgUpdateDelegationPathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateDelegationPathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateDelegationPathResponse,
+    } as MsgUpdateDelegationPathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateDelegationPathResponse {
+    const message = {
+      ...baseMsgUpdateDelegationPathResponse,
+    } as MsgUpdateDelegationPathResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateDelegationPathResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateDelegationPathResponse>
+  ): MsgUpdateDelegationPathResponse {
+    const message = {
+      ...baseMsgUpdateDelegationPathResponse,
+    } as MsgUpdateDelegationPathResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteDelegationPath: object = { creator: "", id: 0 };
+
+export const MsgDeleteDelegationPath = {
+  encode(
+    message: MsgDeleteDelegationPath,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeleteDelegationPath {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteDelegationPath,
+    } as MsgDeleteDelegationPath;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteDelegationPath {
+    const message = {
+      ...baseMsgDeleteDelegationPath,
+    } as MsgDeleteDelegationPath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteDelegationPath): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteDelegationPath>
+  ): MsgDeleteDelegationPath {
+    const message = {
+      ...baseMsgDeleteDelegationPath,
+    } as MsgDeleteDelegationPath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteDelegationPathResponse: object = {};
+
+export const MsgDeleteDelegationPathResponse = {
+  encode(
+    _: MsgDeleteDelegationPathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteDelegationPathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteDelegationPathResponse,
+    } as MsgDeleteDelegationPathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteDelegationPathResponse {
+    const message = {
+      ...baseMsgDeleteDelegationPathResponse,
+    } as MsgDeleteDelegationPathResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteDelegationPathResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteDelegationPathResponse>
+  ): MsgDeleteDelegationPathResponse {
+    const message = {
+      ...baseMsgDeleteDelegationPathResponse,
+    } as MsgDeleteDelegationPathResponse;
+    return message;
+  },
+};
+
+const baseMsgCreatePath: object = { creator: "" };
+
+export const MsgCreatePath = {
+  encode(message: MsgCreatePath, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.domainList !== undefined) {
+      CooperativeDomain.encode(
+        message.domainList,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreatePath {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreatePath } as MsgCreatePath;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.domainList = CooperativeDomain.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreatePath {
+    const message = { ...baseMsgCreatePath } as MsgCreatePath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = CooperativeDomain.fromJSON(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreatePath): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.domainList !== undefined &&
+      (obj.domainList = message.domainList
+        ? CooperativeDomain.toJSON(message.domainList)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgCreatePath>): MsgCreatePath {
+    const message = { ...baseMsgCreatePath } as MsgCreatePath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = CooperativeDomain.fromPartial(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgCreatePathResponse: object = { id: 0 };
+
+export const MsgCreatePathResponse = {
+  encode(
+    message: MsgCreatePathResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreatePathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreatePathResponse } as MsgCreatePathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreatePathResponse {
+    const message = { ...baseMsgCreatePathResponse } as MsgCreatePathResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreatePathResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreatePathResponse>
+  ): MsgCreatePathResponse {
+    const message = { ...baseMsgCreatePathResponse } as MsgCreatePathResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdatePath: object = { creator: "", id: 0 };
+
+export const MsgUpdatePath = {
+  encode(message: MsgUpdatePath, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.domainList !== undefined) {
+      CooperativeDomain.encode(
+        message.domainList,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdatePath {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdatePath } as MsgUpdatePath;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.domainList = CooperativeDomain.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdatePath {
+    const message = { ...baseMsgUpdatePath } as MsgUpdatePath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = CooperativeDomain.fromJSON(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdatePath): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.domainList !== undefined &&
+      (obj.domainList = message.domainList
+        ? CooperativeDomain.toJSON(message.domainList)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdatePath>): MsgUpdatePath {
+    const message = { ...baseMsgUpdatePath } as MsgUpdatePath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.domainList !== undefined && object.domainList !== null) {
+      message.domainList = CooperativeDomain.fromPartial(object.domainList);
+    } else {
+      message.domainList = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdatePathResponse: object = {};
+
+export const MsgUpdatePathResponse = {
+  encode(_: MsgUpdatePathResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdatePathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdatePathResponse } as MsgUpdatePathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdatePathResponse {
+    const message = { ...baseMsgUpdatePathResponse } as MsgUpdatePathResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdatePathResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgUpdatePathResponse>): MsgUpdatePathResponse {
+    const message = { ...baseMsgUpdatePathResponse } as MsgUpdatePathResponse;
+    return message;
+  },
+};
+
+const baseMsgDeletePath: object = { creator: "", id: 0 };
+
+export const MsgDeletePath = {
+  encode(message: MsgDeletePath, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeletePath {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeletePath } as MsgDeletePath;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeletePath {
+    const message = { ...baseMsgDeletePath } as MsgDeletePath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeletePath): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgDeletePath>): MsgDeletePath {
+    const message = { ...baseMsgDeletePath } as MsgDeletePath;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeletePathResponse: object = {};
+
+export const MsgDeletePathResponse = {
+  encode(_: MsgDeletePathResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeletePathResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeletePathResponse } as MsgDeletePathResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeletePathResponse {
+    const message = { ...baseMsgDeletePathResponse } as MsgDeletePathResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeletePathResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgDeletePathResponse>): MsgDeletePathResponse {
+    const message = { ...baseMsgDeletePathResponse } as MsgDeletePathResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreatePublicKey(
@@ -11351,10 +12331,22 @@ export interface Msg {
   UpdateCooperativeDomain(
     request: MsgUpdateCooperativeDomain
   ): Promise<MsgUpdateCooperativeDomainResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteCooperativeDomain(
     request: MsgDeleteCooperativeDomain
   ): Promise<MsgDeleteCooperativeDomainResponse>;
+  CreateDelegationPath(
+    request: MsgCreateDelegationPath
+  ): Promise<MsgCreateDelegationPathResponse>;
+  UpdateDelegationPath(
+    request: MsgUpdateDelegationPath
+  ): Promise<MsgUpdateDelegationPathResponse>;
+  DeleteDelegationPath(
+    request: MsgDeleteDelegationPath
+  ): Promise<MsgDeleteDelegationPathResponse>;
+  CreatePath(request: MsgCreatePath): Promise<MsgCreatePathResponse>;
+  UpdatePath(request: MsgUpdatePath): Promise<MsgUpdatePathResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DeletePath(request: MsgDeletePath): Promise<MsgDeletePathResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -12137,6 +13129,84 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeleteCooperativeDomainResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateDelegationPath(
+    request: MsgCreateDelegationPath
+  ): Promise<MsgCreateDelegationPathResponse> {
+    const data = MsgCreateDelegationPath.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateDelegationPath",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateDelegationPathResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateDelegationPath(
+    request: MsgUpdateDelegationPath
+  ): Promise<MsgUpdateDelegationPathResponse> {
+    const data = MsgUpdateDelegationPath.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateDelegationPath",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateDelegationPathResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteDelegationPath(
+    request: MsgDeleteDelegationPath
+  ): Promise<MsgDeleteDelegationPathResponse> {
+    const data = MsgDeleteDelegationPath.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteDelegationPath",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteDelegationPathResponse.decode(new Reader(data))
+    );
+  }
+
+  CreatePath(request: MsgCreatePath): Promise<MsgCreatePathResponse> {
+    const data = MsgCreatePath.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreatePath",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreatePathResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdatePath(request: MsgUpdatePath): Promise<MsgUpdatePathResponse> {
+    const data = MsgUpdatePath.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdatePath",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdatePathResponse.decode(new Reader(data))
+    );
+  }
+
+  DeletePath(request: MsgDeletePath): Promise<MsgDeletePathResponse> {
+    const data = MsgDeletePath.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeletePath",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeletePathResponse.decode(new Reader(data))
     );
   }
 }

@@ -1,12 +1,12 @@
 /* eslint-disable */
-import { Domain } from "../cdac/domain";
+import { CooperativeDomain } from "../cdac/cooperative_domain";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "crossdomain.cdac";
 
 export interface DomainMap {
   domainIndex: string;
-  domainList: Domain[];
+  cooperativeDomainList: CooperativeDomain[];
   creator: string;
 }
 
@@ -17,8 +17,8 @@ export const DomainMap = {
     if (message.domainIndex !== "") {
       writer.uint32(10).string(message.domainIndex);
     }
-    for (const v of message.domainList) {
-      Domain.encode(v!, writer.uint32(18).fork()).ldelim();
+    for (const v of message.cooperativeDomainList) {
+      CooperativeDomain.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     if (message.creator !== "") {
       writer.uint32(26).string(message.creator);
@@ -30,7 +30,7 @@ export const DomainMap = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDomainMap } as DomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -38,7 +38,9 @@ export const DomainMap = {
           message.domainIndex = reader.string();
           break;
         case 2:
-          message.domainList.push(Domain.decode(reader, reader.uint32()));
+          message.cooperativeDomainList.push(
+            CooperativeDomain.decode(reader, reader.uint32())
+          );
           break;
         case 3:
           message.creator = reader.string();
@@ -53,15 +55,18 @@ export const DomainMap = {
 
   fromJSON(object: any): DomainMap {
     const message = { ...baseDomainMap } as DomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     if (object.domainIndex !== undefined && object.domainIndex !== null) {
       message.domainIndex = String(object.domainIndex);
     } else {
       message.domainIndex = "";
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(Domain.fromJSON(e));
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromJSON(e));
       }
     }
     if (object.creator !== undefined && object.creator !== null) {
@@ -76,12 +81,12 @@ export const DomainMap = {
     const obj: any = {};
     message.domainIndex !== undefined &&
       (obj.domainIndex = message.domainIndex);
-    if (message.domainList) {
-      obj.domainList = message.domainList.map((e) =>
-        e ? Domain.toJSON(e) : undefined
+    if (message.cooperativeDomainList) {
+      obj.cooperativeDomainList = message.cooperativeDomainList.map((e) =>
+        e ? CooperativeDomain.toJSON(e) : undefined
       );
     } else {
-      obj.domainList = [];
+      obj.cooperativeDomainList = [];
     }
     message.creator !== undefined && (obj.creator = message.creator);
     return obj;
@@ -89,15 +94,18 @@ export const DomainMap = {
 
   fromPartial(object: DeepPartial<DomainMap>): DomainMap {
     const message = { ...baseDomainMap } as DomainMap;
-    message.domainList = [];
+    message.cooperativeDomainList = [];
     if (object.domainIndex !== undefined && object.domainIndex !== null) {
       message.domainIndex = object.domainIndex;
     } else {
       message.domainIndex = "";
     }
-    if (object.domainList !== undefined && object.domainList !== null) {
-      for (const e of object.domainList) {
-        message.domainList.push(Domain.fromPartial(e));
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromPartial(e));
       }
     }
     if (object.creator !== undefined && object.creator !== null) {

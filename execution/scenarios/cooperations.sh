@@ -17,6 +17,9 @@ crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657
 crossdomaind tx cdac generate-cooperation-network --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 crossdomaind query cdac list-cooperation-network --node tcp://localhost:26657
 
+#crossdomaind tx cdac create-delegation-path [delegator] [delegatee] [flags]
+crossdomaind tx cdac create-delegation-path '{"name":"mars.1","domainType":"Remote","location":"france"}' '{"name":"mars.4.1","domainType":"Remote","location":"france"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 
+crossdomaind tx cdac create-delegation-path '{"name":"mars.2.1","domainType":"Remote","location":"france"}' '{"name":"mars.4.1","domainType":"Remote","location":"france"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 
-
+crossdomaind query cdac list-delegation-path --node tcp://localhost:26657

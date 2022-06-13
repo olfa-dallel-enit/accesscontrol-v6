@@ -1,0 +1,15 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+import "cdac/cooperative_domain.proto"; 
+import "cdac/path.proto";
+
+message DelegationPath {
+  uint64 id = 1;
+  CooperativeDomain delegator = 2; 
+  CooperativeDomain delegatee = 3; 
+  repeated Path pathList = 4; 
+  string creator = 5;
+  string label = 6;
+}

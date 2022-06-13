@@ -16,6 +16,8 @@ import "cdac/cooperation_data.proto";
 import "cdac/cooperation_network.proto";
 import "cdac/update_policy.proto";
 import "cdac/cooperative_domain.proto";
+import "cdac/delegation_path.proto";
+import "cdac/path.proto";
 // this line is used by starport scaffolding # 1
 import "cdac/validity.proto";
 import "cdac/domain.proto";
@@ -187,6 +189,26 @@ service Query {
 	// Queries a list of CooperativeDomain items.
 	rpc CooperativeDomainAll(QueryAllCooperativeDomainRequest) returns (QueryAllCooperativeDomainResponse) {
 		option (google.api.http).get = "/crossdomain/cdac/cooperative_domain";
+	}
+
+// Queries a DelegationPath by id.
+	rpc DelegationPath(QueryGetDelegationPathRequest) returns (QueryGetDelegationPathResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_path/{id}";
+	}
+
+	// Queries a list of DelegationPath items.
+	rpc DelegationPathAll(QueryAllDelegationPathRequest) returns (QueryAllDelegationPathResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_path";
+	}
+
+// Queries a Path by id.
+	rpc Path(QueryGetPathRequest) returns (QueryGetPathResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/path/{id}";
+	}
+
+	// Queries a list of Path items.
+	rpc PathAll(QueryAllPathRequest) returns (QueryAllPathResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/path";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -468,6 +490,40 @@ message QueryAllCooperativeDomainRequest {
 
 message QueryAllCooperativeDomainResponse {
 	repeated CooperativeDomain CooperativeDomain = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDelegationPathRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDelegationPathResponse {
+	DelegationPath DelegationPath = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDelegationPathRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDelegationPathResponse {
+	repeated DelegationPath DelegationPath = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetPathRequest {
+	uint64 id = 1;
+}
+
+message QueryGetPathResponse {
+	Path Path = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPathRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPathResponse {
+	repeated Path Path = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

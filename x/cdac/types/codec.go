@@ -64,6 +64,12 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateCooperativeDomain{}, "cdac/CreateCooperativeDomain", nil)
 	cdc.RegisterConcrete(&MsgUpdateCooperativeDomain{}, "cdac/UpdateCooperativeDomain", nil)
 	cdc.RegisterConcrete(&MsgDeleteCooperativeDomain{}, "cdac/DeleteCooperativeDomain", nil)
+	cdc.RegisterConcrete(&MsgCreateDelegationPath{}, "cdac/CreateDelegationPath", nil)
+	cdc.RegisterConcrete(&MsgUpdateDelegationPath{}, "cdac/UpdateDelegationPath", nil)
+	cdc.RegisterConcrete(&MsgDeleteDelegationPath{}, "cdac/DeleteDelegationPath", nil)
+	cdc.RegisterConcrete(&MsgCreatePath{}, "cdac/CreatePath", nil)
+	cdc.RegisterConcrete(&MsgUpdatePath{}, "cdac/UpdatePath", nil)
+	cdc.RegisterConcrete(&MsgDeletePath{}, "cdac/DeletePath", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -175,6 +181,16 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateCooperativeDomain{},
 		&MsgUpdateCooperativeDomain{},
 		&MsgDeleteCooperativeDomain{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateDelegationPath{},
+		&MsgUpdateDelegationPath{},
+		&MsgDeleteDelegationPath{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreatePath{},
+		&MsgUpdatePath{},
+		&MsgDeletePath{},
 	)
 	// this line is used by starport scaffolding # 3
 

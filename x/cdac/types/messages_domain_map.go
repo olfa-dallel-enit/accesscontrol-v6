@@ -20,9 +20,9 @@ func NewMsgCreateDomainMap(
 
 ) *MsgCreateDomainMap {
 	return &MsgCreateDomainMap{
-		Creator:     creator,
-		DomainIndex: domainIndex,
-		CooperativeDomainList:  cooperativeDomainList,
+		Creator:               creator,
+		DomainIndex:           domainIndex,
+		CooperativeDomainList: cooperativeDomainList,
 	}
 }
 
@@ -64,9 +64,9 @@ func NewMsgUpdateDomainMap(
 
 ) *MsgUpdateDomainMap {
 	return &MsgUpdateDomainMap{
-		Creator:     creator,
-		DomainIndex: domainIndex,
-		CooperativeDomainList:  cooperativeDomainList,
+		Creator:               creator,
+		DomainIndex:           domainIndex,
+		CooperativeDomainList: cooperativeDomainList,
 	}
 }
 

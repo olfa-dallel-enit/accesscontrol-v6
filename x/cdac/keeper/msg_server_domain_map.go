@@ -21,9 +21,9 @@ func (k msgServer) CreateDomainMap(goCtx context.Context, msg *types.MsgCreateDo
 	}
 
 	var domainMap = types.DomainMap{
-		Creator:     msg.Creator,
-		DomainIndex: msg.DomainIndex,
-		CooperativeDomainList:  msg.CooperativeDomainList,
+		Creator:               msg.Creator,
+		DomainIndex:           msg.DomainIndex,
+		CooperativeDomainList: msg.CooperativeDomainList,
 	}
 
 	k.SetDomainMap(
@@ -51,9 +51,9 @@ func (k msgServer) UpdateDomainMap(goCtx context.Context, msg *types.MsgUpdateDo
 	}
 
 	var domainMap = types.DomainMap{
-		Creator:     msg.Creator,
-		DomainIndex: msg.DomainIndex,
-		CooperativeDomainList:  msg.CooperativeDomainList,
+		Creator:               msg.Creator,
+		DomainIndex:           msg.DomainIndex,
+		CooperativeDomainList: msg.CooperativeDomainList,
 	}
 
 	k.SetDomainMap(ctx, domainMap)

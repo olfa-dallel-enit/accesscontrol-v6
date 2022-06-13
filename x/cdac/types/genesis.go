@@ -27,6 +27,8 @@ func DefaultGenesis() *GenesisState {
 		CooperationNetworkList:         []CooperationNetwork{},
 		UpdatePolicy:                   nil,
 		CooperativeDomainList:          []CooperativeDomain{},
+		DelegationPathList:             []DelegationPath{},
+		PathList:                       []Path{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -201,6 +203,30 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("cooperativeDomain id should be lower or equal than the last id")
 		}
 		cooperativeDomainIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in delegationPath
+	delegationPathIdMap := make(map[uint64]bool)
+	delegationPathCount := gs.GetDelegationPathCount()
+	for _, elem := range gs.DelegationPathList {
+		if _, ok := delegationPathIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for delegationPath")
+		}
+		if elem.Id >= delegationPathCount {
+			return fmt.Errorf("delegationPath id should be lower or equal than the last id")
+		}
+		delegationPathIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in path
+	pathIdMap := make(map[uint64]bool)
+	pathCount := gs.GetPathCount()
+	for _, elem := range gs.PathList {
+		if _, ok := pathIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for path")
+		}
+		if elem.Id >= pathCount {
+			return fmt.Errorf("path id should be lower or equal than the last id")
+		}
+		pathIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 
