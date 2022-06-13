@@ -25,3 +25,8 @@ crossdomaind tx cdac create-delegation-path '{"name":"mars.2.1","domainType":"Re
 crossdomaind query cdac list-delegation-path --node tcp://localhost:26657
 
 crossdomaind query cdac list-calculation-time  --node tcp://localhost:26657
+
+#request-access [object] [action]
+
+
+crossdomaind query cdac request-access "" "" --home ~/.earth --chain-id earth --node tcp://localhost:26657 

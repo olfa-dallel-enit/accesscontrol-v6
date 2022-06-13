@@ -76,6 +76,10 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateCalculationTime{}, "cdac/CreateCalculationTime", nil)
 	cdc.RegisterConcrete(&MsgUpdateCalculationTime{}, "cdac/UpdateCalculationTime", nil)
 	cdc.RegisterConcrete(&MsgDeleteCalculationTime{}, "cdac/DeleteCalculationTime", nil)
+	cdc.RegisterConcrete(&MsgRequestAccessPermission{}, "cdac/RequestAccessPermission", nil)
+	cdc.RegisterConcrete(&MsgCreateInterDomainAclPolicy{}, "cdac/CreateInterDomainAclPolicy", nil)
+	cdc.RegisterConcrete(&MsgUpdateInterDomainAclPolicy{}, "cdac/UpdateInterDomainAclPolicy", nil)
+	cdc.RegisterConcrete(&MsgDeleteInterDomainAclPolicy{}, "cdac/DeleteInterDomainAclPolicy", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -207,6 +211,14 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateCalculationTime{},
 		&MsgUpdateCalculationTime{},
 		&MsgDeleteCalculationTime{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgRequestAccessPermission{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateInterDomainAclPolicy{},
+		&MsgUpdateInterDomainAclPolicy{},
+		&MsgDeleteInterDomainAclPolicy{},
 	)
 	// this line is used by starport scaffolding # 3
 

@@ -22,6 +22,7 @@ import "cdac/delegation_path.proto";
 import "cdac/path.proto";
 import "cdac/time_calculation.proto";
 import "cdac/calculation_time.proto";
+import "cdac/inter_domain_acl_policy.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "crossdomain/x/cdac/types";
@@ -65,5 +66,7 @@ message GenesisState {
   uint64 timeCalculationCount = 35;
   repeated CalculationTime calculationTimeList = 36 [(gogoproto.nullable) = false];
   uint64 calculationTimeCount = 37;
+  repeated InterDomainAclPolicy interDomainAclPolicyList = 38 [(gogoproto.nullable) = false];
+  uint64 interDomainAclPolicyCount = 39;
   // this line is used by starport scaffolding # genesis/proto/state
 }

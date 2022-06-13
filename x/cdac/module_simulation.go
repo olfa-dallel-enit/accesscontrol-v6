@@ -256,6 +256,22 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteCalculationTime int = 100
 
+	opWeightMsgRequestAccessPermission = "op_weight_msg_request_access_permission"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgRequestAccessPermission int = 100
+
+	opWeightMsgCreateInterDomainAclPolicy = "op_weight_msg_inter_domain_acl_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateInterDomainAclPolicy int = 100
+
+	opWeightMsgUpdateInterDomainAclPolicy = "op_weight_msg_inter_domain_acl_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateInterDomainAclPolicy int = 100
+
+	opWeightMsgDeleteInterDomainAclPolicy = "op_weight_msg_inter_domain_acl_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteInterDomainAclPolicy int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -464,6 +480,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		CalculationTimeCount: 2,
+		InterDomainAclPolicyList: []types.InterDomainAclPolicy{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		InterDomainAclPolicyCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -1123,6 +1150,50 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteCalculationTime,
 		cdacsimulation.SimulateMsgDeleteCalculationTime(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgRequestAccessPermission int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgRequestAccessPermission, &weightMsgRequestAccessPermission, nil,
+		func(_ *rand.Rand) {
+			weightMsgRequestAccessPermission = defaultWeightMsgRequestAccessPermission
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgRequestAccessPermission,
+		cdacsimulation.SimulateMsgRequestAccessPermission(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateInterDomainAclPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateInterDomainAclPolicy, &weightMsgCreateInterDomainAclPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateInterDomainAclPolicy = defaultWeightMsgCreateInterDomainAclPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateInterDomainAclPolicy,
+		cdacsimulation.SimulateMsgCreateInterDomainAclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateInterDomainAclPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateInterDomainAclPolicy, &weightMsgUpdateInterDomainAclPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateInterDomainAclPolicy = defaultWeightMsgUpdateInterDomainAclPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateInterDomainAclPolicy,
+		cdacsimulation.SimulateMsgUpdateInterDomainAclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteInterDomainAclPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteInterDomainAclPolicy, &weightMsgDeleteInterDomainAclPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteInterDomainAclPolicy = defaultWeightMsgDeleteInterDomainAclPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteInterDomainAclPolicy,
+		cdacsimulation.SimulateMsgDeleteInterDomainAclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

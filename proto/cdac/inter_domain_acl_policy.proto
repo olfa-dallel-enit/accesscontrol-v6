@@ -1,0 +1,16 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message InterDomainAclPolicy {
+  uint64 id = 1;
+  string label = 2; 
+  repeated string subjectList = 3; 
+  repeated string actionList = 4; 
+  repeated string objectList = 5; 
+  string status = 6; 
+  string creationTimestamp = 7; 
+  string updateTimestamp = 8; 
+  string creator = 9;
+}

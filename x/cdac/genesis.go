@@ -133,6 +133,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set calculationTime count
 	k.SetCalculationTimeCount(ctx, genState.CalculationTimeCount)
+	// Set all the interDomainAclPolicy
+	for _, elem := range genState.InterDomainAclPolicyList {
+		k.SetInterDomainAclPolicy(ctx, elem)
+	}
+
+	// Set interDomainAclPolicy count
+	k.SetInterDomainAclPolicyCount(ctx, genState.InterDomainAclPolicyCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetPort(ctx, genState.PortId)
 	// Only try to bind to port if it is not already bound, since we may already own
@@ -193,6 +200,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.TimeCalculationCount = k.GetTimeCalculationCount(ctx)
 	genesis.CalculationTimeList = k.GetAllCalculationTime(ctx)
 	genesis.CalculationTimeCount = k.GetCalculationTimeCount(ctx)
+	genesis.InterDomainAclPolicyList = k.GetAllInterDomainAclPolicy(ctx)
+	genesis.InterDomainAclPolicyCount = k.GetInterDomainAclPolicyCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

@@ -98,6 +98,10 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdCreateCalculationTime())
 	cmd.AddCommand(CmdUpdateCalculationTime())
 	cmd.AddCommand(CmdDeleteCalculationTime())
+	cmd.AddCommand(CmdRequestAccessPermission())
+	cmd.AddCommand(CmdCreateInterDomainAclPolicy())
+	cmd.AddCommand(CmdUpdateInterDomainAclPolicy())
+	cmd.AddCommand(CmdDeleteInterDomainAclPolicy())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

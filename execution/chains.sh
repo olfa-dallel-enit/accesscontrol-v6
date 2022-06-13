@@ -7,3 +7,4 @@ ignite chain serve -c execution/chains/neptune/neptune.yml --reset-once
 ignite chain serve -c execution/chains/jupiter/jupiter.yml --reset-once
 
 bash execution/relayerConfiguration.sh
+

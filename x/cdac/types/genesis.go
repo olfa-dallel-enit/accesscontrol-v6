@@ -31,6 +31,7 @@ func DefaultGenesis() *GenesisState {
 		PathList:                       []Path{},
 		TimeCalculationList:            []TimeCalculation{},
 		CalculationTimeList:            []CalculationTime{},
+		InterDomainAclPolicyList:       []InterDomainAclPolicy{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -253,6 +254,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("calculationTime id should be lower or equal than the last id")
 		}
 		calculationTimeIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in interDomainAclPolicy
+	interDomainAclPolicyIdMap := make(map[uint64]bool)
+	interDomainAclPolicyCount := gs.GetInterDomainAclPolicyCount()
+	for _, elem := range gs.InterDomainAclPolicyList {
+		if _, ok := interDomainAclPolicyIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for interDomainAclPolicy")
+		}
+		if elem.Id >= interDomainAclPolicyCount {
+			return fmt.Errorf("interDomainAclPolicy id should be lower or equal than the last id")
+		}
+		interDomainAclPolicyIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

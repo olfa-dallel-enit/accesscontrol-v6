@@ -681,6 +681,53 @@ export interface MsgDeleteCalculationTime {
 
 export interface MsgDeleteCalculationTimeResponse {}
 
+export interface MsgRequestAccessPermission {
+  creator: string;
+  subject: string;
+  object: string;
+  action: string;
+}
+
+export interface MsgRequestAccessPermissionResponse {
+  decision: string;
+}
+
+export interface MsgCreateInterDomainAclPolicy {
+  creator: string;
+  label: string;
+  subjectList: string[];
+  actionList: string[];
+  objectList: string[];
+  status: string;
+  creationTimestamp: string;
+  updateTimestamp: string;
+}
+
+export interface MsgCreateInterDomainAclPolicyResponse {
+  id: number;
+}
+
+export interface MsgUpdateInterDomainAclPolicy {
+  creator: string;
+  id: number;
+  label: string;
+  subjectList: string[];
+  actionList: string[];
+  objectList: string[];
+  status: string;
+  creationTimestamp: string;
+  updateTimestamp: string;
+}
+
+export interface MsgUpdateInterDomainAclPolicyResponse {}
+
+export interface MsgDeleteInterDomainAclPolicy {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteInterDomainAclPolicyResponse {}
+
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
 export const MsgCreatePublicKey = {
@@ -13367,6 +13414,941 @@ export const MsgDeleteCalculationTimeResponse = {
   },
 };
 
+const baseMsgRequestAccessPermission: object = {
+  creator: "",
+  subject: "",
+  object: "",
+  action: "",
+};
+
+export const MsgRequestAccessPermission = {
+  encode(
+    message: MsgRequestAccessPermission,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.subject !== "") {
+      writer.uint32(18).string(message.subject);
+    }
+    if (message.object !== "") {
+      writer.uint32(26).string(message.object);
+    }
+    if (message.action !== "") {
+      writer.uint32(34).string(message.action);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgRequestAccessPermission {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgRequestAccessPermission,
+    } as MsgRequestAccessPermission;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.subject = reader.string();
+          break;
+        case 3:
+          message.object = reader.string();
+          break;
+        case 4:
+          message.action = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgRequestAccessPermission {
+    const message = {
+      ...baseMsgRequestAccessPermission,
+    } as MsgRequestAccessPermission;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.subject !== undefined && object.subject !== null) {
+      message.subject = String(object.subject);
+    } else {
+      message.subject = "";
+    }
+    if (object.object !== undefined && object.object !== null) {
+      message.object = String(object.object);
+    } else {
+      message.object = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = String(object.action);
+    } else {
+      message.action = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgRequestAccessPermission): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.subject !== undefined && (obj.subject = message.subject);
+    message.object !== undefined && (obj.object = message.object);
+    message.action !== undefined && (obj.action = message.action);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgRequestAccessPermission>
+  ): MsgRequestAccessPermission {
+    const message = {
+      ...baseMsgRequestAccessPermission,
+    } as MsgRequestAccessPermission;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.subject !== undefined && object.subject !== null) {
+      message.subject = object.subject;
+    } else {
+      message.subject = "";
+    }
+    if (object.object !== undefined && object.object !== null) {
+      message.object = object.object;
+    } else {
+      message.object = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = object.action;
+    } else {
+      message.action = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgRequestAccessPermissionResponse: object = { decision: "" };
+
+export const MsgRequestAccessPermissionResponse = {
+  encode(
+    message: MsgRequestAccessPermissionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.decision !== "") {
+      writer.uint32(10).string(message.decision);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgRequestAccessPermissionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgRequestAccessPermissionResponse,
+    } as MsgRequestAccessPermissionResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.decision = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgRequestAccessPermissionResponse {
+    const message = {
+      ...baseMsgRequestAccessPermissionResponse,
+    } as MsgRequestAccessPermissionResponse;
+    if (object.decision !== undefined && object.decision !== null) {
+      message.decision = String(object.decision);
+    } else {
+      message.decision = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgRequestAccessPermissionResponse): unknown {
+    const obj: any = {};
+    message.decision !== undefined && (obj.decision = message.decision);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgRequestAccessPermissionResponse>
+  ): MsgRequestAccessPermissionResponse {
+    const message = {
+      ...baseMsgRequestAccessPermissionResponse,
+    } as MsgRequestAccessPermissionResponse;
+    if (object.decision !== undefined && object.decision !== null) {
+      message.decision = object.decision;
+    } else {
+      message.decision = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateInterDomainAclPolicy: object = {
+  creator: "",
+  label: "",
+  subjectList: "",
+  actionList: "",
+  objectList: "",
+  status: "",
+  creationTimestamp: "",
+  updateTimestamp: "",
+};
+
+export const MsgCreateInterDomainAclPolicy = {
+  encode(
+    message: MsgCreateInterDomainAclPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.label !== "") {
+      writer.uint32(18).string(message.label);
+    }
+    for (const v of message.subjectList) {
+      writer.uint32(26).string(v!);
+    }
+    for (const v of message.actionList) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.objectList) {
+      writer.uint32(42).string(v!);
+    }
+    if (message.status !== "") {
+      writer.uint32(50).string(message.status);
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(58).string(message.creationTimestamp);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(66).string(message.updateTimestamp);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateInterDomainAclPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateInterDomainAclPolicy,
+    } as MsgCreateInterDomainAclPolicy;
+    message.subjectList = [];
+    message.actionList = [];
+    message.objectList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.label = reader.string();
+          break;
+        case 3:
+          message.subjectList.push(reader.string());
+          break;
+        case 4:
+          message.actionList.push(reader.string());
+          break;
+        case 5:
+          message.objectList.push(reader.string());
+          break;
+        case 6:
+          message.status = reader.string();
+          break;
+        case 7:
+          message.creationTimestamp = reader.string();
+          break;
+        case 8:
+          message.updateTimestamp = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateInterDomainAclPolicy {
+    const message = {
+      ...baseMsgCreateInterDomainAclPolicy,
+    } as MsgCreateInterDomainAclPolicy;
+    message.subjectList = [];
+    message.actionList = [];
+    message.objectList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = String(object.label);
+    } else {
+      message.label = "";
+    }
+    if (object.subjectList !== undefined && object.subjectList !== null) {
+      for (const e of object.subjectList) {
+        message.subjectList.push(String(e));
+      }
+    }
+    if (object.actionList !== undefined && object.actionList !== null) {
+      for (const e of object.actionList) {
+        message.actionList.push(String(e));
+      }
+    }
+    if (object.objectList !== undefined && object.objectList !== null) {
+      for (const e of object.objectList) {
+        message.objectList.push(String(e));
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = String(object.status);
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateInterDomainAclPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.label !== undefined && (obj.label = message.label);
+    if (message.subjectList) {
+      obj.subjectList = message.subjectList.map((e) => e);
+    } else {
+      obj.subjectList = [];
+    }
+    if (message.actionList) {
+      obj.actionList = message.actionList.map((e) => e);
+    } else {
+      obj.actionList = [];
+    }
+    if (message.objectList) {
+      obj.objectList = message.objectList.map((e) => e);
+    } else {
+      obj.objectList = [];
+    }
+    message.status !== undefined && (obj.status = message.status);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateInterDomainAclPolicy>
+  ): MsgCreateInterDomainAclPolicy {
+    const message = {
+      ...baseMsgCreateInterDomainAclPolicy,
+    } as MsgCreateInterDomainAclPolicy;
+    message.subjectList = [];
+    message.actionList = [];
+    message.objectList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = object.label;
+    } else {
+      message.label = "";
+    }
+    if (object.subjectList !== undefined && object.subjectList !== null) {
+      for (const e of object.subjectList) {
+        message.subjectList.push(e);
+      }
+    }
+    if (object.actionList !== undefined && object.actionList !== null) {
+      for (const e of object.actionList) {
+        message.actionList.push(e);
+      }
+    }
+    if (object.objectList !== undefined && object.objectList !== null) {
+      for (const e of object.objectList) {
+        message.objectList.push(e);
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateInterDomainAclPolicyResponse: object = { id: 0 };
+
+export const MsgCreateInterDomainAclPolicyResponse = {
+  encode(
+    message: MsgCreateInterDomainAclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateInterDomainAclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateInterDomainAclPolicyResponse,
+    } as MsgCreateInterDomainAclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateInterDomainAclPolicyResponse {
+    const message = {
+      ...baseMsgCreateInterDomainAclPolicyResponse,
+    } as MsgCreateInterDomainAclPolicyResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateInterDomainAclPolicyResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateInterDomainAclPolicyResponse>
+  ): MsgCreateInterDomainAclPolicyResponse {
+    const message = {
+      ...baseMsgCreateInterDomainAclPolicyResponse,
+    } as MsgCreateInterDomainAclPolicyResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateInterDomainAclPolicy: object = {
+  creator: "",
+  id: 0,
+  label: "",
+  subjectList: "",
+  actionList: "",
+  objectList: "",
+  status: "",
+  creationTimestamp: "",
+  updateTimestamp: "",
+};
+
+export const MsgUpdateInterDomainAclPolicy = {
+  encode(
+    message: MsgUpdateInterDomainAclPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.label !== "") {
+      writer.uint32(26).string(message.label);
+    }
+    for (const v of message.subjectList) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.actionList) {
+      writer.uint32(42).string(v!);
+    }
+    for (const v of message.objectList) {
+      writer.uint32(50).string(v!);
+    }
+    if (message.status !== "") {
+      writer.uint32(58).string(message.status);
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(66).string(message.creationTimestamp);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(74).string(message.updateTimestamp);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateInterDomainAclPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateInterDomainAclPolicy,
+    } as MsgUpdateInterDomainAclPolicy;
+    message.subjectList = [];
+    message.actionList = [];
+    message.objectList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.label = reader.string();
+          break;
+        case 4:
+          message.subjectList.push(reader.string());
+          break;
+        case 5:
+          message.actionList.push(reader.string());
+          break;
+        case 6:
+          message.objectList.push(reader.string());
+          break;
+        case 7:
+          message.status = reader.string();
+          break;
+        case 8:
+          message.creationTimestamp = reader.string();
+          break;
+        case 9:
+          message.updateTimestamp = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateInterDomainAclPolicy {
+    const message = {
+      ...baseMsgUpdateInterDomainAclPolicy,
+    } as MsgUpdateInterDomainAclPolicy;
+    message.subjectList = [];
+    message.actionList = [];
+    message.objectList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = String(object.label);
+    } else {
+      message.label = "";
+    }
+    if (object.subjectList !== undefined && object.subjectList !== null) {
+      for (const e of object.subjectList) {
+        message.subjectList.push(String(e));
+      }
+    }
+    if (object.actionList !== undefined && object.actionList !== null) {
+      for (const e of object.actionList) {
+        message.actionList.push(String(e));
+      }
+    }
+    if (object.objectList !== undefined && object.objectList !== null) {
+      for (const e of object.objectList) {
+        message.objectList.push(String(e));
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = String(object.status);
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateInterDomainAclPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.label !== undefined && (obj.label = message.label);
+    if (message.subjectList) {
+      obj.subjectList = message.subjectList.map((e) => e);
+    } else {
+      obj.subjectList = [];
+    }
+    if (message.actionList) {
+      obj.actionList = message.actionList.map((e) => e);
+    } else {
+      obj.actionList = [];
+    }
+    if (message.objectList) {
+      obj.objectList = message.objectList.map((e) => e);
+    } else {
+      obj.objectList = [];
+    }
+    message.status !== undefined && (obj.status = message.status);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateInterDomainAclPolicy>
+  ): MsgUpdateInterDomainAclPolicy {
+    const message = {
+      ...baseMsgUpdateInterDomainAclPolicy,
+    } as MsgUpdateInterDomainAclPolicy;
+    message.subjectList = [];
+    message.actionList = [];
+    message.objectList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = object.label;
+    } else {
+      message.label = "";
+    }
+    if (object.subjectList !== undefined && object.subjectList !== null) {
+      for (const e of object.subjectList) {
+        message.subjectList.push(e);
+      }
+    }
+    if (object.actionList !== undefined && object.actionList !== null) {
+      for (const e of object.actionList) {
+        message.actionList.push(e);
+      }
+    }
+    if (object.objectList !== undefined && object.objectList !== null) {
+      for (const e of object.objectList) {
+        message.objectList.push(e);
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateInterDomainAclPolicyResponse: object = {};
+
+export const MsgUpdateInterDomainAclPolicyResponse = {
+  encode(
+    _: MsgUpdateInterDomainAclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateInterDomainAclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateInterDomainAclPolicyResponse,
+    } as MsgUpdateInterDomainAclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateInterDomainAclPolicyResponse {
+    const message = {
+      ...baseMsgUpdateInterDomainAclPolicyResponse,
+    } as MsgUpdateInterDomainAclPolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateInterDomainAclPolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateInterDomainAclPolicyResponse>
+  ): MsgUpdateInterDomainAclPolicyResponse {
+    const message = {
+      ...baseMsgUpdateInterDomainAclPolicyResponse,
+    } as MsgUpdateInterDomainAclPolicyResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteInterDomainAclPolicy: object = { creator: "", id: 0 };
+
+export const MsgDeleteInterDomainAclPolicy = {
+  encode(
+    message: MsgDeleteInterDomainAclPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteInterDomainAclPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteInterDomainAclPolicy,
+    } as MsgDeleteInterDomainAclPolicy;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteInterDomainAclPolicy {
+    const message = {
+      ...baseMsgDeleteInterDomainAclPolicy,
+    } as MsgDeleteInterDomainAclPolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteInterDomainAclPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteInterDomainAclPolicy>
+  ): MsgDeleteInterDomainAclPolicy {
+    const message = {
+      ...baseMsgDeleteInterDomainAclPolicy,
+    } as MsgDeleteInterDomainAclPolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteInterDomainAclPolicyResponse: object = {};
+
+export const MsgDeleteInterDomainAclPolicyResponse = {
+  encode(
+    _: MsgDeleteInterDomainAclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteInterDomainAclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteInterDomainAclPolicyResponse,
+    } as MsgDeleteInterDomainAclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteInterDomainAclPolicyResponse {
+    const message = {
+      ...baseMsgDeleteInterDomainAclPolicyResponse,
+    } as MsgDeleteInterDomainAclPolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteInterDomainAclPolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteInterDomainAclPolicyResponse>
+  ): MsgDeleteInterDomainAclPolicyResponse {
+    const message = {
+      ...baseMsgDeleteInterDomainAclPolicyResponse,
+    } as MsgDeleteInterDomainAclPolicyResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreatePublicKey(
@@ -13558,10 +14540,22 @@ export interface Msg {
   UpdateCalculationTime(
     request: MsgUpdateCalculationTime
   ): Promise<MsgUpdateCalculationTimeResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteCalculationTime(
     request: MsgDeleteCalculationTime
   ): Promise<MsgDeleteCalculationTimeResponse>;
+  RequestAccessPermission(
+    request: MsgRequestAccessPermission
+  ): Promise<MsgRequestAccessPermissionResponse>;
+  CreateInterDomainAclPolicy(
+    request: MsgCreateInterDomainAclPolicy
+  ): Promise<MsgCreateInterDomainAclPolicyResponse>;
+  UpdateInterDomainAclPolicy(
+    request: MsgUpdateInterDomainAclPolicy
+  ): Promise<MsgUpdateInterDomainAclPolicyResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DeleteInterDomainAclPolicy(
+    request: MsgDeleteInterDomainAclPolicy
+  ): Promise<MsgDeleteInterDomainAclPolicyResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -14506,6 +15500,62 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeleteCalculationTimeResponse.decode(new Reader(data))
+    );
+  }
+
+  RequestAccessPermission(
+    request: MsgRequestAccessPermission
+  ): Promise<MsgRequestAccessPermissionResponse> {
+    const data = MsgRequestAccessPermission.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "RequestAccessPermission",
+      data
+    );
+    return promise.then((data) =>
+      MsgRequestAccessPermissionResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateInterDomainAclPolicy(
+    request: MsgCreateInterDomainAclPolicy
+  ): Promise<MsgCreateInterDomainAclPolicyResponse> {
+    const data = MsgCreateInterDomainAclPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateInterDomainAclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateInterDomainAclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateInterDomainAclPolicy(
+    request: MsgUpdateInterDomainAclPolicy
+  ): Promise<MsgUpdateInterDomainAclPolicyResponse> {
+    const data = MsgUpdateInterDomainAclPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateInterDomainAclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateInterDomainAclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteInterDomainAclPolicy(
+    request: MsgDeleteInterDomainAclPolicy
+  ): Promise<MsgDeleteInterDomainAclPolicyResponse> {
+    const data = MsgDeleteInterDomainAclPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteInterDomainAclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteInterDomainAclPolicyResponse.decode(new Reader(data))
     );
   }
 }

@@ -4,65 +4,65 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateRootCertificate } from "./types/crossdomain/tx";
-import { MsgCreateDecisionPolicy } from "./types/crossdomain/tx";
+import { MsgDeleteCooperationNetworkFeatures } from "./types/crossdomain/tx";
+import { MsgDeleteUpdatePolicy } from "./types/crossdomain/tx";
+import { MsgDeleteLocalDomainCertificate } from "./types/crossdomain/tx";
 import { MsgDeleteValidity } from "./types/crossdomain/tx";
 import { MsgDeletePrivateKey } from "./types/crossdomain/tx";
-import { MsgCreatePrivateKey } from "./types/crossdomain/tx";
-import { MsgUpdateForwardPolicy } from "./types/crossdomain/tx";
-import { MsgDeleteCooperationNetworkFeatures } from "./types/crossdomain/tx";
-import { MsgUpdatePrivateKey } from "./types/crossdomain/tx";
-import { MsgCreateCooperationNetworkFeatures } from "./types/crossdomain/tx";
-import { MsgConfigureLocalDomain } from "./types/crossdomain/tx";
-import { MsgCreateLocalDomainCertificate } from "./types/crossdomain/tx";
-import { MsgCreateForwardPolicy } from "./types/crossdomain/tx";
-import { MsgUpdateLocalDomainCertificate } from "./types/crossdomain/tx";
-import { MsgUpdateCooperationNetworkFeatures } from "./types/crossdomain/tx";
 import { MsgUpdateLocalDomain } from "./types/crossdomain/tx";
-import { MsgUpdateDecisionPolicy } from "./types/crossdomain/tx";
-import { MsgUpdateUpdatePolicy } from "./types/crossdomain/tx";
-import { MsgDeleteUpdatePolicy } from "./types/crossdomain/tx";
-import { MsgCreateUpdatePolicy } from "./types/crossdomain/tx";
-import { MsgCreateLocalDomain } from "./types/crossdomain/tx";
-import { MsgUpdateValidity } from "./types/crossdomain/tx";
-import { MsgCreateValidity } from "./types/crossdomain/tx";
-import { MsgDeleteForwardPolicy } from "./types/crossdomain/tx";
 import { MsgDeleteRootCertificate } from "./types/crossdomain/tx";
-import { MsgDeleteLocalDomain } from "./types/crossdomain/tx";
-import { MsgDeleteLocalDomainCertificate } from "./types/crossdomain/tx";
+import { MsgUpdateLocalDomainCertificate } from "./types/crossdomain/tx";
 import { MsgUpdateRootCertificate } from "./types/crossdomain/tx";
+import { MsgCreateRootCertificate } from "./types/crossdomain/tx";
+import { MsgCreateCooperationNetworkFeatures } from "./types/crossdomain/tx";
+import { MsgUpdateCooperationNetworkFeatures } from "./types/crossdomain/tx";
+import { MsgUpdatePrivateKey } from "./types/crossdomain/tx";
+import { MsgUpdateValidity } from "./types/crossdomain/tx";
+import { MsgConfigureLocalDomain } from "./types/crossdomain/tx";
+import { MsgUpdateDecisionPolicy } from "./types/crossdomain/tx";
 import { MsgDeleteDecisionPolicy } from "./types/crossdomain/tx";
+import { MsgUpdateUpdatePolicy } from "./types/crossdomain/tx";
+import { MsgCreateLocalDomain } from "./types/crossdomain/tx";
+import { MsgCreatePrivateKey } from "./types/crossdomain/tx";
+import { MsgDeleteForwardPolicy } from "./types/crossdomain/tx";
+import { MsgUpdateForwardPolicy } from "./types/crossdomain/tx";
+import { MsgCreateLocalDomainCertificate } from "./types/crossdomain/tx";
+import { MsgCreateValidity } from "./types/crossdomain/tx";
+import { MsgCreateDecisionPolicy } from "./types/crossdomain/tx";
+import { MsgCreateUpdatePolicy } from "./types/crossdomain/tx";
+import { MsgDeleteLocalDomain } from "./types/crossdomain/tx";
+import { MsgCreateForwardPolicy } from "./types/crossdomain/tx";
 
 
 const types = [
-  ["/crossdomain.crossdomain.MsgCreateRootCertificate", MsgCreateRootCertificate],
-  ["/crossdomain.crossdomain.MsgCreateDecisionPolicy", MsgCreateDecisionPolicy],
+  ["/crossdomain.crossdomain.MsgDeleteCooperationNetworkFeatures", MsgDeleteCooperationNetworkFeatures],
+  ["/crossdomain.crossdomain.MsgDeleteUpdatePolicy", MsgDeleteUpdatePolicy],
+  ["/crossdomain.crossdomain.MsgDeleteLocalDomainCertificate", MsgDeleteLocalDomainCertificate],
   ["/crossdomain.crossdomain.MsgDeleteValidity", MsgDeleteValidity],
   ["/crossdomain.crossdomain.MsgDeletePrivateKey", MsgDeletePrivateKey],
-  ["/crossdomain.crossdomain.MsgCreatePrivateKey", MsgCreatePrivateKey],
-  ["/crossdomain.crossdomain.MsgUpdateForwardPolicy", MsgUpdateForwardPolicy],
-  ["/crossdomain.crossdomain.MsgDeleteCooperationNetworkFeatures", MsgDeleteCooperationNetworkFeatures],
-  ["/crossdomain.crossdomain.MsgUpdatePrivateKey", MsgUpdatePrivateKey],
-  ["/crossdomain.crossdomain.MsgCreateCooperationNetworkFeatures", MsgCreateCooperationNetworkFeatures],
-  ["/crossdomain.crossdomain.MsgConfigureLocalDomain", MsgConfigureLocalDomain],
-  ["/crossdomain.crossdomain.MsgCreateLocalDomainCertificate", MsgCreateLocalDomainCertificate],
-  ["/crossdomain.crossdomain.MsgCreateForwardPolicy", MsgCreateForwardPolicy],
-  ["/crossdomain.crossdomain.MsgUpdateLocalDomainCertificate", MsgUpdateLocalDomainCertificate],
-  ["/crossdomain.crossdomain.MsgUpdateCooperationNetworkFeatures", MsgUpdateCooperationNetworkFeatures],
   ["/crossdomain.crossdomain.MsgUpdateLocalDomain", MsgUpdateLocalDomain],
-  ["/crossdomain.crossdomain.MsgUpdateDecisionPolicy", MsgUpdateDecisionPolicy],
-  ["/crossdomain.crossdomain.MsgUpdateUpdatePolicy", MsgUpdateUpdatePolicy],
-  ["/crossdomain.crossdomain.MsgDeleteUpdatePolicy", MsgDeleteUpdatePolicy],
-  ["/crossdomain.crossdomain.MsgCreateUpdatePolicy", MsgCreateUpdatePolicy],
-  ["/crossdomain.crossdomain.MsgCreateLocalDomain", MsgCreateLocalDomain],
-  ["/crossdomain.crossdomain.MsgUpdateValidity", MsgUpdateValidity],
-  ["/crossdomain.crossdomain.MsgCreateValidity", MsgCreateValidity],
-  ["/crossdomain.crossdomain.MsgDeleteForwardPolicy", MsgDeleteForwardPolicy],
   ["/crossdomain.crossdomain.MsgDeleteRootCertificate", MsgDeleteRootCertificate],
-  ["/crossdomain.crossdomain.MsgDeleteLocalDomain", MsgDeleteLocalDomain],
-  ["/crossdomain.crossdomain.MsgDeleteLocalDomainCertificate", MsgDeleteLocalDomainCertificate],
+  ["/crossdomain.crossdomain.MsgUpdateLocalDomainCertificate", MsgUpdateLocalDomainCertificate],
   ["/crossdomain.crossdomain.MsgUpdateRootCertificate", MsgUpdateRootCertificate],
+  ["/crossdomain.crossdomain.MsgCreateRootCertificate", MsgCreateRootCertificate],
+  ["/crossdomain.crossdomain.MsgCreateCooperationNetworkFeatures", MsgCreateCooperationNetworkFeatures],
+  ["/crossdomain.crossdomain.MsgUpdateCooperationNetworkFeatures", MsgUpdateCooperationNetworkFeatures],
+  ["/crossdomain.crossdomain.MsgUpdatePrivateKey", MsgUpdatePrivateKey],
+  ["/crossdomain.crossdomain.MsgUpdateValidity", MsgUpdateValidity],
+  ["/crossdomain.crossdomain.MsgConfigureLocalDomain", MsgConfigureLocalDomain],
+  ["/crossdomain.crossdomain.MsgUpdateDecisionPolicy", MsgUpdateDecisionPolicy],
   ["/crossdomain.crossdomain.MsgDeleteDecisionPolicy", MsgDeleteDecisionPolicy],
+  ["/crossdomain.crossdomain.MsgUpdateUpdatePolicy", MsgUpdateUpdatePolicy],
+  ["/crossdomain.crossdomain.MsgCreateLocalDomain", MsgCreateLocalDomain],
+  ["/crossdomain.crossdomain.MsgCreatePrivateKey", MsgCreatePrivateKey],
+  ["/crossdomain.crossdomain.MsgDeleteForwardPolicy", MsgDeleteForwardPolicy],
+  ["/crossdomain.crossdomain.MsgUpdateForwardPolicy", MsgUpdateForwardPolicy],
+  ["/crossdomain.crossdomain.MsgCreateLocalDomainCertificate", MsgCreateLocalDomainCertificate],
+  ["/crossdomain.crossdomain.MsgCreateValidity", MsgCreateValidity],
+  ["/crossdomain.crossdomain.MsgCreateDecisionPolicy", MsgCreateDecisionPolicy],
+  ["/crossdomain.crossdomain.MsgCreateUpdatePolicy", MsgCreateUpdatePolicy],
+  ["/crossdomain.crossdomain.MsgDeleteLocalDomain", MsgDeleteLocalDomain],
+  ["/crossdomain.crossdomain.MsgCreateForwardPolicy", MsgCreateForwardPolicy],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -95,34 +95,34 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateRootCertificate: (data: MsgCreateRootCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateRootCertificate", value: MsgCreateRootCertificate.fromPartial( data ) }),
-    msgCreateDecisionPolicy: (data: MsgCreateDecisionPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateDecisionPolicy", value: MsgCreateDecisionPolicy.fromPartial( data ) }),
+    msgDeleteCooperationNetworkFeatures: (data: MsgDeleteCooperationNetworkFeatures): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteCooperationNetworkFeatures", value: MsgDeleteCooperationNetworkFeatures.fromPartial( data ) }),
+    msgDeleteUpdatePolicy: (data: MsgDeleteUpdatePolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteUpdatePolicy", value: MsgDeleteUpdatePolicy.fromPartial( data ) }),
+    msgDeleteLocalDomainCertificate: (data: MsgDeleteLocalDomainCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteLocalDomainCertificate", value: MsgDeleteLocalDomainCertificate.fromPartial( data ) }),
     msgDeleteValidity: (data: MsgDeleteValidity): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteValidity", value: MsgDeleteValidity.fromPartial( data ) }),
     msgDeletePrivateKey: (data: MsgDeletePrivateKey): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeletePrivateKey", value: MsgDeletePrivateKey.fromPartial( data ) }),
-    msgCreatePrivateKey: (data: MsgCreatePrivateKey): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreatePrivateKey", value: MsgCreatePrivateKey.fromPartial( data ) }),
-    msgUpdateForwardPolicy: (data: MsgUpdateForwardPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateForwardPolicy", value: MsgUpdateForwardPolicy.fromPartial( data ) }),
-    msgDeleteCooperationNetworkFeatures: (data: MsgDeleteCooperationNetworkFeatures): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteCooperationNetworkFeatures", value: MsgDeleteCooperationNetworkFeatures.fromPartial( data ) }),
-    msgUpdatePrivateKey: (data: MsgUpdatePrivateKey): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdatePrivateKey", value: MsgUpdatePrivateKey.fromPartial( data ) }),
-    msgCreateCooperationNetworkFeatures: (data: MsgCreateCooperationNetworkFeatures): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateCooperationNetworkFeatures", value: MsgCreateCooperationNetworkFeatures.fromPartial( data ) }),
-    msgConfigureLocalDomain: (data: MsgConfigureLocalDomain): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgConfigureLocalDomain", value: MsgConfigureLocalDomain.fromPartial( data ) }),
-    msgCreateLocalDomainCertificate: (data: MsgCreateLocalDomainCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateLocalDomainCertificate", value: MsgCreateLocalDomainCertificate.fromPartial( data ) }),
-    msgCreateForwardPolicy: (data: MsgCreateForwardPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateForwardPolicy", value: MsgCreateForwardPolicy.fromPartial( data ) }),
-    msgUpdateLocalDomainCertificate: (data: MsgUpdateLocalDomainCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateLocalDomainCertificate", value: MsgUpdateLocalDomainCertificate.fromPartial( data ) }),
-    msgUpdateCooperationNetworkFeatures: (data: MsgUpdateCooperationNetworkFeatures): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateCooperationNetworkFeatures", value: MsgUpdateCooperationNetworkFeatures.fromPartial( data ) }),
     msgUpdateLocalDomain: (data: MsgUpdateLocalDomain): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateLocalDomain", value: MsgUpdateLocalDomain.fromPartial( data ) }),
-    msgUpdateDecisionPolicy: (data: MsgUpdateDecisionPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateDecisionPolicy", value: MsgUpdateDecisionPolicy.fromPartial( data ) }),
-    msgUpdateUpdatePolicy: (data: MsgUpdateUpdatePolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateUpdatePolicy", value: MsgUpdateUpdatePolicy.fromPartial( data ) }),
-    msgDeleteUpdatePolicy: (data: MsgDeleteUpdatePolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteUpdatePolicy", value: MsgDeleteUpdatePolicy.fromPartial( data ) }),
-    msgCreateUpdatePolicy: (data: MsgCreateUpdatePolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateUpdatePolicy", value: MsgCreateUpdatePolicy.fromPartial( data ) }),
-    msgCreateLocalDomain: (data: MsgCreateLocalDomain): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateLocalDomain", value: MsgCreateLocalDomain.fromPartial( data ) }),
-    msgUpdateValidity: (data: MsgUpdateValidity): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateValidity", value: MsgUpdateValidity.fromPartial( data ) }),
-    msgCreateValidity: (data: MsgCreateValidity): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateValidity", value: MsgCreateValidity.fromPartial( data ) }),
-    msgDeleteForwardPolicy: (data: MsgDeleteForwardPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteForwardPolicy", value: MsgDeleteForwardPolicy.fromPartial( data ) }),
     msgDeleteRootCertificate: (data: MsgDeleteRootCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteRootCertificate", value: MsgDeleteRootCertificate.fromPartial( data ) }),
-    msgDeleteLocalDomain: (data: MsgDeleteLocalDomain): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteLocalDomain", value: MsgDeleteLocalDomain.fromPartial( data ) }),
-    msgDeleteLocalDomainCertificate: (data: MsgDeleteLocalDomainCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteLocalDomainCertificate", value: MsgDeleteLocalDomainCertificate.fromPartial( data ) }),
+    msgUpdateLocalDomainCertificate: (data: MsgUpdateLocalDomainCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateLocalDomainCertificate", value: MsgUpdateLocalDomainCertificate.fromPartial( data ) }),
     msgUpdateRootCertificate: (data: MsgUpdateRootCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateRootCertificate", value: MsgUpdateRootCertificate.fromPartial( data ) }),
+    msgCreateRootCertificate: (data: MsgCreateRootCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateRootCertificate", value: MsgCreateRootCertificate.fromPartial( data ) }),
+    msgCreateCooperationNetworkFeatures: (data: MsgCreateCooperationNetworkFeatures): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateCooperationNetworkFeatures", value: MsgCreateCooperationNetworkFeatures.fromPartial( data ) }),
+    msgUpdateCooperationNetworkFeatures: (data: MsgUpdateCooperationNetworkFeatures): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateCooperationNetworkFeatures", value: MsgUpdateCooperationNetworkFeatures.fromPartial( data ) }),
+    msgUpdatePrivateKey: (data: MsgUpdatePrivateKey): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdatePrivateKey", value: MsgUpdatePrivateKey.fromPartial( data ) }),
+    msgUpdateValidity: (data: MsgUpdateValidity): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateValidity", value: MsgUpdateValidity.fromPartial( data ) }),
+    msgConfigureLocalDomain: (data: MsgConfigureLocalDomain): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgConfigureLocalDomain", value: MsgConfigureLocalDomain.fromPartial( data ) }),
+    msgUpdateDecisionPolicy: (data: MsgUpdateDecisionPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateDecisionPolicy", value: MsgUpdateDecisionPolicy.fromPartial( data ) }),
     msgDeleteDecisionPolicy: (data: MsgDeleteDecisionPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteDecisionPolicy", value: MsgDeleteDecisionPolicy.fromPartial( data ) }),
+    msgUpdateUpdatePolicy: (data: MsgUpdateUpdatePolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateUpdatePolicy", value: MsgUpdateUpdatePolicy.fromPartial( data ) }),
+    msgCreateLocalDomain: (data: MsgCreateLocalDomain): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateLocalDomain", value: MsgCreateLocalDomain.fromPartial( data ) }),
+    msgCreatePrivateKey: (data: MsgCreatePrivateKey): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreatePrivateKey", value: MsgCreatePrivateKey.fromPartial( data ) }),
+    msgDeleteForwardPolicy: (data: MsgDeleteForwardPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteForwardPolicy", value: MsgDeleteForwardPolicy.fromPartial( data ) }),
+    msgUpdateForwardPolicy: (data: MsgUpdateForwardPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgUpdateForwardPolicy", value: MsgUpdateForwardPolicy.fromPartial( data ) }),
+    msgCreateLocalDomainCertificate: (data: MsgCreateLocalDomainCertificate): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateLocalDomainCertificate", value: MsgCreateLocalDomainCertificate.fromPartial( data ) }),
+    msgCreateValidity: (data: MsgCreateValidity): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateValidity", value: MsgCreateValidity.fromPartial( data ) }),
+    msgCreateDecisionPolicy: (data: MsgCreateDecisionPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateDecisionPolicy", value: MsgCreateDecisionPolicy.fromPartial( data ) }),
+    msgCreateUpdatePolicy: (data: MsgCreateUpdatePolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateUpdatePolicy", value: MsgCreateUpdatePolicy.fromPartial( data ) }),
+    msgDeleteLocalDomain: (data: MsgDeleteLocalDomain): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgDeleteLocalDomain", value: MsgDeleteLocalDomain.fromPartial( data ) }),
+    msgCreateForwardPolicy: (data: MsgCreateForwardPolicy): EncodeObject => ({ typeUrl: "/crossdomain.crossdomain.MsgCreateForwardPolicy", value: MsgCreateForwardPolicy.fromPartial( data ) }),
     
   };
 };

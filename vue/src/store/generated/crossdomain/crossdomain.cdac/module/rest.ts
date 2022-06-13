@@ -163,6 +163,19 @@ export interface CdacIbcConnection {
   creator?: string;
 }
 
+export interface CdacInterDomainAclPolicy {
+  /** @format uint64 */
+  id?: string;
+  label?: string;
+  subjectList?: string[];
+  actionList?: string[];
+  objectList?: string[];
+  status?: string;
+  creationTimestamp?: string;
+  updateTimestamp?: string;
+  creator?: string;
+}
+
 export interface CdacMsgCreateAuthenticationLogResponse {
   /** @format uint64 */
   id?: string;
@@ -227,6 +240,11 @@ export interface CdacMsgCreateIbcConnectionResponse {
   id?: string;
 }
 
+export interface CdacMsgCreateInterDomainAclPolicyResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
 export interface CdacMsgCreatePathResponse {
   /** @format uint64 */
   id?: string;
@@ -277,6 +295,8 @@ export type CdacMsgDeleteForwardPolicyResponse = object;
 
 export type CdacMsgDeleteIbcConnectionResponse = object;
 
+export type CdacMsgDeleteInterDomainAclPolicyResponse = object;
+
 export type CdacMsgDeletePathResponse = object;
 
 export type CdacMsgDeletePublicKeyResponse = object;
@@ -288,6 +308,10 @@ export type CdacMsgDeleteUpdatePolicyResponse = object;
 export type CdacMsgDeleteValidityResponse = object;
 
 export type CdacMsgGenerateCooperationNetworkResponse = object;
+
+export interface CdacMsgRequestAccessPermissionResponse {
+  decision?: string;
+}
 
 export type CdacMsgSendAuthenticateDomainResponse = object;
 
@@ -336,6 +360,8 @@ export type CdacMsgUpdateDomainResponse = object;
 export type CdacMsgUpdateForwardPolicyResponse = object;
 
 export type CdacMsgUpdateIbcConnectionResponse = object;
+
+export type CdacMsgUpdateInterDomainAclPolicyResponse = object;
 
 export type CdacMsgUpdatePathResponse = object;
 
@@ -581,6 +607,21 @@ export interface CdacQueryAllIbcConnectionResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryAllInterDomainAclPolicyResponse {
+  InterDomainAclPolicy?: CdacInterDomainAclPolicy[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CdacQueryAllPathResponse {
   Path?: CdacPath[];
 
@@ -707,6 +748,10 @@ export interface CdacQueryGetIbcConnectionResponse {
   IbcConnection?: CdacIbcConnection;
 }
 
+export interface CdacQueryGetInterDomainAclPolicyResponse {
+  InterDomainAclPolicy?: CdacInterDomainAclPolicy;
+}
+
 export interface CdacQueryGetPathResponse {
   Path?: CdacPath;
 }
@@ -733,6 +778,10 @@ export interface CdacQueryGetValidityResponse {
 export interface CdacQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: CdacParams;
+}
+
+export interface CdacQueryRequestAccessResponse {
+  decision?: string;
 }
 
 export interface CdacQueryRetrieveForwardPolicyResponse {
@@ -1660,6 +1709,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryInterDomainAclPolicyAll
+   * @summary Queries a list of InterDomainAclPolicy items.
+   * @request GET:/crossdomain/cdac/inter_domain_acl_policy
+   */
+  queryInterDomainAclPolicyAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllInterDomainAclPolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/inter_domain_acl_policy`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryInterDomainAclPolicy
+   * @summary Queries a InterDomainAclPolicy by id.
+   * @request GET:/crossdomain/cdac/inter_domain_acl_policy/{id}
+   */
+  queryInterDomainAclPolicy = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetInterDomainAclPolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/inter_domain_acl_policy/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryParams
    * @summary Parameters queries the parameters of the module.
    * @request GET:/crossdomain/cdac/params
@@ -1751,6 +1842,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryPublicKey = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetPublicKeyResponse, RpcStatus>({
       path: `/crossdomain/cdac/public_key/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryRequestAccess
+   * @summary Queries a list of RequestAccess items.
+   * @request GET:/crossdomain/cdac/request_access/{object}/{action}
+   */
+  queryRequestAccess = (object: string, action: string, params: RequestParams = {}) =>
+    this.request<CdacQueryRequestAccessResponse, RpcStatus>({
+      path: `/crossdomain/cdac/request_access/${object}/${action}`,
       method: "GET",
       format: "json",
       ...params,

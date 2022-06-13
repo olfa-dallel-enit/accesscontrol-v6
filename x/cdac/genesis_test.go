@@ -179,6 +179,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		CalculationTimeCount: 2,
+		InterDomainAclPolicyList: []types.InterDomainAclPolicy{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		InterDomainAclPolicyCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -227,5 +236,7 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.TimeCalculationCount, got.TimeCalculationCount)
 	require.ElementsMatch(t, genesisState.CalculationTimeList, got.CalculationTimeList)
 	require.Equal(t, genesisState.CalculationTimeCount, got.CalculationTimeCount)
+	require.ElementsMatch(t, genesisState.InterDomainAclPolicyList, got.InterDomainAclPolicyList)
+	require.Equal(t, genesisState.InterDomainAclPolicyCount, got.InterDomainAclPolicyCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

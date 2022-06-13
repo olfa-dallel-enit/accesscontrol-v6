@@ -115,3 +115,8 @@ const (
 	CalculationTimeKey      = "CalculationTime-value-"
 	CalculationTimeCountKey = "CalculationTime-count-"
 )
+
+const (
+	InterDomainAclPolicyKey      = "InterDomainAclPolicy-value-"
+	InterDomainAclPolicyCountKey = "InterDomainAclPolicy-count-"
+)

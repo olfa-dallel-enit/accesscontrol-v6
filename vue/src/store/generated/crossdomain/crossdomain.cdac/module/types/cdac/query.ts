@@ -25,6 +25,7 @@ import { DelegationPath } from "../cdac/delegation_path";
 import { Path } from "../cdac/path";
 import { TimeCalculation } from "../cdac/time_calculation";
 import { CalculationTime } from "../cdac/calculation_time";
+import { InterDomainAclPolicy } from "../cdac/inter_domain_acl_policy";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -370,6 +371,32 @@ export interface QueryAllCalculationTimeRequest {
 
 export interface QueryAllCalculationTimeResponse {
   CalculationTime: CalculationTime[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryRequestAccessRequest {
+  object: string;
+  action: string;
+}
+
+export interface QueryRequestAccessResponse {
+  decision: string;
+}
+
+export interface QueryGetInterDomainAclPolicyRequest {
+  id: number;
+}
+
+export interface QueryGetInterDomainAclPolicyResponse {
+  InterDomainAclPolicy: InterDomainAclPolicy | undefined;
+}
+
+export interface QueryAllInterDomainAclPolicyRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllInterDomainAclPolicyResponse {
+  InterDomainAclPolicy: InterDomainAclPolicy[];
   pagination: PageResponse | undefined;
 }
 
@@ -6850,6 +6877,499 @@ export const QueryAllCalculationTimeResponse = {
   },
 };
 
+const baseQueryRequestAccessRequest: object = { object: "", action: "" };
+
+export const QueryRequestAccessRequest = {
+  encode(
+    message: QueryRequestAccessRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.object !== "") {
+      writer.uint32(10).string(message.object);
+    }
+    if (message.action !== "") {
+      writer.uint32(18).string(message.action);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryRequestAccessRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryRequestAccessRequest,
+    } as QueryRequestAccessRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.object = reader.string();
+          break;
+        case 2:
+          message.action = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryRequestAccessRequest {
+    const message = {
+      ...baseQueryRequestAccessRequest,
+    } as QueryRequestAccessRequest;
+    if (object.object !== undefined && object.object !== null) {
+      message.object = String(object.object);
+    } else {
+      message.object = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = String(object.action);
+    } else {
+      message.action = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryRequestAccessRequest): unknown {
+    const obj: any = {};
+    message.object !== undefined && (obj.object = message.object);
+    message.action !== undefined && (obj.action = message.action);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryRequestAccessRequest>
+  ): QueryRequestAccessRequest {
+    const message = {
+      ...baseQueryRequestAccessRequest,
+    } as QueryRequestAccessRequest;
+    if (object.object !== undefined && object.object !== null) {
+      message.object = object.object;
+    } else {
+      message.object = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = object.action;
+    } else {
+      message.action = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryRequestAccessResponse: object = { decision: "" };
+
+export const QueryRequestAccessResponse = {
+  encode(
+    message: QueryRequestAccessResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.decision !== "") {
+      writer.uint32(10).string(message.decision);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryRequestAccessResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryRequestAccessResponse,
+    } as QueryRequestAccessResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.decision = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryRequestAccessResponse {
+    const message = {
+      ...baseQueryRequestAccessResponse,
+    } as QueryRequestAccessResponse;
+    if (object.decision !== undefined && object.decision !== null) {
+      message.decision = String(object.decision);
+    } else {
+      message.decision = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryRequestAccessResponse): unknown {
+    const obj: any = {};
+    message.decision !== undefined && (obj.decision = message.decision);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryRequestAccessResponse>
+  ): QueryRequestAccessResponse {
+    const message = {
+      ...baseQueryRequestAccessResponse,
+    } as QueryRequestAccessResponse;
+    if (object.decision !== undefined && object.decision !== null) {
+      message.decision = object.decision;
+    } else {
+      message.decision = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryGetInterDomainAclPolicyRequest: object = { id: 0 };
+
+export const QueryGetInterDomainAclPolicyRequest = {
+  encode(
+    message: QueryGetInterDomainAclPolicyRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetInterDomainAclPolicyRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetInterDomainAclPolicyRequest,
+    } as QueryGetInterDomainAclPolicyRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetInterDomainAclPolicyRequest {
+    const message = {
+      ...baseQueryGetInterDomainAclPolicyRequest,
+    } as QueryGetInterDomainAclPolicyRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetInterDomainAclPolicyRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetInterDomainAclPolicyRequest>
+  ): QueryGetInterDomainAclPolicyRequest {
+    const message = {
+      ...baseQueryGetInterDomainAclPolicyRequest,
+    } as QueryGetInterDomainAclPolicyRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetInterDomainAclPolicyResponse: object = {};
+
+export const QueryGetInterDomainAclPolicyResponse = {
+  encode(
+    message: QueryGetInterDomainAclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.InterDomainAclPolicy !== undefined) {
+      InterDomainAclPolicy.encode(
+        message.InterDomainAclPolicy,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetInterDomainAclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetInterDomainAclPolicyResponse,
+    } as QueryGetInterDomainAclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.InterDomainAclPolicy = InterDomainAclPolicy.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetInterDomainAclPolicyResponse {
+    const message = {
+      ...baseQueryGetInterDomainAclPolicyResponse,
+    } as QueryGetInterDomainAclPolicyResponse;
+    if (
+      object.InterDomainAclPolicy !== undefined &&
+      object.InterDomainAclPolicy !== null
+    ) {
+      message.InterDomainAclPolicy = InterDomainAclPolicy.fromJSON(
+        object.InterDomainAclPolicy
+      );
+    } else {
+      message.InterDomainAclPolicy = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetInterDomainAclPolicyResponse): unknown {
+    const obj: any = {};
+    message.InterDomainAclPolicy !== undefined &&
+      (obj.InterDomainAclPolicy = message.InterDomainAclPolicy
+        ? InterDomainAclPolicy.toJSON(message.InterDomainAclPolicy)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetInterDomainAclPolicyResponse>
+  ): QueryGetInterDomainAclPolicyResponse {
+    const message = {
+      ...baseQueryGetInterDomainAclPolicyResponse,
+    } as QueryGetInterDomainAclPolicyResponse;
+    if (
+      object.InterDomainAclPolicy !== undefined &&
+      object.InterDomainAclPolicy !== null
+    ) {
+      message.InterDomainAclPolicy = InterDomainAclPolicy.fromPartial(
+        object.InterDomainAclPolicy
+      );
+    } else {
+      message.InterDomainAclPolicy = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllInterDomainAclPolicyRequest: object = {};
+
+export const QueryAllInterDomainAclPolicyRequest = {
+  encode(
+    message: QueryAllInterDomainAclPolicyRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllInterDomainAclPolicyRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllInterDomainAclPolicyRequest,
+    } as QueryAllInterDomainAclPolicyRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllInterDomainAclPolicyRequest {
+    const message = {
+      ...baseQueryAllInterDomainAclPolicyRequest,
+    } as QueryAllInterDomainAclPolicyRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllInterDomainAclPolicyRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllInterDomainAclPolicyRequest>
+  ): QueryAllInterDomainAclPolicyRequest {
+    const message = {
+      ...baseQueryAllInterDomainAclPolicyRequest,
+    } as QueryAllInterDomainAclPolicyRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllInterDomainAclPolicyResponse: object = {};
+
+export const QueryAllInterDomainAclPolicyResponse = {
+  encode(
+    message: QueryAllInterDomainAclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.InterDomainAclPolicy) {
+      InterDomainAclPolicy.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllInterDomainAclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllInterDomainAclPolicyResponse,
+    } as QueryAllInterDomainAclPolicyResponse;
+    message.InterDomainAclPolicy = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.InterDomainAclPolicy.push(
+            InterDomainAclPolicy.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllInterDomainAclPolicyResponse {
+    const message = {
+      ...baseQueryAllInterDomainAclPolicyResponse,
+    } as QueryAllInterDomainAclPolicyResponse;
+    message.InterDomainAclPolicy = [];
+    if (
+      object.InterDomainAclPolicy !== undefined &&
+      object.InterDomainAclPolicy !== null
+    ) {
+      for (const e of object.InterDomainAclPolicy) {
+        message.InterDomainAclPolicy.push(InterDomainAclPolicy.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllInterDomainAclPolicyResponse): unknown {
+    const obj: any = {};
+    if (message.InterDomainAclPolicy) {
+      obj.InterDomainAclPolicy = message.InterDomainAclPolicy.map((e) =>
+        e ? InterDomainAclPolicy.toJSON(e) : undefined
+      );
+    } else {
+      obj.InterDomainAclPolicy = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllInterDomainAclPolicyResponse>
+  ): QueryAllInterDomainAclPolicyResponse {
+    const message = {
+      ...baseQueryAllInterDomainAclPolicyResponse,
+    } as QueryAllInterDomainAclPolicyResponse;
+    message.InterDomainAclPolicy = [];
+    if (
+      object.InterDomainAclPolicy !== undefined &&
+      object.InterDomainAclPolicy !== null
+    ) {
+      for (const e of object.InterDomainAclPolicy) {
+        message.InterDomainAclPolicy.push(InterDomainAclPolicy.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -7004,6 +7524,18 @@ export interface Query {
   CalculationTimeAll(
     request: QueryAllCalculationTimeRequest
   ): Promise<QueryAllCalculationTimeResponse>;
+  /** Queries a list of RequestAccess items. */
+  RequestAccess(
+    request: QueryRequestAccessRequest
+  ): Promise<QueryRequestAccessResponse>;
+  /** Queries a InterDomainAclPolicy by id. */
+  InterDomainAclPolicy(
+    request: QueryGetInterDomainAclPolicyRequest
+  ): Promise<QueryGetInterDomainAclPolicyResponse>;
+  /** Queries a list of InterDomainAclPolicy items. */
+  InterDomainAclPolicyAll(
+    request: QueryAllInterDomainAclPolicyRequest
+  ): Promise<QueryAllInterDomainAclPolicyResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -7562,6 +8094,48 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllCalculationTimeResponse.decode(new Reader(data))
+    );
+  }
+
+  RequestAccess(
+    request: QueryRequestAccessRequest
+  ): Promise<QueryRequestAccessResponse> {
+    const data = QueryRequestAccessRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "RequestAccess",
+      data
+    );
+    return promise.then((data) =>
+      QueryRequestAccessResponse.decode(new Reader(data))
+    );
+  }
+
+  InterDomainAclPolicy(
+    request: QueryGetInterDomainAclPolicyRequest
+  ): Promise<QueryGetInterDomainAclPolicyResponse> {
+    const data = QueryGetInterDomainAclPolicyRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "InterDomainAclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetInterDomainAclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  InterDomainAclPolicyAll(
+    request: QueryAllInterDomainAclPolicyRequest
+  ): Promise<QueryAllInterDomainAclPolicyResponse> {
+    const data = QueryAllInterDomainAclPolicyRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "InterDomainAclPolicyAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllInterDomainAclPolicyResponse.decode(new Reader(data))
     );
   }
 }
