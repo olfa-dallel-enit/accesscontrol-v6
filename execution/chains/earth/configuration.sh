@@ -15,5 +15,5 @@ crossdomaind tx cdac create-update-policy false true false --from alice --yes --
 crossdomaind query cdac show-update-policy --node tcp://localhost:26657
 
 #crossdomaind tx crossdomain create-cooperation-network-features [depth] [cost] [interest-list] [location-list] [last-update] [validity] [flags]
-crossdomaind tx crossdomain update-cooperation-network-features 0  0 "" "" "2022-06-12 13:20:00" '{"notBefore":"2023-01-01 00:00:00 +0000 UTC","notAfter":"2026-01-01 00:00:00 +0000 UTC"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+crossdomaind tx crossdomain create-cooperation-network-features 0 0 "" "" "2022-06-12 16:00:00" '{"notBefore":"2023-01-01 00:00:00 +0000 UTC","notAfter":"2026-01-01 00:00:00 +0000 UTC"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 crossdomaind query crossdomain show-cooperation-network-features  --node tcp://localhost:26657

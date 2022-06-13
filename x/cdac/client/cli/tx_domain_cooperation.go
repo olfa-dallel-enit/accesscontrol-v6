@@ -14,9 +14,9 @@ import (
 
 func CmdCreateDomainCooperation() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-domain-cooperation [label] [cooperation-type] [source-domain] [remote-domain] [validity] [interest] [cost] [creation-timestamp] [update-timestamp]",
+		Use:   "create-domain-cooperation [label] [cooperation-type] [source-domain] [remote-domain] [validity] [interest] [cost] [creation-date] [creation-timestamp] [update-date] [update-timestamp] [status]",
 		Short: "Create a new domain-cooperation",
-		Args:  cobra.ExactArgs(9),
+		Args:  cobra.ExactArgs(12),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argLabel := args[0]
 			argCooperationType := args[1]
@@ -40,15 +40,18 @@ func CmdCreateDomainCooperation() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			argCreationTimestamp := args[7]
-			argUpdateTimestamp := args[8]
+			argCreationDate := args[7]
+			argCreationTimestamp := args[8]
+			argUpdateDate := args[9]
+			argUpdateTimestamp := args[10]
+			argStatus := args[11]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgCreateDomainCooperation(clientCtx.GetFromAddress().String(), argLabel, argCooperationType, argSourceDomain, argRemoteDomain, argValidity, argInterest, argCost, argCreationTimestamp, argUpdateTimestamp)
+			msg := types.NewMsgCreateDomainCooperation(clientCtx.GetFromAddress().String(), argLabel, argCooperationType, argSourceDomain, argRemoteDomain, argValidity, argInterest, argCost, argCreationDate, argCreationTimestamp, argUpdateDate, argUpdateTimestamp, argStatus)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -63,9 +66,9 @@ func CmdCreateDomainCooperation() *cobra.Command {
 
 func CmdUpdateDomainCooperation() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update-domain-cooperation [id] [label] [cooperation-type] [source-domain] [remote-domain] [validity] [interest] [cost] [creation-timestamp] [update-timestamp]",
+		Use:   "update-domain-cooperation [id] [label] [cooperation-type] [source-domain] [remote-domain] [validity] [interest] [cost] [creation-date] [creation-timestamp] [update-date] [update-timestamp] [status]",
 		Short: "Update a domain-cooperation",
-		Args:  cobra.ExactArgs(10),
+		Args:  cobra.ExactArgs(13),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			id, err := strconv.ParseUint(args[0], 10, 64)
 			if err != nil {
@@ -101,16 +104,20 @@ func CmdUpdateDomainCooperation() *cobra.Command {
 				return err
 			}
 
-			argCreationTimestamp := args[8]
+			argCreationDate := args[8]
+			argCreationTimestamp := args[9]
 
-			argUpdateTimestamp := args[9]
+			argUpdateDate := args[10]
+			argUpdateTimestamp := args[11]
+
+			argStatus := args[12]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgUpdateDomainCooperation(clientCtx.GetFromAddress().String(), id, argLabel, argCooperationType, argSourceDomain, argRemoteDomain, argValidity, argInterest, argCost, argCreationTimestamp, argUpdateTimestamp)
+			msg := types.NewMsgUpdateDomainCooperation(clientCtx.GetFromAddress().String(), id, argLabel, argCooperationType, argSourceDomain, argRemoteDomain, argValidity, argInterest, argCost, argCreationDate, argCreationTimestamp, argUpdateDate, argUpdateTimestamp, argStatus)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

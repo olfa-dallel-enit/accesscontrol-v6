@@ -14,8 +14,10 @@ message DomainCooperation {
   Validity validity = 6; 
   string interest = 7; 
   uint64 cost = 8; 
-  string creationTimestamp = 9; 
-  string updateTimestamp = 10; 
-  string creator = 11;
-  string status = 12;
+  string creationDate = 9;
+  string creationTimestamp = 10; 
+  string updateDate = 11;
+  string updateTimestamp = 12; 
+  string creator = 13;
+  string status = 14;
 }

@@ -13,7 +13,7 @@ const (
 
 var _ sdk.Msg = &MsgCreateDomainCooperation{}
 
-func NewMsgCreateDomainCooperation(creator string, label string, cooperationType string, sourceDomain *Domain, remoteDomain *Domain, validity *Validity, interest string, cost uint64, creationTimestamp string, updateTimestamp string) *MsgCreateDomainCooperation {
+func NewMsgCreateDomainCooperation(creator string, label string, cooperationType string, sourceDomain *Domain, remoteDomain *Domain, validity *Validity, interest string, cost uint64, creationDate string, creationTimestamp string, updateDate string, updateTimestamp string, status string) *MsgCreateDomainCooperation {
 	return &MsgCreateDomainCooperation{
 		Creator:           creator,
 		Label:             label,
@@ -23,8 +23,11 @@ func NewMsgCreateDomainCooperation(creator string, label string, cooperationType
 		Validity:          validity,
 		Interest:          interest,
 		Cost:              cost,
+		CreationDate: creationDate,
 		CreationTimestamp: creationTimestamp,
+		UpdateDate: updateDate,
 		UpdateTimestamp:   updateTimestamp,
+		Status:			  status,
 	}
 }
 
@@ -59,7 +62,7 @@ func (msg *MsgCreateDomainCooperation) ValidateBasic() error {
 
 var _ sdk.Msg = &MsgUpdateDomainCooperation{}
 
-func NewMsgUpdateDomainCooperation(creator string, id uint64, label string, cooperationType string, sourceDomain *Domain, remoteDomain *Domain, validity *Validity, interest string, cost uint64, creationTimestamp string, updateTimestamp string) *MsgUpdateDomainCooperation {
+func NewMsgUpdateDomainCooperation(creator string, id uint64, label string, cooperationType string, sourceDomain *Domain, remoteDomain *Domain, validity *Validity, interest string, cost uint64, creationDate string, creationTimestamp string, updateDate string, updateTimestamp string, status string) *MsgUpdateDomainCooperation {
 	return &MsgUpdateDomainCooperation{
 		Id:                id,
 		Creator:           creator,
@@ -70,8 +73,11 @@ func NewMsgUpdateDomainCooperation(creator string, id uint64, label string, coop
 		Validity:          validity,
 		Interest:          interest,
 		Cost:              cost,
+		CreationDate: creationDate,
 		CreationTimestamp: creationTimestamp,
+		UpdateDate: updateDate,
 		UpdateTimestamp:   updateTimestamp,
+		Status:			  status,
 	}
 }
 

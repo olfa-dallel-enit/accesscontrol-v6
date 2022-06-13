@@ -210,7 +210,8 @@ func (k Keeper) OnAcknowledgementEstablishCooperationPacket(ctx sdk.Context, pac
 				Interest:          data.Interest,
 				Cost:              cast.ToUint64(data.Cost),
 				CreationTimestamp: cast.ToString(time.Now()),
-				UpdateTimestamp:   cast.ToString(time.Now()),
+				UpdateDate: 	cast.ToString(time.Now()),
+				UpdateTimestamp:   cast.ToString(time.Now().UnixNano()),
 				Status:            "Enabled",
 			})
 			k.AppendCooperationLog(ctx, types.CooperationLog{
@@ -1011,7 +1012,8 @@ func (k Keeper) AddDomainCooperation(ctx sdk.Context, packet channeltypes.Packet
 		Interest:          data.Interest,
 		Cost:              cast.ToUint64(data.Cost),
 		CreationTimestamp: cast.ToString(time.Now()),
-		UpdateTimestamp:   cast.ToString(time.Now()),
+		UpdateDate: 	cast.ToString(time.Now()),
+		UpdateTimestamp:   cast.ToString(time.Now().UnixNano()),
 		Status:            "Enabled",
 	})
 

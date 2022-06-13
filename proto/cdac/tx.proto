@@ -252,6 +252,7 @@ message MsgSendAuthenticateDomain {
 
 message MsgSendAuthenticateDomainResponse {
 }
+
 message MsgCreateDomainCooperation {
   string creator = 1;
   string label = 2;
@@ -261,8 +262,11 @@ message MsgCreateDomainCooperation {
   Validity validity = 6;
   string interest = 7;
   uint64 cost = 8;
-  string creationTimestamp = 9;
-  string updateTimestamp = 10;
+  string creationDate = 9;
+  string creationTimestamp = 10;
+  string updateDate = 11;
+  string updateTimestamp = 12;
+  string status = 13;
 }
 
 message MsgCreateDomainCooperationResponse {
@@ -279,8 +283,11 @@ message MsgUpdateDomainCooperation {
   Validity validity = 7;
   string interest = 8;
   uint64 cost = 9;
-  string creationTimestamp = 10;
-  string updateTimestamp = 11;
+  string creationDate = 10;
+  string creationTimestamp = 11;
+  string updateDate = 12;
+  string updateTimestamp = 13;
+  string status = 14;
 }
 
 message MsgUpdateDomainCooperationResponse {}
