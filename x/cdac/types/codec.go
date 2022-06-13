@@ -80,6 +80,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateInterDomainAclPolicy{}, "cdac/CreateInterDomainAclPolicy", nil)
 	cdc.RegisterConcrete(&MsgUpdateInterDomainAclPolicy{}, "cdac/UpdateInterDomainAclPolicy", nil)
 	cdc.RegisterConcrete(&MsgDeleteInterDomainAclPolicy{}, "cdac/DeleteInterDomainAclPolicy", nil)
+	cdc.RegisterConcrete(&MsgCreateInterDomainDclPolicy{}, "cdac/CreateInterDomainDclPolicy", nil)
+	cdc.RegisterConcrete(&MsgUpdateInterDomainDclPolicy{}, "cdac/UpdateInterDomainDclPolicy", nil)
+	cdc.RegisterConcrete(&MsgDeleteInterDomainDclPolicy{}, "cdac/DeleteInterDomainDclPolicy", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -219,6 +222,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateInterDomainAclPolicy{},
 		&MsgUpdateInterDomainAclPolicy{},
 		&MsgDeleteInterDomainAclPolicy{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateInterDomainDclPolicy{},
+		&MsgUpdateInterDomainDclPolicy{},
+		&MsgDeleteInterDomainDclPolicy{},
 	)
 	// this line is used by starport scaffolding # 3
 

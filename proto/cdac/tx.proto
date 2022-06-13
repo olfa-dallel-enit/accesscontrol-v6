@@ -12,12 +12,13 @@ import "cdac/path.proto";
 import "cdac/time_calculation.proto";
 import "cdac/calculation_time.proto";
 import "cdac/inter_domain_acl_policy.proto";
+import "cdac/inter_domain_dcl_policy.proto";
 // this line is used by starport scaffolding # proto/tx/import
+import "cdac/validity.proto";
 import "cdac/cooperative_domain.proto";
 import "cdac/cooperation_network_features.proto";
 import "cdac/cooperation_data.proto";
 import "cdac/domain_map.proto";
-import "cdac/validity.proto";
 import "cdac/domain.proto";
 import "cdac/ibc_connection.proto";
 import "cdac/certificate.proto";
@@ -99,6 +100,9 @@ rpc CreateCalculationTime(MsgCreateCalculationTime) returns (MsgCreateCalculatio
 rpc CreateInterDomainAclPolicy(MsgCreateInterDomainAclPolicy) returns (MsgCreateInterDomainAclPolicyResponse);
   rpc UpdateInterDomainAclPolicy(MsgUpdateInterDomainAclPolicy) returns (MsgUpdateInterDomainAclPolicyResponse);
   rpc DeleteInterDomainAclPolicy(MsgDeleteInterDomainAclPolicy) returns (MsgDeleteInterDomainAclPolicyResponse);
+rpc CreateInterDomainDclPolicy(MsgCreateInterDomainDclPolicy) returns (MsgCreateInterDomainDclPolicyResponse);
+  rpc UpdateInterDomainDclPolicy(MsgUpdateInterDomainDclPolicy) returns (MsgUpdateInterDomainDclPolicyResponse);
+  rpc DeleteInterDomainDclPolicy(MsgDeleteInterDomainDclPolicy) returns (MsgDeleteInterDomainDclPolicyResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -782,9 +786,6 @@ message MsgCreateInterDomainAclPolicy {
   repeated string subjectList = 3;
   repeated string actionList = 4;
   repeated string objectList = 5;
-  string status = 6;
-  string creationTimestamp = 7;
-  string updateTimestamp = 8;
 }
 
 message MsgCreateInterDomainAclPolicyResponse {
@@ -811,5 +812,43 @@ message MsgDeleteInterDomainAclPolicy {
 }
 
 message MsgDeleteInterDomainAclPolicyResponse {}
+
+message MsgCreateInterDomainDclPolicy {
+  string creator = 1;
+  string label = 2;
+  repeated string delegatorList = 3;
+  repeated string delegateeList = 4;
+  repeated string permissionList = 5;
+  uint64 depth = 6;
+  uint64 maxDelegations = 7;
+  Validity validity = 8;
+}
+
+message MsgCreateInterDomainDclPolicyResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateInterDomainDclPolicy {
+  string creator = 1;
+  uint64 id = 2;
+  string label = 3;
+  repeated string delegatorList = 4;
+  repeated string delegateeList = 5;
+  repeated string permissionList = 6;
+  string creationTimestamp = 8;
+  string updateTimestamp = 9;
+  uint64 depth = 10;
+  uint64 maxDelegations = 11;
+  Validity validity = 12;
+}
+
+message MsgUpdateInterDomainDclPolicyResponse {}
+
+message MsgDeleteInterDomainDclPolicy {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteInterDomainDclPolicyResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

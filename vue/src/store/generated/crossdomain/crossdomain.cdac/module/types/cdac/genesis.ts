@@ -22,6 +22,7 @@ import { Path } from "../cdac/path";
 import { TimeCalculation } from "../cdac/time_calculation";
 import { CalculationTime } from "../cdac/calculation_time";
 import { InterDomainAclPolicy } from "../cdac/inter_domain_acl_policy";
+import { InterDomainDclPolicy } from "../cdac/inter_domain_dcl_policy";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -65,8 +66,10 @@ export interface GenesisState {
   calculationTimeList: CalculationTime[];
   calculationTimeCount: number;
   interDomainAclPolicyList: InterDomainAclPolicy[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   interDomainAclPolicyCount: number;
+  interDomainDclPolicyList: InterDomainDclPolicy[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  interDomainDclPolicyCount: number;
 }
 
 const baseGenesisState: object = {
@@ -88,6 +91,7 @@ const baseGenesisState: object = {
   timeCalculationCount: 0,
   calculationTimeCount: 0,
   interDomainAclPolicyCount: 0,
+  interDomainDclPolicyCount: 0,
 };
 
 export const GenesisState = {
@@ -212,6 +216,12 @@ export const GenesisState = {
     if (message.interDomainAclPolicyCount !== 0) {
       writer.uint32(312).uint64(message.interDomainAclPolicyCount);
     }
+    for (const v of message.interDomainDclPolicyList) {
+      InterDomainDclPolicy.encode(v!, writer.uint32(322).fork()).ldelim();
+    }
+    if (message.interDomainDclPolicyCount !== 0) {
+      writer.uint32(328).uint64(message.interDomainDclPolicyCount);
+    }
     return writer;
   },
 
@@ -238,6 +248,7 @@ export const GenesisState = {
     message.timeCalculationList = [];
     message.calculationTimeList = [];
     message.interDomainAclPolicyList = [];
+    message.interDomainDclPolicyList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -398,6 +409,16 @@ export const GenesisState = {
             reader.uint64() as Long
           );
           break;
+        case 40:
+          message.interDomainDclPolicyList.push(
+            InterDomainDclPolicy.decode(reader, reader.uint32())
+          );
+          break;
+        case 41:
+          message.interDomainDclPolicyCount = longToNumber(
+            reader.uint64() as Long
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -427,6 +448,7 @@ export const GenesisState = {
     message.timeCalculationList = [];
     message.calculationTimeList = [];
     message.interDomainAclPolicyList = [];
+    message.interDomainDclPolicyList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -709,6 +731,24 @@ export const GenesisState = {
     } else {
       message.interDomainAclPolicyCount = 0;
     }
+    if (
+      object.interDomainDclPolicyList !== undefined &&
+      object.interDomainDclPolicyList !== null
+    ) {
+      for (const e of object.interDomainDclPolicyList) {
+        message.interDomainDclPolicyList.push(InterDomainDclPolicy.fromJSON(e));
+      }
+    }
+    if (
+      object.interDomainDclPolicyCount !== undefined &&
+      object.interDomainDclPolicyCount !== null
+    ) {
+      message.interDomainDclPolicyCount = Number(
+        object.interDomainDclPolicyCount
+      );
+    } else {
+      message.interDomainDclPolicyCount = 0;
+    }
     return message;
   },
 
@@ -888,6 +928,15 @@ export const GenesisState = {
     }
     message.interDomainAclPolicyCount !== undefined &&
       (obj.interDomainAclPolicyCount = message.interDomainAclPolicyCount);
+    if (message.interDomainDclPolicyList) {
+      obj.interDomainDclPolicyList = message.interDomainDclPolicyList.map((e) =>
+        e ? InterDomainDclPolicy.toJSON(e) : undefined
+      );
+    } else {
+      obj.interDomainDclPolicyList = [];
+    }
+    message.interDomainDclPolicyCount !== undefined &&
+      (obj.interDomainDclPolicyCount = message.interDomainDclPolicyCount);
     return obj;
   },
 
@@ -912,6 +961,7 @@ export const GenesisState = {
     message.timeCalculationList = [];
     message.calculationTimeList = [];
     message.interDomainAclPolicyList = [];
+    message.interDomainDclPolicyList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -1192,6 +1242,24 @@ export const GenesisState = {
       message.interDomainAclPolicyCount = object.interDomainAclPolicyCount;
     } else {
       message.interDomainAclPolicyCount = 0;
+    }
+    if (
+      object.interDomainDclPolicyList !== undefined &&
+      object.interDomainDclPolicyList !== null
+    ) {
+      for (const e of object.interDomainDclPolicyList) {
+        message.interDomainDclPolicyList.push(
+          InterDomainDclPolicy.fromPartial(e)
+        );
+      }
+    }
+    if (
+      object.interDomainDclPolicyCount !== undefined &&
+      object.interDomainDclPolicyCount !== null
+    ) {
+      message.interDomainDclPolicyCount = object.interDomainDclPolicyCount;
+    } else {
+      message.interDomainDclPolicyCount = 0;
     }
     return message;
   },

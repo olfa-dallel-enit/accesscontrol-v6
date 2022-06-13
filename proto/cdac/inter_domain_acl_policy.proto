@@ -13,4 +13,5 @@ message InterDomainAclPolicy {
   string creationTimestamp = 7; 
   string updateTimestamp = 8; 
   string creator = 9;
+  uint64 nbDelegations = 10;
 }

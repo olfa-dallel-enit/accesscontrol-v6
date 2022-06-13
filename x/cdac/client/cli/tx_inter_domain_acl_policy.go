@@ -13,24 +13,21 @@ import (
 
 func CmdCreateInterDomainAclPolicy() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-inter-domain-acl-policy [label] [subject-list] [action-list] [object-list] [status] [creation-timestamp] [update-timestamp]",
+		Use:   "create-inter-domain-acl-policy [label] [subject-list] [action-list] [object-list]",
 		Short: "Create a new inter-domain-acl-policy",
-		Args:  cobra.ExactArgs(7),
+		Args:  cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argLabel := args[0]
 			argSubjectList := strings.Split(args[1], listSeparator)
 			argActionList := strings.Split(args[2], listSeparator)
 			argObjectList := strings.Split(args[3], listSeparator)
-			argStatus := args[4]
-			argCreationTimestamp := args[5]
-			argUpdateTimestamp := args[6]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgCreateInterDomainAclPolicy(clientCtx.GetFromAddress().String(), argLabel, argSubjectList, argActionList, argObjectList, argStatus, argCreationTimestamp, argUpdateTimestamp)
+			msg := types.NewMsgCreateInterDomainAclPolicy(clientCtx.GetFromAddress().String(), argLabel, argSubjectList, argActionList, argObjectList)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

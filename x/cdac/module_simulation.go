@@ -272,6 +272,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteInterDomainAclPolicy int = 100
 
+	opWeightMsgCreateInterDomainDclPolicy = "op_weight_msg_inter_domain_dcl_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateInterDomainDclPolicy int = 100
+
+	opWeightMsgUpdateInterDomainDclPolicy = "op_weight_msg_inter_domain_dcl_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateInterDomainDclPolicy int = 100
+
+	opWeightMsgDeleteInterDomainDclPolicy = "op_weight_msg_inter_domain_dcl_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteInterDomainDclPolicy int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -491,6 +503,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		InterDomainAclPolicyCount: 2,
+		InterDomainDclPolicyList: []types.InterDomainDclPolicy{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		InterDomainDclPolicyCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -1194,6 +1217,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteInterDomainAclPolicy,
 		cdacsimulation.SimulateMsgDeleteInterDomainAclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateInterDomainDclPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateInterDomainDclPolicy, &weightMsgCreateInterDomainDclPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateInterDomainDclPolicy = defaultWeightMsgCreateInterDomainDclPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateInterDomainDclPolicy,
+		cdacsimulation.SimulateMsgCreateInterDomainDclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateInterDomainDclPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateInterDomainDclPolicy, &weightMsgUpdateInterDomainDclPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateInterDomainDclPolicy = defaultWeightMsgUpdateInterDomainDclPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateInterDomainDclPolicy,
+		cdacsimulation.SimulateMsgUpdateInterDomainDclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteInterDomainDclPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteInterDomainDclPolicy, &weightMsgDeleteInterDomainDclPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteInterDomainDclPolicy = defaultWeightMsgDeleteInterDomainDclPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteInterDomainDclPolicy,
+		cdacsimulation.SimulateMsgDeleteInterDomainDclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

@@ -27,6 +27,13 @@ crossdomaind query cdac list-delegation-path --node tcp://localhost:26657
 crossdomaind query cdac list-calculation-time  --node tcp://localhost:26657
 
 #request-access [object] [action]
-
-
 crossdomaind query cdac request-access "" "" --home ~/.earth --chain-id earth --node tcp://localhost:26657 
+
+#crossdomaind tx cdac create-inter-domain-acl-policy [label] [subject-list] [action-list] [object-list][flags]
+crossdomaind tx cdac create-inter-domain-acl-policy acl1 "mars.1" "write,read" "capteur.1"  --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+
+crossdomaind query cdac list-inter-domain-acl-policy --home ~/.earth --chain-id earth --node tcp://localhost:26657 
+
+#crossdomaind tx cdac create-inter-domain-dcl-policy [label] [delegator-list] [delegatee-list] [permission-list] [depth] [max-delegations] [validity] [flags]
+crossdomaind tx cdac create-inter-domain-dcl-policy "dcl1" "mars.1" "mars.2.1" "acl1" 2 10 '{"notBefore":"2022-02-03 00:00:00","notAfter":"2024-02-03 00:00:00"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+crossdomaind query cdac list-inter-domain-dcl-policy --home ~/.earth --chain-id earth --node tcp://localhost:26657 

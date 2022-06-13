@@ -7,27 +7,35 @@ import (
 	"crossdomain/x/cdac/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+
+	"github.com/spf13/cast"
+	"time"
 )
 
 func (k msgServer) CreateInterDomainAclPolicy(goCtx context.Context, msg *types.MsgCreateInterDomainAclPolicy) (*types.MsgCreateInterDomainAclPolicyResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	var interDomainAclPolicy = types.InterDomainAclPolicy{
-		Creator:           msg.Creator,
-		Label:             msg.Label,
-		SubjectList:       msg.SubjectList,
-		ActionList:        msg.ActionList,
-		ObjectList:        msg.ObjectList,
-		Status:            msg.Status,
-		CreationTimestamp: msg.CreationTimestamp,
-		UpdateTimestamp:   msg.UpdateTimestamp,
+	var id uint64
+	found := k.FindInterDomainAclPolicyByLabel(ctx, msg.Label)
+	if ! found{
+		var interDomainAclPolicy = types.InterDomainAclPolicy{
+			Creator:           ctx.ChainID(),
+			Label:             msg.Label,
+			SubjectList:       msg.SubjectList,
+			ActionList:        msg.ActionList,
+			ObjectList:        msg.ObjectList,
+			Status:            "",
+			CreationTimestamp: cast.ToString(time.Now()),
+			UpdateTimestamp:   cast.ToString(time.Now()),
+			NbDelegations:     0,
+		}
+	
+		id = k.AppendInterDomainAclPolicy(
+			ctx,
+			interDomainAclPolicy,
+		)
 	}
-
-	id := k.AppendInterDomainAclPolicy(
-		ctx,
-		interDomainAclPolicy,
-	)
-
+	
 	return &types.MsgCreateInterDomainAclPolicyResponse{
 		Id: id,
 	}, nil

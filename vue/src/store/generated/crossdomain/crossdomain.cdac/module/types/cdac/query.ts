@@ -26,6 +26,7 @@ import { Path } from "../cdac/path";
 import { TimeCalculation } from "../cdac/time_calculation";
 import { CalculationTime } from "../cdac/calculation_time";
 import { InterDomainAclPolicy } from "../cdac/inter_domain_acl_policy";
+import { InterDomainDclPolicy } from "../cdac/inter_domain_dcl_policy";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -397,6 +398,23 @@ export interface QueryAllInterDomainAclPolicyRequest {
 
 export interface QueryAllInterDomainAclPolicyResponse {
   InterDomainAclPolicy: InterDomainAclPolicy[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetInterDomainDclPolicyRequest {
+  id: number;
+}
+
+export interface QueryGetInterDomainDclPolicyResponse {
+  InterDomainDclPolicy: InterDomainDclPolicy | undefined;
+}
+
+export interface QueryAllInterDomainDclPolicyRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllInterDomainDclPolicyResponse {
+  InterDomainDclPolicy: InterDomainDclPolicy[];
   pagination: PageResponse | undefined;
 }
 
@@ -7370,6 +7388,344 @@ export const QueryAllInterDomainAclPolicyResponse = {
   },
 };
 
+const baseQueryGetInterDomainDclPolicyRequest: object = { id: 0 };
+
+export const QueryGetInterDomainDclPolicyRequest = {
+  encode(
+    message: QueryGetInterDomainDclPolicyRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetInterDomainDclPolicyRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetInterDomainDclPolicyRequest,
+    } as QueryGetInterDomainDclPolicyRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetInterDomainDclPolicyRequest {
+    const message = {
+      ...baseQueryGetInterDomainDclPolicyRequest,
+    } as QueryGetInterDomainDclPolicyRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetInterDomainDclPolicyRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetInterDomainDclPolicyRequest>
+  ): QueryGetInterDomainDclPolicyRequest {
+    const message = {
+      ...baseQueryGetInterDomainDclPolicyRequest,
+    } as QueryGetInterDomainDclPolicyRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetInterDomainDclPolicyResponse: object = {};
+
+export const QueryGetInterDomainDclPolicyResponse = {
+  encode(
+    message: QueryGetInterDomainDclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.InterDomainDclPolicy !== undefined) {
+      InterDomainDclPolicy.encode(
+        message.InterDomainDclPolicy,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetInterDomainDclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetInterDomainDclPolicyResponse,
+    } as QueryGetInterDomainDclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.InterDomainDclPolicy = InterDomainDclPolicy.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetInterDomainDclPolicyResponse {
+    const message = {
+      ...baseQueryGetInterDomainDclPolicyResponse,
+    } as QueryGetInterDomainDclPolicyResponse;
+    if (
+      object.InterDomainDclPolicy !== undefined &&
+      object.InterDomainDclPolicy !== null
+    ) {
+      message.InterDomainDclPolicy = InterDomainDclPolicy.fromJSON(
+        object.InterDomainDclPolicy
+      );
+    } else {
+      message.InterDomainDclPolicy = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetInterDomainDclPolicyResponse): unknown {
+    const obj: any = {};
+    message.InterDomainDclPolicy !== undefined &&
+      (obj.InterDomainDclPolicy = message.InterDomainDclPolicy
+        ? InterDomainDclPolicy.toJSON(message.InterDomainDclPolicy)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetInterDomainDclPolicyResponse>
+  ): QueryGetInterDomainDclPolicyResponse {
+    const message = {
+      ...baseQueryGetInterDomainDclPolicyResponse,
+    } as QueryGetInterDomainDclPolicyResponse;
+    if (
+      object.InterDomainDclPolicy !== undefined &&
+      object.InterDomainDclPolicy !== null
+    ) {
+      message.InterDomainDclPolicy = InterDomainDclPolicy.fromPartial(
+        object.InterDomainDclPolicy
+      );
+    } else {
+      message.InterDomainDclPolicy = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllInterDomainDclPolicyRequest: object = {};
+
+export const QueryAllInterDomainDclPolicyRequest = {
+  encode(
+    message: QueryAllInterDomainDclPolicyRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllInterDomainDclPolicyRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllInterDomainDclPolicyRequest,
+    } as QueryAllInterDomainDclPolicyRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllInterDomainDclPolicyRequest {
+    const message = {
+      ...baseQueryAllInterDomainDclPolicyRequest,
+    } as QueryAllInterDomainDclPolicyRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllInterDomainDclPolicyRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllInterDomainDclPolicyRequest>
+  ): QueryAllInterDomainDclPolicyRequest {
+    const message = {
+      ...baseQueryAllInterDomainDclPolicyRequest,
+    } as QueryAllInterDomainDclPolicyRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllInterDomainDclPolicyResponse: object = {};
+
+export const QueryAllInterDomainDclPolicyResponse = {
+  encode(
+    message: QueryAllInterDomainDclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.InterDomainDclPolicy) {
+      InterDomainDclPolicy.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllInterDomainDclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllInterDomainDclPolicyResponse,
+    } as QueryAllInterDomainDclPolicyResponse;
+    message.InterDomainDclPolicy = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.InterDomainDclPolicy.push(
+            InterDomainDclPolicy.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllInterDomainDclPolicyResponse {
+    const message = {
+      ...baseQueryAllInterDomainDclPolicyResponse,
+    } as QueryAllInterDomainDclPolicyResponse;
+    message.InterDomainDclPolicy = [];
+    if (
+      object.InterDomainDclPolicy !== undefined &&
+      object.InterDomainDclPolicy !== null
+    ) {
+      for (const e of object.InterDomainDclPolicy) {
+        message.InterDomainDclPolicy.push(InterDomainDclPolicy.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllInterDomainDclPolicyResponse): unknown {
+    const obj: any = {};
+    if (message.InterDomainDclPolicy) {
+      obj.InterDomainDclPolicy = message.InterDomainDclPolicy.map((e) =>
+        e ? InterDomainDclPolicy.toJSON(e) : undefined
+      );
+    } else {
+      obj.InterDomainDclPolicy = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllInterDomainDclPolicyResponse>
+  ): QueryAllInterDomainDclPolicyResponse {
+    const message = {
+      ...baseQueryAllInterDomainDclPolicyResponse,
+    } as QueryAllInterDomainDclPolicyResponse;
+    message.InterDomainDclPolicy = [];
+    if (
+      object.InterDomainDclPolicy !== undefined &&
+      object.InterDomainDclPolicy !== null
+    ) {
+      for (const e of object.InterDomainDclPolicy) {
+        message.InterDomainDclPolicy.push(InterDomainDclPolicy.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -7536,6 +7892,14 @@ export interface Query {
   InterDomainAclPolicyAll(
     request: QueryAllInterDomainAclPolicyRequest
   ): Promise<QueryAllInterDomainAclPolicyResponse>;
+  /** Queries a InterDomainDclPolicy by id. */
+  InterDomainDclPolicy(
+    request: QueryGetInterDomainDclPolicyRequest
+  ): Promise<QueryGetInterDomainDclPolicyResponse>;
+  /** Queries a list of InterDomainDclPolicy items. */
+  InterDomainDclPolicyAll(
+    request: QueryAllInterDomainDclPolicyRequest
+  ): Promise<QueryAllInterDomainDclPolicyResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -8136,6 +8500,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllInterDomainAclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  InterDomainDclPolicy(
+    request: QueryGetInterDomainDclPolicyRequest
+  ): Promise<QueryGetInterDomainDclPolicyResponse> {
+    const data = QueryGetInterDomainDclPolicyRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "InterDomainDclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetInterDomainDclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  InterDomainDclPolicyAll(
+    request: QueryAllInterDomainDclPolicyRequest
+  ): Promise<QueryAllInterDomainDclPolicyResponse> {
+    const data = QueryAllInterDomainDclPolicyRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Query",
+      "InterDomainDclPolicyAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllInterDomainDclPolicyResponse.decode(new Reader(data))
     );
   }
 }

@@ -120,3 +120,8 @@ const (
 	InterDomainAclPolicyKey      = "InterDomainAclPolicy-value-"
 	InterDomainAclPolicyCountKey = "InterDomainAclPolicy-count-"
 )
+
+const (
+	InterDomainDclPolicyKey      = "InterDomainDclPolicy-value-"
+	InterDomainDclPolicyCountKey = "InterDomainDclPolicy-count-"
+)

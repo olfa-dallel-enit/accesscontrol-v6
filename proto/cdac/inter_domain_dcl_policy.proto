@@ -1,0 +1,19 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+import "cdac/validity.proto"; 
+
+message InterDomainDclPolicy {
+  uint64 id = 1;
+  string label = 2; 
+  repeated string delegatorList = 3; 
+  repeated string delegateeList = 4; 
+  repeated string permissionList = 5; 
+  string creationTimestamp = 6; 
+  string updateTimestamp = 7; 
+  uint64 depth = 8; 
+  uint64 maxDelegations = 9; 
+  Validity validity = 10; 
+  string creator = 11;
+}

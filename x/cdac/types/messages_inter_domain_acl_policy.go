@@ -13,16 +13,13 @@ const (
 
 var _ sdk.Msg = &MsgCreateInterDomainAclPolicy{}
 
-func NewMsgCreateInterDomainAclPolicy(creator string, label string, subjectList []string, actionList []string, objectList []string, status string, creationTimestamp string, updateTimestamp string) *MsgCreateInterDomainAclPolicy {
+func NewMsgCreateInterDomainAclPolicy(creator string, label string, subjectList []string, actionList []string, objectList []string) *MsgCreateInterDomainAclPolicy {
 	return &MsgCreateInterDomainAclPolicy{
-		Creator:           creator,
-		Label:             label,
-		SubjectList:       subjectList,
-		ActionList:        actionList,
-		ObjectList:        objectList,
-		Status:            status,
-		CreationTimestamp: creationTimestamp,
-		UpdateTimestamp:   updateTimestamp,
+		Creator:     creator,
+		Label:       label,
+		SubjectList: subjectList,
+		ActionList:  actionList,
+		ObjectList:  objectList,
 	}
 }
 

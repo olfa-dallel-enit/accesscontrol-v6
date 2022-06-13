@@ -104,3 +104,35 @@ func GetInterDomainAclPolicyIDBytes(id uint64) []byte {
 func GetInterDomainAclPolicyIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
+
+func (k Keeper) GetInterDomainAclPolicyByLabel(ctx sdk.Context, label string) (accessPolicy types.InterDomainAclPolicy, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.InterDomainAclPolicyKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.InterDomainAclPolicy
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Label == label{
+			return val, true
+		}
+	}
+	return accessPolicy, false
+}
+
+func (k Keeper) FindInterDomainAclPolicyByLabel(ctx sdk.Context, label string) (found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.InterDomainAclPolicyKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.InterDomainAclPolicy
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Label == label{
+			return true
+		}
+	}
+	return false
+}

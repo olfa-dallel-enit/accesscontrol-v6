@@ -21,6 +21,7 @@ import "cdac/path.proto";
 import "cdac/time_calculation.proto";
 import "cdac/calculation_time.proto";
 import "cdac/inter_domain_acl_policy.proto";
+import "cdac/inter_domain_dcl_policy.proto";
 // this line is used by starport scaffolding # 1
 import "cdac/validity.proto";
 import "cdac/domain.proto";
@@ -247,6 +248,16 @@ service Query {
 	// Queries a list of InterDomainAclPolicy items.
 	rpc InterDomainAclPolicyAll(QueryAllInterDomainAclPolicyRequest) returns (QueryAllInterDomainAclPolicyResponse) {
 		option (google.api.http).get = "/crossdomain/cdac/inter_domain_acl_policy";
+	}
+
+// Queries a InterDomainDclPolicy by id.
+	rpc InterDomainDclPolicy(QueryGetInterDomainDclPolicyRequest) returns (QueryGetInterDomainDclPolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/inter_domain_dcl_policy/{id}";
+	}
+
+	// Queries a list of InterDomainDclPolicy items.
+	rpc InterDomainDclPolicyAll(QueryAllInterDomainDclPolicyRequest) returns (QueryAllInterDomainDclPolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/inter_domain_dcl_policy";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -622,6 +633,23 @@ message QueryAllInterDomainAclPolicyRequest {
 
 message QueryAllInterDomainAclPolicyResponse {
 	repeated InterDomainAclPolicy InterDomainAclPolicy = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetInterDomainDclPolicyRequest {
+	uint64 id = 1;
+}
+
+message QueryGetInterDomainDclPolicyResponse {
+	InterDomainDclPolicy InterDomainDclPolicy = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllInterDomainDclPolicyRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllInterDomainDclPolicyResponse {
+	repeated InterDomainDclPolicy InterDomainDclPolicy = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

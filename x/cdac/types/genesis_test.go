@@ -196,6 +196,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				InterDomainAclPolicyCount: 2,
+				InterDomainDclPolicyList: []types.InterDomainDclPolicy{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				InterDomainDclPolicyCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -667,6 +676,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				InterDomainAclPolicyCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated interDomainDclPolicy",
+			genState: &types.GenesisState{
+				InterDomainDclPolicyList: []types.InterDomainDclPolicy{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid interDomainDclPolicy count",
+			genState: &types.GenesisState{
+				InterDomainDclPolicyList: []types.InterDomainDclPolicy{
+					{
+						Id: 1,
+					},
+				},
+				InterDomainDclPolicyCount: 0,
 			},
 			valid: false,
 		},

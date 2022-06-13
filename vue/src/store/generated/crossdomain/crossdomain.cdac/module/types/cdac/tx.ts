@@ -698,9 +698,6 @@ export interface MsgCreateInterDomainAclPolicy {
   subjectList: string[];
   actionList: string[];
   objectList: string[];
-  status: string;
-  creationTimestamp: string;
-  updateTimestamp: string;
 }
 
 export interface MsgCreateInterDomainAclPolicyResponse {
@@ -727,6 +724,48 @@ export interface MsgDeleteInterDomainAclPolicy {
 }
 
 export interface MsgDeleteInterDomainAclPolicyResponse {}
+
+export interface MsgCreateInterDomainDclPolicy {
+  creator: string;
+  label: string;
+  delegatorList: string[];
+  delegateeList: string[];
+  permissionList: string[];
+  status: string;
+  creationTimestamp: string;
+  updateTimestamp: string;
+  depth: number;
+  maxDelegations: number;
+  validity: Validity | undefined;
+}
+
+export interface MsgCreateInterDomainDclPolicyResponse {
+  id: number;
+}
+
+export interface MsgUpdateInterDomainDclPolicy {
+  creator: string;
+  id: number;
+  label: string;
+  delegatorList: string[];
+  delegateeList: string[];
+  permissionList: string[];
+  status: string;
+  creationTimestamp: string;
+  updateTimestamp: string;
+  depth: number;
+  maxDelegations: number;
+  validity: Validity | undefined;
+}
+
+export interface MsgUpdateInterDomainDclPolicyResponse {}
+
+export interface MsgDeleteInterDomainDclPolicy {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteInterDomainDclPolicyResponse {}
 
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
@@ -13614,9 +13653,6 @@ const baseMsgCreateInterDomainAclPolicy: object = {
   subjectList: "",
   actionList: "",
   objectList: "",
-  status: "",
-  creationTimestamp: "",
-  updateTimestamp: "",
 };
 
 export const MsgCreateInterDomainAclPolicy = {
@@ -13638,15 +13674,6 @@ export const MsgCreateInterDomainAclPolicy = {
     }
     for (const v of message.objectList) {
       writer.uint32(42).string(v!);
-    }
-    if (message.status !== "") {
-      writer.uint32(50).string(message.status);
-    }
-    if (message.creationTimestamp !== "") {
-      writer.uint32(58).string(message.creationTimestamp);
-    }
-    if (message.updateTimestamp !== "") {
-      writer.uint32(66).string(message.updateTimestamp);
     }
     return writer;
   },
@@ -13680,15 +13707,6 @@ export const MsgCreateInterDomainAclPolicy = {
           break;
         case 5:
           message.objectList.push(reader.string());
-          break;
-        case 6:
-          message.status = reader.string();
-          break;
-        case 7:
-          message.creationTimestamp = reader.string();
-          break;
-        case 8:
-          message.updateTimestamp = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -13730,27 +13748,6 @@ export const MsgCreateInterDomainAclPolicy = {
         message.objectList.push(String(e));
       }
     }
-    if (object.status !== undefined && object.status !== null) {
-      message.status = String(object.status);
-    } else {
-      message.status = "";
-    }
-    if (
-      object.creationTimestamp !== undefined &&
-      object.creationTimestamp !== null
-    ) {
-      message.creationTimestamp = String(object.creationTimestamp);
-    } else {
-      message.creationTimestamp = "";
-    }
-    if (
-      object.updateTimestamp !== undefined &&
-      object.updateTimestamp !== null
-    ) {
-      message.updateTimestamp = String(object.updateTimestamp);
-    } else {
-      message.updateTimestamp = "";
-    }
     return message;
   },
 
@@ -13773,11 +13770,6 @@ export const MsgCreateInterDomainAclPolicy = {
     } else {
       obj.objectList = [];
     }
-    message.status !== undefined && (obj.status = message.status);
-    message.creationTimestamp !== undefined &&
-      (obj.creationTimestamp = message.creationTimestamp);
-    message.updateTimestamp !== undefined &&
-      (obj.updateTimestamp = message.updateTimestamp);
     return obj;
   },
 
@@ -13814,27 +13806,6 @@ export const MsgCreateInterDomainAclPolicy = {
       for (const e of object.objectList) {
         message.objectList.push(e);
       }
-    }
-    if (object.status !== undefined && object.status !== null) {
-      message.status = object.status;
-    } else {
-      message.status = "";
-    }
-    if (
-      object.creationTimestamp !== undefined &&
-      object.creationTimestamp !== null
-    ) {
-      message.creationTimestamp = object.creationTimestamp;
-    } else {
-      message.creationTimestamp = "";
-    }
-    if (
-      object.updateTimestamp !== undefined &&
-      object.updateTimestamp !== null
-    ) {
-      message.updateTimestamp = object.updateTimestamp;
-    } else {
-      message.updateTimestamp = "";
     }
     return message;
   },
@@ -14349,6 +14320,861 @@ export const MsgDeleteInterDomainAclPolicyResponse = {
   },
 };
 
+const baseMsgCreateInterDomainDclPolicy: object = {
+  creator: "",
+  label: "",
+  delegatorList: "",
+  delegateeList: "",
+  permissionList: "",
+  status: "",
+  creationTimestamp: "",
+  updateTimestamp: "",
+  depth: 0,
+  maxDelegations: 0,
+};
+
+export const MsgCreateInterDomainDclPolicy = {
+  encode(
+    message: MsgCreateInterDomainDclPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.label !== "") {
+      writer.uint32(18).string(message.label);
+    }
+    for (const v of message.delegatorList) {
+      writer.uint32(26).string(v!);
+    }
+    for (const v of message.delegateeList) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.permissionList) {
+      writer.uint32(42).string(v!);
+    }
+    if (message.status !== "") {
+      writer.uint32(50).string(message.status);
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(58).string(message.creationTimestamp);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(66).string(message.updateTimestamp);
+    }
+    if (message.depth !== 0) {
+      writer.uint32(72).uint64(message.depth);
+    }
+    if (message.maxDelegations !== 0) {
+      writer.uint32(80).uint64(message.maxDelegations);
+    }
+    if (message.validity !== undefined) {
+      Validity.encode(message.validity, writer.uint32(90).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateInterDomainDclPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateInterDomainDclPolicy,
+    } as MsgCreateInterDomainDclPolicy;
+    message.delegatorList = [];
+    message.delegateeList = [];
+    message.permissionList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.label = reader.string();
+          break;
+        case 3:
+          message.delegatorList.push(reader.string());
+          break;
+        case 4:
+          message.delegateeList.push(reader.string());
+          break;
+        case 5:
+          message.permissionList.push(reader.string());
+          break;
+        case 6:
+          message.status = reader.string();
+          break;
+        case 7:
+          message.creationTimestamp = reader.string();
+          break;
+        case 8:
+          message.updateTimestamp = reader.string();
+          break;
+        case 9:
+          message.depth = longToNumber(reader.uint64() as Long);
+          break;
+        case 10:
+          message.maxDelegations = longToNumber(reader.uint64() as Long);
+          break;
+        case 11:
+          message.validity = Validity.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateInterDomainDclPolicy {
+    const message = {
+      ...baseMsgCreateInterDomainDclPolicy,
+    } as MsgCreateInterDomainDclPolicy;
+    message.delegatorList = [];
+    message.delegateeList = [];
+    message.permissionList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = String(object.label);
+    } else {
+      message.label = "";
+    }
+    if (object.delegatorList !== undefined && object.delegatorList !== null) {
+      for (const e of object.delegatorList) {
+        message.delegatorList.push(String(e));
+      }
+    }
+    if (object.delegateeList !== undefined && object.delegateeList !== null) {
+      for (const e of object.delegateeList) {
+        message.delegateeList.push(String(e));
+      }
+    }
+    if (object.permissionList !== undefined && object.permissionList !== null) {
+      for (const e of object.permissionList) {
+        message.permissionList.push(String(e));
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = String(object.status);
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = Number(object.depth);
+    } else {
+      message.depth = 0;
+    }
+    if (object.maxDelegations !== undefined && object.maxDelegations !== null) {
+      message.maxDelegations = Number(object.maxDelegations);
+    } else {
+      message.maxDelegations = 0;
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromJSON(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateInterDomainDclPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.label !== undefined && (obj.label = message.label);
+    if (message.delegatorList) {
+      obj.delegatorList = message.delegatorList.map((e) => e);
+    } else {
+      obj.delegatorList = [];
+    }
+    if (message.delegateeList) {
+      obj.delegateeList = message.delegateeList.map((e) => e);
+    } else {
+      obj.delegateeList = [];
+    }
+    if (message.permissionList) {
+      obj.permissionList = message.permissionList.map((e) => e);
+    } else {
+      obj.permissionList = [];
+    }
+    message.status !== undefined && (obj.status = message.status);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
+    message.depth !== undefined && (obj.depth = message.depth);
+    message.maxDelegations !== undefined &&
+      (obj.maxDelegations = message.maxDelegations);
+    message.validity !== undefined &&
+      (obj.validity = message.validity
+        ? Validity.toJSON(message.validity)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateInterDomainDclPolicy>
+  ): MsgCreateInterDomainDclPolicy {
+    const message = {
+      ...baseMsgCreateInterDomainDclPolicy,
+    } as MsgCreateInterDomainDclPolicy;
+    message.delegatorList = [];
+    message.delegateeList = [];
+    message.permissionList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = object.label;
+    } else {
+      message.label = "";
+    }
+    if (object.delegatorList !== undefined && object.delegatorList !== null) {
+      for (const e of object.delegatorList) {
+        message.delegatorList.push(e);
+      }
+    }
+    if (object.delegateeList !== undefined && object.delegateeList !== null) {
+      for (const e of object.delegateeList) {
+        message.delegateeList.push(e);
+      }
+    }
+    if (object.permissionList !== undefined && object.permissionList !== null) {
+      for (const e of object.permissionList) {
+        message.permissionList.push(e);
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = object.depth;
+    } else {
+      message.depth = 0;
+    }
+    if (object.maxDelegations !== undefined && object.maxDelegations !== null) {
+      message.maxDelegations = object.maxDelegations;
+    } else {
+      message.maxDelegations = 0;
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromPartial(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateInterDomainDclPolicyResponse: object = { id: 0 };
+
+export const MsgCreateInterDomainDclPolicyResponse = {
+  encode(
+    message: MsgCreateInterDomainDclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateInterDomainDclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateInterDomainDclPolicyResponse,
+    } as MsgCreateInterDomainDclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateInterDomainDclPolicyResponse {
+    const message = {
+      ...baseMsgCreateInterDomainDclPolicyResponse,
+    } as MsgCreateInterDomainDclPolicyResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateInterDomainDclPolicyResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateInterDomainDclPolicyResponse>
+  ): MsgCreateInterDomainDclPolicyResponse {
+    const message = {
+      ...baseMsgCreateInterDomainDclPolicyResponse,
+    } as MsgCreateInterDomainDclPolicyResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateInterDomainDclPolicy: object = {
+  creator: "",
+  id: 0,
+  label: "",
+  delegatorList: "",
+  delegateeList: "",
+  permissionList: "",
+  status: "",
+  creationTimestamp: "",
+  updateTimestamp: "",
+  depth: 0,
+  maxDelegations: 0,
+};
+
+export const MsgUpdateInterDomainDclPolicy = {
+  encode(
+    message: MsgUpdateInterDomainDclPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.label !== "") {
+      writer.uint32(26).string(message.label);
+    }
+    for (const v of message.delegatorList) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.delegateeList) {
+      writer.uint32(42).string(v!);
+    }
+    for (const v of message.permissionList) {
+      writer.uint32(50).string(v!);
+    }
+    if (message.status !== "") {
+      writer.uint32(58).string(message.status);
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(66).string(message.creationTimestamp);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(74).string(message.updateTimestamp);
+    }
+    if (message.depth !== 0) {
+      writer.uint32(80).uint64(message.depth);
+    }
+    if (message.maxDelegations !== 0) {
+      writer.uint32(88).uint64(message.maxDelegations);
+    }
+    if (message.validity !== undefined) {
+      Validity.encode(message.validity, writer.uint32(98).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateInterDomainDclPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateInterDomainDclPolicy,
+    } as MsgUpdateInterDomainDclPolicy;
+    message.delegatorList = [];
+    message.delegateeList = [];
+    message.permissionList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.label = reader.string();
+          break;
+        case 4:
+          message.delegatorList.push(reader.string());
+          break;
+        case 5:
+          message.delegateeList.push(reader.string());
+          break;
+        case 6:
+          message.permissionList.push(reader.string());
+          break;
+        case 7:
+          message.status = reader.string();
+          break;
+        case 8:
+          message.creationTimestamp = reader.string();
+          break;
+        case 9:
+          message.updateTimestamp = reader.string();
+          break;
+        case 10:
+          message.depth = longToNumber(reader.uint64() as Long);
+          break;
+        case 11:
+          message.maxDelegations = longToNumber(reader.uint64() as Long);
+          break;
+        case 12:
+          message.validity = Validity.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateInterDomainDclPolicy {
+    const message = {
+      ...baseMsgUpdateInterDomainDclPolicy,
+    } as MsgUpdateInterDomainDclPolicy;
+    message.delegatorList = [];
+    message.delegateeList = [];
+    message.permissionList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = String(object.label);
+    } else {
+      message.label = "";
+    }
+    if (object.delegatorList !== undefined && object.delegatorList !== null) {
+      for (const e of object.delegatorList) {
+        message.delegatorList.push(String(e));
+      }
+    }
+    if (object.delegateeList !== undefined && object.delegateeList !== null) {
+      for (const e of object.delegateeList) {
+        message.delegateeList.push(String(e));
+      }
+    }
+    if (object.permissionList !== undefined && object.permissionList !== null) {
+      for (const e of object.permissionList) {
+        message.permissionList.push(String(e));
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = String(object.status);
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = Number(object.depth);
+    } else {
+      message.depth = 0;
+    }
+    if (object.maxDelegations !== undefined && object.maxDelegations !== null) {
+      message.maxDelegations = Number(object.maxDelegations);
+    } else {
+      message.maxDelegations = 0;
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromJSON(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateInterDomainDclPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.label !== undefined && (obj.label = message.label);
+    if (message.delegatorList) {
+      obj.delegatorList = message.delegatorList.map((e) => e);
+    } else {
+      obj.delegatorList = [];
+    }
+    if (message.delegateeList) {
+      obj.delegateeList = message.delegateeList.map((e) => e);
+    } else {
+      obj.delegateeList = [];
+    }
+    if (message.permissionList) {
+      obj.permissionList = message.permissionList.map((e) => e);
+    } else {
+      obj.permissionList = [];
+    }
+    message.status !== undefined && (obj.status = message.status);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
+    message.depth !== undefined && (obj.depth = message.depth);
+    message.maxDelegations !== undefined &&
+      (obj.maxDelegations = message.maxDelegations);
+    message.validity !== undefined &&
+      (obj.validity = message.validity
+        ? Validity.toJSON(message.validity)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgUpdateInterDomainDclPolicy>
+  ): MsgUpdateInterDomainDclPolicy {
+    const message = {
+      ...baseMsgUpdateInterDomainDclPolicy,
+    } as MsgUpdateInterDomainDclPolicy;
+    message.delegatorList = [];
+    message.delegateeList = [];
+    message.permissionList = [];
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.label !== undefined && object.label !== null) {
+      message.label = object.label;
+    } else {
+      message.label = "";
+    }
+    if (object.delegatorList !== undefined && object.delegatorList !== null) {
+      for (const e of object.delegatorList) {
+        message.delegatorList.push(e);
+      }
+    }
+    if (object.delegateeList !== undefined && object.delegateeList !== null) {
+      for (const e of object.delegateeList) {
+        message.delegateeList.push(e);
+      }
+    }
+    if (object.permissionList !== undefined && object.permissionList !== null) {
+      for (const e of object.permissionList) {
+        message.permissionList.push(e);
+      }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
+    }
+    if (object.depth !== undefined && object.depth !== null) {
+      message.depth = object.depth;
+    } else {
+      message.depth = 0;
+    }
+    if (object.maxDelegations !== undefined && object.maxDelegations !== null) {
+      message.maxDelegations = object.maxDelegations;
+    } else {
+      message.maxDelegations = 0;
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromPartial(object.validity);
+    } else {
+      message.validity = undefined;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateInterDomainDclPolicyResponse: object = {};
+
+export const MsgUpdateInterDomainDclPolicyResponse = {
+  encode(
+    _: MsgUpdateInterDomainDclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateInterDomainDclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateInterDomainDclPolicyResponse,
+    } as MsgUpdateInterDomainDclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateInterDomainDclPolicyResponse {
+    const message = {
+      ...baseMsgUpdateInterDomainDclPolicyResponse,
+    } as MsgUpdateInterDomainDclPolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateInterDomainDclPolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateInterDomainDclPolicyResponse>
+  ): MsgUpdateInterDomainDclPolicyResponse {
+    const message = {
+      ...baseMsgUpdateInterDomainDclPolicyResponse,
+    } as MsgUpdateInterDomainDclPolicyResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteInterDomainDclPolicy: object = { creator: "", id: 0 };
+
+export const MsgDeleteInterDomainDclPolicy = {
+  encode(
+    message: MsgDeleteInterDomainDclPolicy,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteInterDomainDclPolicy {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteInterDomainDclPolicy,
+    } as MsgDeleteInterDomainDclPolicy;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteInterDomainDclPolicy {
+    const message = {
+      ...baseMsgDeleteInterDomainDclPolicy,
+    } as MsgDeleteInterDomainDclPolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteInterDomainDclPolicy): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgDeleteInterDomainDclPolicy>
+  ): MsgDeleteInterDomainDclPolicy {
+    const message = {
+      ...baseMsgDeleteInterDomainDclPolicy,
+    } as MsgDeleteInterDomainDclPolicy;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteInterDomainDclPolicyResponse: object = {};
+
+export const MsgDeleteInterDomainDclPolicyResponse = {
+  encode(
+    _: MsgDeleteInterDomainDclPolicyResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteInterDomainDclPolicyResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteInterDomainDclPolicyResponse,
+    } as MsgDeleteInterDomainDclPolicyResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteInterDomainDclPolicyResponse {
+    const message = {
+      ...baseMsgDeleteInterDomainDclPolicyResponse,
+    } as MsgDeleteInterDomainDclPolicyResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteInterDomainDclPolicyResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteInterDomainDclPolicyResponse>
+  ): MsgDeleteInterDomainDclPolicyResponse {
+    const message = {
+      ...baseMsgDeleteInterDomainDclPolicyResponse,
+    } as MsgDeleteInterDomainDclPolicyResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreatePublicKey(
@@ -14552,10 +15378,19 @@ export interface Msg {
   UpdateInterDomainAclPolicy(
     request: MsgUpdateInterDomainAclPolicy
   ): Promise<MsgUpdateInterDomainAclPolicyResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteInterDomainAclPolicy(
     request: MsgDeleteInterDomainAclPolicy
   ): Promise<MsgDeleteInterDomainAclPolicyResponse>;
+  CreateInterDomainDclPolicy(
+    request: MsgCreateInterDomainDclPolicy
+  ): Promise<MsgCreateInterDomainDclPolicyResponse>;
+  UpdateInterDomainDclPolicy(
+    request: MsgUpdateInterDomainDclPolicy
+  ): Promise<MsgUpdateInterDomainDclPolicyResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DeleteInterDomainDclPolicy(
+    request: MsgDeleteInterDomainDclPolicy
+  ): Promise<MsgDeleteInterDomainDclPolicyResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -15556,6 +16391,48 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeleteInterDomainAclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateInterDomainDclPolicy(
+    request: MsgCreateInterDomainDclPolicy
+  ): Promise<MsgCreateInterDomainDclPolicyResponse> {
+    const data = MsgCreateInterDomainDclPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "CreateInterDomainDclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateInterDomainDclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateInterDomainDclPolicy(
+    request: MsgUpdateInterDomainDclPolicy
+  ): Promise<MsgUpdateInterDomainDclPolicyResponse> {
+    const data = MsgUpdateInterDomainDclPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "UpdateInterDomainDclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateInterDomainDclPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteInterDomainDclPolicy(
+    request: MsgDeleteInterDomainDclPolicy
+  ): Promise<MsgDeleteInterDomainDclPolicyResponse> {
+    const data = MsgDeleteInterDomainDclPolicy.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "DeleteInterDomainDclPolicy",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteInterDomainDclPolicyResponse.decode(new Reader(data))
     );
   }
 }

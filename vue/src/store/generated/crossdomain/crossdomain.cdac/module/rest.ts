@@ -174,6 +174,29 @@ export interface CdacInterDomainAclPolicy {
   creationTimestamp?: string;
   updateTimestamp?: string;
   creator?: string;
+
+  /** @format uint64 */
+  nbDelegations?: string;
+}
+
+export interface CdacInterDomainDclPolicy {
+  /** @format uint64 */
+  id?: string;
+  label?: string;
+  delegatorList?: string[];
+  delegateeList?: string[];
+  permissionList?: string[];
+  status?: string;
+  creationTimestamp?: string;
+  updateTimestamp?: string;
+
+  /** @format uint64 */
+  depth?: string;
+
+  /** @format uint64 */
+  maxDelegations?: string;
+  validity?: CdacValidity;
+  creator?: string;
 }
 
 export interface CdacMsgCreateAuthenticationLogResponse {
@@ -245,6 +268,11 @@ export interface CdacMsgCreateInterDomainAclPolicyResponse {
   id?: string;
 }
 
+export interface CdacMsgCreateInterDomainDclPolicyResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
 export interface CdacMsgCreatePathResponse {
   /** @format uint64 */
   id?: string;
@@ -296,6 +324,8 @@ export type CdacMsgDeleteForwardPolicyResponse = object;
 export type CdacMsgDeleteIbcConnectionResponse = object;
 
 export type CdacMsgDeleteInterDomainAclPolicyResponse = object;
+
+export type CdacMsgDeleteInterDomainDclPolicyResponse = object;
 
 export type CdacMsgDeletePathResponse = object;
 
@@ -362,6 +392,8 @@ export type CdacMsgUpdateForwardPolicyResponse = object;
 export type CdacMsgUpdateIbcConnectionResponse = object;
 
 export type CdacMsgUpdateInterDomainAclPolicyResponse = object;
+
+export type CdacMsgUpdateInterDomainDclPolicyResponse = object;
 
 export type CdacMsgUpdatePathResponse = object;
 
@@ -622,6 +654,21 @@ export interface CdacQueryAllInterDomainAclPolicyResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CdacQueryAllInterDomainDclPolicyResponse {
+  InterDomainDclPolicy?: CdacInterDomainDclPolicy[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CdacQueryAllPathResponse {
   Path?: CdacPath[];
 
@@ -750,6 +797,10 @@ export interface CdacQueryGetIbcConnectionResponse {
 
 export interface CdacQueryGetInterDomainAclPolicyResponse {
   InterDomainAclPolicy?: CdacInterDomainAclPolicy;
+}
+
+export interface CdacQueryGetInterDomainDclPolicyResponse {
+  InterDomainDclPolicy?: CdacInterDomainDclPolicy;
 }
 
 export interface CdacQueryGetPathResponse {
@@ -1742,6 +1793,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryInterDomainAclPolicy = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetInterDomainAclPolicyResponse, RpcStatus>({
       path: `/crossdomain/cdac/inter_domain_acl_policy/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryInterDomainDclPolicyAll
+   * @summary Queries a list of InterDomainDclPolicy items.
+   * @request GET:/crossdomain/cdac/inter_domain_dcl_policy
+   */
+  queryInterDomainDclPolicyAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllInterDomainDclPolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/inter_domain_dcl_policy`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryInterDomainDclPolicy
+   * @summary Queries a InterDomainDclPolicy by id.
+   * @request GET:/crossdomain/cdac/inter_domain_dcl_policy/{id}
+   */
+  queryInterDomainDclPolicy = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetInterDomainDclPolicyResponse, RpcStatus>({
+      path: `/crossdomain/cdac/inter_domain_dcl_policy/${id}`,
       method: "GET",
       format: "json",
       ...params,
