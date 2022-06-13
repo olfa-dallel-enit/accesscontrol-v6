@@ -61,6 +61,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateUpdatePolicy{}, "cdac/CreateUpdatePolicy", nil)
 	cdc.RegisterConcrete(&MsgUpdateUpdatePolicy{}, "cdac/UpdateUpdatePolicy", nil)
 	cdc.RegisterConcrete(&MsgDeleteUpdatePolicy{}, "cdac/DeleteUpdatePolicy", nil)
+	cdc.RegisterConcrete(&MsgCreateCooperativeDomain{}, "cdac/CreateCooperativeDomain", nil)
+	cdc.RegisterConcrete(&MsgUpdateCooperativeDomain{}, "cdac/UpdateCooperativeDomain", nil)
+	cdc.RegisterConcrete(&MsgDeleteCooperativeDomain{}, "cdac/DeleteCooperativeDomain", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -167,6 +170,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateUpdatePolicy{},
 		&MsgUpdateUpdatePolicy{},
 		&MsgDeleteUpdatePolicy{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateCooperativeDomain{},
+		&MsgUpdateCooperativeDomain{},
+		&MsgDeleteCooperativeDomain{},
 	)
 	// this line is used by starport scaffolding # 3
 

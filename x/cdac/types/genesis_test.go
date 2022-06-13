@@ -142,6 +142,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					Event:           false,
 					PeriodicalQuery: true,
 				},
+				CooperativeDomainList: []types.CooperativeDomain{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				CooperativeDomainCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -457,6 +466,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				CooperationNetworkCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated cooperativeDomain",
+			genState: &types.GenesisState{
+				CooperativeDomainList: []types.CooperativeDomain{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid cooperativeDomain count",
+			genState: &types.GenesisState{
+				CooperativeDomainList: []types.CooperativeDomain{
+					{
+						Id: 1,
+					},
+				},
+				CooperativeDomainCount: 0,
 			},
 			valid: false,
 		},

@@ -21,11 +21,11 @@ func (k msgServer) CreateDomainCooperation(goCtx context.Context, msg *types.Msg
 		Validity:          msg.Validity,
 		Interest:          msg.Interest,
 		Cost:              msg.Cost,
-		CreationDate:	   msg.CreationDate,
+		CreationDate:      msg.CreationDate,
 		CreationTimestamp: msg.CreationTimestamp,
 		UpdateDate:        msg.UpdateDate,
 		UpdateTimestamp:   msg.UpdateTimestamp,
-		Status:			   msg.Status,
+		Status:            msg.Status,
 	}
 
 	id := k.AppendDomainCooperation(
@@ -51,11 +51,11 @@ func (k msgServer) UpdateDomainCooperation(goCtx context.Context, msg *types.Msg
 		Validity:          msg.Validity,
 		Interest:          msg.Interest,
 		Cost:              msg.Cost,
-		CreationDate:	   msg.CreationDate,
+		CreationDate:      msg.CreationDate,
 		CreationTimestamp: msg.CreationTimestamp,
 		UpdateDate:        msg.UpdateDate,
 		UpdateTimestamp:   msg.UpdateTimestamp,
-		Status:			   msg.Status,
+		Status:            msg.Status,
 	}
 
 	// Checks that the element exists

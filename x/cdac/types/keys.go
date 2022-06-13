@@ -90,3 +90,8 @@ const (
 const (
 	UpdatePolicyKey = "UpdatePolicy-value-"
 )
+
+const (
+	CooperativeDomainKey      = "CooperativeDomain-value-"
+	CooperativeDomainCountKey = "CooperativeDomain-count-"
+)

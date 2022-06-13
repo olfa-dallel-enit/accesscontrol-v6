@@ -20,17 +20,17 @@ func NewMsgCreateCooperationData(
 	status string,
 	cost uint64,
 	lastUpdate string,
-	interestList []string,
+	interest string,
 
 ) *MsgCreateCooperationData {
 	return &MsgCreateCooperationData{
-		Creator:      creator,
-		LabelIndex:   labelIndex,
-		Validity:     validity,
-		Status:       status,
-		Cost:         cost,
-		LastUpdate:   lastUpdate,
-		InterestList: interestList,
+		Creator:    creator,
+		LabelIndex: labelIndex,
+		Validity:   validity,
+		Status:     status,
+		Cost:       cost,
+		LastUpdate: lastUpdate,
+		Interest:   interest,
 	}
 }
 
@@ -72,17 +72,17 @@ func NewMsgUpdateCooperationData(
 	status string,
 	cost uint64,
 	lastUpdate string,
-	interestList []string,
+	interest string,
 
 ) *MsgUpdateCooperationData {
 	return &MsgUpdateCooperationData{
-		Creator:      creator,
-		LabelIndex:   labelIndex,
-		Validity:     validity,
-		Status:       status,
-		Cost:         cost,
-		LastUpdate:   lastUpdate,
-		InterestList: interestList,
+		Creator:    creator,
+		LabelIndex: labelIndex,
+		Validity:   validity,
+		Status:     status,
+		Cost:       cost,
+		LastUpdate: lastUpdate,
+		Interest:   interest,
 	}
 }
 

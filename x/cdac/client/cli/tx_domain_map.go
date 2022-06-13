@@ -19,8 +19,8 @@ func CmdCreateDomainMap() *cobra.Command {
 			indexDomainIndex := args[0]
 
 			// Get value arguments
-			var argDomainList []*types.Domain
-			err = json.Unmarshal([]byte(args[1]), &argDomainList)
+			var argCooperativeDomainList []*types.CooperativeDomain
+			err = json.Unmarshal([]byte(args[1]), &argCooperativeDomainList)
 			if err != nil {
 				return err
 			}
@@ -33,7 +33,7 @@ func CmdCreateDomainMap() *cobra.Command {
 			msg := types.NewMsgCreateDomainMap(
 				clientCtx.GetFromAddress().String(),
 				indexDomainIndex,
-				argDomainList,
+				argCooperativeDomainList,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -57,8 +57,8 @@ func CmdUpdateDomainMap() *cobra.Command {
 			indexDomainIndex := args[0]
 
 			// Get value arguments
-			var argDomainList []*types.Domain
-			err = json.Unmarshal([]byte(args[1]), &argDomainList)
+			var argCooperativeDomainList []*types.CooperativeDomain
+			err = json.Unmarshal([]byte(args[1]), &argCooperativeDomainList)
 			if err != nil {
 				return err
 			}
@@ -71,7 +71,7 @@ func CmdUpdateDomainMap() *cobra.Command {
 			msg := types.NewMsgUpdateDomainMap(
 				clientCtx.GetFromAddress().String(),
 				indexDomainIndex,
-				argDomainList,
+				argCooperativeDomainList,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

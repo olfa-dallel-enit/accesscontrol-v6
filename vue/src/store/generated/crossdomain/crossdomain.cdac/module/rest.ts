@@ -36,7 +36,7 @@ export interface CdacCooperationData {
   /** @format uint64 */
   cost?: string;
   lastUpdate?: string;
-  interestList?: string[];
+  interest?: string;
   creator?: string;
 }
 
@@ -78,6 +78,15 @@ export interface CdacCooperationNetworkFeatures {
   creator?: string;
 }
 
+export interface CdacCooperativeDomain {
+  /** @format uint64 */
+  id?: string;
+  name?: string;
+  domainType?: string;
+  location?: string;
+  creator?: string;
+}
+
 export interface CdacDomain {
   /** @format uint64 */
   id?: string;
@@ -101,7 +110,9 @@ export interface CdacDomainCooperation {
 
   /** @format uint64 */
   cost?: string;
+  creationDate?: string;
   creationTimestamp?: string;
+  updateDate?: string;
   updateTimestamp?: string;
   creator?: string;
   status?: string;
@@ -157,6 +168,11 @@ export interface CdacMsgCreateCooperationNetworkResponse {
   id?: string;
 }
 
+export interface CdacMsgCreateCooperativeDomainResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
 export interface CdacMsgCreateDomainCooperationResponse {
   /** @format uint64 */
   id?: string;
@@ -202,6 +218,8 @@ export type CdacMsgDeleteCooperationLogResponse = object;
 export type CdacMsgDeleteCooperationNetworkFeaturesResponse = object;
 
 export type CdacMsgDeleteCooperationNetworkResponse = object;
+
+export type CdacMsgDeleteCooperativeDomainResponse = object;
 
 export type CdacMsgDeleteDomainCooperationResponse = object;
 
@@ -252,6 +270,8 @@ export type CdacMsgUpdateCooperationLogResponse = object;
 export type CdacMsgUpdateCooperationNetworkFeaturesResponse = object;
 
 export type CdacMsgUpdateCooperationNetworkResponse = object;
+
+export type CdacMsgUpdateCooperativeDomainResponse = object;
 
 export type CdacMsgUpdateDomainCooperationResponse = object;
 
@@ -363,6 +383,21 @@ export interface CdacQueryAllCooperationNetworkFeaturesResponse {
 
 export interface CdacQueryAllCooperationNetworkResponse {
   CooperationNetwork?: CdacCooperationNetwork[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface CdacQueryAllCooperativeDomainResponse {
+  CooperativeDomain?: CdacCooperativeDomain[];
 
   /**
    * PageResponse is to be embedded in gRPC response messages where the
@@ -513,6 +548,10 @@ export interface CdacQueryGetCooperationNetworkFeaturesResponse {
 
 export interface CdacQueryGetCooperationNetworkResponse {
   CooperationNetwork?: CdacCooperationNetwork;
+}
+
+export interface CdacQueryGetCooperativeDomainResponse {
+  CooperativeDomain?: CdacCooperativeDomain;
 }
 
 export interface CdacQueryGetDomainCooperationResponse {
@@ -1107,6 +1146,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryCooperationNetworkFeatures = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetCooperationNetworkFeaturesResponse, RpcStatus>({
       path: `/crossdomain/cdac/cooperation_network_features/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCooperativeDomainAll
+   * @summary Queries a list of CooperativeDomain items.
+   * @request GET:/crossdomain/cdac/cooperative_domain
+   */
+  queryCooperativeDomainAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllCooperativeDomainResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperative_domain`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCooperativeDomain
+   * @summary Queries a CooperativeDomain by id.
+   * @request GET:/crossdomain/cdac/cooperative_domain/{id}
+   */
+  queryCooperativeDomain = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetCooperativeDomainResponse, RpcStatus>({
+      path: `/crossdomain/cdac/cooperative_domain/${id}`,
       method: "GET",
       format: "json",
       ...params,

@@ -7,6 +7,7 @@ import "cdac/cooperation_log.proto";
 import "cdac/forward_policy.proto";
 import "cdac/cooperation_network.proto";
 import "cdac/update_policy.proto";
+import "cdac/cooperative_domain.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "cdac/cooperation_network_features.proto";
 import "cdac/cooperation_data.proto";
@@ -74,6 +75,9 @@ rpc CreateCooperationNetwork(MsgCreateCooperationNetwork) returns (MsgCreateCoop
   rpc CreateUpdatePolicy(MsgCreateUpdatePolicy) returns (MsgCreateUpdatePolicyResponse);
   rpc UpdateUpdatePolicy(MsgUpdateUpdatePolicy) returns (MsgUpdateUpdatePolicyResponse);
   rpc DeleteUpdatePolicy(MsgDeleteUpdatePolicy) returns (MsgDeleteUpdatePolicyResponse);
+rpc CreateCooperativeDomain(MsgCreateCooperativeDomain) returns (MsgCreateCooperativeDomainResponse);
+  rpc UpdateCooperativeDomain(MsgUpdateCooperativeDomain) returns (MsgUpdateCooperativeDomainResponse);
+  rpc DeleteCooperativeDomain(MsgDeleteCooperativeDomain) returns (MsgDeleteCooperativeDomainResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -460,7 +464,7 @@ message MsgCreateDomainMap {
   string creator = 1;
   string domainIndex = 2;
 
-  repeated Domain domainList = 3;
+  repeated CooperativeDomain cooperativeDomainList = 3;
 }
 message MsgCreateDomainMapResponse {}
 
@@ -468,7 +472,7 @@ message MsgUpdateDomainMap {
   string creator = 1;
   string domainIndex = 2;
 
-  repeated Domain domainList = 3;
+  repeated CooperativeDomain cooperativeDomainList = 3;
 }
 message MsgUpdateDomainMapResponse {}
 
@@ -518,7 +522,7 @@ message MsgCreateCooperationData {
   string status = 4;
   uint64 cost = 5;
   string lastUpdate = 6;
-  repeated string interestList = 7;
+  string interest = 7;
 }
 message MsgCreateCooperationDataResponse {}
 
@@ -530,7 +534,7 @@ message MsgUpdateCooperationData {
   string status = 4;
   uint64 cost = 5;
   string lastUpdate = 6;
-  repeated string interestList = 7;
+  string interest = 7;
 }
 message MsgUpdateCooperationDataResponse {}
 
@@ -601,4 +605,32 @@ message MsgDeleteUpdatePolicy {
   string creator = 1;
 }
 message MsgDeleteUpdatePolicyResponse {}
+message MsgCreateCooperativeDomain {
+  string creator = 1;
+  string name = 2;
+  string domainType = 3;
+  string location = 4;
+}
+
+message MsgCreateCooperativeDomainResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateCooperativeDomain {
+  string creator = 1;
+  uint64 id = 2;
+  string name = 3;
+  string domainType = 4;
+  string location = 5;
+}
+
+message MsgUpdateCooperativeDomainResponse {}
+
+message MsgDeleteCooperativeDomain {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteCooperativeDomainResponse {}
+
 // this line is used by starport scaffolding # proto/tx/message

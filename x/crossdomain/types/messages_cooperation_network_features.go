@@ -21,7 +21,7 @@ func NewMsgCreateCooperationNetworkFeatures(creator string, depth uint64, cost u
 		InterestList: interestList,
 		LocationList: locationList,
 		LastUpdate:   lastUpdate,
-		Validity: validity,
+		Validity:     validity,
 	}
 }
 
@@ -64,7 +64,7 @@ func NewMsgUpdateCooperationNetworkFeatures(creator string, depth uint64, cost u
 		InterestList: interestList,
 		LocationList: locationList,
 		LastUpdate:   lastUpdate,
-		Validity: validity,
+		Validity:     validity,
 	}
 }
 

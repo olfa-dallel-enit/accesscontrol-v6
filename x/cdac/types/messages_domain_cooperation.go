@@ -23,11 +23,11 @@ func NewMsgCreateDomainCooperation(creator string, label string, cooperationType
 		Validity:          validity,
 		Interest:          interest,
 		Cost:              cost,
-		CreationDate: creationDate,
+		CreationDate:      creationDate,
 		CreationTimestamp: creationTimestamp,
-		UpdateDate: updateDate,
+		UpdateDate:        updateDate,
 		UpdateTimestamp:   updateTimestamp,
-		Status:			  status,
+		Status:            status,
 	}
 }
 
@@ -73,11 +73,11 @@ func NewMsgUpdateDomainCooperation(creator string, id uint64, label string, coop
 		Validity:          validity,
 		Interest:          interest,
 		Cost:              cost,
-		CreationDate: creationDate,
+		CreationDate:      creationDate,
 		CreationTimestamp: creationTimestamp,
-		UpdateDate: updateDate,
+		UpdateDate:        updateDate,
 		UpdateTimestamp:   updateTimestamp,
-		Status:			  status,
+		Status:            status,
 	}
 }
 

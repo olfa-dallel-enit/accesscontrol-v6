@@ -196,6 +196,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteUpdatePolicy int = 100
 
+	opWeightMsgCreateCooperativeDomain = "op_weight_msg_cooperative_domain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateCooperativeDomain int = 100
+
+	opWeightMsgUpdateCooperativeDomain = "op_weight_msg_cooperative_domain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateCooperativeDomain int = 100
+
+	opWeightMsgDeleteCooperativeDomain = "op_weight_msg_cooperative_domain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteCooperativeDomain int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -349,6 +361,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		CooperationNetworkCount: 2,
+		CooperativeDomainList: []types.CooperativeDomain{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		CooperativeDomainCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -843,6 +866,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteUpdatePolicy,
 		cdacsimulation.SimulateMsgDeleteUpdatePolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateCooperativeDomain int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateCooperativeDomain, &weightMsgCreateCooperativeDomain, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateCooperativeDomain = defaultWeightMsgCreateCooperativeDomain
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateCooperativeDomain,
+		cdacsimulation.SimulateMsgCreateCooperativeDomain(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateCooperativeDomain int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateCooperativeDomain, &weightMsgUpdateCooperativeDomain, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateCooperativeDomain = defaultWeightMsgUpdateCooperativeDomain
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateCooperativeDomain,
+		cdacsimulation.SimulateMsgUpdateCooperativeDomain(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteCooperativeDomain int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteCooperativeDomain, &weightMsgDeleteCooperativeDomain, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteCooperativeDomain = defaultWeightMsgDeleteCooperativeDomain
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteCooperativeDomain,
+		cdacsimulation.SimulateMsgDeleteCooperativeDomain(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

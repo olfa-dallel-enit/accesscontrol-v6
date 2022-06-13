@@ -15,7 +15,9 @@ export interface DomainCooperation {
   validity: Validity | undefined;
   interest: string;
   cost: number;
+  creationDate: string;
   creationTimestamp: string;
+  updateDate: string;
   updateTimestamp: string;
   creator: string;
   status: string;
@@ -27,7 +29,9 @@ const baseDomainCooperation: object = {
   cooperationType: "",
   interest: "",
   cost: 0,
+  creationDate: "",
   creationTimestamp: "",
+  updateDate: "",
   updateTimestamp: "",
   creator: "",
   status: "",
@@ -59,17 +63,23 @@ export const DomainCooperation = {
     if (message.cost !== 0) {
       writer.uint32(64).uint64(message.cost);
     }
+    if (message.creationDate !== "") {
+      writer.uint32(74).string(message.creationDate);
+    }
     if (message.creationTimestamp !== "") {
-      writer.uint32(74).string(message.creationTimestamp);
+      writer.uint32(82).string(message.creationTimestamp);
+    }
+    if (message.updateDate !== "") {
+      writer.uint32(90).string(message.updateDate);
     }
     if (message.updateTimestamp !== "") {
-      writer.uint32(82).string(message.updateTimestamp);
+      writer.uint32(98).string(message.updateTimestamp);
     }
     if (message.creator !== "") {
-      writer.uint32(90).string(message.creator);
+      writer.uint32(106).string(message.creator);
     }
     if (message.status !== "") {
-      writer.uint32(98).string(message.status);
+      writer.uint32(114).string(message.status);
     }
     return writer;
   },
@@ -106,15 +116,21 @@ export const DomainCooperation = {
           message.cost = longToNumber(reader.uint64() as Long);
           break;
         case 9:
-          message.creationTimestamp = reader.string();
+          message.creationDate = reader.string();
           break;
         case 10:
-          message.updateTimestamp = reader.string();
+          message.creationTimestamp = reader.string();
           break;
         case 11:
-          message.creator = reader.string();
+          message.updateDate = reader.string();
           break;
         case 12:
+          message.updateTimestamp = reader.string();
+          break;
+        case 13:
+          message.creator = reader.string();
+          break;
+        case 14:
           message.status = reader.string();
           break;
         default:
@@ -170,6 +186,11 @@ export const DomainCooperation = {
     } else {
       message.cost = 0;
     }
+    if (object.creationDate !== undefined && object.creationDate !== null) {
+      message.creationDate = String(object.creationDate);
+    } else {
+      message.creationDate = "";
+    }
     if (
       object.creationTimestamp !== undefined &&
       object.creationTimestamp !== null
@@ -177,6 +198,11 @@ export const DomainCooperation = {
       message.creationTimestamp = String(object.creationTimestamp);
     } else {
       message.creationTimestamp = "";
+    }
+    if (object.updateDate !== undefined && object.updateDate !== null) {
+      message.updateDate = String(object.updateDate);
+    } else {
+      message.updateDate = "";
     }
     if (
       object.updateTimestamp !== undefined &&
@@ -219,8 +245,11 @@ export const DomainCooperation = {
         : undefined);
     message.interest !== undefined && (obj.interest = message.interest);
     message.cost !== undefined && (obj.cost = message.cost);
+    message.creationDate !== undefined &&
+      (obj.creationDate = message.creationDate);
     message.creationTimestamp !== undefined &&
       (obj.creationTimestamp = message.creationTimestamp);
+    message.updateDate !== undefined && (obj.updateDate = message.updateDate);
     message.updateTimestamp !== undefined &&
       (obj.updateTimestamp = message.updateTimestamp);
     message.creator !== undefined && (obj.creator = message.creator);
@@ -273,6 +302,11 @@ export const DomainCooperation = {
     } else {
       message.cost = 0;
     }
+    if (object.creationDate !== undefined && object.creationDate !== null) {
+      message.creationDate = object.creationDate;
+    } else {
+      message.creationDate = "";
+    }
     if (
       object.creationTimestamp !== undefined &&
       object.creationTimestamp !== null
@@ -280,6 +314,11 @@ export const DomainCooperation = {
       message.creationTimestamp = object.creationTimestamp;
     } else {
       message.creationTimestamp = "";
+    }
+    if (object.updateDate !== undefined && object.updateDate !== null) {
+      message.updateDate = object.updateDate;
+    } else {
+      message.updateDate = "";
     }
     if (
       object.updateTimestamp !== undefined &&

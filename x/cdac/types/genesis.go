@@ -26,6 +26,7 @@ func DefaultGenesis() *GenesisState {
 		CooperationDataList:            []CooperationData{},
 		CooperationNetworkList:         []CooperationNetwork{},
 		UpdatePolicy:                   nil,
+		CooperativeDomainList:          []CooperativeDomain{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -188,6 +189,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("cooperationNetwork id should be lower or equal than the last id")
 		}
 		cooperationNetworkIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in cooperativeDomain
+	cooperativeDomainIdMap := make(map[uint64]bool)
+	cooperativeDomainCount := gs.GetCooperativeDomainCount()
+	for _, elem := range gs.CooperativeDomainList {
+		if _, ok := cooperativeDomainIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for cooperativeDomain")
+		}
+		if elem.Id >= cooperativeDomainCount {
+			return fmt.Errorf("cooperativeDomain id should be lower or equal than the last id")
+		}
+		cooperativeDomainIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

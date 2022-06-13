@@ -1,0 +1,12 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message CooperativeDomain {
+  uint64 id = 1;
+  string name = 2; 
+  string domainType = 3; 
+  string location = 4; 
+  string creator = 5;
+}

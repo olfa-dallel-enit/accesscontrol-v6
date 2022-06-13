@@ -134,6 +134,15 @@ func TestGenesis(t *testing.T) {
 			Event:           true,
 			PeriodicalQuery: false,
 		},
+		CooperativeDomainList: []types.CooperativeDomain{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		CooperativeDomainCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -172,5 +181,7 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.CooperationNetworkList, got.CooperationNetworkList)
 	require.Equal(t, genesisState.CooperationNetworkCount, got.CooperationNetworkCount)
 	require.Equal(t, genesisState.UpdatePolicy, got.UpdatePolicy)
+	require.ElementsMatch(t, genesisState.CooperativeDomainList, got.CooperativeDomainList)
+	require.Equal(t, genesisState.CooperativeDomainCount, got.CooperativeDomainCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

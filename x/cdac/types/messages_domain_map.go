@@ -16,13 +16,13 @@ var _ sdk.Msg = &MsgCreateDomainMap{}
 func NewMsgCreateDomainMap(
 	creator string,
 	domainIndex string,
-	domainList []*Domain,
+	cooperativeDomainList []*CooperativeDomain,
 
 ) *MsgCreateDomainMap {
 	return &MsgCreateDomainMap{
 		Creator:     creator,
 		DomainIndex: domainIndex,
-		DomainList:  domainList,
+		CooperativeDomainList:  cooperativeDomainList,
 	}
 }
 
@@ -60,13 +60,13 @@ var _ sdk.Msg = &MsgUpdateDomainMap{}
 func NewMsgUpdateDomainMap(
 	creator string,
 	domainIndex string,
-	domainList []*Domain,
+	cooperativeDomainList []*CooperativeDomain,
 
 ) *MsgUpdateDomainMap {
 	return &MsgUpdateDomainMap{
 		Creator:     creator,
 		DomainIndex: domainIndex,
-		DomainList:  domainList,
+		CooperativeDomainList:  cooperativeDomainList,
 	}
 }
 

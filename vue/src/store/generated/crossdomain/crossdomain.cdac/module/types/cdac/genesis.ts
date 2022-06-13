@@ -16,6 +16,7 @@ import { CooperationNetworkFeatures } from "../cdac/cooperation_network_features
 import { CooperationData } from "../cdac/cooperation_data";
 import { CooperationNetwork } from "../cdac/cooperation_network";
 import { UpdatePolicy } from "../cdac/update_policy";
+import { CooperativeDomain } from "../cdac/cooperative_domain";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -47,8 +48,10 @@ export interface GenesisState {
   cooperationDataList: CooperationData[];
   cooperationNetworkList: CooperationNetwork[];
   cooperationNetworkCount: number;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   updatePolicy: UpdatePolicy | undefined;
+  cooperativeDomainList: CooperativeDomain[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  cooperativeDomainCount: number;
 }
 
 const baseGenesisState: object = {
@@ -64,6 +67,7 @@ const baseGenesisState: object = {
   forwardPolicyCount: 0,
   cooperationNetworkFeaturesCount: 0,
   cooperationNetworkCount: 0,
+  cooperativeDomainCount: 0,
 };
 
 export const GenesisState = {
@@ -152,6 +156,12 @@ export const GenesisState = {
         writer.uint32(218).fork()
       ).ldelim();
     }
+    for (const v of message.cooperativeDomainList) {
+      CooperativeDomain.encode(v!, writer.uint32(226).fork()).ldelim();
+    }
+    if (message.cooperativeDomainCount !== 0) {
+      writer.uint32(232).uint64(message.cooperativeDomainCount);
+    }
     return writer;
   },
 
@@ -172,6 +182,7 @@ export const GenesisState = {
     message.cooperationNetworkFeaturesList = [];
     message.cooperationDataList = [];
     message.cooperationNetworkList = [];
+    message.cooperativeDomainList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -282,6 +293,16 @@ export const GenesisState = {
         case 27:
           message.updatePolicy = UpdatePolicy.decode(reader, reader.uint32());
           break;
+        case 28:
+          message.cooperativeDomainList.push(
+            CooperativeDomain.decode(reader, reader.uint32())
+          );
+          break;
+        case 29:
+          message.cooperativeDomainCount = longToNumber(
+            reader.uint64() as Long
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -305,6 +326,7 @@ export const GenesisState = {
     message.cooperationNetworkFeaturesList = [];
     message.cooperationDataList = [];
     message.cooperationNetworkList = [];
+    message.cooperativeDomainList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -495,6 +517,22 @@ export const GenesisState = {
     } else {
       message.updatePolicy = undefined;
     }
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromJSON(e));
+      }
+    }
+    if (
+      object.cooperativeDomainCount !== undefined &&
+      object.cooperativeDomainCount !== null
+    ) {
+      message.cooperativeDomainCount = Number(object.cooperativeDomainCount);
+    } else {
+      message.cooperativeDomainCount = 0;
+    }
     return message;
   },
 
@@ -621,6 +659,15 @@ export const GenesisState = {
       (obj.updatePolicy = message.updatePolicy
         ? UpdatePolicy.toJSON(message.updatePolicy)
         : undefined);
+    if (message.cooperativeDomainList) {
+      obj.cooperativeDomainList = message.cooperativeDomainList.map((e) =>
+        e ? CooperativeDomain.toJSON(e) : undefined
+      );
+    } else {
+      obj.cooperativeDomainList = [];
+    }
+    message.cooperativeDomainCount !== undefined &&
+      (obj.cooperativeDomainCount = message.cooperativeDomainCount);
     return obj;
   },
 
@@ -639,6 +686,7 @@ export const GenesisState = {
     message.cooperationNetworkFeaturesList = [];
     message.cooperationDataList = [];
     message.cooperationNetworkList = [];
+    message.cooperativeDomainList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -827,6 +875,22 @@ export const GenesisState = {
       message.updatePolicy = UpdatePolicy.fromPartial(object.updatePolicy);
     } else {
       message.updatePolicy = undefined;
+    }
+    if (
+      object.cooperativeDomainList !== undefined &&
+      object.cooperativeDomainList !== null
+    ) {
+      for (const e of object.cooperativeDomainList) {
+        message.cooperativeDomainList.push(CooperativeDomain.fromPartial(e));
+      }
+    }
+    if (
+      object.cooperativeDomainCount !== undefined &&
+      object.cooperativeDomainCount !== null
+    ) {
+      message.cooperativeDomainCount = object.cooperativeDomainCount;
+    } else {
+      message.cooperativeDomainCount = 0;
     }
     return message;
   },

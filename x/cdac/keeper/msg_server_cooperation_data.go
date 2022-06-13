@@ -21,13 +21,13 @@ func (k msgServer) CreateCooperationData(goCtx context.Context, msg *types.MsgCr
 	}
 
 	var cooperationData = types.CooperationData{
-		Creator:      msg.Creator,
-		LabelIndex:   msg.LabelIndex,
-		Validity:     msg.Validity,
-		Status:       msg.Status,
-		Cost:         msg.Cost,
-		LastUpdate:   msg.LastUpdate,
-		InterestList: msg.InterestList,
+		Creator:    msg.Creator,
+		LabelIndex: msg.LabelIndex,
+		Validity:   msg.Validity,
+		Status:     msg.Status,
+		Cost:       msg.Cost,
+		LastUpdate: msg.LastUpdate,
+		Interest:   msg.Interest,
 	}
 
 	k.SetCooperationData(
@@ -55,13 +55,13 @@ func (k msgServer) UpdateCooperationData(goCtx context.Context, msg *types.MsgUp
 	}
 
 	var cooperationData = types.CooperationData{
-		Creator:      msg.Creator,
-		LabelIndex:   msg.LabelIndex,
-		Validity:     msg.Validity,
-		Status:       msg.Status,
-		Cost:         msg.Cost,
-		LastUpdate:   msg.LastUpdate,
-		InterestList: msg.InterestList,
+		Creator:    msg.Creator,
+		LabelIndex: msg.LabelIndex,
+		Validity:   msg.Validity,
+		Status:     msg.Status,
+		Cost:       msg.Cost,
+		LastUpdate: msg.LastUpdate,
+		Interest:   msg.Interest,
 	}
 
 	k.SetCooperationData(ctx, cooperationData)

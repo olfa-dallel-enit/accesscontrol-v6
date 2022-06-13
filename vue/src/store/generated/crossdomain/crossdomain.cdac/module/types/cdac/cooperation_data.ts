@@ -11,7 +11,7 @@ export interface CooperationData {
   status: string;
   cost: number;
   lastUpdate: string;
-  interestList: string[];
+  interest: string;
   creator: string;
 }
 
@@ -20,7 +20,7 @@ const baseCooperationData: object = {
   status: "",
   cost: 0,
   lastUpdate: "",
-  interestList: "",
+  interest: "",
   creator: "",
 };
 
@@ -41,8 +41,8 @@ export const CooperationData = {
     if (message.lastUpdate !== "") {
       writer.uint32(42).string(message.lastUpdate);
     }
-    for (const v of message.interestList) {
-      writer.uint32(50).string(v!);
+    if (message.interest !== "") {
+      writer.uint32(50).string(message.interest);
     }
     if (message.creator !== "") {
       writer.uint32(58).string(message.creator);
@@ -54,7 +54,6 @@ export const CooperationData = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCooperationData } as CooperationData;
-    message.interestList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -74,7 +73,7 @@ export const CooperationData = {
           message.lastUpdate = reader.string();
           break;
         case 6:
-          message.interestList.push(reader.string());
+          message.interest = reader.string();
           break;
         case 7:
           message.creator = reader.string();
@@ -89,7 +88,6 @@ export const CooperationData = {
 
   fromJSON(object: any): CooperationData {
     const message = { ...baseCooperationData } as CooperationData;
-    message.interestList = [];
     if (object.labelIndex !== undefined && object.labelIndex !== null) {
       message.labelIndex = String(object.labelIndex);
     } else {
@@ -115,10 +113,10 @@ export const CooperationData = {
     } else {
       message.lastUpdate = "";
     }
-    if (object.interestList !== undefined && object.interestList !== null) {
-      for (const e of object.interestList) {
-        message.interestList.push(String(e));
-      }
+    if (object.interest !== undefined && object.interest !== null) {
+      message.interest = String(object.interest);
+    } else {
+      message.interest = "";
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
@@ -138,18 +136,13 @@ export const CooperationData = {
     message.status !== undefined && (obj.status = message.status);
     message.cost !== undefined && (obj.cost = message.cost);
     message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
-    if (message.interestList) {
-      obj.interestList = message.interestList.map((e) => e);
-    } else {
-      obj.interestList = [];
-    }
+    message.interest !== undefined && (obj.interest = message.interest);
     message.creator !== undefined && (obj.creator = message.creator);
     return obj;
   },
 
   fromPartial(object: DeepPartial<CooperationData>): CooperationData {
     const message = { ...baseCooperationData } as CooperationData;
-    message.interestList = [];
     if (object.labelIndex !== undefined && object.labelIndex !== null) {
       message.labelIndex = object.labelIndex;
     } else {
@@ -175,10 +168,10 @@ export const CooperationData = {
     } else {
       message.lastUpdate = "";
     }
-    if (object.interestList !== undefined && object.interestList !== null) {
-      for (const e of object.interestList) {
-        message.interestList.push(e);
-      }
+    if (object.interest !== undefined && object.interest !== null) {
+      message.interest = object.interest;
+    } else {
+      message.interest = "";
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;

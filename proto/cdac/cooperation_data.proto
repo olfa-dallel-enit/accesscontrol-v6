@@ -10,7 +10,7 @@ message CooperationData {
   string status = 3; 
   uint64 cost = 4; 
   string lastUpdate = 5; 
-  repeated string interestList = 6; 
+  string interest = 6; 
   string creator = 7;
 }
 

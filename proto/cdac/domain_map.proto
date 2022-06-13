@@ -2,11 +2,11 @@ syntax = "proto3";
 package crossdomain.cdac;
 
 option go_package = "crossdomain/x/cdac/types";
-import "cdac/domain.proto"; 
+import "cdac/cooperative_domain.proto";
 
 message DomainMap {
   string domainIndex = 1; 
-  repeated Domain domainList = 2; 
+  repeated CooperativeDomain cooperativeDomainList = 2; 
   string creator = 3;
 }
 

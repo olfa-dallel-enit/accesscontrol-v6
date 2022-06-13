@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import { Validity } from "../crossdomain/validity";
 
 export const protobufPackage = "crossdomain.crossdomain";
 
@@ -10,6 +11,7 @@ export interface CooperationNetworkFeatures {
   interestList: string[];
   locationList: string[];
   lastUpdate: string;
+  validity: Validity | undefined;
   creator: string;
 }
 
@@ -42,8 +44,11 @@ export const CooperationNetworkFeatures = {
     if (message.lastUpdate !== "") {
       writer.uint32(42).string(message.lastUpdate);
     }
+    if (message.validity !== undefined) {
+      Validity.encode(message.validity, writer.uint32(50).fork()).ldelim();
+    }
     if (message.creator !== "") {
-      writer.uint32(50).string(message.creator);
+      writer.uint32(58).string(message.creator);
     }
     return writer;
   },
@@ -78,6 +83,9 @@ export const CooperationNetworkFeatures = {
           message.lastUpdate = reader.string();
           break;
         case 6:
+          message.validity = Validity.decode(reader, reader.uint32());
+          break;
+        case 7:
           message.creator = reader.string();
           break;
         default:
@@ -119,6 +127,11 @@ export const CooperationNetworkFeatures = {
     } else {
       message.lastUpdate = "";
     }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromJSON(object.validity);
+    } else {
+      message.validity = undefined;
+    }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -142,6 +155,10 @@ export const CooperationNetworkFeatures = {
       obj.locationList = [];
     }
     message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
+    message.validity !== undefined &&
+      (obj.validity = message.validity
+        ? Validity.toJSON(message.validity)
+        : undefined);
     message.creator !== undefined && (obj.creator = message.creator);
     return obj;
   },
@@ -178,6 +195,11 @@ export const CooperationNetworkFeatures = {
       message.lastUpdate = object.lastUpdate;
     } else {
       message.lastUpdate = "";
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromPartial(object.validity);
+    } else {
+      message.validity = undefined;
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;

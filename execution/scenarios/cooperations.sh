@@ -12,8 +12,6 @@ crossdomaind tx cdac create-domain-cooperation "mars.2.1-mars.3.1" "Indirect" '{
 
 crossdomaind tx cdac create-domain-cooperation "mars.3.1-mars.4.1" "Indirect" '{"name":"mars.3.1","domainType":"Remote","location":"france","Certificate":{},"ibc-connection":{}}' '{"name":"mars.4.1","domainType":"Remote","location":"france","Certificate":{},"ibc-connection":{}}' '{"notBefore":"2022-02-03 00:00:00","notAfter":"2024-02-03 00:00:00"}' "computing" 200 "2022-02-03 00:00:00" "1643846400000000000" "2022-02-03 00:00:00" "1643846400000000000" "Enabled" --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
 
-
-
 crossdomaind query cdac list-domain-cooperation --node tcp://localhost:26657
 
 crossdomaind tx cdac generate-cooperation-network --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15

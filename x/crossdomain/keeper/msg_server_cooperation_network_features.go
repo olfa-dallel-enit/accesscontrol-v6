@@ -24,7 +24,7 @@ func (k msgServer) CreateCooperationNetworkFeatures(goCtx context.Context, msg *
 		InterestList: msg.InterestList,
 		LocationList: msg.LocationList,
 		LastUpdate:   msg.LastUpdate,
-		Validity: msg.Validity,
+		Validity:     msg.Validity,
 	}
 
 	k.SetCooperationNetworkFeatures(
@@ -55,7 +55,7 @@ func (k msgServer) UpdateCooperationNetworkFeatures(goCtx context.Context, msg *
 		InterestList: msg.InterestList,
 		LocationList: msg.LocationList,
 		LastUpdate:   msg.LastUpdate,
-		Validity: msg.Validity,
+		Validity:     msg.Validity,
 	}
 
 	k.SetCooperationNetworkFeatures(ctx, cooperationNetworkFeatures)

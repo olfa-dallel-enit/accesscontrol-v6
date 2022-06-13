@@ -8,12 +8,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
-	"strings"
 )
 
 func CmdCreateCooperationData() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-cooperation-data [label-index] [validity] [status] [cost] [last-update] [interest-list]",
+		Use:   "create-cooperation-data [label-index] [validity] [status] [cost] [last-update] [interest]",
 		Short: "Create a new cooperation-data",
 		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
@@ -32,7 +31,7 @@ func CmdCreateCooperationData() *cobra.Command {
 				return err
 			}
 			argLastUpdate := args[4]
-			argInterestList := strings.Split(args[5], listSeparator)
+			argInterest := args[5]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -46,7 +45,7 @@ func CmdCreateCooperationData() *cobra.Command {
 				argStatus,
 				argCost,
 				argLastUpdate,
-				argInterestList,
+				argInterest,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -62,7 +61,7 @@ func CmdCreateCooperationData() *cobra.Command {
 
 func CmdUpdateCooperationData() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update-cooperation-data [label-index] [validity] [status] [cost] [last-update] [interest-list]",
+		Use:   "update-cooperation-data [label-index] [validity] [status] [cost] [last-update] [interest]",
 		Short: "Update a cooperation-data",
 		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
@@ -81,7 +80,7 @@ func CmdUpdateCooperationData() *cobra.Command {
 				return err
 			}
 			argLastUpdate := args[4]
-			argInterestList := strings.Split(args[5], listSeparator)
+			argInterest := args[5]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -95,7 +94,7 @@ func CmdUpdateCooperationData() *cobra.Command {
 				argStatus,
 				argCost,
 				argLastUpdate,
-				argInterestList,
+				argInterest,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

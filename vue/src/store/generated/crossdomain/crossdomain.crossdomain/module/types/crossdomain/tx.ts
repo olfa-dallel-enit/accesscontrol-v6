@@ -210,6 +210,7 @@ export interface MsgCreateCooperationNetworkFeatures {
   interestList: string[];
   locationList: string[];
   lastUpdate: string;
+  validity: Validity | undefined;
 }
 
 export interface MsgCreateCooperationNetworkFeaturesResponse {}
@@ -221,6 +222,7 @@ export interface MsgUpdateCooperationNetworkFeatures {
   interestList: string[];
   locationList: string[];
   lastUpdate: string;
+  validity: Validity | undefined;
 }
 
 export interface MsgUpdateCooperationNetworkFeaturesResponse {}
@@ -4072,6 +4074,9 @@ export const MsgCreateCooperationNetworkFeatures = {
     if (message.lastUpdate !== "") {
       writer.uint32(58).string(message.lastUpdate);
     }
+    if (message.validity !== undefined) {
+      Validity.encode(message.validity, writer.uint32(66).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -4106,6 +4111,9 @@ export const MsgCreateCooperationNetworkFeatures = {
           break;
         case 7:
           message.lastUpdate = reader.string();
+          break;
+        case 8:
+          message.validity = Validity.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -4151,6 +4159,11 @@ export const MsgCreateCooperationNetworkFeatures = {
     } else {
       message.lastUpdate = "";
     }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromJSON(object.validity);
+    } else {
+      message.validity = undefined;
+    }
     return message;
   },
 
@@ -4170,6 +4183,10 @@ export const MsgCreateCooperationNetworkFeatures = {
       obj.locationList = [];
     }
     message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
+    message.validity !== undefined &&
+      (obj.validity = message.validity
+        ? Validity.toJSON(message.validity)
+        : undefined);
     return obj;
   },
 
@@ -4210,6 +4227,11 @@ export const MsgCreateCooperationNetworkFeatures = {
       message.lastUpdate = object.lastUpdate;
     } else {
       message.lastUpdate = "";
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromPartial(object.validity);
+    } else {
+      message.validity = undefined;
     }
     return message;
   },
@@ -4299,6 +4321,9 @@ export const MsgUpdateCooperationNetworkFeatures = {
     if (message.lastUpdate !== "") {
       writer.uint32(58).string(message.lastUpdate);
     }
+    if (message.validity !== undefined) {
+      Validity.encode(message.validity, writer.uint32(66).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -4333,6 +4358,9 @@ export const MsgUpdateCooperationNetworkFeatures = {
           break;
         case 7:
           message.lastUpdate = reader.string();
+          break;
+        case 8:
+          message.validity = Validity.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -4378,6 +4406,11 @@ export const MsgUpdateCooperationNetworkFeatures = {
     } else {
       message.lastUpdate = "";
     }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromJSON(object.validity);
+    } else {
+      message.validity = undefined;
+    }
     return message;
   },
 
@@ -4397,6 +4430,10 @@ export const MsgUpdateCooperationNetworkFeatures = {
       obj.locationList = [];
     }
     message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate);
+    message.validity !== undefined &&
+      (obj.validity = message.validity
+        ? Validity.toJSON(message.validity)
+        : undefined);
     return obj;
   },
 
@@ -4437,6 +4474,11 @@ export const MsgUpdateCooperationNetworkFeatures = {
       message.lastUpdate = object.lastUpdate;
     } else {
       message.lastUpdate = "";
+    }
+    if (object.validity !== undefined && object.validity !== null) {
+      message.validity = Validity.fromPartial(object.validity);
+    } else {
+      message.validity = undefined;
     }
     return message;
   },

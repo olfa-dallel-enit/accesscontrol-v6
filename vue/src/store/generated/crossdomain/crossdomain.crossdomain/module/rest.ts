@@ -18,6 +18,7 @@ export interface CrossdomainCooperationNetworkFeatures {
   interestList?: string[];
   locationList?: string[];
   lastUpdate?: string;
+  validity?: CrossdomainValidity;
   creator?: string;
 }
 
