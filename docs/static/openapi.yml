@@ -21495,6 +21495,210 @@ paths:
           format: uint64
       tags:
         - Query
+  /crossdomain/cdac/delegation_conditions:
+    get:
+      summary: Queries a list of DelegationConditions items.
+      operationId: CrossdomainCdacDelegationConditionsAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationConditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    depth:
+                      type: string
+                      format: uint64
+                    validity:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        notBefore:
+                          type: string
+                        notAfter:
+                          type: string
+                        creator:
+                          type: string
+                    maxDelegations:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/delegation_conditions/{id}':
+    get:
+      summary: Queries a DelegationConditions by id.
+      operationId: CrossdomainCdacDelegationConditions
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationConditions:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  depth:
+                    type: string
+                    format: uint64
+                  validity:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      notBefore:
+                        type: string
+                      notAfter:
+                        type: string
+                      creator:
+                        type: string
+                  maxDelegations:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
   /crossdomain/cdac/delegation_path:
     get:
       summary: Queries a list of DelegationPath items.
@@ -21748,6 +21952,722 @@ paths:
                   creator:
                     type: string
                   label:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /crossdomain/cdac/delegation_policy:
+    get:
+      summary: Queries a list of DelegationPolicy items.
+      operationId: CrossdomainCdacDelegationPolicyAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationPolicy:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    label:
+                      type: string
+                    target:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        delegatorList:
+                          type: array
+                          items:
+                            type: string
+                        permissionList:
+                          type: array
+                          items:
+                            type: string
+                        action:
+                          type: string
+                        creator:
+                          type: string
+                    combiningAlgorithm:
+                      type: string
+                    ruleList:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        label:
+                          type: string
+                        effect:
+                          type: string
+                        delegationConditions:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            depth:
+                              type: string
+                              format: uint64
+                            validity:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                notBefore:
+                                  type: string
+                                notAfter:
+                                  type: string
+                                creator:
+                                  type: string
+                            maxDelegations:
+                              type: string
+                              format: uint64
+                            creator:
+                              type: string
+                        priority:
+                          type: string
+                          format: uint64
+                        creator:
+                          type: string
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/delegation_policy/{id}':
+    get:
+      summary: Queries a DelegationPolicy by id.
+      operationId: CrossdomainCdacDelegationPolicy
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationPolicy:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  label:
+                    type: string
+                  target:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      delegatorList:
+                        type: array
+                        items:
+                          type: string
+                      permissionList:
+                        type: array
+                        items:
+                          type: string
+                      action:
+                        type: string
+                      creator:
+                        type: string
+                  combiningAlgorithm:
+                    type: string
+                  ruleList:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      label:
+                        type: string
+                      effect:
+                        type: string
+                      delegationConditions:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          depth:
+                            type: string
+                            format: uint64
+                          validity:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              notBefore:
+                                type: string
+                              notAfter:
+                                type: string
+                              creator:
+                                type: string
+                          maxDelegations:
+                            type: string
+                            format: uint64
+                          creator:
+                            type: string
+                      priority:
+                        type: string
+                        format: uint64
+                      creator:
+                        type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /crossdomain/cdac/delegation_policy_target:
+    get:
+      summary: Queries a list of DelegationPolicyTarget items.
+      operationId: CrossdomainCdacDelegationPolicyTargetAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationPolicyTarget:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    delegatorList:
+                      type: array
+                      items:
+                        type: string
+                    permissionList:
+                      type: array
+                      items:
+                        type: string
+                    action:
+                      type: string
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/delegation_policy_target/{id}':
+    get:
+      summary: Queries a DelegationPolicyTarget by id.
+      operationId: CrossdomainCdacDelegationPolicyTarget
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationPolicyTarget:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  delegatorList:
+                    type: array
+                    items:
+                      type: string
+                  permissionList:
+                    type: array
+                    items:
+                      type: string
+                  action:
+                    type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /crossdomain/cdac/delegation_rule:
+    get:
+      summary: Queries a list of DelegationRule items.
+      operationId: CrossdomainCdacDelegationRuleAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationRule:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    label:
+                      type: string
+                    effect:
+                      type: string
+                    delegationConditions:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        depth:
+                          type: string
+                          format: uint64
+                        validity:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            notBefore:
+                              type: string
+                            notAfter:
+                              type: string
+                            creator:
+                              type: string
+                        maxDelegations:
+                          type: string
+                          format: uint64
+                        creator:
+                          type: string
+                    priority:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/crossdomain/cdac/delegation_rule/{id}':
+    get:
+      summary: Queries a DelegationRule by id.
+      operationId: CrossdomainCdacDelegationRule
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              DelegationRule:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  label:
+                    type: string
+                  effect:
+                    type: string
+                  delegationConditions:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      depth:
+                        type: string
+                        format: uint64
+                      validity:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          notBefore:
+                            type: string
+                          notAfter:
+                            type: string
+                          creator:
+                            type: string
+                      maxDelegations:
+                        type: string
+                        format: uint64
+                      creator:
+                        type: string
+                  priority:
+                    type: string
+                    format: uint64
+                  creator:
                     type: string
         default:
           description: An unexpected error response.
@@ -23520,8 +24440,6 @@ paths:
                       type: array
                       items:
                         type: string
-                    status:
-                      type: string
                     creationTimestamp:
                       type: string
                     updateTimestamp:
@@ -23680,8 +24598,6 @@ paths:
                     type: array
                     items:
                       type: string
-                  status:
-                    type: string
                   creationTimestamp:
                     type: string
                   updateTimestamp:
@@ -52077,6 +52993,32 @@ definitions:
         type: string
       creator:
         type: string
+  crossdomain.cdac.DelegationConditions:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      depth:
+        type: string
+        format: uint64
+      validity:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          notBefore:
+            type: string
+          notAfter:
+            type: string
+          creator:
+            type: string
+      maxDelegations:
+        type: string
+        format: uint64
+      creator:
+        type: string
   crossdomain.cdac.DelegationPath:
     type: object
     properties:
@@ -52140,6 +53082,136 @@ definitions:
       creator:
         type: string
       label:
+        type: string
+  crossdomain.cdac.DelegationPolicy:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      label:
+        type: string
+      target:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          delegatorList:
+            type: array
+            items:
+              type: string
+          permissionList:
+            type: array
+            items:
+              type: string
+          action:
+            type: string
+          creator:
+            type: string
+      combiningAlgorithm:
+        type: string
+      ruleList:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          label:
+            type: string
+          effect:
+            type: string
+          delegationConditions:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              depth:
+                type: string
+                format: uint64
+              validity:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  notBefore:
+                    type: string
+                  notAfter:
+                    type: string
+                  creator:
+                    type: string
+              maxDelegations:
+                type: string
+                format: uint64
+              creator:
+                type: string
+          priority:
+            type: string
+            format: uint64
+          creator:
+            type: string
+      creator:
+        type: string
+  crossdomain.cdac.DelegationPolicyTarget:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      delegatorList:
+        type: array
+        items:
+          type: string
+      permissionList:
+        type: array
+        items:
+          type: string
+      action:
+        type: string
+      creator:
+        type: string
+  crossdomain.cdac.DelegationRule:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      label:
+        type: string
+      effect:
+        type: string
+      delegationConditions:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          depth:
+            type: string
+            format: uint64
+          validity:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              notBefore:
+                type: string
+              notAfter:
+                type: string
+              creator:
+                type: string
+          maxDelegations:
+            type: string
+            format: uint64
+          creator:
+            type: string
+      priority:
+        type: string
+        format: uint64
+      creator:
         type: string
   crossdomain.cdac.Domain:
     type: object
@@ -52464,8 +53536,6 @@ definitions:
         type: array
         items:
           type: string
-      status:
-        type: string
       creationTimestamp:
         type: string
       updateTimestamp:
@@ -52534,7 +53604,31 @@ definitions:
       id:
         type: string
         format: uint64
+  crossdomain.cdac.MsgCreateDelegationConditionsResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
   crossdomain.cdac.MsgCreateDelegationPathResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  crossdomain.cdac.MsgCreateDelegationPolicyResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  crossdomain.cdac.MsgCreateDelegationPolicyTargetResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  crossdomain.cdac.MsgCreateDelegationRuleResponse:
     type: object
     properties:
       id:
@@ -52620,7 +53714,15 @@ definitions:
     type: object
   crossdomain.cdac.MsgDeleteCooperativeDomainResponse:
     type: object
+  crossdomain.cdac.MsgDeleteDelegationConditionsResponse:
+    type: object
   crossdomain.cdac.MsgDeleteDelegationPathResponse:
+    type: object
+  crossdomain.cdac.MsgDeleteDelegationPolicyResponse:
+    type: object
+  crossdomain.cdac.MsgDeleteDelegationPolicyTargetResponse:
+    type: object
+  crossdomain.cdac.MsgDeleteDelegationRuleResponse:
     type: object
   crossdomain.cdac.MsgDeleteDomainCooperationResponse:
     type: object
@@ -52689,7 +53791,15 @@ definitions:
     type: object
   crossdomain.cdac.MsgUpdateCooperativeDomainResponse:
     type: object
+  crossdomain.cdac.MsgUpdateDelegationConditionsResponse:
+    type: object
   crossdomain.cdac.MsgUpdateDelegationPathResponse:
+    type: object
+  crossdomain.cdac.MsgUpdateDelegationPolicyResponse:
+    type: object
+  crossdomain.cdac.MsgUpdateDelegationPolicyTargetResponse:
+    type: object
+  crossdomain.cdac.MsgUpdateDelegationRuleResponse:
     type: object
   crossdomain.cdac.MsgUpdateDomainCooperationResponse:
     type: object
@@ -53242,6 +54352,62 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  crossdomain.cdac.QueryAllDelegationConditionsResponse:
+    type: object
+    properties:
+      DelegationConditions:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            depth:
+              type: string
+              format: uint64
+            validity:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                notBefore:
+                  type: string
+                notAfter:
+                  type: string
+                creator:
+                  type: string
+            maxDelegations:
+              type: string
+              format: uint64
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
   crossdomain.cdac.QueryAllDelegationPathResponse:
     type: object
     properties:
@@ -53310,6 +54476,226 @@ definitions:
             creator:
               type: string
             label:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllDelegationPolicyResponse:
+    type: object
+    properties:
+      DelegationPolicy:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            label:
+              type: string
+            target:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                delegatorList:
+                  type: array
+                  items:
+                    type: string
+                permissionList:
+                  type: array
+                  items:
+                    type: string
+                action:
+                  type: string
+                creator:
+                  type: string
+            combiningAlgorithm:
+              type: string
+            ruleList:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                label:
+                  type: string
+                effect:
+                  type: string
+                delegationConditions:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    depth:
+                      type: string
+                      format: uint64
+                    validity:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        notBefore:
+                          type: string
+                        notAfter:
+                          type: string
+                        creator:
+                          type: string
+                    maxDelegations:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+                priority:
+                  type: string
+                  format: uint64
+                creator:
+                  type: string
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllDelegationPolicyTargetResponse:
+    type: object
+    properties:
+      DelegationPolicyTarget:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            delegatorList:
+              type: array
+              items:
+                type: string
+            permissionList:
+              type: array
+              items:
+                type: string
+            action:
+              type: string
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  crossdomain.cdac.QueryAllDelegationRuleResponse:
+    type: object
+    properties:
+      DelegationRule:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            label:
+              type: string
+            effect:
+              type: string
+            delegationConditions:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                depth:
+                  type: string
+                  format: uint64
+                validity:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    notBefore:
+                      type: string
+                    notAfter:
+                      type: string
+                    creator:
+                      type: string
+                maxDelegations:
+                  type: string
+                  format: uint64
+                creator:
+                  type: string
+            priority:
+              type: string
+              format: uint64
+            creator:
               type: string
       pagination:
         type: object
@@ -53844,8 +55230,6 @@ definitions:
               type: array
               items:
                 type: string
-            status:
-              type: string
             creationTimestamp:
               type: string
             updateTimestamp:
@@ -54523,6 +55907,35 @@ definitions:
             type: string
           creator:
             type: string
+  crossdomain.cdac.QueryGetDelegationConditionsResponse:
+    type: object
+    properties:
+      DelegationConditions:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          depth:
+            type: string
+            format: uint64
+          validity:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              notBefore:
+                type: string
+              notAfter:
+                type: string
+              creator:
+                type: string
+          maxDelegations:
+            type: string
+            format: uint64
+          creator:
+            type: string
   crossdomain.cdac.QueryGetDelegationPathResponse:
     type: object
     properties:
@@ -54589,6 +56002,145 @@ definitions:
           creator:
             type: string
           label:
+            type: string
+  crossdomain.cdac.QueryGetDelegationPolicyResponse:
+    type: object
+    properties:
+      DelegationPolicy:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          label:
+            type: string
+          target:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              delegatorList:
+                type: array
+                items:
+                  type: string
+              permissionList:
+                type: array
+                items:
+                  type: string
+              action:
+                type: string
+              creator:
+                type: string
+          combiningAlgorithm:
+            type: string
+          ruleList:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              label:
+                type: string
+              effect:
+                type: string
+              delegationConditions:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  depth:
+                    type: string
+                    format: uint64
+                  validity:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      notBefore:
+                        type: string
+                      notAfter:
+                        type: string
+                      creator:
+                        type: string
+                  maxDelegations:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+              priority:
+                type: string
+                format: uint64
+              creator:
+                type: string
+          creator:
+            type: string
+  crossdomain.cdac.QueryGetDelegationPolicyTargetResponse:
+    type: object
+    properties:
+      DelegationPolicyTarget:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          delegatorList:
+            type: array
+            items:
+              type: string
+          permissionList:
+            type: array
+            items:
+              type: string
+          action:
+            type: string
+          creator:
+            type: string
+  crossdomain.cdac.QueryGetDelegationRuleResponse:
+    type: object
+    properties:
+      DelegationRule:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          label:
+            type: string
+          effect:
+            type: string
+          delegationConditions:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              depth:
+                type: string
+                format: uint64
+              validity:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  notBefore:
+                    type: string
+                  notAfter:
+                    type: string
+                  creator:
+                    type: string
+              maxDelegations:
+                type: string
+                format: uint64
+              creator:
+                type: string
+          priority:
+            type: string
+            format: uint64
+          creator:
             type: string
   crossdomain.cdac.QueryGetDomainCooperationResponse:
     type: object
@@ -54934,8 +56486,6 @@ definitions:
             type: array
             items:
               type: string
-          status:
-            type: string
           creationTimestamp:
             type: string
           updateTimestamp:

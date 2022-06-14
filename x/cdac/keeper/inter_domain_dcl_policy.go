@@ -114,14 +114,14 @@ func (k Keeper) GetInterDomainDclPolicyByLabel(ctx sdk.Context, label string) (d
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.InterDomainDclPolicy
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
-		if val.Label == label{
+		if val.Label == label {
 			return val, true
 		}
 	}
 	return delegationPolicy, false
 }
 
-func (k Keeper) FindInterDomainDclPolicyByLabel(ctx sdk.Context, label string) (bool) {
+func (k Keeper) FindInterDomainDclPolicyByLabel(ctx sdk.Context, label string) bool {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.InterDomainDclPolicyKey))
 	iterator := sdk.KVStorePrefixIterator(store, []byte{})
 
@@ -130,7 +130,7 @@ func (k Keeper) FindInterDomainDclPolicyByLabel(ctx sdk.Context, label string) (
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.InterDomainDclPolicy
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
-		if val.Label == label{
+		if val.Label == label {
 			return true
 		}
 	}

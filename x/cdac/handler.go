@@ -296,6 +296,54 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			res, err := msgServer.DeleteInterDomainDclPolicy(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 
+		case *types.MsgCreateDelegationConditions:
+			res, err := msgServer.CreateDelegationConditions(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateDelegationConditions:
+			res, err := msgServer.UpdateDelegationConditions(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteDelegationConditions:
+			res, err := msgServer.DeleteDelegationConditions(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateDelegationRule:
+			res, err := msgServer.CreateDelegationRule(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateDelegationRule:
+			res, err := msgServer.UpdateDelegationRule(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteDelegationRule:
+			res, err := msgServer.DeleteDelegationRule(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateDelegationPolicyTarget:
+			res, err := msgServer.CreateDelegationPolicyTarget(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateDelegationPolicyTarget:
+			res, err := msgServer.UpdateDelegationPolicyTarget(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteDelegationPolicyTarget:
+			res, err := msgServer.DeleteDelegationPolicyTarget(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgCreateDelegationPolicy:
+			res, err := msgServer.CreateDelegationPolicy(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgUpdateDelegationPolicy:
+			res, err := msgServer.UpdateDelegationPolicy(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
+		case *types.MsgDeleteDelegationPolicy:
+			res, err := msgServer.DeleteDelegationPolicy(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+
 			// this line is used by starport scaffolding # 1
 		default:
 			errMsg := fmt.Sprintf("unrecognized %s message type: %T", types.ModuleName, msg)

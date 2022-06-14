@@ -15,14 +15,14 @@ var _ sdk.Msg = &MsgCreateInterDomainDclPolicy{}
 
 func NewMsgCreateInterDomainDclPolicy(creator string, label string, delegatorList []string, delegateeList []string, permissionList []string, depth uint64, maxDelegations uint64, validity *Validity) *MsgCreateInterDomainDclPolicy {
 	return &MsgCreateInterDomainDclPolicy{
-		Creator:           creator,
-		Label:             label,
-		DelegatorList:     delegatorList,
-		DelegateeList:     delegateeList,
-		PermissionList:    permissionList,
-		Depth:             depth,
-		MaxDelegations:    maxDelegations,
-		Validity:          validity,
+		Creator:        creator,
+		Label:          label,
+		DelegatorList:  delegatorList,
+		DelegateeList:  delegateeList,
+		PermissionList: permissionList,
+		Depth:          depth,
+		MaxDelegations: maxDelegations,
+		Validity:       validity,
 	}
 }
 

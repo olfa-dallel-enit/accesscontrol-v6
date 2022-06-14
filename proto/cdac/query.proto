@@ -22,6 +22,10 @@ import "cdac/time_calculation.proto";
 import "cdac/calculation_time.proto";
 import "cdac/inter_domain_acl_policy.proto";
 import "cdac/inter_domain_dcl_policy.proto";
+import "cdac/delegation_conditions.proto";
+import "cdac/delegation_rule.proto";
+import "cdac/delegation_policy_target.proto";
+import "cdac/delegation_policy.proto";
 // this line is used by starport scaffolding # 1
 import "cdac/validity.proto";
 import "cdac/domain.proto";
@@ -258,6 +262,46 @@ service Query {
 	// Queries a list of InterDomainDclPolicy items.
 	rpc InterDomainDclPolicyAll(QueryAllInterDomainDclPolicyRequest) returns (QueryAllInterDomainDclPolicyResponse) {
 		option (google.api.http).get = "/crossdomain/cdac/inter_domain_dcl_policy";
+	}
+
+// Queries a DelegationConditions by id.
+	rpc DelegationConditions(QueryGetDelegationConditionsRequest) returns (QueryGetDelegationConditionsResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_conditions/{id}";
+	}
+
+	// Queries a list of DelegationConditions items.
+	rpc DelegationConditionsAll(QueryAllDelegationConditionsRequest) returns (QueryAllDelegationConditionsResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_conditions";
+	}
+
+// Queries a DelegationRule by id.
+	rpc DelegationRule(QueryGetDelegationRuleRequest) returns (QueryGetDelegationRuleResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_rule/{id}";
+	}
+
+	// Queries a list of DelegationRule items.
+	rpc DelegationRuleAll(QueryAllDelegationRuleRequest) returns (QueryAllDelegationRuleResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_rule";
+	}
+
+// Queries a DelegationPolicyTarget by id.
+	rpc DelegationPolicyTarget(QueryGetDelegationPolicyTargetRequest) returns (QueryGetDelegationPolicyTargetResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_policy_target/{id}";
+	}
+
+	// Queries a list of DelegationPolicyTarget items.
+	rpc DelegationPolicyTargetAll(QueryAllDelegationPolicyTargetRequest) returns (QueryAllDelegationPolicyTargetResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_policy_target";
+	}
+
+// Queries a DelegationPolicy by id.
+	rpc DelegationPolicy(QueryGetDelegationPolicyRequest) returns (QueryGetDelegationPolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_policy/{id}";
+	}
+
+	// Queries a list of DelegationPolicy items.
+	rpc DelegationPolicyAll(QueryAllDelegationPolicyRequest) returns (QueryAllDelegationPolicyResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_policy";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -650,6 +694,74 @@ message QueryAllInterDomainDclPolicyRequest {
 
 message QueryAllInterDomainDclPolicyResponse {
 	repeated InterDomainDclPolicy InterDomainDclPolicy = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDelegationConditionsRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDelegationConditionsResponse {
+	DelegationConditions DelegationConditions = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDelegationConditionsRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDelegationConditionsResponse {
+	repeated DelegationConditions DelegationConditions = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDelegationRuleRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDelegationRuleResponse {
+	DelegationRule DelegationRule = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDelegationRuleRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDelegationRuleResponse {
+	repeated DelegationRule DelegationRule = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDelegationPolicyTargetRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDelegationPolicyTargetResponse {
+	DelegationPolicyTarget DelegationPolicyTarget = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDelegationPolicyTargetRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDelegationPolicyTargetResponse {
+	repeated DelegationPolicyTarget DelegationPolicyTarget = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDelegationPolicyRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDelegationPolicyResponse {
+	DelegationPolicy DelegationPolicy = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDelegationPolicyRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDelegationPolicyResponse {
+	repeated DelegationPolicy DelegationPolicy = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

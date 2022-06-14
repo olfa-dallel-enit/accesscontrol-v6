@@ -13,7 +13,11 @@ import "cdac/time_calculation.proto";
 import "cdac/calculation_time.proto";
 import "cdac/inter_domain_acl_policy.proto";
 import "cdac/inter_domain_dcl_policy.proto";
+import "cdac/delegation_policy.proto";
 // this line is used by starport scaffolding # proto/tx/import
+import "cdac/delegation_rule.proto";
+import "cdac/delegation_policy_target.proto";
+import "cdac/delegation_conditions.proto";
 import "cdac/validity.proto";
 import "cdac/cooperative_domain.proto";
 import "cdac/cooperation_network_features.proto";
@@ -103,6 +107,18 @@ rpc CreateInterDomainAclPolicy(MsgCreateInterDomainAclPolicy) returns (MsgCreate
 rpc CreateInterDomainDclPolicy(MsgCreateInterDomainDclPolicy) returns (MsgCreateInterDomainDclPolicyResponse);
   rpc UpdateInterDomainDclPolicy(MsgUpdateInterDomainDclPolicy) returns (MsgUpdateInterDomainDclPolicyResponse);
   rpc DeleteInterDomainDclPolicy(MsgDeleteInterDomainDclPolicy) returns (MsgDeleteInterDomainDclPolicyResponse);
+rpc CreateDelegationConditions(MsgCreateDelegationConditions) returns (MsgCreateDelegationConditionsResponse);
+  rpc UpdateDelegationConditions(MsgUpdateDelegationConditions) returns (MsgUpdateDelegationConditionsResponse);
+  rpc DeleteDelegationConditions(MsgDeleteDelegationConditions) returns (MsgDeleteDelegationConditionsResponse);
+rpc CreateDelegationRule(MsgCreateDelegationRule) returns (MsgCreateDelegationRuleResponse);
+  rpc UpdateDelegationRule(MsgUpdateDelegationRule) returns (MsgUpdateDelegationRuleResponse);
+  rpc DeleteDelegationRule(MsgDeleteDelegationRule) returns (MsgDeleteDelegationRuleResponse);
+rpc CreateDelegationPolicyTarget(MsgCreateDelegationPolicyTarget) returns (MsgCreateDelegationPolicyTargetResponse);
+  rpc UpdateDelegationPolicyTarget(MsgUpdateDelegationPolicyTarget) returns (MsgUpdateDelegationPolicyTargetResponse);
+  rpc DeleteDelegationPolicyTarget(MsgDeleteDelegationPolicyTarget) returns (MsgDeleteDelegationPolicyTargetResponse);
+rpc CreateDelegationPolicy(MsgCreateDelegationPolicy) returns (MsgCreateDelegationPolicyResponse);
+  rpc UpdateDelegationPolicy(MsgUpdateDelegationPolicy) returns (MsgUpdateDelegationPolicyResponse);
+  rpc DeleteDelegationPolicy(MsgDeleteDelegationPolicy) returns (MsgDeleteDelegationPolicyResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -850,5 +866,121 @@ message MsgDeleteInterDomainDclPolicy {
 }
 
 message MsgDeleteInterDomainDclPolicyResponse {}
+
+message MsgCreateDelegationConditions {
+  string creator = 1;
+  uint64 depth = 2;
+  Validity validity = 3;
+  uint64 maxDelegations = 4;
+}
+
+message MsgCreateDelegationConditionsResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateDelegationConditions {
+  string creator = 1;
+  uint64 id = 2;
+  uint64 depth = 3;
+  Validity validity = 4;
+  uint64 maxDelegations = 5;
+}
+
+message MsgUpdateDelegationConditionsResponse {}
+
+message MsgDeleteDelegationConditions {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteDelegationConditionsResponse {}
+
+message MsgCreateDelegationRule {
+  string creator = 1;
+  string label = 2;
+  string effect = 3;
+  DelegationConditions delegationConditions = 4;
+  uint64 priority = 5;
+}
+
+message MsgCreateDelegationRuleResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateDelegationRule {
+  string creator = 1;
+  uint64 id = 2;
+  string label = 3;
+  string effect = 4;
+  DelegationConditions delegationConditions = 5;
+  uint64 priority = 6;
+}
+
+message MsgUpdateDelegationRuleResponse {}
+
+message MsgDeleteDelegationRule {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteDelegationRuleResponse {}
+
+message MsgCreateDelegationPolicyTarget {
+  string creator = 1;
+  repeated string delegatorList = 2;
+  repeated string permissionList = 3;
+  string action = 4;
+}
+
+message MsgCreateDelegationPolicyTargetResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateDelegationPolicyTarget {
+  string creator = 1;
+  uint64 id = 2;
+  repeated string delegatorList = 3;
+  repeated string permissionList = 4;
+  string action = 5;
+}
+
+message MsgUpdateDelegationPolicyTargetResponse {}
+
+message MsgDeleteDelegationPolicyTarget {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteDelegationPolicyTargetResponse {}
+
+message MsgCreateDelegationPolicy {
+  string creator = 1;
+  string label = 2;
+  DelegationPolicyTarget target = 3;
+  string combiningAlgorithm = 4;
+  DelegationRule ruleList = 5;
+}
+
+message MsgCreateDelegationPolicyResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateDelegationPolicy {
+  string creator = 1;
+  uint64 id = 2;
+  string label = 3;
+  DelegationPolicyTarget target = 4;
+  string combiningAlgorithm = 5;
+  DelegationRule ruleList = 6;
+}
+
+message MsgUpdateDelegationPolicyResponse {}
+
+message MsgDeleteDelegationPolicy {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteDelegationPolicyResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

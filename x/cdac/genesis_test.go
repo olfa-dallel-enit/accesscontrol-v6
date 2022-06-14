@@ -197,6 +197,42 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		InterDomainDclPolicyCount: 2,
+		DelegationConditionsList: []types.DelegationConditions{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		DelegationConditionsCount: 2,
+		DelegationRuleList: []types.DelegationRule{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		DelegationRuleCount: 2,
+		DelegationPolicyTargetList: []types.DelegationPolicyTarget{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		DelegationPolicyTargetCount: 2,
+		DelegationPolicyList: []types.DelegationPolicy{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		DelegationPolicyCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -249,5 +285,13 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.InterDomainAclPolicyCount, got.InterDomainAclPolicyCount)
 	require.ElementsMatch(t, genesisState.InterDomainDclPolicyList, got.InterDomainDclPolicyList)
 	require.Equal(t, genesisState.InterDomainDclPolicyCount, got.InterDomainDclPolicyCount)
+	require.ElementsMatch(t, genesisState.DelegationConditionsList, got.DelegationConditionsList)
+	require.Equal(t, genesisState.DelegationConditionsCount, got.DelegationConditionsCount)
+	require.ElementsMatch(t, genesisState.DelegationRuleList, got.DelegationRuleList)
+	require.Equal(t, genesisState.DelegationRuleCount, got.DelegationRuleCount)
+	require.ElementsMatch(t, genesisState.DelegationPolicyTargetList, got.DelegationPolicyTargetList)
+	require.Equal(t, genesisState.DelegationPolicyTargetCount, got.DelegationPolicyTargetCount)
+	require.ElementsMatch(t, genesisState.DelegationPolicyList, got.DelegationPolicyList)
+	require.Equal(t, genesisState.DelegationPolicyCount, got.DelegationPolicyCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

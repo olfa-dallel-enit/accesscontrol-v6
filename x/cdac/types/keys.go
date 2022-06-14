@@ -125,3 +125,23 @@ const (
 	InterDomainDclPolicyKey      = "InterDomainDclPolicy-value-"
 	InterDomainDclPolicyCountKey = "InterDomainDclPolicy-count-"
 )
+
+const (
+	DelegationConditionsKey      = "DelegationConditions-value-"
+	DelegationConditionsCountKey = "DelegationConditions-count-"
+)
+
+const (
+	DelegationRuleKey      = "DelegationRule-value-"
+	DelegationRuleCountKey = "DelegationRule-count-"
+)
+
+const (
+	DelegationPolicyTargetKey      = "DelegationPolicyTarget-value-"
+	DelegationPolicyTargetCountKey = "DelegationPolicyTarget-count-"
+)
+
+const (
+	DelegationPolicyKey      = "DelegationPolicy-value-"
+	DelegationPolicyCountKey = "DelegationPolicy-count-"
+)

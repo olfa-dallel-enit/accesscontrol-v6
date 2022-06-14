@@ -1,6 +1,6 @@
 
 
-git 
+
 ignite chain serve -c execution/chains/mars/mars.yml --reset-once
 ignite chain serve -c execution/chains/venus/venus.yml --reset-once
 ignite chain serve -c execution/chains/neptune/neptune.yml --reset-once

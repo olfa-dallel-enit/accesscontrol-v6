@@ -147,6 +147,34 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set interDomainDclPolicy count
 	k.SetInterDomainDclPolicyCount(ctx, genState.InterDomainDclPolicyCount)
+	// Set all the delegationConditions
+	for _, elem := range genState.DelegationConditionsList {
+		k.SetDelegationConditions(ctx, elem)
+	}
+
+	// Set delegationConditions count
+	k.SetDelegationConditionsCount(ctx, genState.DelegationConditionsCount)
+	// Set all the delegationRule
+	for _, elem := range genState.DelegationRuleList {
+		k.SetDelegationRule(ctx, elem)
+	}
+
+	// Set delegationRule count
+	k.SetDelegationRuleCount(ctx, genState.DelegationRuleCount)
+	// Set all the delegationPolicyTarget
+	for _, elem := range genState.DelegationPolicyTargetList {
+		k.SetDelegationPolicyTarget(ctx, elem)
+	}
+
+	// Set delegationPolicyTarget count
+	k.SetDelegationPolicyTargetCount(ctx, genState.DelegationPolicyTargetCount)
+	// Set all the delegationPolicy
+	for _, elem := range genState.DelegationPolicyList {
+		k.SetDelegationPolicy(ctx, elem)
+	}
+
+	// Set delegationPolicy count
+	k.SetDelegationPolicyCount(ctx, genState.DelegationPolicyCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetPort(ctx, genState.PortId)
 	// Only try to bind to port if it is not already bound, since we may already own
@@ -211,6 +239,14 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.InterDomainAclPolicyCount = k.GetInterDomainAclPolicyCount(ctx)
 	genesis.InterDomainDclPolicyList = k.GetAllInterDomainDclPolicy(ctx)
 	genesis.InterDomainDclPolicyCount = k.GetInterDomainDclPolicyCount(ctx)
+	genesis.DelegationConditionsList = k.GetAllDelegationConditions(ctx)
+	genesis.DelegationConditionsCount = k.GetDelegationConditionsCount(ctx)
+	genesis.DelegationRuleList = k.GetAllDelegationRule(ctx)
+	genesis.DelegationRuleCount = k.GetDelegationRuleCount(ctx)
+	genesis.DelegationPolicyTargetList = k.GetAllDelegationPolicyTarget(ctx)
+	genesis.DelegationPolicyTargetCount = k.GetDelegationPolicyTargetCount(ctx)
+	genesis.DelegationPolicyList = k.GetAllDelegationPolicy(ctx)
+	genesis.DelegationPolicyCount = k.GetDelegationPolicyCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

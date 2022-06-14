@@ -17,7 +17,7 @@ func (k msgServer) CreateInterDomainAclPolicy(goCtx context.Context, msg *types.
 
 	var id uint64
 	found := k.FindInterDomainAclPolicyByLabel(ctx, msg.Label)
-	if ! found{
+	if !found {
 		var interDomainAclPolicy = types.InterDomainAclPolicy{
 			Creator:           ctx.ChainID(),
 			Label:             msg.Label,
@@ -29,13 +29,13 @@ func (k msgServer) CreateInterDomainAclPolicy(goCtx context.Context, msg *types.
 			UpdateTimestamp:   cast.ToString(time.Now()),
 			NbDelegations:     0,
 		}
-	
+
 		id = k.AppendInterDomainAclPolicy(
 			ctx,
 			interDomainAclPolicy,
 		)
 	}
-	
+
 	return &types.MsgCreateInterDomainAclPolicyResponse{
 		Id: id,
 	}, nil

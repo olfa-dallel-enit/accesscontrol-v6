@@ -33,6 +33,10 @@ func DefaultGenesis() *GenesisState {
 		CalculationTimeList:            []CalculationTime{},
 		InterDomainAclPolicyList:       []InterDomainAclPolicy{},
 		InterDomainDclPolicyList:       []InterDomainDclPolicy{},
+		DelegationConditionsList:       []DelegationConditions{},
+		DelegationRuleList:             []DelegationRule{},
+		DelegationPolicyTargetList:     []DelegationPolicyTarget{},
+		DelegationPolicyList:           []DelegationPolicy{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -279,6 +283,54 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("interDomainDclPolicy id should be lower or equal than the last id")
 		}
 		interDomainDclPolicyIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in delegationConditions
+	delegationConditionsIdMap := make(map[uint64]bool)
+	delegationConditionsCount := gs.GetDelegationConditionsCount()
+	for _, elem := range gs.DelegationConditionsList {
+		if _, ok := delegationConditionsIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for delegationConditions")
+		}
+		if elem.Id >= delegationConditionsCount {
+			return fmt.Errorf("delegationConditions id should be lower or equal than the last id")
+		}
+		delegationConditionsIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in delegationRule
+	delegationRuleIdMap := make(map[uint64]bool)
+	delegationRuleCount := gs.GetDelegationRuleCount()
+	for _, elem := range gs.DelegationRuleList {
+		if _, ok := delegationRuleIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for delegationRule")
+		}
+		if elem.Id >= delegationRuleCount {
+			return fmt.Errorf("delegationRule id should be lower or equal than the last id")
+		}
+		delegationRuleIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in delegationPolicyTarget
+	delegationPolicyTargetIdMap := make(map[uint64]bool)
+	delegationPolicyTargetCount := gs.GetDelegationPolicyTargetCount()
+	for _, elem := range gs.DelegationPolicyTargetList {
+		if _, ok := delegationPolicyTargetIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for delegationPolicyTarget")
+		}
+		if elem.Id >= delegationPolicyTargetCount {
+			return fmt.Errorf("delegationPolicyTarget id should be lower or equal than the last id")
+		}
+		delegationPolicyTargetIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in delegationPolicy
+	delegationPolicyIdMap := make(map[uint64]bool)
+	delegationPolicyCount := gs.GetDelegationPolicyCount()
+	for _, elem := range gs.DelegationPolicyList {
+		if _, ok := delegationPolicyIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for delegationPolicy")
+		}
+		if elem.Id >= delegationPolicyCount {
+			return fmt.Errorf("delegationPolicy id should be lower or equal than the last id")
+		}
+		delegationPolicyIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

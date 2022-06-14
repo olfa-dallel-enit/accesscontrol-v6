@@ -83,6 +83,18 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateInterDomainDclPolicy{}, "cdac/CreateInterDomainDclPolicy", nil)
 	cdc.RegisterConcrete(&MsgUpdateInterDomainDclPolicy{}, "cdac/UpdateInterDomainDclPolicy", nil)
 	cdc.RegisterConcrete(&MsgDeleteInterDomainDclPolicy{}, "cdac/DeleteInterDomainDclPolicy", nil)
+	cdc.RegisterConcrete(&MsgCreateDelegationConditions{}, "cdac/CreateDelegationConditions", nil)
+	cdc.RegisterConcrete(&MsgUpdateDelegationConditions{}, "cdac/UpdateDelegationConditions", nil)
+	cdc.RegisterConcrete(&MsgDeleteDelegationConditions{}, "cdac/DeleteDelegationConditions", nil)
+	cdc.RegisterConcrete(&MsgCreateDelegationRule{}, "cdac/CreateDelegationRule", nil)
+	cdc.RegisterConcrete(&MsgUpdateDelegationRule{}, "cdac/UpdateDelegationRule", nil)
+	cdc.RegisterConcrete(&MsgDeleteDelegationRule{}, "cdac/DeleteDelegationRule", nil)
+	cdc.RegisterConcrete(&MsgCreateDelegationPolicyTarget{}, "cdac/CreateDelegationPolicyTarget", nil)
+	cdc.RegisterConcrete(&MsgUpdateDelegationPolicyTarget{}, "cdac/UpdateDelegationPolicyTarget", nil)
+	cdc.RegisterConcrete(&MsgDeleteDelegationPolicyTarget{}, "cdac/DeleteDelegationPolicyTarget", nil)
+	cdc.RegisterConcrete(&MsgCreateDelegationPolicy{}, "cdac/CreateDelegationPolicy", nil)
+	cdc.RegisterConcrete(&MsgUpdateDelegationPolicy{}, "cdac/UpdateDelegationPolicy", nil)
+	cdc.RegisterConcrete(&MsgDeleteDelegationPolicy{}, "cdac/DeleteDelegationPolicy", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -227,6 +239,26 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateInterDomainDclPolicy{},
 		&MsgUpdateInterDomainDclPolicy{},
 		&MsgDeleteInterDomainDclPolicy{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateDelegationConditions{},
+		&MsgUpdateDelegationConditions{},
+		&MsgDeleteDelegationConditions{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateDelegationRule{},
+		&MsgUpdateDelegationRule{},
+		&MsgDeleteDelegationRule{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateDelegationPolicyTarget{},
+		&MsgUpdateDelegationPolicyTarget{},
+		&MsgDeleteDelegationPolicyTarget{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateDelegationPolicy{},
+		&MsgUpdateDelegationPolicy{},
+		&MsgDeleteDelegationPolicy{},
 	)
 	// this line is used by starport scaffolding # 3
 

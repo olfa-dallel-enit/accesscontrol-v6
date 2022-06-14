@@ -23,6 +23,10 @@ import { TimeCalculation } from "../cdac/time_calculation";
 import { CalculationTime } from "../cdac/calculation_time";
 import { InterDomainAclPolicy } from "../cdac/inter_domain_acl_policy";
 import { InterDomainDclPolicy } from "../cdac/inter_domain_dcl_policy";
+import { DelegationConditions } from "../cdac/delegation_conditions";
+import { DelegationRule } from "../cdac/delegation_rule";
+import { DelegationPolicyTarget } from "../cdac/delegation_policy_target";
+import { DelegationPolicy } from "../cdac/delegation_policy";
 
 export const protobufPackage = "crossdomain.cdac";
 
@@ -68,8 +72,16 @@ export interface GenesisState {
   interDomainAclPolicyList: InterDomainAclPolicy[];
   interDomainAclPolicyCount: number;
   interDomainDclPolicyList: InterDomainDclPolicy[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   interDomainDclPolicyCount: number;
+  delegationConditionsList: DelegationConditions[];
+  delegationConditionsCount: number;
+  delegationRuleList: DelegationRule[];
+  delegationRuleCount: number;
+  delegationPolicyTargetList: DelegationPolicyTarget[];
+  delegationPolicyTargetCount: number;
+  delegationPolicyList: DelegationPolicy[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  delegationPolicyCount: number;
 }
 
 const baseGenesisState: object = {
@@ -92,6 +104,10 @@ const baseGenesisState: object = {
   calculationTimeCount: 0,
   interDomainAclPolicyCount: 0,
   interDomainDclPolicyCount: 0,
+  delegationConditionsCount: 0,
+  delegationRuleCount: 0,
+  delegationPolicyTargetCount: 0,
+  delegationPolicyCount: 0,
 };
 
 export const GenesisState = {
@@ -222,6 +238,30 @@ export const GenesisState = {
     if (message.interDomainDclPolicyCount !== 0) {
       writer.uint32(328).uint64(message.interDomainDclPolicyCount);
     }
+    for (const v of message.delegationConditionsList) {
+      DelegationConditions.encode(v!, writer.uint32(338).fork()).ldelim();
+    }
+    if (message.delegationConditionsCount !== 0) {
+      writer.uint32(344).uint64(message.delegationConditionsCount);
+    }
+    for (const v of message.delegationRuleList) {
+      DelegationRule.encode(v!, writer.uint32(354).fork()).ldelim();
+    }
+    if (message.delegationRuleCount !== 0) {
+      writer.uint32(360).uint64(message.delegationRuleCount);
+    }
+    for (const v of message.delegationPolicyTargetList) {
+      DelegationPolicyTarget.encode(v!, writer.uint32(370).fork()).ldelim();
+    }
+    if (message.delegationPolicyTargetCount !== 0) {
+      writer.uint32(376).uint64(message.delegationPolicyTargetCount);
+    }
+    for (const v of message.delegationPolicyList) {
+      DelegationPolicy.encode(v!, writer.uint32(386).fork()).ldelim();
+    }
+    if (message.delegationPolicyCount !== 0) {
+      writer.uint32(392).uint64(message.delegationPolicyCount);
+    }
     return writer;
   },
 
@@ -249,6 +289,10 @@ export const GenesisState = {
     message.calculationTimeList = [];
     message.interDomainAclPolicyList = [];
     message.interDomainDclPolicyList = [];
+    message.delegationConditionsList = [];
+    message.delegationRuleList = [];
+    message.delegationPolicyTargetList = [];
+    message.delegationPolicyList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -419,6 +463,42 @@ export const GenesisState = {
             reader.uint64() as Long
           );
           break;
+        case 42:
+          message.delegationConditionsList.push(
+            DelegationConditions.decode(reader, reader.uint32())
+          );
+          break;
+        case 43:
+          message.delegationConditionsCount = longToNumber(
+            reader.uint64() as Long
+          );
+          break;
+        case 44:
+          message.delegationRuleList.push(
+            DelegationRule.decode(reader, reader.uint32())
+          );
+          break;
+        case 45:
+          message.delegationRuleCount = longToNumber(reader.uint64() as Long);
+          break;
+        case 46:
+          message.delegationPolicyTargetList.push(
+            DelegationPolicyTarget.decode(reader, reader.uint32())
+          );
+          break;
+        case 47:
+          message.delegationPolicyTargetCount = longToNumber(
+            reader.uint64() as Long
+          );
+          break;
+        case 48:
+          message.delegationPolicyList.push(
+            DelegationPolicy.decode(reader, reader.uint32())
+          );
+          break;
+        case 49:
+          message.delegationPolicyCount = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -449,6 +529,10 @@ export const GenesisState = {
     message.calculationTimeList = [];
     message.interDomainAclPolicyList = [];
     message.interDomainDclPolicyList = [];
+    message.delegationConditionsList = [];
+    message.delegationRuleList = [];
+    message.delegationPolicyTargetList = [];
+    message.delegationPolicyList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -749,6 +833,76 @@ export const GenesisState = {
     } else {
       message.interDomainDclPolicyCount = 0;
     }
+    if (
+      object.delegationConditionsList !== undefined &&
+      object.delegationConditionsList !== null
+    ) {
+      for (const e of object.delegationConditionsList) {
+        message.delegationConditionsList.push(DelegationConditions.fromJSON(e));
+      }
+    }
+    if (
+      object.delegationConditionsCount !== undefined &&
+      object.delegationConditionsCount !== null
+    ) {
+      message.delegationConditionsCount = Number(
+        object.delegationConditionsCount
+      );
+    } else {
+      message.delegationConditionsCount = 0;
+    }
+    if (
+      object.delegationRuleList !== undefined &&
+      object.delegationRuleList !== null
+    ) {
+      for (const e of object.delegationRuleList) {
+        message.delegationRuleList.push(DelegationRule.fromJSON(e));
+      }
+    }
+    if (
+      object.delegationRuleCount !== undefined &&
+      object.delegationRuleCount !== null
+    ) {
+      message.delegationRuleCount = Number(object.delegationRuleCount);
+    } else {
+      message.delegationRuleCount = 0;
+    }
+    if (
+      object.delegationPolicyTargetList !== undefined &&
+      object.delegationPolicyTargetList !== null
+    ) {
+      for (const e of object.delegationPolicyTargetList) {
+        message.delegationPolicyTargetList.push(
+          DelegationPolicyTarget.fromJSON(e)
+        );
+      }
+    }
+    if (
+      object.delegationPolicyTargetCount !== undefined &&
+      object.delegationPolicyTargetCount !== null
+    ) {
+      message.delegationPolicyTargetCount = Number(
+        object.delegationPolicyTargetCount
+      );
+    } else {
+      message.delegationPolicyTargetCount = 0;
+    }
+    if (
+      object.delegationPolicyList !== undefined &&
+      object.delegationPolicyList !== null
+    ) {
+      for (const e of object.delegationPolicyList) {
+        message.delegationPolicyList.push(DelegationPolicy.fromJSON(e));
+      }
+    }
+    if (
+      object.delegationPolicyCount !== undefined &&
+      object.delegationPolicyCount !== null
+    ) {
+      message.delegationPolicyCount = Number(object.delegationPolicyCount);
+    } else {
+      message.delegationPolicyCount = 0;
+    }
     return message;
   },
 
@@ -937,6 +1091,42 @@ export const GenesisState = {
     }
     message.interDomainDclPolicyCount !== undefined &&
       (obj.interDomainDclPolicyCount = message.interDomainDclPolicyCount);
+    if (message.delegationConditionsList) {
+      obj.delegationConditionsList = message.delegationConditionsList.map((e) =>
+        e ? DelegationConditions.toJSON(e) : undefined
+      );
+    } else {
+      obj.delegationConditionsList = [];
+    }
+    message.delegationConditionsCount !== undefined &&
+      (obj.delegationConditionsCount = message.delegationConditionsCount);
+    if (message.delegationRuleList) {
+      obj.delegationRuleList = message.delegationRuleList.map((e) =>
+        e ? DelegationRule.toJSON(e) : undefined
+      );
+    } else {
+      obj.delegationRuleList = [];
+    }
+    message.delegationRuleCount !== undefined &&
+      (obj.delegationRuleCount = message.delegationRuleCount);
+    if (message.delegationPolicyTargetList) {
+      obj.delegationPolicyTargetList = message.delegationPolicyTargetList.map(
+        (e) => (e ? DelegationPolicyTarget.toJSON(e) : undefined)
+      );
+    } else {
+      obj.delegationPolicyTargetList = [];
+    }
+    message.delegationPolicyTargetCount !== undefined &&
+      (obj.delegationPolicyTargetCount = message.delegationPolicyTargetCount);
+    if (message.delegationPolicyList) {
+      obj.delegationPolicyList = message.delegationPolicyList.map((e) =>
+        e ? DelegationPolicy.toJSON(e) : undefined
+      );
+    } else {
+      obj.delegationPolicyList = [];
+    }
+    message.delegationPolicyCount !== undefined &&
+      (obj.delegationPolicyCount = message.delegationPolicyCount);
     return obj;
   },
 
@@ -962,6 +1152,10 @@ export const GenesisState = {
     message.calculationTimeList = [];
     message.interDomainAclPolicyList = [];
     message.interDomainDclPolicyList = [];
+    message.delegationConditionsList = [];
+    message.delegationRuleList = [];
+    message.delegationPolicyTargetList = [];
+    message.delegationPolicyList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -1260,6 +1454,74 @@ export const GenesisState = {
       message.interDomainDclPolicyCount = object.interDomainDclPolicyCount;
     } else {
       message.interDomainDclPolicyCount = 0;
+    }
+    if (
+      object.delegationConditionsList !== undefined &&
+      object.delegationConditionsList !== null
+    ) {
+      for (const e of object.delegationConditionsList) {
+        message.delegationConditionsList.push(
+          DelegationConditions.fromPartial(e)
+        );
+      }
+    }
+    if (
+      object.delegationConditionsCount !== undefined &&
+      object.delegationConditionsCount !== null
+    ) {
+      message.delegationConditionsCount = object.delegationConditionsCount;
+    } else {
+      message.delegationConditionsCount = 0;
+    }
+    if (
+      object.delegationRuleList !== undefined &&
+      object.delegationRuleList !== null
+    ) {
+      for (const e of object.delegationRuleList) {
+        message.delegationRuleList.push(DelegationRule.fromPartial(e));
+      }
+    }
+    if (
+      object.delegationRuleCount !== undefined &&
+      object.delegationRuleCount !== null
+    ) {
+      message.delegationRuleCount = object.delegationRuleCount;
+    } else {
+      message.delegationRuleCount = 0;
+    }
+    if (
+      object.delegationPolicyTargetList !== undefined &&
+      object.delegationPolicyTargetList !== null
+    ) {
+      for (const e of object.delegationPolicyTargetList) {
+        message.delegationPolicyTargetList.push(
+          DelegationPolicyTarget.fromPartial(e)
+        );
+      }
+    }
+    if (
+      object.delegationPolicyTargetCount !== undefined &&
+      object.delegationPolicyTargetCount !== null
+    ) {
+      message.delegationPolicyTargetCount = object.delegationPolicyTargetCount;
+    } else {
+      message.delegationPolicyTargetCount = 0;
+    }
+    if (
+      object.delegationPolicyList !== undefined &&
+      object.delegationPolicyList !== null
+    ) {
+      for (const e of object.delegationPolicyList) {
+        message.delegationPolicyList.push(DelegationPolicy.fromPartial(e));
+      }
+    }
+    if (
+      object.delegationPolicyCount !== undefined &&
+      object.delegationPolicyCount !== null
+    ) {
+      message.delegationPolicyCount = object.delegationPolicyCount;
+    } else {
+      message.delegationPolicyCount = 0;
     }
     return message;
   },

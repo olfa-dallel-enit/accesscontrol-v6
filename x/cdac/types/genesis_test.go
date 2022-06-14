@@ -205,6 +205,42 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				InterDomainDclPolicyCount: 2,
+				DelegationConditionsList: []types.DelegationConditions{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DelegationConditionsCount: 2,
+				DelegationRuleList: []types.DelegationRule{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DelegationRuleCount: 2,
+				DelegationPolicyTargetList: []types.DelegationPolicyTarget{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DelegationPolicyTargetCount: 2,
+				DelegationPolicyList: []types.DelegationPolicy{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DelegationPolicyCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -702,6 +738,110 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				InterDomainDclPolicyCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated delegationConditions",
+			genState: &types.GenesisState{
+				DelegationConditionsList: []types.DelegationConditions{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid delegationConditions count",
+			genState: &types.GenesisState{
+				DelegationConditionsList: []types.DelegationConditions{
+					{
+						Id: 1,
+					},
+				},
+				DelegationConditionsCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated delegationRule",
+			genState: &types.GenesisState{
+				DelegationRuleList: []types.DelegationRule{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid delegationRule count",
+			genState: &types.GenesisState{
+				DelegationRuleList: []types.DelegationRule{
+					{
+						Id: 1,
+					},
+				},
+				DelegationRuleCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated delegationPolicyTarget",
+			genState: &types.GenesisState{
+				DelegationPolicyTargetList: []types.DelegationPolicyTarget{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid delegationPolicyTarget count",
+			genState: &types.GenesisState{
+				DelegationPolicyTargetList: []types.DelegationPolicyTarget{
+					{
+						Id: 1,
+					},
+				},
+				DelegationPolicyTargetCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated delegationPolicy",
+			genState: &types.GenesisState{
+				DelegationPolicyList: []types.DelegationPolicy{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid delegationPolicy count",
+			genState: &types.GenesisState{
+				DelegationPolicyList: []types.DelegationPolicy{
+					{
+						Id: 1,
+					},
+				},
+				DelegationPolicyCount: 0,
 			},
 			valid: false,
 		},

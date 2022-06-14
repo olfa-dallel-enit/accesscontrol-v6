@@ -11,7 +11,6 @@ export interface InterDomainDclPolicy {
   delegatorList: string[];
   delegateeList: string[];
   permissionList: string[];
-  status: string;
   creationTimestamp: string;
   updateTimestamp: string;
   depth: number;
@@ -26,7 +25,6 @@ const baseInterDomainDclPolicy: object = {
   delegatorList: "",
   delegateeList: "",
   permissionList: "",
-  status: "",
   creationTimestamp: "",
   updateTimestamp: "",
   depth: 0,
@@ -54,26 +52,23 @@ export const InterDomainDclPolicy = {
     for (const v of message.permissionList) {
       writer.uint32(42).string(v!);
     }
-    if (message.status !== "") {
-      writer.uint32(50).string(message.status);
-    }
     if (message.creationTimestamp !== "") {
-      writer.uint32(58).string(message.creationTimestamp);
+      writer.uint32(50).string(message.creationTimestamp);
     }
     if (message.updateTimestamp !== "") {
-      writer.uint32(66).string(message.updateTimestamp);
+      writer.uint32(58).string(message.updateTimestamp);
     }
     if (message.depth !== 0) {
-      writer.uint32(72).uint64(message.depth);
+      writer.uint32(64).uint64(message.depth);
     }
     if (message.maxDelegations !== 0) {
-      writer.uint32(80).uint64(message.maxDelegations);
+      writer.uint32(72).uint64(message.maxDelegations);
     }
     if (message.validity !== undefined) {
-      Validity.encode(message.validity, writer.uint32(90).fork()).ldelim();
+      Validity.encode(message.validity, writer.uint32(82).fork()).ldelim();
     }
     if (message.creator !== "") {
-      writer.uint32(98).string(message.creator);
+      writer.uint32(90).string(message.creator);
     }
     return writer;
   },
@@ -104,24 +99,21 @@ export const InterDomainDclPolicy = {
           message.permissionList.push(reader.string());
           break;
         case 6:
-          message.status = reader.string();
-          break;
-        case 7:
           message.creationTimestamp = reader.string();
           break;
-        case 8:
+        case 7:
           message.updateTimestamp = reader.string();
           break;
-        case 9:
+        case 8:
           message.depth = longToNumber(reader.uint64() as Long);
           break;
-        case 10:
+        case 9:
           message.maxDelegations = longToNumber(reader.uint64() as Long);
           break;
-        case 11:
+        case 10:
           message.validity = Validity.decode(reader, reader.uint32());
           break;
-        case 12:
+        case 11:
           message.creator = reader.string();
           break;
         default:
@@ -161,11 +153,6 @@ export const InterDomainDclPolicy = {
       for (const e of object.permissionList) {
         message.permissionList.push(String(e));
       }
-    }
-    if (object.status !== undefined && object.status !== null) {
-      message.status = String(object.status);
-    } else {
-      message.status = "";
     }
     if (
       object.creationTimestamp !== undefined &&
@@ -225,7 +212,6 @@ export const InterDomainDclPolicy = {
     } else {
       obj.permissionList = [];
     }
-    message.status !== undefined && (obj.status = message.status);
     message.creationTimestamp !== undefined &&
       (obj.creationTimestamp = message.creationTimestamp);
     message.updateTimestamp !== undefined &&
@@ -270,11 +256,6 @@ export const InterDomainDclPolicy = {
       for (const e of object.permissionList) {
         message.permissionList.push(e);
       }
-    }
-    if (object.status !== undefined && object.status !== null) {
-      message.status = object.status;
-    } else {
-      message.status = "";
     }
     if (
       object.creationTimestamp !== undefined &&

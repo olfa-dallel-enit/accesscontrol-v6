@@ -114,7 +114,7 @@ func (k Keeper) GetInterDomainAclPolicyByLabel(ctx sdk.Context, label string) (a
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.InterDomainAclPolicy
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
-		if val.Label == label{
+		if val.Label == label {
 			return val, true
 		}
 	}
@@ -130,7 +130,7 @@ func (k Keeper) FindInterDomainAclPolicyByLabel(ctx sdk.Context, label string) (
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.InterDomainAclPolicy
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
-		if val.Label == label{
+		if val.Label == label {
 			return true
 		}
 	}

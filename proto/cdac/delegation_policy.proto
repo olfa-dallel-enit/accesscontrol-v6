@@ -1,0 +1,15 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+import "cdac/delegation_policy_target.proto"; 
+import "cdac/delegation_rule.proto"; 
+
+message DelegationPolicy {
+  uint64 id = 1;
+  string label = 2; 
+  DelegationPolicyTarget target = 3; 
+  string combiningAlgorithm = 4; 
+  DelegationRule ruleList = 5; 
+  string creator = 6;
+}

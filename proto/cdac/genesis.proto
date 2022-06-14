@@ -24,6 +24,10 @@ import "cdac/time_calculation.proto";
 import "cdac/calculation_time.proto";
 import "cdac/inter_domain_acl_policy.proto";
 import "cdac/inter_domain_dcl_policy.proto";
+import "cdac/delegation_conditions.proto";
+import "cdac/delegation_rule.proto";
+import "cdac/delegation_policy_target.proto";
+import "cdac/delegation_policy.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "crossdomain/x/cdac/types";
@@ -71,5 +75,13 @@ message GenesisState {
   uint64 interDomainAclPolicyCount = 39;
   repeated InterDomainDclPolicy interDomainDclPolicyList = 40 [(gogoproto.nullable) = false];
   uint64 interDomainDclPolicyCount = 41;
+  repeated DelegationConditions delegationConditionsList = 42 [(gogoproto.nullable) = false];
+  uint64 delegationConditionsCount = 43;
+  repeated DelegationRule delegationRuleList = 44 [(gogoproto.nullable) = false];
+  uint64 delegationRuleCount = 45;
+  repeated DelegationPolicyTarget delegationPolicyTargetList = 46 [(gogoproto.nullable) = false];
+  uint64 delegationPolicyTargetCount = 47;
+  repeated DelegationPolicy delegationPolicyList = 48 [(gogoproto.nullable) = false];
+  uint64 delegationPolicyCount = 49;
   // this line is used by starport scaffolding # genesis/proto/state
 }

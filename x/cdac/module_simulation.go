@@ -284,6 +284,54 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteInterDomainDclPolicy int = 100
 
+	opWeightMsgCreateDelegationConditions = "op_weight_msg_delegation_conditions"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDelegationConditions int = 100
+
+	opWeightMsgUpdateDelegationConditions = "op_weight_msg_delegation_conditions"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDelegationConditions int = 100
+
+	opWeightMsgDeleteDelegationConditions = "op_weight_msg_delegation_conditions"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDelegationConditions int = 100
+
+	opWeightMsgCreateDelegationRule = "op_weight_msg_delegation_rule"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDelegationRule int = 100
+
+	opWeightMsgUpdateDelegationRule = "op_weight_msg_delegation_rule"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDelegationRule int = 100
+
+	opWeightMsgDeleteDelegationRule = "op_weight_msg_delegation_rule"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDelegationRule int = 100
+
+	opWeightMsgCreateDelegationPolicyTarget = "op_weight_msg_delegation_policy_target"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDelegationPolicyTarget int = 100
+
+	opWeightMsgUpdateDelegationPolicyTarget = "op_weight_msg_delegation_policy_target"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDelegationPolicyTarget int = 100
+
+	opWeightMsgDeleteDelegationPolicyTarget = "op_weight_msg_delegation_policy_target"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDelegationPolicyTarget int = 100
+
+	opWeightMsgCreateDelegationPolicy = "op_weight_msg_delegation_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateDelegationPolicy int = 100
+
+	opWeightMsgUpdateDelegationPolicy = "op_weight_msg_delegation_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateDelegationPolicy int = 100
+
+	opWeightMsgDeleteDelegationPolicy = "op_weight_msg_delegation_policy"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteDelegationPolicy int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -514,6 +562,50 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		InterDomainDclPolicyCount: 2,
+		DelegationConditionsList: []types.DelegationConditions{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		DelegationConditionsCount: 2,
+		DelegationRuleList: []types.DelegationRule{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		DelegationRuleCount: 2,
+		DelegationPolicyTargetList: []types.DelegationPolicyTarget{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		DelegationPolicyTargetCount: 2,
+		DelegationPolicyList: []types.DelegationPolicy{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		DelegationPolicyCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&cdacGenesis)
@@ -1250,6 +1342,138 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteInterDomainDclPolicy,
 		cdacsimulation.SimulateMsgDeleteInterDomainDclPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDelegationConditions int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDelegationConditions, &weightMsgCreateDelegationConditions, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDelegationConditions = defaultWeightMsgCreateDelegationConditions
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDelegationConditions,
+		cdacsimulation.SimulateMsgCreateDelegationConditions(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDelegationConditions int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDelegationConditions, &weightMsgUpdateDelegationConditions, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDelegationConditions = defaultWeightMsgUpdateDelegationConditions
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDelegationConditions,
+		cdacsimulation.SimulateMsgUpdateDelegationConditions(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDelegationConditions int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDelegationConditions, &weightMsgDeleteDelegationConditions, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDelegationConditions = defaultWeightMsgDeleteDelegationConditions
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDelegationConditions,
+		cdacsimulation.SimulateMsgDeleteDelegationConditions(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDelegationRule int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDelegationRule, &weightMsgCreateDelegationRule, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDelegationRule = defaultWeightMsgCreateDelegationRule
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDelegationRule,
+		cdacsimulation.SimulateMsgCreateDelegationRule(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDelegationRule int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDelegationRule, &weightMsgUpdateDelegationRule, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDelegationRule = defaultWeightMsgUpdateDelegationRule
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDelegationRule,
+		cdacsimulation.SimulateMsgUpdateDelegationRule(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDelegationRule int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDelegationRule, &weightMsgDeleteDelegationRule, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDelegationRule = defaultWeightMsgDeleteDelegationRule
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDelegationRule,
+		cdacsimulation.SimulateMsgDeleteDelegationRule(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDelegationPolicyTarget int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDelegationPolicyTarget, &weightMsgCreateDelegationPolicyTarget, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDelegationPolicyTarget = defaultWeightMsgCreateDelegationPolicyTarget
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDelegationPolicyTarget,
+		cdacsimulation.SimulateMsgCreateDelegationPolicyTarget(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDelegationPolicyTarget int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDelegationPolicyTarget, &weightMsgUpdateDelegationPolicyTarget, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDelegationPolicyTarget = defaultWeightMsgUpdateDelegationPolicyTarget
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDelegationPolicyTarget,
+		cdacsimulation.SimulateMsgUpdateDelegationPolicyTarget(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDelegationPolicyTarget int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDelegationPolicyTarget, &weightMsgDeleteDelegationPolicyTarget, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDelegationPolicyTarget = defaultWeightMsgDeleteDelegationPolicyTarget
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDelegationPolicyTarget,
+		cdacsimulation.SimulateMsgDeleteDelegationPolicyTarget(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateDelegationPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateDelegationPolicy, &weightMsgCreateDelegationPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateDelegationPolicy = defaultWeightMsgCreateDelegationPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateDelegationPolicy,
+		cdacsimulation.SimulateMsgCreateDelegationPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateDelegationPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDelegationPolicy, &weightMsgUpdateDelegationPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateDelegationPolicy = defaultWeightMsgUpdateDelegationPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateDelegationPolicy,
+		cdacsimulation.SimulateMsgUpdateDelegationPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteDelegationPolicy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteDelegationPolicy, &weightMsgDeleteDelegationPolicy, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteDelegationPolicy = defaultWeightMsgDeleteDelegationPolicy
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteDelegationPolicy,
+		cdacsimulation.SimulateMsgDeleteDelegationPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

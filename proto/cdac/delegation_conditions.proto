@@ -1,0 +1,13 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+import "cdac/validity.proto"; 
+
+message DelegationConditions {
+  uint64 id = 1;
+  uint64 depth = 2; 
+  Validity validity = 3; 
+  uint64 maxDelegations = 4; 
+  string creator = 5;
+}

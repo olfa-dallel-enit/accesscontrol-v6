@@ -12,26 +12,26 @@ import (
 func (k msgServer) CreateInterDomainDclPolicy(goCtx context.Context, msg *types.MsgCreateInterDomainDclPolicy) (*types.MsgCreateInterDomainDclPolicyResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	found := k.FindInterDomainDclPolicyByLabel(ctx, msg.Label) 
-	if !found{
+	found := k.FindInterDomainDclPolicyByLabel(ctx, msg.Label)
+	if !found {
 		var permissionLabels []string
-		for _, permission := range msg.PermissionList{
+		for _, permission := range msg.PermissionList {
 			existed := k.FindInterDomainAclPolicyByLabel(ctx, permission)
-			if existed{
+			if existed {
 				permissionLabels = append(permissionLabels, permission)
 			}
 		}
 	}
 
 	var interDomainDclPolicy = types.InterDomainDclPolicy{
-		Creator:           msg.Creator,
-		Label:             msg.Label,
-		DelegatorList:     msg.DelegatorList,
-		DelegateeList:     msg.DelegateeList,
-		PermissionList:    msg.PermissionList,
-		Depth:             msg.Depth,
-		MaxDelegations:    msg.MaxDelegations,
-		Validity:          msg.Validity,
+		Creator:        msg.Creator,
+		Label:          msg.Label,
+		DelegatorList:  msg.DelegatorList,
+		DelegateeList:  msg.DelegateeList,
+		PermissionList: msg.PermissionList,
+		Depth:          msg.Depth,
+		MaxDelegations: msg.MaxDelegations,
+		Validity:       msg.Validity,
 	}
 
 	id := k.AppendInterDomainDclPolicy(
