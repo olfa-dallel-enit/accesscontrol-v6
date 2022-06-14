@@ -1,0 +1,12 @@
+syntax = "proto3";
+package crossdomain.cdac;
+
+option go_package = "crossdomain/x/cdac/types";
+
+message DelegationLog {
+  uint64 id = 1;
+  string creator = 2;
+  string decision = 3;
+  string transaction = 4;
+  string reason = 5;
+}

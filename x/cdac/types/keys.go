@@ -145,3 +145,8 @@ const (
 	DelegationPolicyKey      = "DelegationPolicy-value-"
 	DelegationPolicyCountKey = "DelegationPolicy-count-"
 )
+
+const (
+	DelegationLogKey      = "DelegationLog-value-"
+	DelegationLogCountKey = "DelegationLog-count-"
+)

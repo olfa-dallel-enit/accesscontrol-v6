@@ -37,6 +37,7 @@ func DefaultGenesis() *GenesisState {
 		DelegationRuleList:             []DelegationRule{},
 		DelegationPolicyTargetList:     []DelegationPolicyTarget{},
 		DelegationPolicyList:           []DelegationPolicy{},
+		DelegationLogList:              []DelegationLog{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -331,6 +332,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("delegationPolicy id should be lower or equal than the last id")
 		}
 		delegationPolicyIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in delegationLog
+	delegationLogIdMap := make(map[uint64]bool)
+	delegationLogCount := gs.GetDelegationLogCount()
+	for _, elem := range gs.DelegationLogList {
+		if _, ok := delegationLogIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for delegationLog")
+		}
+		if elem.Id >= delegationLogCount {
+			return fmt.Errorf("delegationLog id should be lower or equal than the last id")
+		}
+		delegationLogIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

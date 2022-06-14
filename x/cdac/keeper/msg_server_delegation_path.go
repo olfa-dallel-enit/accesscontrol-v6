@@ -168,7 +168,7 @@ func (k Keeper) GenerateDelegationPathByDelegator(ctx sdk.Context, delegator *ty
 	return id, foundTarget
 }
 
-func (k Keeper) GenerateAllDelegationPathsByDelegatee(ctx sdk.Context, delegatee *types.CooperativeDomain) (types.DelegationPath) {
+func (k Keeper) GenerateAllDelegationPathsByDelegatee(ctx sdk.Context, delegatee *types.CooperativeDomain) types.DelegationPath {
 	startTimestamp := time.Now().UnixNano()
 
 	var delegationPath types.DelegationPath
@@ -176,9 +176,9 @@ func (k Keeper) GenerateAllDelegationPathsByDelegatee(ctx sdk.Context, delegatee
 	foundTarget := false
 
 	delegator := &types.CooperativeDomain{
-		Name: ctx.ChainID(),
+		Name:       ctx.ChainID(),
 		DomainType: "Local",
-		Location: "",
+		Location:   "",
 	}
 
 	cooperationNetwork, found := k.GetCooperationNetwork(ctx, k.GetCooperationNetworkCount(ctx)-1)

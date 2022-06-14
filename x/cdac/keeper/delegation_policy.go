@@ -104,3 +104,32 @@ func GetDelegationPolicyIDBytes(id uint64) []byte {
 func GetDelegationPolicyIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
+
+func (k Keeper) GetAllDelegationPolicyByTarget(ctx sdk.Context, target types.DelegationPolicyTarget) (delegationPolicies []types.DelegationPolicy) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DelegationPolicyKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.DelegationPolicy
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if CompareLists(val.Target.DelegatorList, target.DelegatorList) && CompareLists(val.Target.PermissionList, target.PermissionList) && (val.Target.Action == target.Action) {
+			delegationPolicies = append(delegationPolicies, val)
+		}
+	}
+	return
+}
+
+func CompareLists(list1 []string, list2 []string) bool {
+	if len(list1) != len(list2) {
+		return false
+	} else {
+		for index := 0; index < len(list1); index++ {
+			if list1[index] != list2[index] {
+				return false
+			}
+		}
+	}
+	return true
+}

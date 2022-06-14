@@ -26,6 +26,7 @@ import "cdac/delegation_conditions.proto";
 import "cdac/delegation_rule.proto";
 import "cdac/delegation_policy_target.proto";
 import "cdac/delegation_policy.proto";
+import "cdac/delegation_log.proto";
 // this line is used by starport scaffolding # 1
 import "cdac/validity.proto";
 import "cdac/domain.proto";
@@ -302,6 +303,16 @@ service Query {
 	// Queries a list of DelegationPolicy items.
 	rpc DelegationPolicyAll(QueryAllDelegationPolicyRequest) returns (QueryAllDelegationPolicyResponse) {
 		option (google.api.http).get = "/crossdomain/cdac/delegation_policy";
+	}
+
+// Queries a DelegationLog by id.
+	rpc DelegationLog(QueryGetDelegationLogRequest) returns (QueryGetDelegationLogResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_log/{id}";
+	}
+
+	// Queries a list of DelegationLog items.
+	rpc DelegationLogAll(QueryAllDelegationLogRequest) returns (QueryAllDelegationLogResponse) {
+		option (google.api.http).get = "/crossdomain/cdac/delegation_log";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -762,6 +773,23 @@ message QueryAllDelegationPolicyRequest {
 
 message QueryAllDelegationPolicyResponse {
 	repeated DelegationPolicy DelegationPolicy = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetDelegationLogRequest {
+	uint64 id = 1;
+}
+
+message QueryGetDelegationLogResponse {
+	DelegationLog DelegationLog = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllDelegationLogRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllDelegationLogResponse {
+	repeated DelegationLog DelegationLog = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

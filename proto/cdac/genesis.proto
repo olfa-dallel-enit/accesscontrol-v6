@@ -28,6 +28,7 @@ import "cdac/delegation_conditions.proto";
 import "cdac/delegation_rule.proto";
 import "cdac/delegation_policy_target.proto";
 import "cdac/delegation_policy.proto";
+import "cdac/delegation_log.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "crossdomain/x/cdac/types";
@@ -83,5 +84,7 @@ message GenesisState {
   uint64 delegationPolicyTargetCount = 47;
   repeated DelegationPolicy delegationPolicyList = 48 [(gogoproto.nullable) = false];
   uint64 delegationPolicyCount = 49;
+  repeated DelegationLog delegationLogList = 50 [(gogoproto.nullable) = false];
+  uint64 delegationLogCount = 51;
   // this line is used by starport scaffolding # genesis/proto/state
 }

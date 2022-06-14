@@ -175,6 +175,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set delegationPolicy count
 	k.SetDelegationPolicyCount(ctx, genState.DelegationPolicyCount)
+	// Set all the delegationLog
+	for _, elem := range genState.DelegationLogList {
+		k.SetDelegationLog(ctx, elem)
+	}
+
+	// Set delegationLog count
+	k.SetDelegationLogCount(ctx, genState.DelegationLogCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetPort(ctx, genState.PortId)
 	// Only try to bind to port if it is not already bound, since we may already own
@@ -247,6 +254,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.DelegationPolicyTargetCount = k.GetDelegationPolicyTargetCount(ctx)
 	genesis.DelegationPolicyList = k.GetAllDelegationPolicy(ctx)
 	genesis.DelegationPolicyCount = k.GetDelegationPolicyCount(ctx)
+	genesis.DelegationLogList = k.GetAllDelegationLog(ctx)
+	genesis.DelegationLogCount = k.GetDelegationLogCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

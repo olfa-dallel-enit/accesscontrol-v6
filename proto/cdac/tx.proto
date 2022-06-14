@@ -14,6 +14,7 @@ import "cdac/calculation_time.proto";
 import "cdac/inter_domain_acl_policy.proto";
 import "cdac/inter_domain_dcl_policy.proto";
 import "cdac/delegation_policy.proto";
+import "cdac/delegation_log.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "cdac/delegation_rule.proto";
 import "cdac/delegation_policy_target.proto";
@@ -120,6 +121,9 @@ rpc CreateDelegationPolicy(MsgCreateDelegationPolicy) returns (MsgCreateDelegati
   rpc UpdateDelegationPolicy(MsgUpdateDelegationPolicy) returns (MsgUpdateDelegationPolicyResponse);
   rpc DeleteDelegationPolicy(MsgDeleteDelegationPolicy) returns (MsgDeleteDelegationPolicyResponse);
   rpc RequestDelegation(MsgRequestDelegation) returns (MsgRequestDelegationResponse);
+rpc CreateDelegationLog(MsgCreateDelegationLog) returns (MsgCreateDelegationLogResponse);
+  rpc UpdateDelegationLog(MsgUpdateDelegationLog) returns (MsgUpdateDelegationLogResponse);
+  rpc DeleteDelegationLog(MsgDeleteDelegationLog) returns (MsgDeleteDelegationLogResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -994,5 +998,27 @@ message MsgRequestDelegation {
 
 message MsgRequestDelegationResponse {
 }
+
+message MsgCreateDelegationLog {
+  string creator = 1;
+}
+
+message MsgCreateDelegationLogResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateDelegationLog {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgUpdateDelegationLogResponse {}
+
+message MsgDeleteDelegationLog {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteDelegationLogResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

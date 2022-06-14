@@ -241,6 +241,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				DelegationPolicyCount: 2,
+				DelegationLogList: []types.DelegationLog{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				DelegationLogCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -842,6 +851,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				DelegationPolicyCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated delegationLog",
+			genState: &types.GenesisState{
+				DelegationLogList: []types.DelegationLog{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid delegationLog count",
+			genState: &types.GenesisState{
+				DelegationLogList: []types.DelegationLog{
+					{
+						Id: 1,
+					},
+				},
+				DelegationLogCount: 0,
 			},
 			valid: false,
 		},

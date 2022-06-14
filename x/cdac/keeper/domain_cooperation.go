@@ -273,10 +273,10 @@ func (k Keeper) GetCooperativeDomainByName(ctx sdk.Context, domainName string) (
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.DomainCooperation
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
-		if (val.RemoteDomain.Name == domainName){
+		if val.RemoteDomain.Name == domainName {
 			cooperativeDomain = &types.CooperativeDomain{
-				Name : val.RemoteDomain.Name,
-				Location: val.RemoteDomain.Location,
+				Name:       val.RemoteDomain.Name,
+				Location:   val.RemoteDomain.Location,
 				DomainType: val.RemoteDomain.DomainType,
 			}
 			return cooperativeDomain, true

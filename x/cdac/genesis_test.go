@@ -233,6 +233,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		DelegationPolicyCount: 2,
+		DelegationLogList: []types.DelegationLog{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		DelegationLogCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -293,5 +302,7 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.DelegationPolicyTargetCount, got.DelegationPolicyTargetCount)
 	require.ElementsMatch(t, genesisState.DelegationPolicyList, got.DelegationPolicyList)
 	require.Equal(t, genesisState.DelegationPolicyCount, got.DelegationPolicyCount)
+	require.ElementsMatch(t, genesisState.DelegationLogList, got.DelegationLogList)
+	require.Equal(t, genesisState.DelegationLogCount, got.DelegationLogCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

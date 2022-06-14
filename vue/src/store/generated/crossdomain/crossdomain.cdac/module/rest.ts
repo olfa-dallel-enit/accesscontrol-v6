@@ -112,6 +112,12 @@ export interface CdacDelegationConditions {
   creator?: string;
 }
 
+export interface CdacDelegationLog {
+  /** @format uint64 */
+  id?: string;
+  creator?: string;
+}
+
 export interface CdacDelegationPath {
   /** @format uint64 */
   id?: string;
@@ -292,6 +298,11 @@ export interface CdacMsgCreateDelegationConditionsResponse {
   id?: string;
 }
 
+export interface CdacMsgCreateDelegationLogResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
 export interface CdacMsgCreateDelegationPathResponse {
   /** @format uint64 */
   id?: string;
@@ -384,6 +395,8 @@ export type CdacMsgDeleteCooperativeDomainResponse = object;
 
 export type CdacMsgDeleteDelegationConditionsResponse = object;
 
+export type CdacMsgDeleteDelegationLogResponse = object;
+
 export type CdacMsgDeleteDelegationPathResponse = object;
 
 export type CdacMsgDeleteDelegationPolicyResponse = object;
@@ -461,6 +474,8 @@ export type CdacMsgUpdateCooperationNetworkResponse = object;
 export type CdacMsgUpdateCooperativeDomainResponse = object;
 
 export type CdacMsgUpdateDelegationConditionsResponse = object;
+
+export type CdacMsgUpdateDelegationLogResponse = object;
 
 export type CdacMsgUpdateDelegationPathResponse = object;
 
@@ -640,6 +655,21 @@ export interface CdacQueryAllCooperativeDomainResponse {
 
 export interface CdacQueryAllDelegationConditionsResponse {
   DelegationConditions?: CdacDelegationConditions[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface CdacQueryAllDelegationLogResponse {
+  DelegationLog?: CdacDelegationLog[];
 
   /**
    * PageResponse is to be embedded in gRPC response messages where the
@@ -922,6 +952,10 @@ export interface CdacQueryGetCooperativeDomainResponse {
 
 export interface CdacQueryGetDelegationConditionsResponse {
   DelegationConditions?: CdacDelegationConditions;
+}
+
+export interface CdacQueryGetDelegationLogResponse {
+  DelegationLog?: CdacDelegationLog;
 }
 
 export interface CdacQueryGetDelegationPathResponse {
@@ -1690,6 +1724,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryDelegationConditions = (id: string, params: RequestParams = {}) =>
     this.request<CdacQueryGetDelegationConditionsResponse, RpcStatus>({
       path: `/crossdomain/cdac/delegation_conditions/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDelegationLogAll
+   * @summary Queries a list of DelegationLog items.
+   * @request GET:/crossdomain/cdac/delegation_log
+   */
+  queryDelegationLogAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CdacQueryAllDelegationLogResponse, RpcStatus>({
+      path: `/crossdomain/cdac/delegation_log`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDelegationLog
+   * @summary Queries a DelegationLog by id.
+   * @request GET:/crossdomain/cdac/delegation_log/{id}
+   */
+  queryDelegationLog = (id: string, params: RequestParams = {}) =>
+    this.request<CdacQueryGetDelegationLogResponse, RpcStatus>({
+      path: `/crossdomain/cdac/delegation_log/${id}`,
       method: "GET",
       format: "json",
       ...params,
