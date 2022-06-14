@@ -104,3 +104,20 @@ func GetDelegationRuleIDBytes(id uint64) []byte {
 func GetDelegationRuleIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
+
+func (k Keeper) GetDelegationRuleByLabel(ctx sdk.Context, label string) (delegationRule types.DelegationRule, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DelegationRuleKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.DelegationRule
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Label == label{
+			return val, true
+		}
+	}
+
+	return delegationRule, false
+}

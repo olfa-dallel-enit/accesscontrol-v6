@@ -7,6 +7,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cast"
+	"time"
 )
 
 func (k msgServer) RequestDelegation(goCtx context.Context, msg *types.MsgRequestDelegation) (*types.MsgRequestDelegationResponse, error) {
@@ -20,8 +21,8 @@ func (k msgServer) RequestDelegation(goCtx context.Context, msg *types.MsgReques
 
 	delegationDecision = "Not applicable"
 
-	delegatee, ex := k.GetCooperativeDomainByName(ctx, msg.Delegatee)
-	if ex {
+	delegatee, found := k.GetCooperativeDomainByName(ctx, msg.Delegatee)
+	if found {
 		//var delegationPath types.DelegationPath
 		delegationPath := k.GenerateAllDelegationPathsByDelegatee(ctx, delegatee)
 		if len(delegationPath.PathList) > 0 {
@@ -44,8 +45,17 @@ func (k msgServer) RequestDelegation(goCtx context.Context, msg *types.MsgReques
 					//evaluate policies
 					for _, delegationPolicy := range delegationPolicies{
 						delegationRule := delegationPolicy.RuleList[0]
-						if delegationRule.DelegationConditions.Depth >= cast.ToUint64(len(path.DomainList) - 1){
-							delegationDecision = "Allow"
+						nbDelegations, found := k.GetNbDelegationsByLabel(ctx, msg.Permission)
+						if found{
+							if delegationRule.DelegationConditions.Depth >= cast.ToUint64(len(path.DomainList) - 1) && CheckValidity(delegationRule.DelegationConditions.Validity) && nbDelegations <= delegationRule.DelegationConditions.MaxDelegations{
+								delegationDecision = "Allow"
+							}else{
+								delegationDecision  = "Not applicable"
+								reason = "Delegation validity!"
+							}
+						}else{
+							delegationDecision  = "Not applicable"
+							reason = "can not extract nbDelegations!"
 						}
 					}
 				}else{
@@ -71,4 +81,11 @@ func (k msgServer) RequestDelegation(goCtx context.Context, msg *types.MsgReques
 	})
 	
 	return &types.MsgRequestDelegationResponse{}, nil
+}
+
+func CheckValidity(validity *types.Validity) (bool){
+	if cast.ToTime(validity.NotBefore).UnixNano() <= time.Now().UnixNano() && time.Now().UnixNano() <= cast.ToTime(validity.NotAfter).UnixNano(){
+		return true
+	}
+	return false
 }

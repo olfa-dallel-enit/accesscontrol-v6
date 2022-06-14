@@ -136,3 +136,12 @@ func (k Keeper) FindInterDomainAclPolicyByLabel(ctx sdk.Context, label string) (
 	}
 	return false
 }
+
+func (k Keeper) GetNbDelegationsByLabel(ctx sdk.Context, label string) (nbDelegations uint64, found bool) {
+
+	accessPolicy, found := k.GetInterDomainAclPolicyByLabel(ctx, label)
+	if found{
+		return accessPolicy.NbDelegations, true
+	}
+	return 0, false
+}
