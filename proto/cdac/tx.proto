@@ -119,6 +119,7 @@ rpc CreateDelegationPolicyTarget(MsgCreateDelegationPolicyTarget) returns (MsgCr
 rpc CreateDelegationPolicy(MsgCreateDelegationPolicy) returns (MsgCreateDelegationPolicyResponse);
   rpc UpdateDelegationPolicy(MsgUpdateDelegationPolicy) returns (MsgUpdateDelegationPolicyResponse);
   rpc DeleteDelegationPolicy(MsgDeleteDelegationPolicy) returns (MsgDeleteDelegationPolicyResponse);
+  rpc RequestDelegation(MsgRequestDelegation) returns (MsgRequestDelegationResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -982,5 +983,16 @@ message MsgDeleteDelegationPolicy {
 }
 
 message MsgDeleteDelegationPolicyResponse {}
+
+message MsgRequestDelegation {
+  string creator = 1;
+  string delegatee = 2;
+  string permission = 3;
+  string action = 4;
+  string pathSelectionCriterion = 5;
+}
+
+message MsgRequestDelegationResponse {
+}
 
 // this line is used by starport scaffolding # proto/tx/message

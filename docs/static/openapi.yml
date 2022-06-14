@@ -22020,47 +22020,65 @@ paths:
                     combiningAlgorithm:
                       type: string
                     ruleList:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        label:
-                          type: string
-                        effect:
-                          type: string
-                        delegationConditions:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                              format: uint64
-                            depth:
-                              type: string
-                              format: uint64
-                            validity:
-                              type: object
-                              properties:
-                                id:
-                                  type: string
-                                  format: uint64
-                                notBefore:
-                                  type: string
-                                notAfter:
-                                  type: string
-                                creator:
-                                  type: string
-                            maxDelegations:
-                              type: string
-                              format: uint64
-                            creator:
-                              type: string
-                        priority:
-                          type: string
-                          format: uint64
-                        creator:
-                          type: string
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          label:
+                            type: string
+                          effect:
+                            type: string
+                          delegationConditions:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uint64
+                              depth:
+                                type: string
+                                format: uint64
+                              validity:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uint64
+                                  notBefore:
+                                    type: string
+                                  notAfter:
+                                    type: string
+                                  creator:
+                                    type: string
+                              maxDelegations:
+                                type: string
+                                format: uint64
+                              creator:
+                                type: string
+                          priority:
+                            type: string
+                            format: uint64
+                          creator:
+                            type: string
+                          creationDate:
+                            type: string
+                          creationTimestamp:
+                            type: string
+                          updateDate:
+                            type: string
+                          updateTimestamp:
+                            type: string
                     creator:
+                      type: string
+                    creationDate:
+                      type: string
+                    creationTimestamp:
+                      type: string
+                    updateDate:
+                      type: string
+                    updateTimestamp:
                       type: string
               pagination:
                 type: object
@@ -22205,47 +22223,65 @@ paths:
                   combiningAlgorithm:
                     type: string
                   ruleList:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        format: uint64
-                      label:
-                        type: string
-                      effect:
-                        type: string
-                      delegationConditions:
-                        type: object
-                        properties:
-                          id:
-                            type: string
-                            format: uint64
-                          depth:
-                            type: string
-                            format: uint64
-                          validity:
-                            type: object
-                            properties:
-                              id:
-                                type: string
-                                format: uint64
-                              notBefore:
-                                type: string
-                              notAfter:
-                                type: string
-                              creator:
-                                type: string
-                          maxDelegations:
-                            type: string
-                            format: uint64
-                          creator:
-                            type: string
-                      priority:
-                        type: string
-                        format: uint64
-                      creator:
-                        type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        label:
+                          type: string
+                        effect:
+                          type: string
+                        delegationConditions:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uint64
+                            depth:
+                              type: string
+                              format: uint64
+                            validity:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uint64
+                                notBefore:
+                                  type: string
+                                notAfter:
+                                  type: string
+                                creator:
+                                  type: string
+                            maxDelegations:
+                              type: string
+                              format: uint64
+                            creator:
+                              type: string
+                        priority:
+                          type: string
+                          format: uint64
+                        creator:
+                          type: string
+                        creationDate:
+                          type: string
+                        creationTimestamp:
+                          type: string
+                        updateDate:
+                          type: string
+                        updateTimestamp:
+                          type: string
                   creator:
+                    type: string
+                  creationDate:
+                    type: string
+                  creationTimestamp:
+                    type: string
+                  updateDate:
+                    type: string
+                  updateTimestamp:
                     type: string
         default:
           description: An unexpected error response.
@@ -22514,6 +22550,14 @@ paths:
                       format: uint64
                     creator:
                       type: string
+                    creationDate:
+                      type: string
+                    creationTimestamp:
+                      type: string
+                    updateDate:
+                      type: string
+                    updateTimestamp:
+                      type: string
               pagination:
                 type: object
                 properties:
@@ -22668,6 +22712,14 @@ paths:
                     type: string
                     format: uint64
                   creator:
+                    type: string
+                  creationDate:
+                    type: string
+                  creationTimestamp:
+                    type: string
+                  updateDate:
+                    type: string
+                  updateTimestamp:
                     type: string
         default:
           description: An unexpected error response.
@@ -53112,47 +53164,65 @@ definitions:
       combiningAlgorithm:
         type: string
       ruleList:
-        type: object
-        properties:
-          id:
-            type: string
-            format: uint64
-          label:
-            type: string
-          effect:
-            type: string
-          delegationConditions:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uint64
-              depth:
-                type: string
-                format: uint64
-              validity:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uint64
-                  notBefore:
-                    type: string
-                  notAfter:
-                    type: string
-                  creator:
-                    type: string
-              maxDelegations:
-                type: string
-                format: uint64
-              creator:
-                type: string
-          priority:
-            type: string
-            format: uint64
-          creator:
-            type: string
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            label:
+              type: string
+            effect:
+              type: string
+            delegationConditions:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                depth:
+                  type: string
+                  format: uint64
+                validity:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    notBefore:
+                      type: string
+                    notAfter:
+                      type: string
+                    creator:
+                      type: string
+                maxDelegations:
+                  type: string
+                  format: uint64
+                creator:
+                  type: string
+            priority:
+              type: string
+              format: uint64
+            creator:
+              type: string
+            creationDate:
+              type: string
+            creationTimestamp:
+              type: string
+            updateDate:
+              type: string
+            updateTimestamp:
+              type: string
       creator:
+        type: string
+      creationDate:
+        type: string
+      creationTimestamp:
+        type: string
+      updateDate:
+        type: string
+      updateTimestamp:
         type: string
   crossdomain.cdac.DelegationPolicyTarget:
     type: object
@@ -53212,6 +53282,14 @@ definitions:
         type: string
         format: uint64
       creator:
+        type: string
+      creationDate:
+        type: string
+      creationTimestamp:
+        type: string
+      updateDate:
+        type: string
+      updateTimestamp:
         type: string
   crossdomain.cdac.Domain:
     type: object
@@ -53755,6 +53833,8 @@ definitions:
     properties:
       decision:
         type: string
+  crossdomain.cdac.MsgRequestDelegationResponse:
+    type: object
   crossdomain.cdac.MsgSendAuthenticateDomainResponse:
     type: object
   crossdomain.cdac.MsgSendDisableCooperationResponse:
@@ -54536,47 +54616,65 @@ definitions:
             combiningAlgorithm:
               type: string
             ruleList:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uint64
-                label:
-                  type: string
-                effect:
-                  type: string
-                delegationConditions:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      format: uint64
-                    depth:
-                      type: string
-                      format: uint64
-                    validity:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uint64
-                        notBefore:
-                          type: string
-                        notAfter:
-                          type: string
-                        creator:
-                          type: string
-                    maxDelegations:
-                      type: string
-                      format: uint64
-                    creator:
-                      type: string
-                priority:
-                  type: string
-                  format: uint64
-                creator:
-                  type: string
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  label:
+                    type: string
+                  effect:
+                    type: string
+                  delegationConditions:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      depth:
+                        type: string
+                        format: uint64
+                      validity:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uint64
+                          notBefore:
+                            type: string
+                          notAfter:
+                            type: string
+                          creator:
+                            type: string
+                      maxDelegations:
+                        type: string
+                        format: uint64
+                      creator:
+                        type: string
+                  priority:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+                  creationDate:
+                    type: string
+                  creationTimestamp:
+                    type: string
+                  updateDate:
+                    type: string
+                  updateTimestamp:
+                    type: string
             creator:
+              type: string
+            creationDate:
+              type: string
+            creationTimestamp:
+              type: string
+            updateDate:
+              type: string
+            updateTimestamp:
               type: string
       pagination:
         type: object
@@ -54696,6 +54794,14 @@ definitions:
               type: string
               format: uint64
             creator:
+              type: string
+            creationDate:
+              type: string
+            creationTimestamp:
+              type: string
+            updateDate:
+              type: string
+            updateTimestamp:
               type: string
       pagination:
         type: object
@@ -56035,47 +56141,65 @@ definitions:
           combiningAlgorithm:
             type: string
           ruleList:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uint64
-              label:
-                type: string
-              effect:
-                type: string
-              delegationConditions:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uint64
-                  depth:
-                    type: string
-                    format: uint64
-                  validity:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        format: uint64
-                      notBefore:
-                        type: string
-                      notAfter:
-                        type: string
-                      creator:
-                        type: string
-                  maxDelegations:
-                    type: string
-                    format: uint64
-                  creator:
-                    type: string
-              priority:
-                type: string
-                format: uint64
-              creator:
-                type: string
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                label:
+                  type: string
+                effect:
+                  type: string
+                delegationConditions:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    depth:
+                      type: string
+                      format: uint64
+                    validity:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        notBefore:
+                          type: string
+                        notAfter:
+                          type: string
+                        creator:
+                          type: string
+                    maxDelegations:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+                priority:
+                  type: string
+                  format: uint64
+                creator:
+                  type: string
+                creationDate:
+                  type: string
+                creationTimestamp:
+                  type: string
+                updateDate:
+                  type: string
+                updateTimestamp:
+                  type: string
           creator:
+            type: string
+          creationDate:
+            type: string
+          creationTimestamp:
+            type: string
+          updateDate:
+            type: string
+          updateTimestamp:
             type: string
   crossdomain.cdac.QueryGetDelegationPolicyTargetResponse:
     type: object
@@ -56141,6 +56265,14 @@ definitions:
             type: string
             format: uint64
           creator:
+            type: string
+          creationDate:
+            type: string
+          creationTimestamp:
+            type: string
+          updateDate:
+            type: string
+          updateTimestamp:
             type: string
   crossdomain.cdac.QueryGetDomainCooperationResponse:
     type: object

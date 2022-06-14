@@ -23,7 +23,7 @@ func CmdCreateDelegationPolicyTarget() *cobra.Command {
 			argPermissionList := strings.Split(args[1], listSeparator)
 			argAction := args[2]
 
-			if strings.Compare(strings.ToUpper(argAction),strings.ToUpper("grant")) != 0 || strings.Compare(strings.ToUpper(argAction),strings.ToUpper("transfer")) != 0 {
+			if strings.Compare(strings.ToUpper(argAction), strings.ToUpper("grant")) != 0 || strings.Compare(strings.ToUpper(argAction), strings.ToUpper("transfer")) != 0 {
 				return sdkerrors.Wrap(sdkerrors.ErrIO, " Invalid delegation action")
 			}
 

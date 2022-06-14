@@ -128,8 +128,12 @@ export interface CdacDelegationPolicy {
   label?: string;
   target?: CdacDelegationPolicyTarget;
   combiningAlgorithm?: string;
-  ruleList?: CdacDelegationRule;
+  ruleList?: CdacDelegationRule[];
   creator?: string;
+  creationDate?: string;
+  creationTimestamp?: string;
+  updateDate?: string;
+  updateTimestamp?: string;
 }
 
 export interface CdacDelegationPolicyTarget {
@@ -151,6 +155,10 @@ export interface CdacDelegationRule {
   /** @format uint64 */
   priority?: string;
   creator?: string;
+  creationDate?: string;
+  creationTimestamp?: string;
+  updateDate?: string;
+  updateTimestamp?: string;
 }
 
 export interface CdacDomain {
@@ -413,6 +421,8 @@ export type CdacMsgGenerateCooperationNetworkResponse = object;
 export interface CdacMsgRequestAccessPermissionResponse {
   decision?: string;
 }
+
+export type CdacMsgRequestDelegationResponse = object;
 
 export type CdacMsgSendAuthenticateDomainResponse = object;
 

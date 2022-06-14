@@ -857,7 +857,7 @@ export interface MsgCreateDelegationPolicy {
   label: string;
   target: DelegationPolicyTarget | undefined;
   combiningAlgorithm: string;
-  ruleList: DelegationRule | undefined;
+  ruleList: DelegationRule[];
 }
 
 export interface MsgCreateDelegationPolicyResponse {
@@ -870,7 +870,7 @@ export interface MsgUpdateDelegationPolicy {
   label: string;
   target: DelegationPolicyTarget | undefined;
   combiningAlgorithm: string;
-  ruleList: DelegationRule | undefined;
+  ruleList: DelegationRule[];
 }
 
 export interface MsgUpdateDelegationPolicyResponse {}
@@ -881,6 +881,16 @@ export interface MsgDeleteDelegationPolicy {
 }
 
 export interface MsgDeleteDelegationPolicyResponse {}
+
+export interface MsgRequestDelegation {
+  creator: string;
+  delegatee: string;
+  permission: string;
+  action: string;
+  pathSelectionCriterion: string;
+}
+
+export interface MsgRequestDelegationResponse {}
 
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
@@ -16908,11 +16918,8 @@ export const MsgCreateDelegationPolicy = {
     if (message.combiningAlgorithm !== "") {
       writer.uint32(34).string(message.combiningAlgorithm);
     }
-    if (message.ruleList !== undefined) {
-      DelegationRule.encode(
-        message.ruleList,
-        writer.uint32(42).fork()
-      ).ldelim();
+    for (const v of message.ruleList) {
+      DelegationRule.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -16926,6 +16933,7 @@ export const MsgCreateDelegationPolicy = {
     const message = {
       ...baseMsgCreateDelegationPolicy,
     } as MsgCreateDelegationPolicy;
+    message.ruleList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -16945,7 +16953,7 @@ export const MsgCreateDelegationPolicy = {
           message.combiningAlgorithm = reader.string();
           break;
         case 5:
-          message.ruleList = DelegationRule.decode(reader, reader.uint32());
+          message.ruleList.push(DelegationRule.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -16959,6 +16967,7 @@ export const MsgCreateDelegationPolicy = {
     const message = {
       ...baseMsgCreateDelegationPolicy,
     } as MsgCreateDelegationPolicy;
+    message.ruleList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -16983,9 +16992,9 @@ export const MsgCreateDelegationPolicy = {
       message.combiningAlgorithm = "";
     }
     if (object.ruleList !== undefined && object.ruleList !== null) {
-      message.ruleList = DelegationRule.fromJSON(object.ruleList);
-    } else {
-      message.ruleList = undefined;
+      for (const e of object.ruleList) {
+        message.ruleList.push(DelegationRule.fromJSON(e));
+      }
     }
     return message;
   },
@@ -17000,10 +17009,13 @@ export const MsgCreateDelegationPolicy = {
         : undefined);
     message.combiningAlgorithm !== undefined &&
       (obj.combiningAlgorithm = message.combiningAlgorithm);
-    message.ruleList !== undefined &&
-      (obj.ruleList = message.ruleList
-        ? DelegationRule.toJSON(message.ruleList)
-        : undefined);
+    if (message.ruleList) {
+      obj.ruleList = message.ruleList.map((e) =>
+        e ? DelegationRule.toJSON(e) : undefined
+      );
+    } else {
+      obj.ruleList = [];
+    }
     return obj;
   },
 
@@ -17013,6 +17025,7 @@ export const MsgCreateDelegationPolicy = {
     const message = {
       ...baseMsgCreateDelegationPolicy,
     } as MsgCreateDelegationPolicy;
+    message.ruleList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -17037,9 +17050,9 @@ export const MsgCreateDelegationPolicy = {
       message.combiningAlgorithm = "";
     }
     if (object.ruleList !== undefined && object.ruleList !== null) {
-      message.ruleList = DelegationRule.fromPartial(object.ruleList);
-    } else {
-      message.ruleList = undefined;
+      for (const e of object.ruleList) {
+        message.ruleList.push(DelegationRule.fromPartial(e));
+      }
     }
     return message;
   },
@@ -17144,11 +17157,8 @@ export const MsgUpdateDelegationPolicy = {
     if (message.combiningAlgorithm !== "") {
       writer.uint32(42).string(message.combiningAlgorithm);
     }
-    if (message.ruleList !== undefined) {
-      DelegationRule.encode(
-        message.ruleList,
-        writer.uint32(50).fork()
-      ).ldelim();
+    for (const v of message.ruleList) {
+      DelegationRule.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     return writer;
   },
@@ -17162,6 +17172,7 @@ export const MsgUpdateDelegationPolicy = {
     const message = {
       ...baseMsgUpdateDelegationPolicy,
     } as MsgUpdateDelegationPolicy;
+    message.ruleList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -17184,7 +17195,7 @@ export const MsgUpdateDelegationPolicy = {
           message.combiningAlgorithm = reader.string();
           break;
         case 6:
-          message.ruleList = DelegationRule.decode(reader, reader.uint32());
+          message.ruleList.push(DelegationRule.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -17198,6 +17209,7 @@ export const MsgUpdateDelegationPolicy = {
     const message = {
       ...baseMsgUpdateDelegationPolicy,
     } as MsgUpdateDelegationPolicy;
+    message.ruleList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
@@ -17227,9 +17239,9 @@ export const MsgUpdateDelegationPolicy = {
       message.combiningAlgorithm = "";
     }
     if (object.ruleList !== undefined && object.ruleList !== null) {
-      message.ruleList = DelegationRule.fromJSON(object.ruleList);
-    } else {
-      message.ruleList = undefined;
+      for (const e of object.ruleList) {
+        message.ruleList.push(DelegationRule.fromJSON(e));
+      }
     }
     return message;
   },
@@ -17245,10 +17257,13 @@ export const MsgUpdateDelegationPolicy = {
         : undefined);
     message.combiningAlgorithm !== undefined &&
       (obj.combiningAlgorithm = message.combiningAlgorithm);
-    message.ruleList !== undefined &&
-      (obj.ruleList = message.ruleList
-        ? DelegationRule.toJSON(message.ruleList)
-        : undefined);
+    if (message.ruleList) {
+      obj.ruleList = message.ruleList.map((e) =>
+        e ? DelegationRule.toJSON(e) : undefined
+      );
+    } else {
+      obj.ruleList = [];
+    }
     return obj;
   },
 
@@ -17258,6 +17273,7 @@ export const MsgUpdateDelegationPolicy = {
     const message = {
       ...baseMsgUpdateDelegationPolicy,
     } as MsgUpdateDelegationPolicy;
+    message.ruleList = [];
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
@@ -17287,9 +17303,9 @@ export const MsgUpdateDelegationPolicy = {
       message.combiningAlgorithm = "";
     }
     if (object.ruleList !== undefined && object.ruleList !== null) {
-      message.ruleList = DelegationRule.fromPartial(object.ruleList);
-    } else {
-      message.ruleList = undefined;
+      for (const e of object.ruleList) {
+        message.ruleList.push(DelegationRule.fromPartial(e));
+      }
     }
     return message;
   },
@@ -17481,6 +17497,197 @@ export const MsgDeleteDelegationPolicyResponse = {
     const message = {
       ...baseMsgDeleteDelegationPolicyResponse,
     } as MsgDeleteDelegationPolicyResponse;
+    return message;
+  },
+};
+
+const baseMsgRequestDelegation: object = {
+  creator: "",
+  delegatee: "",
+  permission: "",
+  action: "",
+  pathSelectionCriterion: "",
+};
+
+export const MsgRequestDelegation = {
+  encode(
+    message: MsgRequestDelegation,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.delegatee !== "") {
+      writer.uint32(18).string(message.delegatee);
+    }
+    if (message.permission !== "") {
+      writer.uint32(26).string(message.permission);
+    }
+    if (message.action !== "") {
+      writer.uint32(34).string(message.action);
+    }
+    if (message.pathSelectionCriterion !== "") {
+      writer.uint32(42).string(message.pathSelectionCriterion);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgRequestDelegation {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgRequestDelegation } as MsgRequestDelegation;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.delegatee = reader.string();
+          break;
+        case 3:
+          message.permission = reader.string();
+          break;
+        case 4:
+          message.action = reader.string();
+          break;
+        case 5:
+          message.pathSelectionCriterion = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgRequestDelegation {
+    const message = { ...baseMsgRequestDelegation } as MsgRequestDelegation;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.delegatee !== undefined && object.delegatee !== null) {
+      message.delegatee = String(object.delegatee);
+    } else {
+      message.delegatee = "";
+    }
+    if (object.permission !== undefined && object.permission !== null) {
+      message.permission = String(object.permission);
+    } else {
+      message.permission = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = String(object.action);
+    } else {
+      message.action = "";
+    }
+    if (
+      object.pathSelectionCriterion !== undefined &&
+      object.pathSelectionCriterion !== null
+    ) {
+      message.pathSelectionCriterion = String(object.pathSelectionCriterion);
+    } else {
+      message.pathSelectionCriterion = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgRequestDelegation): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.delegatee !== undefined && (obj.delegatee = message.delegatee);
+    message.permission !== undefined && (obj.permission = message.permission);
+    message.action !== undefined && (obj.action = message.action);
+    message.pathSelectionCriterion !== undefined &&
+      (obj.pathSelectionCriterion = message.pathSelectionCriterion);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgRequestDelegation>): MsgRequestDelegation {
+    const message = { ...baseMsgRequestDelegation } as MsgRequestDelegation;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.delegatee !== undefined && object.delegatee !== null) {
+      message.delegatee = object.delegatee;
+    } else {
+      message.delegatee = "";
+    }
+    if (object.permission !== undefined && object.permission !== null) {
+      message.permission = object.permission;
+    } else {
+      message.permission = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = object.action;
+    } else {
+      message.action = "";
+    }
+    if (
+      object.pathSelectionCriterion !== undefined &&
+      object.pathSelectionCriterion !== null
+    ) {
+      message.pathSelectionCriterion = object.pathSelectionCriterion;
+    } else {
+      message.pathSelectionCriterion = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgRequestDelegationResponse: object = {};
+
+export const MsgRequestDelegationResponse = {
+  encode(
+    _: MsgRequestDelegationResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgRequestDelegationResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgRequestDelegationResponse,
+    } as MsgRequestDelegationResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgRequestDelegationResponse {
+    const message = {
+      ...baseMsgRequestDelegationResponse,
+    } as MsgRequestDelegationResponse;
+    return message;
+  },
+
+  toJSON(_: MsgRequestDelegationResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgRequestDelegationResponse>
+  ): MsgRequestDelegationResponse {
+    const message = {
+      ...baseMsgRequestDelegationResponse,
+    } as MsgRequestDelegationResponse;
     return message;
   },
 };
@@ -17733,10 +17940,13 @@ export interface Msg {
   UpdateDelegationPolicy(
     request: MsgUpdateDelegationPolicy
   ): Promise<MsgUpdateDelegationPolicyResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteDelegationPolicy(
     request: MsgDeleteDelegationPolicy
   ): Promise<MsgDeleteDelegationPolicyResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  RequestDelegation(
+    request: MsgRequestDelegation
+  ): Promise<MsgRequestDelegationResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -18947,6 +19157,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeleteDelegationPolicyResponse.decode(new Reader(data))
+    );
+  }
+
+  RequestDelegation(
+    request: MsgRequestDelegation
+  ): Promise<MsgRequestDelegationResponse> {
+    const data = MsgRequestDelegation.encode(request).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "RequestDelegation",
+      data
+    );
+    return promise.then((data) =>
+      MsgRequestDelegationResponse.decode(new Reader(data))
     );
   }
 }

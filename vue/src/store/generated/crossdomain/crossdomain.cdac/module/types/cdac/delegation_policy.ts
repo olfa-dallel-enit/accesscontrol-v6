@@ -11,8 +11,12 @@ export interface DelegationPolicy {
   label: string;
   target: DelegationPolicyTarget | undefined;
   combiningAlgorithm: string;
-  ruleList: DelegationRule | undefined;
+  ruleList: DelegationRule[];
   creator: string;
+  creationDate: string;
+  creationTimestamp: string;
+  updateDate: string;
+  updateTimestamp: string;
 }
 
 const baseDelegationPolicy: object = {
@@ -20,6 +24,10 @@ const baseDelegationPolicy: object = {
   label: "",
   combiningAlgorithm: "",
   creator: "",
+  creationDate: "",
+  creationTimestamp: "",
+  updateDate: "",
+  updateTimestamp: "",
 };
 
 export const DelegationPolicy = {
@@ -39,14 +47,23 @@ export const DelegationPolicy = {
     if (message.combiningAlgorithm !== "") {
       writer.uint32(34).string(message.combiningAlgorithm);
     }
-    if (message.ruleList !== undefined) {
-      DelegationRule.encode(
-        message.ruleList,
-        writer.uint32(42).fork()
-      ).ldelim();
+    for (const v of message.ruleList) {
+      DelegationRule.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     if (message.creator !== "") {
       writer.uint32(50).string(message.creator);
+    }
+    if (message.creationDate !== "") {
+      writer.uint32(58).string(message.creationDate);
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(66).string(message.creationTimestamp);
+    }
+    if (message.updateDate !== "") {
+      writer.uint32(74).string(message.updateDate);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(82).string(message.updateTimestamp);
     }
     return writer;
   },
@@ -55,6 +72,7 @@ export const DelegationPolicy = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDelegationPolicy } as DelegationPolicy;
+    message.ruleList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -74,10 +92,22 @@ export const DelegationPolicy = {
           message.combiningAlgorithm = reader.string();
           break;
         case 5:
-          message.ruleList = DelegationRule.decode(reader, reader.uint32());
+          message.ruleList.push(DelegationRule.decode(reader, reader.uint32()));
           break;
         case 6:
           message.creator = reader.string();
+          break;
+        case 7:
+          message.creationDate = reader.string();
+          break;
+        case 8:
+          message.creationTimestamp = reader.string();
+          break;
+        case 9:
+          message.updateDate = reader.string();
+          break;
+        case 10:
+          message.updateTimestamp = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -89,6 +119,7 @@ export const DelegationPolicy = {
 
   fromJSON(object: any): DelegationPolicy {
     const message = { ...baseDelegationPolicy } as DelegationPolicy;
+    message.ruleList = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = Number(object.id);
     } else {
@@ -113,14 +144,40 @@ export const DelegationPolicy = {
       message.combiningAlgorithm = "";
     }
     if (object.ruleList !== undefined && object.ruleList !== null) {
-      message.ruleList = DelegationRule.fromJSON(object.ruleList);
-    } else {
-      message.ruleList = undefined;
+      for (const e of object.ruleList) {
+        message.ruleList.push(DelegationRule.fromJSON(e));
+      }
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
       message.creator = "";
+    }
+    if (object.creationDate !== undefined && object.creationDate !== null) {
+      message.creationDate = String(object.creationDate);
+    } else {
+      message.creationDate = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (object.updateDate !== undefined && object.updateDate !== null) {
+      message.updateDate = String(object.updateDate);
+    } else {
+      message.updateDate = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
     }
     return message;
   },
@@ -135,16 +192,27 @@ export const DelegationPolicy = {
         : undefined);
     message.combiningAlgorithm !== undefined &&
       (obj.combiningAlgorithm = message.combiningAlgorithm);
-    message.ruleList !== undefined &&
-      (obj.ruleList = message.ruleList
-        ? DelegationRule.toJSON(message.ruleList)
-        : undefined);
+    if (message.ruleList) {
+      obj.ruleList = message.ruleList.map((e) =>
+        e ? DelegationRule.toJSON(e) : undefined
+      );
+    } else {
+      obj.ruleList = [];
+    }
     message.creator !== undefined && (obj.creator = message.creator);
+    message.creationDate !== undefined &&
+      (obj.creationDate = message.creationDate);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateDate !== undefined && (obj.updateDate = message.updateDate);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
     return obj;
   },
 
   fromPartial(object: DeepPartial<DelegationPolicy>): DelegationPolicy {
     const message = { ...baseDelegationPolicy } as DelegationPolicy;
+    message.ruleList = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = object.id;
     } else {
@@ -169,14 +237,40 @@ export const DelegationPolicy = {
       message.combiningAlgorithm = "";
     }
     if (object.ruleList !== undefined && object.ruleList !== null) {
-      message.ruleList = DelegationRule.fromPartial(object.ruleList);
-    } else {
-      message.ruleList = undefined;
+      for (const e of object.ruleList) {
+        message.ruleList.push(DelegationRule.fromPartial(e));
+      }
     }
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.creationDate !== undefined && object.creationDate !== null) {
+      message.creationDate = object.creationDate;
+    } else {
+      message.creationDate = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (object.updateDate !== undefined && object.updateDate !== null) {
+      message.updateDate = object.updateDate;
+    } else {
+      message.updateDate = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
     }
     return message;
   },

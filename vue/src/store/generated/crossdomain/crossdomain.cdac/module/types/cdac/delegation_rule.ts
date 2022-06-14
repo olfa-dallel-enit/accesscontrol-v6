@@ -12,6 +12,10 @@ export interface DelegationRule {
   delegationConditions: DelegationConditions | undefined;
   priority: number;
   creator: string;
+  creationDate: string;
+  creationTimestamp: string;
+  updateDate: string;
+  updateTimestamp: string;
 }
 
 const baseDelegationRule: object = {
@@ -20,6 +24,10 @@ const baseDelegationRule: object = {
   effect: "",
   priority: 0,
   creator: "",
+  creationDate: "",
+  creationTimestamp: "",
+  updateDate: "",
+  updateTimestamp: "",
 };
 
 export const DelegationRule = {
@@ -44,6 +52,18 @@ export const DelegationRule = {
     }
     if (message.creator !== "") {
       writer.uint32(50).string(message.creator);
+    }
+    if (message.creationDate !== "") {
+      writer.uint32(58).string(message.creationDate);
+    }
+    if (message.creationTimestamp !== "") {
+      writer.uint32(66).string(message.creationTimestamp);
+    }
+    if (message.updateDate !== "") {
+      writer.uint32(74).string(message.updateDate);
+    }
+    if (message.updateTimestamp !== "") {
+      writer.uint32(82).string(message.updateTimestamp);
     }
     return writer;
   },
@@ -75,6 +95,18 @@ export const DelegationRule = {
           break;
         case 6:
           message.creator = reader.string();
+          break;
+        case 7:
+          message.creationDate = reader.string();
+          break;
+        case 8:
+          message.creationTimestamp = reader.string();
+          break;
+        case 9:
+          message.updateDate = reader.string();
+          break;
+        case 10:
+          message.updateTimestamp = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -121,6 +153,32 @@ export const DelegationRule = {
     } else {
       message.creator = "";
     }
+    if (object.creationDate !== undefined && object.creationDate !== null) {
+      message.creationDate = String(object.creationDate);
+    } else {
+      message.creationDate = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = String(object.creationTimestamp);
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (object.updateDate !== undefined && object.updateDate !== null) {
+      message.updateDate = String(object.updateDate);
+    } else {
+      message.updateDate = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = String(object.updateTimestamp);
+    } else {
+      message.updateTimestamp = "";
+    }
     return message;
   },
 
@@ -135,6 +193,13 @@ export const DelegationRule = {
         : undefined);
     message.priority !== undefined && (obj.priority = message.priority);
     message.creator !== undefined && (obj.creator = message.creator);
+    message.creationDate !== undefined &&
+      (obj.creationDate = message.creationDate);
+    message.creationTimestamp !== undefined &&
+      (obj.creationTimestamp = message.creationTimestamp);
+    message.updateDate !== undefined && (obj.updateDate = message.updateDate);
+    message.updateTimestamp !== undefined &&
+      (obj.updateTimestamp = message.updateTimestamp);
     return obj;
   },
 
@@ -174,6 +239,32 @@ export const DelegationRule = {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.creationDate !== undefined && object.creationDate !== null) {
+      message.creationDate = object.creationDate;
+    } else {
+      message.creationDate = "";
+    }
+    if (
+      object.creationTimestamp !== undefined &&
+      object.creationTimestamp !== null
+    ) {
+      message.creationTimestamp = object.creationTimestamp;
+    } else {
+      message.creationTimestamp = "";
+    }
+    if (object.updateDate !== undefined && object.updateDate !== null) {
+      message.updateDate = object.updateDate;
+    } else {
+      message.updateDate = "";
+    }
+    if (
+      object.updateTimestamp !== undefined &&
+      object.updateTimestamp !== null
+    ) {
+      message.updateTimestamp = object.updateTimestamp;
+    } else {
+      message.updateTimestamp = "";
     }
     return message;
   },

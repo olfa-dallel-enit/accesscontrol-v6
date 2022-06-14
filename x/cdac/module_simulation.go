@@ -332,6 +332,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteDelegationPolicy int = 100
 
+	opWeightMsgRequestDelegation = "op_weight_msg_request_delegation"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgRequestDelegation int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -1474,6 +1478,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteDelegationPolicy,
 		cdacsimulation.SimulateMsgDeleteDelegationPolicy(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgRequestDelegation int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgRequestDelegation, &weightMsgRequestDelegation, nil,
+		func(_ *rand.Rand) {
+			weightMsgRequestDelegation = defaultWeightMsgRequestDelegation
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgRequestDelegation,
+		cdacsimulation.SimulateMsgRequestDelegation(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

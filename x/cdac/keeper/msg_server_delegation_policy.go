@@ -8,8 +8,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"time"
 	"github.com/spf13/cast"
+	"time"
 )
 
 func (k msgServer) CreateDelegationPolicy(goCtx context.Context, msg *types.MsgCreateDelegationPolicy) (*types.MsgCreateDelegationPolicyResponse, error) {
@@ -21,7 +21,7 @@ func (k msgServer) CreateDelegationPolicy(goCtx context.Context, msg *types.MsgC
 		Target:             msg.Target,
 		CombiningAlgorithm: msg.CombiningAlgorithm,
 		RuleList:           msg.RuleList,
-		CreationDate:		cast.ToString(time.Now()),
+		CreationDate:       cast.ToString(time.Now()),
 		CreationTimestamp:  cast.ToString(time.Now().UnixNano()),
 		UpdateDate:         cast.ToString(time.Now()),
 		UpdateTimestamp:    cast.ToString(time.Now().UnixNano()),

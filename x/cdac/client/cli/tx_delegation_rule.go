@@ -24,7 +24,7 @@ func CmdCreateDelegationRule() *cobra.Command {
 			argLabel := args[0]
 			argEffect := args[1]
 
-			if strings.Compare(strings.ToUpper(argEffect),strings.ToUpper("deny")) != 0 || strings.Compare(strings.ToUpper(argEffect),strings.ToUpper("permit")) != 0 {
+			if strings.Compare(strings.ToUpper(argEffect), strings.ToUpper("deny")) != 0 || strings.Compare(strings.ToUpper(argEffect), strings.ToUpper("permit")) != 0 {
 				return sdkerrors.Wrap(sdkerrors.ErrIO, " Invalid delegation rule effect")
 			}
 
