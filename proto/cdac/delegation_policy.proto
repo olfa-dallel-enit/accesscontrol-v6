@@ -10,6 +10,10 @@ message DelegationPolicy {
   string label = 2; 
   DelegationPolicyTarget target = 3; 
   string combiningAlgorithm = 4; 
-  DelegationRule ruleList = 5; 
+  repeated DelegationRule ruleList = 5; 
   string creator = 6;
+  string creationDate = 7;
+  string creationTimestamp = 8; 
+  string updateDate = 9;
+  string updateTimestamp = 10; 
 }

@@ -10,6 +10,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
+
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"strings"
 )
 
 func CmdCreateDelegationRule() *cobra.Command {
@@ -20,6 +23,11 @@ func CmdCreateDelegationRule() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argLabel := args[0]
 			argEffect := args[1]
+
+			if strings.Compare(strings.ToUpper(argEffect),strings.ToUpper("deny")) != 0 || strings.Compare(strings.ToUpper(argEffect),strings.ToUpper("permit")) != 0 {
+				return sdkerrors.Wrap(sdkerrors.ErrIO, " Invalid delegation rule effect")
+			}
+
 			argDelegationConditions := new(types.DelegationConditions)
 			err = json.Unmarshal([]byte(args[2]), argDelegationConditions)
 			if err != nil {

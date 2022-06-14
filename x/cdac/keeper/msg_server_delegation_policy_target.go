@@ -13,7 +13,7 @@ func (k msgServer) CreateDelegationPolicyTarget(goCtx context.Context, msg *type
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	var delegationPolicyTarget = types.DelegationPolicyTarget{
-		Creator:        msg.Creator,
+		Creator:        ctx.ChainID(),
 		DelegatorList:  msg.DelegatorList,
 		PermissionList: msg.PermissionList,
 		Action:         msg.Action,

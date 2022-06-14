@@ -9,6 +9,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cobra"
 	"strings"
+
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 func CmdCreateDelegationPolicyTarget() *cobra.Command {
@@ -20,6 +22,10 @@ func CmdCreateDelegationPolicyTarget() *cobra.Command {
 			argDelegatorList := strings.Split(args[0], listSeparator)
 			argPermissionList := strings.Split(args[1], listSeparator)
 			argAction := args[2]
+
+			if strings.Compare(strings.ToUpper(argAction),strings.ToUpper("grant")) != 0 || strings.Compare(strings.ToUpper(argAction),strings.ToUpper("transfer")) != 0 {
+				return sdkerrors.Wrap(sdkerrors.ErrIO, " Invalid delegation action")
+			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {

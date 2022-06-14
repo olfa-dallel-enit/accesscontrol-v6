@@ -13,7 +13,7 @@ const (
 
 var _ sdk.Msg = &MsgCreateDelegationPolicy{}
 
-func NewMsgCreateDelegationPolicy(creator string, label string, target *DelegationPolicyTarget, combiningAlgorithm string, ruleList *DelegationRule) *MsgCreateDelegationPolicy {
+func NewMsgCreateDelegationPolicy(creator string, label string, target *DelegationPolicyTarget, combiningAlgorithm string, ruleList []*DelegationRule) *MsgCreateDelegationPolicy {
 	return &MsgCreateDelegationPolicy{
 		Creator:            creator,
 		Label:              label,
@@ -54,7 +54,7 @@ func (msg *MsgCreateDelegationPolicy) ValidateBasic() error {
 
 var _ sdk.Msg = &MsgUpdateDelegationPolicy{}
 
-func NewMsgUpdateDelegationPolicy(creator string, id uint64, label string, target *DelegationPolicyTarget, combiningAlgorithm string, ruleList *DelegationRule) *MsgUpdateDelegationPolicy {
+func NewMsgUpdateDelegationPolicy(creator string, id uint64, label string, target *DelegationPolicyTarget, combiningAlgorithm string, ruleList []*DelegationRule) *MsgUpdateDelegationPolicy {
 	return &MsgUpdateDelegationPolicy{
 		Id:                 id,
 		Creator:            creator,

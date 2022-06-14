@@ -35,5 +35,11 @@ crossdomaind tx cdac create-inter-domain-acl-policy acl1 "mars.1" "write,read" "
 crossdomaind query cdac list-inter-domain-acl-policy --home ~/.earth --chain-id earth --node tcp://localhost:26657 
 
 #crossdomaind tx cdac create-inter-domain-dcl-policy [label] [delegator-list] [delegatee-list] [permission-list] [depth] [max-delegations] [validity] [flags]
-crossdomaind tx cdac create-inter-domain-dcl-policy "dcl1" "mars.1" "mars.2.1" "acl1" 2 10 '{"notBefore":"2022-02-03 00:00:00","notAfter":"2024-02-03 00:00:00"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
-crossdomaind query cdac list-inter-domain-dcl-policy --home ~/.earth --chain-id earth --node tcp://localhost:26657 
+#crossdomaind tx cdac create-inter-domain-dcl-policy "dcl1" "mars.1" "mars.2.1" "acl1" 2 10 '{"notBefore":"2022-02-03 00:00:00","notAfter":"2024-02-03 00:00:00"}' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+#crossdomaind query cdac list-inter-domain-dcl-policy --home ~/.earth --chain-id earth --node tcp://localhost:26657 
+
+#crossdomaind tx cdac create-delegation-policy [label] [target] [combining-algorithm] [rule-list] [flags]
+crossdomaind tx cdac create-delegation-policy "dp1" '{"delegatorList":["mars.1"],"permissionList":["acl1"],"action":"grant"}' "permit-overrides" '[{"label":"rule1","effect":"permit","delegationConditions":{"depth":2,"validity":{"notBefore":"2022-02-03 00:00:00","notAfter":"2024-02-03 00:00:00"},"maxDelegations":20},"priority":5}]' --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15
+crossdomaind query cdac list-delegation-policy --home ~/.earth --chain-id earth --node tcp://localhost:26657 
+
+

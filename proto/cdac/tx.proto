@@ -958,7 +958,7 @@ message MsgCreateDelegationPolicy {
   string label = 2;
   DelegationPolicyTarget target = 3;
   string combiningAlgorithm = 4;
-  DelegationRule ruleList = 5;
+  repeated DelegationRule ruleList = 5;
 }
 
 message MsgCreateDelegationPolicyResponse {
@@ -971,7 +971,7 @@ message MsgUpdateDelegationPolicy {
   string label = 3;
   DelegationPolicyTarget target = 4;
   string combiningAlgorithm = 5;
-  DelegationRule ruleList = 6;
+  repeated DelegationRule ruleList = 6;
 }
 
 message MsgUpdateDelegationPolicyResponse {}

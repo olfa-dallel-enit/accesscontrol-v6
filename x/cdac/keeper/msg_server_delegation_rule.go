@@ -7,17 +7,24 @@ import (
 	"crossdomain/x/cdac/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+
+	"time"
+	"github.com/spf13/cast"
 )
 
 func (k msgServer) CreateDelegationRule(goCtx context.Context, msg *types.MsgCreateDelegationRule) (*types.MsgCreateDelegationRuleResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	var delegationRule = types.DelegationRule{
-		Creator:              msg.Creator,
+		Creator:              ctx.ChainID(),
 		Label:                msg.Label,
 		Effect:               msg.Effect,
 		DelegationConditions: msg.DelegationConditions,
 		Priority:             msg.Priority,
+		CreationDate:		cast.ToString(time.Now()),
+		CreationTimestamp:  cast.ToString(time.Now().UnixNano()),
+		UpdateDate:         cast.ToString(time.Now()),
+		UpdateTimestamp:    cast.ToString(time.Now().UnixNano()),
 	}
 
 	id := k.AppendDelegationRule(

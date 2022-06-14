@@ -24,8 +24,8 @@ func CmdCreateDelegationPolicy() *cobra.Command {
 				return err
 			}
 			argCombiningAlgorithm := args[2]
-			argRuleList := new(types.DelegationRule)
-			err = json.Unmarshal([]byte(args[3]), argRuleList)
+			var argRuleList []*types.DelegationRule
+			err = json.Unmarshal([]byte(args[3]), &argRuleList)
 			if err != nil {
 				return err
 			}
@@ -69,8 +69,8 @@ func CmdUpdateDelegationPolicy() *cobra.Command {
 
 			argCombiningAlgorithm := args[3]
 
-			argRuleList := new(types.DelegationRule)
-			err = json.Unmarshal([]byte(args[4]), argRuleList)
+			var argRuleList []*types.DelegationRule
+			err = json.Unmarshal([]byte(args[4]), &argRuleList)
 			if err != nil {
 				return err
 			}

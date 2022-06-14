@@ -11,4 +11,8 @@ message DelegationRule {
   DelegationConditions delegationConditions = 4; 
   uint64 priority = 5; 
   string creator = 6;
+  string creationDate = 7;
+  string creationTimestamp = 8; 
+  string updateDate = 9;
+  string updateTimestamp = 10; 
 }
