@@ -8,6 +8,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+
 	"github.com/spf13/cast"
 	"time"
 )
@@ -15,7 +16,7 @@ import (
 func (k msgServer) CreateDelegationPath(goCtx context.Context, msg *types.MsgCreateDelegationPath) (*types.MsgCreateDelegationPathResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	id, _ := k.GenerateDelegationPath(ctx, msg.Delegator, msg.Delegatee)
+	id, _ := k.GenerateDelegationPathByDelegator(ctx, msg.Delegator, msg.Delegatee)
 
 	return &types.MsgCreateDelegationPathResponse{
 		Id: id,
@@ -80,7 +81,7 @@ func ExtractDomainMap(domainMapList []*types.DomainMap, domainIndex string) (dom
 	return domains, false
 }
 
-func (k Keeper) GenerateDelegationPath(ctx sdk.Context, delegator *types.CooperativeDomain, delegatee *types.CooperativeDomain) (id uint64, found bool) {
+func (k Keeper) GenerateDelegationPathByDelegator(ctx sdk.Context, delegator *types.CooperativeDomain, delegatee *types.CooperativeDomain) (id uint64, found bool) {
 	startTimestamp := time.Now().UnixNano()
 
 	foundTarget := false
@@ -165,4 +166,99 @@ func (k Keeper) GenerateDelegationPath(ctx sdk.Context, delegator *types.Coopera
 		}
 	}
 	return id, foundTarget
+}
+
+func (k Keeper) GenerateAllDelegationPathsByDelegatee(ctx sdk.Context, delegatee *types.CooperativeDomain) (types.DelegationPath) {
+	startTimestamp := time.Now().UnixNano()
+
+	var delegationPath types.DelegationPath
+
+	foundTarget := false
+
+	delegator := &types.CooperativeDomain{
+		Name: ctx.ChainID(),
+		DomainType: "Local",
+		Location: "",
+	}
+
+	cooperationNetwork, found := k.GetCooperationNetwork(ctx, k.GetCooperationNetworkCount(ctx)-1)
+	if found {
+		domainMapList := cooperationNetwork.DomainMapList
+
+		var allPaths []*types.Path
+
+		for _, domainMapElt := range domainMapList {
+			if domainMapElt.DomainIndex == delegator.Name {
+				var domainList []*types.CooperativeDomain
+				domainList = append(domainList, delegator)
+
+				path := types.Path{
+					Creator:    ctx.ChainID(),
+					DomainList: domainList,
+				}
+				allPaths = append(allPaths, &path)
+			}
+		}
+
+		j := 0
+		i := len(allPaths)
+		for j < i {
+			p := allPaths[j]
+
+			lastDomain := p.DomainList[len(p.DomainList)-1]
+
+			domains, existed := ExtractDomainMap(cooperationNetwork.DomainMapList, lastDomain.Name)
+			if existed {
+				for _, domain := range domains {
+					var domainList []*types.CooperativeDomain
+					domainList = append(p.DomainList, domain)
+
+					path := types.Path{
+						Creator:    ctx.ChainID(),
+						DomainList: domainList,
+					}
+					allPaths = append(allPaths, &path)
+					if domain.Name == delegatee.Name {
+						foundTarget = true
+					}
+				}
+			}
+			i = len(allPaths)
+			j = j + 1
+		}
+
+		if foundTarget {
+
+			var pathList []*types.Path
+
+			for _, path := range allPaths {
+				if path.DomainList[len(path.DomainList)-1].Name == delegatee.Name {
+					pathList = append(pathList, path)
+				}
+			}
+
+			delegationPath = types.DelegationPath{
+				Creator:   ctx.ChainID(),
+				Delegator: delegator,
+				Delegatee: delegatee,
+				PathList:  pathList,
+			}
+
+			/*k.AppendDelegationPath(
+				ctx,
+				delegationPath,
+			)*/
+
+			endTimestamp := time.Now().UnixNano()
+			duration := endTimestamp - startTimestamp
+			k.AppendCalculationTime(ctx, types.CalculationTime{
+				Creator:        ctx.ChainID(),
+				Operation:      "Find delegation paths between: " + delegator.Name + " & " + delegatee.Name,
+				StartTimestamp: cast.ToString(startTimestamp),
+				EndTimestamp:   cast.ToString(endTimestamp),
+				Duration:       cast.ToUint64(duration),
+			})
+		}
+	}
+	return delegationPath
 }

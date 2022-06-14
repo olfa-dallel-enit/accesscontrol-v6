@@ -263,3 +263,25 @@ func (k Keeper) GetCooperationByChannel(ctx sdk.Context, channel string) (domain
 
 	return domainCooperation, false
 }
+
+func (k Keeper) GetCooperativeDomainByName(ctx sdk.Context, domainName string) (cooperativeDomain *types.CooperativeDomain, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainCooperationKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.DomainCooperation
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if (val.RemoteDomain.Name == domainName){
+			cooperativeDomain = &types.CooperativeDomain{
+				Name : val.RemoteDomain.Name,
+				Location: val.RemoteDomain.Location,
+				DomainType: val.RemoteDomain.DomainType,
+			}
+			return cooperativeDomain, true
+		}
+	}
+
+	return cooperativeDomain, false
+}

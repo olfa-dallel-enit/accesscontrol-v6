@@ -13,5 +13,13 @@ func (k msgServer) RequestDelegation(goCtx context.Context, msg *types.MsgReques
 	// TODO: Handling the message
 	_ = ctx
 
+
+	delegatee, found := k.GetCooperativeDomainByName(ctx, msg.Delegatee)
+	if found{
+		//var delegationPath types.DelegationPath
+		//delegationPath := k.GenerateAllDelegationPathsByDelegatee(ctx, delegatee)
+		k.GenerateAllDelegationPathsByDelegatee(ctx, delegatee)
+	}
+
 	return &types.MsgRequestDelegationResponse{}, nil
 }
