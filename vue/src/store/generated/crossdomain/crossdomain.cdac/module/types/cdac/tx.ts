@@ -914,6 +914,12 @@ export interface MsgDeleteDelegationLog {
 
 export interface MsgDeleteDelegationLogResponse {}
 
+export interface MsgGeneratePeriodicalCooperationNetwork {
+  creator: string;
+}
+
+export interface MsgGeneratePeriodicalCooperationNetworkResponse {}
+
 const baseMsgCreatePublicKey: object = { creator: "", n: 0, e: 0 };
 
 export const MsgCreatePublicKey = {
@@ -18101,6 +18107,127 @@ export const MsgDeleteDelegationLogResponse = {
   },
 };
 
+const baseMsgGeneratePeriodicalCooperationNetwork: object = { creator: "" };
+
+export const MsgGeneratePeriodicalCooperationNetwork = {
+  encode(
+    message: MsgGeneratePeriodicalCooperationNetwork,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgGeneratePeriodicalCooperationNetwork {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgGeneratePeriodicalCooperationNetwork,
+    } as MsgGeneratePeriodicalCooperationNetwork;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgGeneratePeriodicalCooperationNetwork {
+    const message = {
+      ...baseMsgGeneratePeriodicalCooperationNetwork,
+    } as MsgGeneratePeriodicalCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgGeneratePeriodicalCooperationNetwork): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgGeneratePeriodicalCooperationNetwork>
+  ): MsgGeneratePeriodicalCooperationNetwork {
+    const message = {
+      ...baseMsgGeneratePeriodicalCooperationNetwork,
+    } as MsgGeneratePeriodicalCooperationNetwork;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgGeneratePeriodicalCooperationNetworkResponse: object = {};
+
+export const MsgGeneratePeriodicalCooperationNetworkResponse = {
+  encode(
+    _: MsgGeneratePeriodicalCooperationNetworkResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgGeneratePeriodicalCooperationNetworkResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgGeneratePeriodicalCooperationNetworkResponse,
+    } as MsgGeneratePeriodicalCooperationNetworkResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgGeneratePeriodicalCooperationNetworkResponse {
+    const message = {
+      ...baseMsgGeneratePeriodicalCooperationNetworkResponse,
+    } as MsgGeneratePeriodicalCooperationNetworkResponse;
+    return message;
+  },
+
+  toJSON(_: MsgGeneratePeriodicalCooperationNetworkResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgGeneratePeriodicalCooperationNetworkResponse>
+  ): MsgGeneratePeriodicalCooperationNetworkResponse {
+    const message = {
+      ...baseMsgGeneratePeriodicalCooperationNetworkResponse,
+    } as MsgGeneratePeriodicalCooperationNetworkResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreatePublicKey(
@@ -18361,10 +18488,13 @@ export interface Msg {
   UpdateDelegationLog(
     request: MsgUpdateDelegationLog
   ): Promise<MsgUpdateDelegationLogResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteDelegationLog(
     request: MsgDeleteDelegationLog
   ): Promise<MsgDeleteDelegationLogResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  GeneratePeriodicalCooperationNetwork(
+    request: MsgGeneratePeriodicalCooperationNetwork
+  ): Promise<MsgGeneratePeriodicalCooperationNetworkResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -19631,6 +19761,22 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeleteDelegationLogResponse.decode(new Reader(data))
+    );
+  }
+
+  GeneratePeriodicalCooperationNetwork(
+    request: MsgGeneratePeriodicalCooperationNetwork
+  ): Promise<MsgGeneratePeriodicalCooperationNetworkResponse> {
+    const data = MsgGeneratePeriodicalCooperationNetwork.encode(
+      request
+    ).finish();
+    const promise = this.rpc.request(
+      "crossdomain.cdac.Msg",
+      "GeneratePeriodicalCooperationNetwork",
+      data
+    );
+    return promise.then((data) =>
+      MsgGeneratePeriodicalCooperationNetworkResponse.decode(new Reader(data))
     );
   }
 }

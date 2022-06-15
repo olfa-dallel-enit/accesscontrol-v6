@@ -99,6 +99,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateDelegationLog{}, "cdac/CreateDelegationLog", nil)
 	cdc.RegisterConcrete(&MsgUpdateDelegationLog{}, "cdac/UpdateDelegationLog", nil)
 	cdc.RegisterConcrete(&MsgDeleteDelegationLog{}, "cdac/DeleteDelegationLog", nil)
+	cdc.RegisterConcrete(&MsgGeneratePeriodicalCooperationNetwork{}, "cdac/GeneratePeriodicalCooperationNetwork", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -271,6 +272,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateDelegationLog{},
 		&MsgUpdateDelegationLog{},
 		&MsgDeleteDelegationLog{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgGeneratePeriodicalCooperationNetwork{},
 	)
 	// this line is used by starport scaffolding # 3
 

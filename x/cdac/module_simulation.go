@@ -348,6 +348,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteDelegationLog int = 100
 
+	opWeightMsgGeneratePeriodicalCooperationNetwork = "op_weight_msg_generate_periodical_cooperation_network"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgGeneratePeriodicalCooperationNetwork int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -1545,6 +1549,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteDelegationLog,
 		cdacsimulation.SimulateMsgDeleteDelegationLog(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgGeneratePeriodicalCooperationNetwork int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgGeneratePeriodicalCooperationNetwork, &weightMsgGeneratePeriodicalCooperationNetwork, nil,
+		func(_ *rand.Rand) {
+			weightMsgGeneratePeriodicalCooperationNetwork = defaultWeightMsgGeneratePeriodicalCooperationNetwork
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgGeneratePeriodicalCooperationNetwork,
+		cdacsimulation.SimulateMsgGeneratePeriodicalCooperationNetwork(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

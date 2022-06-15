@@ -114,7 +114,7 @@ func (k Keeper) GetDelegationRuleByLabel(ctx sdk.Context, label string) (delegat
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.DelegationRule
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
-		if val.Label == label{
+		if val.Label == label {
 			return val, true
 		}
 	}

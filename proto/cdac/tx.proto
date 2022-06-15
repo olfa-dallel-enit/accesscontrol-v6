@@ -124,6 +124,7 @@ rpc CreateDelegationPolicy(MsgCreateDelegationPolicy) returns (MsgCreateDelegati
 rpc CreateDelegationLog(MsgCreateDelegationLog) returns (MsgCreateDelegationLogResponse);
   rpc UpdateDelegationLog(MsgUpdateDelegationLog) returns (MsgUpdateDelegationLogResponse);
   rpc DeleteDelegationLog(MsgDeleteDelegationLog) returns (MsgDeleteDelegationLogResponse);
+  rpc GeneratePeriodicalCooperationNetwork(MsgGeneratePeriodicalCooperationNetwork) returns (MsgGeneratePeriodicalCooperationNetworkResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -1020,5 +1021,12 @@ message MsgDeleteDelegationLog {
 }
 
 message MsgDeleteDelegationLogResponse {}
+
+message MsgGeneratePeriodicalCooperationNetwork {
+  string creator = 1;
+}
+
+message MsgGeneratePeriodicalCooperationNetworkResponse {
+}
 
 // this line is used by starport scaffolding # proto/tx/message

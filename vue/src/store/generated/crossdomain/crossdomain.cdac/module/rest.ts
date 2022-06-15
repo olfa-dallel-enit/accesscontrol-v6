@@ -116,6 +116,9 @@ export interface CdacDelegationLog {
   /** @format uint64 */
   id?: string;
   creator?: string;
+  decision?: string;
+  transaction?: string;
+  reason?: string;
 }
 
 export interface CdacDelegationPath {
@@ -430,6 +433,8 @@ export type CdacMsgDeleteUpdatePolicyResponse = object;
 export type CdacMsgDeleteValidityResponse = object;
 
 export type CdacMsgGenerateCooperationNetworkResponse = object;
+
+export type CdacMsgGeneratePeriodicalCooperationNetworkResponse = object;
 
 export interface CdacMsgRequestAccessPermissionResponse {
   decision?: string;

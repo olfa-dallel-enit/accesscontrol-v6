@@ -7,9 +7,18 @@ export const protobufPackage = "crossdomain.cdac";
 export interface DelegationLog {
   id: number;
   creator: string;
+  decision: string;
+  transaction: string;
+  reason: string;
 }
 
-const baseDelegationLog: object = { id: 0, creator: "" };
+const baseDelegationLog: object = {
+  id: 0,
+  creator: "",
+  decision: "",
+  transaction: "",
+  reason: "",
+};
 
 export const DelegationLog = {
   encode(message: DelegationLog, writer: Writer = Writer.create()): Writer {
@@ -18,6 +27,15 @@ export const DelegationLog = {
     }
     if (message.creator !== "") {
       writer.uint32(18).string(message.creator);
+    }
+    if (message.decision !== "") {
+      writer.uint32(26).string(message.decision);
+    }
+    if (message.transaction !== "") {
+      writer.uint32(34).string(message.transaction);
+    }
+    if (message.reason !== "") {
+      writer.uint32(42).string(message.reason);
     }
     return writer;
   },
@@ -34,6 +52,15 @@ export const DelegationLog = {
           break;
         case 2:
           message.creator = reader.string();
+          break;
+        case 3:
+          message.decision = reader.string();
+          break;
+        case 4:
+          message.transaction = reader.string();
+          break;
+        case 5:
+          message.reason = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -55,6 +82,21 @@ export const DelegationLog = {
     } else {
       message.creator = "";
     }
+    if (object.decision !== undefined && object.decision !== null) {
+      message.decision = String(object.decision);
+    } else {
+      message.decision = "";
+    }
+    if (object.transaction !== undefined && object.transaction !== null) {
+      message.transaction = String(object.transaction);
+    } else {
+      message.transaction = "";
+    }
+    if (object.reason !== undefined && object.reason !== null) {
+      message.reason = String(object.reason);
+    } else {
+      message.reason = "";
+    }
     return message;
   },
 
@@ -62,6 +104,10 @@ export const DelegationLog = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.creator !== undefined && (obj.creator = message.creator);
+    message.decision !== undefined && (obj.decision = message.decision);
+    message.transaction !== undefined &&
+      (obj.transaction = message.transaction);
+    message.reason !== undefined && (obj.reason = message.reason);
     return obj;
   },
 
@@ -76,6 +122,21 @@ export const DelegationLog = {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.decision !== undefined && object.decision !== null) {
+      message.decision = object.decision;
+    } else {
+      message.decision = "";
+    }
+    if (object.transaction !== undefined && object.transaction !== null) {
+      message.transaction = object.transaction;
+    } else {
+      message.transaction = "";
+    }
+    if (object.reason !== undefined && object.reason !== null) {
+      message.reason = object.reason;
+    } else {
+      message.reason = "";
     }
     return message;
   },

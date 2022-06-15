@@ -68,7 +68,7 @@ func CmdSendEstablishCooperation() *cobra.Command {
 
 			res, _ := queryClient.EstablishedCooperationByChannel(cmd.Context(), params)
 			if res.Found {
-				clientCtx.PrintProto(res)
+				//clientCtx.PrintProto(res)
 				establishedCooperation := res.DomainCooperation
 
 				pageReq, err := client.ReadPageRequest(cmd.Flags())
@@ -118,6 +118,8 @@ func CmdSendEstablishCooperation() *cobra.Command {
 				return err
 			}
 
+			clientCtx.PrintProto(updatePolicyRes)
+
 			if updatePolicyRes.UpdatePolicy.Event {
 				msg3 := types.NewMsgGenerateCooperationNetwork(
 					clientCtx.GetFromAddress().String(),
@@ -125,7 +127,7 @@ func CmdSendEstablishCooperation() *cobra.Command {
 				if err := msg.ValidateBasic(); err != nil {
 					return err
 				}
-				return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
+				tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
 			}
 
 			return nil //tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
