@@ -96,20 +96,23 @@ func CmdSendEstablishCooperation() *cobra.Command {
 						time.Sleep(10 * time.Second)
 						msg2 := types.NewMsgSendForwardCooperationData(creator, srcPort, establishedCooperation.SourceDomain.IbcConnection.Channel, timeoutTimestamp, domainCooperation.Validity.NotBefore, domainCooperation.Validity.NotAfter, domainCooperation.Interest, cast.ToString(domainCooperation.Cost), domainCooperation.SourceDomain.Name, domainCooperation.RemoteDomain.Name, domainCooperation.SourceDomain.Location, domainCooperation.RemoteDomain.Location)
 						tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg2)
-						time.Sleep(10 * time.Second)
+					    time.Sleep(10 * time.Second)
 					}
 				}
 			}
-
-			/*msg3 := types.NewMsgSendExchangeCooperationData(creator, srcPort, srcChannel, timeoutTimestamp)
+			/*********************/
+			/*
+			msg3 := types.NewMsgSendExchangeCooperationData(creator, srcPort, srcChannel, timeoutTimestamp)
 			if err := msg3.ValidateBasic(); err != nil {
 				return err
 			}
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)*/
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
+			time.Sleep(10 * time.Second)
+			*/
 
 			//check update policy
 
-			updatePolicyQuery := types.NewQueryClient(clientCtx)
+			/*updatePolicyQuery := types.NewQueryClient(clientCtx)
 
 			updatePolicyParams := &types.QueryGetUpdatePolicyRequest{}
 
@@ -118,18 +121,18 @@ func CmdSendEstablishCooperation() *cobra.Command {
 				return err
 			}
 
-			clientCtx.PrintProto(updatePolicyRes)
+			//clientCtx.PrintProto(updatePolicyRes)
 
 			if updatePolicyRes.UpdatePolicy.Event {
-				msg3 := types.NewMsgGenerateCooperationNetwork(
+				msg4 := types.NewMsgGenerateCooperationNetwork(
 					clientCtx.GetFromAddress().String(),
 				)
-				if err := msg.ValidateBasic(); err != nil {
+				if err := msg4.ValidateBasic(); err != nil {
 					return err
 				}
-				tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
-			}
-
+				tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg4)
+			}*/
+			/*******************/
 			return nil //tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

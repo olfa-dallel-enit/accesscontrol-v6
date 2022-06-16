@@ -90,6 +90,7 @@ func (k Keeper) OnRecvEstablishCooperationPacket(ctx sdk.Context, packet channel
 					k.AddDomainCooperation(ctx, packet, data)
 					packetAck.Confirmation = "Confirmed"
 					packetAck.ConfirmedBy = ctx.ChainID()
+					k.ForwardCooperationsToNewCooperativeDomain(ctx, packet, data.Sender)
 				} else if k.CheckCostBasedDecisionPolicy(ctx, data.Sender, cast.ToUint64(data.Cost), decisionPolicy) {
 					k.AddDomainCooperation(ctx, packet, data)
 					packetAck.Confirmation = "Confirmed"
@@ -1048,6 +1049,8 @@ func (k Keeper) ForwardCooperationsToNewCooperativeDomain(ctx sdk.Context, packe
 					packetToForward,
 					"cdac",
 					packet.DestinationChannel,
+					//clienttypes.NewHeight(clienttypes.ZeroHeight().RevisionNumber, clienttypes.ZeroHeight().RevisionHeight+1),
+					//clienttypes.ZeroHeight().Increment(),
 					clienttypes.ZeroHeight(),
 					packet.TimeoutTimestamp,
 				)
@@ -1059,12 +1062,36 @@ func (k Keeper) ForwardCooperationsToNewCooperativeDomain(ctx sdk.Context, packe
 					Function:    "OnRecvEstablishCooperationPacket",
 					Decision:    "Confirmed: cooperation data is forwarded to " + domainName,
 				})
+			}
+		}
+		//time.Sleep(10 * time.Second)
+	}
+	/*ticker := time.NewTicker(10 * time.Second)
+	i:= 0
+	domainCooperations := k.GetAllDomainCooperation(ctx)
+	for _ = range ticker.C {
+		domainCooperation := domainCooperations[i]
+		if domainCooperation.RemoteDomain.Name != domainName {
+			if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+				var packetToForward types.ForwardCooperationDataPacketData
 
-				/*k.TransmitForwardCooperationDataPacket(
+				packetToForward.NotBefore = domainCooperation.Validity.NotBefore
+				packetToForward.NotAfter = domainCooperation.Validity.NotAfter
+				packetToForward.Interest = domainCooperation.Interest
+				packetToForward.Cost = cast.ToString(domainCooperation.Cost)
+				packetToForward.Domain1Name = domainCooperation.SourceDomain.Name
+				packetToForward.Domain2Name = domainCooperation.RemoteDomain.Name
+				packetToForward.Domain1Location = domainCooperation.SourceDomain.Location
+				packetToForward.Domain2Location = domainCooperation.RemoteDomain.Location
+				packetToForward.Sender = ctx.ChainID()
+
+				k.TransmitForwardCooperationDataPacket(
 					ctx,
 					packetToForward,
 					"cdac",
 					packet.DestinationChannel,
+					//clienttypes.NewHeight(clienttypes.ZeroHeight().RevisionNumber, clienttypes.ZeroHeight().RevisionHeight+1),
+					//clienttypes.ZeroHeight().Increment(),
 					clienttypes.ZeroHeight(),
 					packet.TimeoutTimestamp,
 				)
@@ -1075,9 +1102,13 @@ func (k Keeper) ForwardCooperationsToNewCooperativeDomain(ctx sdk.Context, packe
 					Details:     "Cooperation label: " + packetToForward.Domain1Name + "-" + packetToForward.Domain2Name,
 					Function:    "OnRecvEstablishCooperationPacket",
 					Decision:    "Confirmed: cooperation data is forwarded to " + domainName,
-				})*/
+				})
 			}
 		}
-		//time.Sleep(10 * time.Second)
-	}
+		i = i + 1
+		if i == len(domainCooperations){
+			ticker.Stop()
+			break
+		}
+	}*/
 }

@@ -12,6 +12,9 @@ import (
 
 	"github.com/spf13/cast"
 	"time"
+	/*"crypto/rsa"
+	"crypto/x509"
+	"crypto/rand"*/
 )
 
 // TransmitModifyCooperationCostPacket transmits the packet over IBC with the specified source port and source channel
@@ -81,6 +84,11 @@ func (k Keeper) OnRecvModifyCooperationCostPacket(ctx sdk.Context, packet channe
 	if found {
 		if k.IsAuthenticated(ctx, data.Sender) {
 			if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
+				/*pk, _ := k.crossdomainKeeper.GetPrivateKey(ctx)
+				privateKey, _ := x509.ParsePKCS1PrivateKey([]byte(pk.Value))
+
+				decryptedCost, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, []byte(data.Cost))*/
+				
 				k.SetDomainCooperation(ctx, types.DomainCooperation{
 					Id:                domainCooperation.Id,
 					Creator:           ctx.ChainID(),
@@ -90,7 +98,7 @@ func (k Keeper) OnRecvModifyCooperationCostPacket(ctx sdk.Context, packet channe
 					RemoteDomain:      domainCooperation.RemoteDomain,
 					Validity:          domainCooperation.Validity,
 					Interest:          domainCooperation.Interest,
-					Cost:              cast.ToUint64(data.Cost),
+					Cost:              0, //cast.ToUint64(string(decryptedCost)),
 					CreationTimestamp: domainCooperation.CreationTimestamp,
 					UpdateTimestamp:   cast.ToString(time.Now()),
 					Status:            domainCooperation.Status,

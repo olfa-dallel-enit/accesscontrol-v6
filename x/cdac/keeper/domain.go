@@ -169,3 +169,20 @@ func (k Keeper) GetDomainLocationByDomainName(ctx sdk.Context, domainName string
 
 	return location, false
 }
+
+func (k Keeper) GetDomainPublicKeyByDomainName(ctx sdk.Context, domainName string) (publicKey *types.PublicKey, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.DomainKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.Domain
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		if val.Name == domainName {
+			return val.Certificate.PublicKey, true
+		}
+	}
+
+	return publicKey, false
+}
