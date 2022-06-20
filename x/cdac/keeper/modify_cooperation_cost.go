@@ -12,9 +12,9 @@ import (
 
 	"github.com/spf13/cast"
 	"time"
-	/*"crypto/rsa"
+	"crypto/rsa"
 	"crypto/x509"
-	"crypto/rand"*/
+	"crypto/rand"
 )
 
 // TransmitModifyCooperationCostPacket transmits the packet over IBC with the specified source port and source channel
@@ -84,11 +84,9 @@ func (k Keeper) OnRecvModifyCooperationCostPacket(ctx sdk.Context, packet channe
 	if found {
 		if k.IsAuthenticated(ctx, data.Sender) {
 			if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
-				/*pk, _ := k.crossdomainKeeper.GetPrivateKey(ctx)
-				privateKey, _ := x509.ParsePKCS1PrivateKey([]byte(pk.Value))
-
-				decryptedCost, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, []byte(data.Cost))*/
 				
+				//cost := k.DecryptData(ctx, []byte(data.Cost))
+				cost := cast.ToUint64(0)
 				k.SetDomainCooperation(ctx, types.DomainCooperation{
 					Id:                domainCooperation.Id,
 					Creator:           ctx.ChainID(),
@@ -98,7 +96,7 @@ func (k Keeper) OnRecvModifyCooperationCostPacket(ctx sdk.Context, packet channe
 					RemoteDomain:      domainCooperation.RemoteDomain,
 					Validity:          domainCooperation.Validity,
 					Interest:          domainCooperation.Interest,
-					Cost:              0, //cast.ToUint64(string(decryptedCost)),
+					Cost:              cost,
 					CreationTimestamp: domainCooperation.CreationTimestamp,
 					UpdateTimestamp:   cast.ToString(time.Now()),
 					Status:            domainCooperation.Status,
@@ -176,6 +174,12 @@ func (k Keeper) OnAcknowledgementModifyCooperationCostPacket(ctx sdk.Context, pa
 		if packetAck.Confirmation == "Confirmed" {
 			domainCooperation, found := k.GetDomainCooperationByDomainName(ctx, packetAck.ConfirmedBy)
 			if found {
+
+				/*pk, _ := k.crossdomainKeeper.GetPrivateKey(ctx)
+				privateKey, _ := x509.ParsePKCS1PrivateKey([]byte(pk.Value))
+
+				decryptedCost, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, []byte(data.Cost))*/
+
 				k.SetDomainCooperation(ctx, types.DomainCooperation{
 					Id:                domainCooperation.Id,
 					Creator:           ctx.ChainID(),
@@ -185,7 +189,7 @@ func (k Keeper) OnAcknowledgementModifyCooperationCostPacket(ctx sdk.Context, pa
 					RemoteDomain:      domainCooperation.RemoteDomain,
 					Validity:          domainCooperation.Validity,
 					Interest:          domainCooperation.Interest,
-					Cost:              cast.ToUint64(data.Cost),
+					Cost:              0, //cast.ToUint64(string(decryptedCost)),//cast.ToUint64(data.Cost),
 					CreationTimestamp: domainCooperation.CreationTimestamp,
 					UpdateTimestamp:   cast.ToString(time.Now()),
 					Status:            domainCooperation.Status,
@@ -233,4 +237,12 @@ func (k Keeper) OnTimeoutModifyCooperationCostPacket(ctx sdk.Context, packet cha
 	// TODO: packet timeout logic
 
 	return nil
+}
+
+func (k Keeper) DecryptData(ctx sdk.Context, message []byte) (cost uint64){
+	pk, _ := k.crossdomainKeeper.GetPrivateKey(ctx)
+	privateKey, _ := x509.ParsePKCS1PrivateKey([]byte(pk.Value))
+	decryptedCost, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, message)
+	cost = cast.ToUint64(string(decryptedCost))
+	return cost
 }

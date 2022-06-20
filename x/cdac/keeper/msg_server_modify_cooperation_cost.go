@@ -34,7 +34,8 @@ func (k msgServer) SendModifyCooperationCost(goCtx context.Context, msg *types.M
 			N: new(big.Int).SetUint64(publicKey.N),
 			E: cast.ToInt(publicKey.E),
 		}
-		encryptedBytes, _ := rsa.EncryptPKCS1v15(rand.Reader, &rsaPublicKey, []byte(msg.Cost))
+		secretMessage := "olfa"
+		encryptedBytes, _ := rsa.EncryptPKCS1v15(rand.Reader, &rsaPublicKey, []byte(secretMessage))
 		encryptedCost := base64.StdEncoding.EncodeToString(encryptedBytes)
 
 		packet.Cost =  encryptedCost//msg.Cost
@@ -58,7 +59,7 @@ func (k msgServer) SendModifyCooperationCost(goCtx context.Context, msg *types.M
 			Transaction: "msg-server-modify-cooperation-cost",
 			Function:    "SendModifyCooperationCost",
 			Timestamp:   cast.ToString(time.Now()),
-			Details:     "Encrypted message" + encryptedCost,
+			Details:     "Encrypted message "+ cast.ToString(rsaPublicKey.N) + " " + cast.ToString(rsaPublicKey.E),
 			Decision:    "Cooperation cost modification is confirmed",
 		})
 	}
