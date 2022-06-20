@@ -93,10 +93,10 @@ func CmdSendEstablishCooperation() *cobra.Command {
 					if strings.Compare(domainCooperation.Label, establishedCooperation.Label) != 0 && domainCooperation.CooperationType == "Direct" {
 						msg1 := types.NewMsgSendForwardCooperationData(creator, srcPort, domainCooperation.SourceDomain.IbcConnection.Channel, timeoutTimestamp, establishedCooperation.Validity.NotBefore, establishedCooperation.Validity.NotAfter, establishedCooperation.Interest, cast.ToString(establishedCooperation.Cost), establishedCooperation.SourceDomain.Name, establishedCooperation.RemoteDomain.Name, establishedCooperation.SourceDomain.Location, establishedCooperation.RemoteDomain.Location)
 						tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg1)
-						time.Sleep(10 * time.Second)
+						//time.Sleep(10 * time.Second)
 						msg2 := types.NewMsgSendForwardCooperationData(creator, srcPort, establishedCooperation.SourceDomain.IbcConnection.Channel, timeoutTimestamp, domainCooperation.Validity.NotBefore, domainCooperation.Validity.NotAfter, domainCooperation.Interest, cast.ToString(domainCooperation.Cost), domainCooperation.SourceDomain.Name, domainCooperation.RemoteDomain.Name, domainCooperation.SourceDomain.Location, domainCooperation.RemoteDomain.Location)
 						tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg2)
-					    time.Sleep(10 * time.Second)
+					    //time.Sleep(10 * time.Second)
 					}
 				}
 			}

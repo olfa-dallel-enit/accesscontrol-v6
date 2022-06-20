@@ -3,6 +3,9 @@ accounts:
     coins: ["100000token", "10000000000stake"]
   - name: bob
     coins: ["50000token", "10000000000stake"]
+  - name: relayer
+    address: "cosmos1twaswzyhj4w2hrhllanzp7cvwejenw4qalnegs"
+    coins: ["50000token", "10000000000stake"]
 validator:
   name: alice
   staked: "10000000000stake"
