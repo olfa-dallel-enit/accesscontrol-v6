@@ -460,6 +460,8 @@ export type CdacMsgSendModifyCooperationInterestResponse = object;
 
 export type CdacMsgSendModifyCooperationValidityResponse = object;
 
+export type CdacMsgSendPublishProofListResponse = object;
+
 export type CdacMsgSendRevokeCooperationResponse = object;
 
 export type CdacMsgUpdateAuthenticationLogResponse = object;

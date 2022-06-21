@@ -10,11 +10,11 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v2/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v2/modules/core/24-host"
 
-	"github.com/spf13/cast"
-	"time"
+	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
-	"crypto/rand"
+	"github.com/spf13/cast"
+	"time"
 )
 
 // TransmitModifyCooperationCostPacket transmits the packet over IBC with the specified source port and source channel
@@ -84,7 +84,7 @@ func (k Keeper) OnRecvModifyCooperationCostPacket(ctx sdk.Context, packet channe
 	if found {
 		if k.IsAuthenticated(ctx, data.Sender) {
 			if domainCooperation.Status == "Enabled" && cast.ToTime(domainCooperation.Validity.NotBefore).UnixNano() <= time.Now().UnixNano() && cast.ToTime(domainCooperation.Validity.NotAfter).UnixNano() >= time.Now().UnixNano() {
-				
+
 				//cost := k.DecryptData(ctx, []byte(data.Cost))
 				cost := cast.ToUint64(0)
 				k.SetDomainCooperation(ctx, types.DomainCooperation{
@@ -239,7 +239,7 @@ func (k Keeper) OnTimeoutModifyCooperationCostPacket(ctx sdk.Context, packet cha
 	return nil
 }
 
-func (k Keeper) DecryptData(ctx sdk.Context, message []byte) (cost uint64){
+func (k Keeper) DecryptData(ctx sdk.Context, message []byte) (cost uint64) {
 	pk, _ := k.crossdomainKeeper.GetPrivateKey(ctx)
 	privateKey, _ := x509.ParsePKCS1PrivateKey([]byte(pk.Value))
 	decryptedCost, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, message)

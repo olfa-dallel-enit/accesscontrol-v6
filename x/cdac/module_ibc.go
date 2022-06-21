@@ -332,6 +332,25 @@ func (am AppModule) OnRecvPacket(
 				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
 			),
 		)
+	case *types.CdacPacketData_PublishProofListPacket:
+		packetAck, err := am.keeper.OnRecvPublishProofListPacket(ctx, modulePacket, *packet.PublishProofListPacket)
+		if err != nil {
+			ack = channeltypes.NewErrorAcknowledgement(err.Error())
+		} else {
+			// Encode packet acknowledgment
+			packetAckBytes, err := types.ModuleCdc.MarshalJSON(&packetAck)
+			if err != nil {
+				return channeltypes.NewErrorAcknowledgement(sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error()).Error())
+			}
+			ack = channeltypes.NewResultAcknowledgement(sdk.MustSortJSON(packetAckBytes))
+		}
+		ctx.EventManager().EmitEvent(
+			sdk.NewEvent(
+				types.EventTypePublishProofListPacket,
+				sdk.NewAttribute(sdk.AttributeKeyModule, types.ModuleName),
+				sdk.NewAttribute(types.AttributeKeyAckSuccess, fmt.Sprintf("%t", err != nil)),
+			),
+		)
 		// this line is used by starport scaffolding # ibc/packet/module/recv
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s packet type: %T", types.ModuleName, packet)
@@ -425,6 +444,12 @@ func (am AppModule) OnAcknowledgementPacket(
 			return err
 		}
 		eventType = types.EventTypeRevokeCooperationPacket
+	case *types.CdacPacketData_PublishProofListPacket:
+		err := am.keeper.OnAcknowledgementPublishProofListPacket(ctx, modulePacket, *packet.PublishProofListPacket, ack)
+		if err != nil {
+			return err
+		}
+		eventType = types.EventTypePublishProofListPacket
 		// this line is used by starport scaffolding # ibc/packet/module/ack
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s packet type: %T", types.ModuleName, packet)
@@ -519,6 +544,11 @@ func (am AppModule) OnTimeoutPacket(
 		}
 	case *types.CdacPacketData_RevokeCooperationPacket:
 		err := am.keeper.OnTimeoutRevokeCooperationPacket(ctx, modulePacket, *packet.RevokeCooperationPacket)
+		if err != nil {
+			return err
+		}
+	case *types.CdacPacketData_PublishProofListPacket:
+		err := am.keeper.OnTimeoutPublishProofListPacket(ctx, modulePacket, *packet.PublishProofListPacket)
 		if err != nil {
 			return err
 		}

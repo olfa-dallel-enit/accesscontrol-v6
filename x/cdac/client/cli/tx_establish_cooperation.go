@@ -96,18 +96,18 @@ func CmdSendEstablishCooperation() *cobra.Command {
 						//time.Sleep(10 * time.Second)
 						msg2 := types.NewMsgSendForwardCooperationData(creator, srcPort, establishedCooperation.SourceDomain.IbcConnection.Channel, timeoutTimestamp, domainCooperation.Validity.NotBefore, domainCooperation.Validity.NotAfter, domainCooperation.Interest, cast.ToString(domainCooperation.Cost), domainCooperation.SourceDomain.Name, domainCooperation.RemoteDomain.Name, domainCooperation.SourceDomain.Location, domainCooperation.RemoteDomain.Location)
 						tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg2)
-					    //time.Sleep(10 * time.Second)
+						//time.Sleep(10 * time.Second)
 					}
 				}
 			}
 			/*********************/
 			/*
-			msg3 := types.NewMsgSendExchangeCooperationData(creator, srcPort, srcChannel, timeoutTimestamp)
-			if err := msg3.ValidateBasic(); err != nil {
-				return err
-			}
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
-			time.Sleep(10 * time.Second)
+				msg3 := types.NewMsgSendExchangeCooperationData(creator, srcPort, srcChannel, timeoutTimestamp)
+				if err := msg3.ValidateBasic(); err != nil {
+					return err
+				}
+				return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg3)
+				time.Sleep(10 * time.Second)
 			*/
 
 			//check update policy

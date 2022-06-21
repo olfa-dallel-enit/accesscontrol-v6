@@ -125,6 +125,7 @@ rpc CreateDelegationLog(MsgCreateDelegationLog) returns (MsgCreateDelegationLogR
   rpc UpdateDelegationLog(MsgUpdateDelegationLog) returns (MsgUpdateDelegationLogResponse);
   rpc DeleteDelegationLog(MsgDeleteDelegationLog) returns (MsgDeleteDelegationLogResponse);
   rpc GeneratePeriodicalCooperationNetwork(MsgGeneratePeriodicalCooperationNetwork) returns (MsgGeneratePeriodicalCooperationNetworkResponse);
+  rpc SendPublishProofList(MsgSendPublishProofList) returns (MsgSendPublishProofListResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -1029,4 +1030,13 @@ message MsgGeneratePeriodicalCooperationNetwork {
 message MsgGeneratePeriodicalCooperationNetworkResponse {
 }
 
+message MsgSendPublishProofList {
+  string creator = 1;
+  string port = 2;
+  string channelID = 3;
+  uint64 timeoutTimestamp = 4;
+}
+
+message MsgSendPublishProofListResponse {
+}
 // this line is used by starport scaffolding # proto/tx/message

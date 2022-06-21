@@ -49,3 +49,5 @@ crossdomaind tx cdac send-establish-cooperation  cdac channel-0  "2022-02-03 00:
 #crossdomaind tx cdac generate-cooperation-network --from alice --yes --home ~/.mars --chain-id mars --node tcp://localhost:26659 --gas=auto --gas-adjustment=1.15
 
 #crossdomaind query cdac list-cooperation-network --node tcp://localhost:26659
+
+crossdomaind tx cdac send-publish-proof-list cdac channel-0  --from alice --yes --home ~/.earth --chain-id earth --node tcp://localhost:26657 --gas=auto --gas-adjustment=1.15

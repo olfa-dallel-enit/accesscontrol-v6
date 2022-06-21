@@ -54057,6 +54057,8 @@ definitions:
     type: object
   crossdomain.cdac.MsgSendModifyCooperationValidityResponse:
     type: object
+  crossdomain.cdac.MsgSendPublishProofListResponse:
+    type: object
   crossdomain.cdac.MsgSendRevokeCooperationResponse:
     type: object
   crossdomain.cdac.MsgUpdateAuthenticationLogResponse:

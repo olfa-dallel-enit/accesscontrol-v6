@@ -6,6 +6,8 @@ export const protobufPackage = "crossdomain.cdac";
 export interface CdacPacketData {
   noData: NoData | undefined;
   /** this line is used by starport scaffolding # ibc/packet/proto/field */
+  publishProofListPacket: PublishProofListPacketData | undefined;
+  /** this line is used by starport scaffolding # ibc/packet/proto/field/number */
   revokeCooperationPacket: RevokeCooperationPacketData | undefined;
   /** this line is used by starport scaffolding # ibc/packet/proto/field/number */
   modifyCooperationInterestPacket:
@@ -163,12 +165,24 @@ export interface RevokeCooperationPacketAck {
   confirmedBy: string;
 }
 
+/** PublishProofListPacketData defines a struct for the packet payload */
+export interface PublishProofListPacketData {}
+
+/** PublishProofListPacketAck defines a struct for the packet acknowledgment */
+export interface PublishProofListPacketAck {}
+
 const baseCdacPacketData: object = {};
 
 export const CdacPacketData = {
   encode(message: CdacPacketData, writer: Writer = Writer.create()): Writer {
     if (message.noData !== undefined) {
       NoData.encode(message.noData, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.publishProofListPacket !== undefined) {
+      PublishProofListPacketData.encode(
+        message.publishProofListPacket,
+        writer.uint32(98).fork()
+      ).ldelim();
     }
     if (message.revokeCooperationPacket !== undefined) {
       RevokeCooperationPacketData.encode(
@@ -242,6 +256,12 @@ export const CdacPacketData = {
       switch (tag >>> 3) {
         case 1:
           message.noData = NoData.decode(reader, reader.uint32());
+          break;
+        case 12:
+          message.publishProofListPacket = PublishProofListPacketData.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 11:
           message.revokeCooperationPacket = RevokeCooperationPacketData.decode(
@@ -317,6 +337,16 @@ export const CdacPacketData = {
       message.noData = NoData.fromJSON(object.noData);
     } else {
       message.noData = undefined;
+    }
+    if (
+      object.publishProofListPacket !== undefined &&
+      object.publishProofListPacket !== null
+    ) {
+      message.publishProofListPacket = PublishProofListPacketData.fromJSON(
+        object.publishProofListPacket
+      );
+    } else {
+      message.publishProofListPacket = undefined;
     }
     if (
       object.revokeCooperationPacket !== undefined &&
@@ -425,6 +455,10 @@ export const CdacPacketData = {
     const obj: any = {};
     message.noData !== undefined &&
       (obj.noData = message.noData ? NoData.toJSON(message.noData) : undefined);
+    message.publishProofListPacket !== undefined &&
+      (obj.publishProofListPacket = message.publishProofListPacket
+        ? PublishProofListPacketData.toJSON(message.publishProofListPacket)
+        : undefined);
     message.revokeCooperationPacket !== undefined &&
       (obj.revokeCooperationPacket = message.revokeCooperationPacket
         ? RevokeCooperationPacketData.toJSON(message.revokeCooperationPacket)
@@ -486,6 +520,16 @@ export const CdacPacketData = {
       message.noData = NoData.fromPartial(object.noData);
     } else {
       message.noData = undefined;
+    }
+    if (
+      object.publishProofListPacket !== undefined &&
+      object.publishProofListPacket !== null
+    ) {
+      message.publishProofListPacket = PublishProofListPacketData.fromPartial(
+        object.publishProofListPacket
+      );
+    } else {
+      message.publishProofListPacket = undefined;
     }
     if (
       object.revokeCooperationPacket !== undefined &&
@@ -2640,6 +2684,110 @@ export const RevokeCooperationPacketAck = {
     } else {
       message.confirmedBy = "";
     }
+    return message;
+  },
+};
+
+const basePublishProofListPacketData: object = {};
+
+export const PublishProofListPacketData = {
+  encode(
+    _: PublishProofListPacketData,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): PublishProofListPacketData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...basePublishProofListPacketData,
+    } as PublishProofListPacketData;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): PublishProofListPacketData {
+    const message = {
+      ...basePublishProofListPacketData,
+    } as PublishProofListPacketData;
+    return message;
+  },
+
+  toJSON(_: PublishProofListPacketData): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<PublishProofListPacketData>
+  ): PublishProofListPacketData {
+    const message = {
+      ...basePublishProofListPacketData,
+    } as PublishProofListPacketData;
+    return message;
+  },
+};
+
+const basePublishProofListPacketAck: object = {};
+
+export const PublishProofListPacketAck = {
+  encode(
+    _: PublishProofListPacketAck,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): PublishProofListPacketAck {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...basePublishProofListPacketAck,
+    } as PublishProofListPacketAck;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): PublishProofListPacketAck {
+    const message = {
+      ...basePublishProofListPacketAck,
+    } as PublishProofListPacketAck;
+    return message;
+  },
+
+  toJSON(_: PublishProofListPacketAck): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<PublishProofListPacketAck>
+  ): PublishProofListPacketAck {
+    const message = {
+      ...basePublishProofListPacketAck,
+    } as PublishProofListPacketAck;
     return message;
   },
 };

@@ -2,9 +2,9 @@
 
 #hermes -c ~/.hermes/config.toml query connection channels mars connection-0
 
-#mkdir -p $HOME/.hermes && touch $HOME/.hermes/config.toml
+mkdir -p $HOME/.hermes && touch $HOME/.hermes/config.toml
 #vi ~/.hermes/config.toml
-#cat >  ~/.hermes/config.toml
+cat >  ~/.hermes/config.toml
 #cat   ~/.hermes/config.toml
 
 #file at '/home/gitpod/.hermes/config.toml'
@@ -12,7 +12,7 @@
 
 #bash execution/hermes/script ~/.hermes/config.toml earth mars
 
-#hermes -c ~/.hermes/config.toml config validate
+hermes -c ~/.hermes/config.toml config validate
 
 #crossdomaind keys  add testkey --output json
 #Enter keyring passphrase:
