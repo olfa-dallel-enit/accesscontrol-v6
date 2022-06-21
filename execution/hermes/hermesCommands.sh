@@ -1,22 +1,9 @@
-#https://hermes.informal.systems/config.html
-
-#hermes -c ~/.hermes/config.toml query connection channels mars connection-0
 
 mkdir -p $HOME/.hermes && touch $HOME/.hermes/config.toml
-#vi ~/.hermes/config.toml
-cat >  ~/.hermes/config.toml
-#cat   ~/.hermes/config.toml
 
-#file at '/home/gitpod/.hermes/config.toml'
-#https://github.com/informalsystems/ibc-rs/blob/master/config.toml
-
-#bash execution/hermes/script ~/.hermes/config.toml earth mars
+cat "execution/hermes/config.toml" > "$HOME/.hermes/config.toml"
 
 hermes -c ~/.hermes/config.toml config validate
-
-#crossdomaind keys  add testkey --output json
-#Enter keyring passphrase:
-#Re-enter keyring passphrase:{"name":"testkey","type":"local","address":"cosmos1twaswzyhj4w2hrhllanzp7cvwejenw4qalnegs","pubkey":"{\"@type\":\"/cosmos.crypto.secp256k1.PubKey\",\"key\":\"A6HbErT/HvZdXq7PBerWoUM5JdBumH8C+oV7GvTOSQHI\"}","mnemonic":"achieve loan require spoil token judge chief huge lumber glide dumb retreat donkey vendor giant mansion tennis clap tooth stuff arctic brave banner above"}
 
 
 hermes -c ~/.hermes/config.toml keys add earth -f execution/chains/earth/key_seed.json
@@ -35,10 +22,12 @@ hermes -c ~/.hermes/config.toml create channel mars --chain-b neptune --port-a c
 hermes -c ~/.hermes/config.toml create channel mars --chain-b jupiter --port-a cdac --port-b cdac -o ordered --channel-version cdac-1 --new-client-connection
 
 
-#$HOME/.hermes/keys/
-
-
 hermes -c ~/.hermes/config.toml start
+
+
+
+
+#$HOME/.hermes/keys/
 
 #hermes tx raw packet-recv earth mars cdac channel-0
 
@@ -50,3 +39,21 @@ hermes -c ~/.hermes/config.toml start
 
 
 #hermes query tx events earth A963DEC767778A5AB6E1268D7865CBEECBB57C9147AF9EB2AB7F2370E40E5C0F
+
+#https://hermes.informal.systems/config.html
+
+#hermes -c ~/.hermes/config.toml query connection channels mars connection-0
+
+#vi ~/.hermes/config.toml
+#cat >  ~/.hermes/config.toml
+#cat   ~/.hermes/config.toml
+
+#file at '/home/gitpod/.hermes/config.toml'
+#https://github.com/informalsystems/ibc-rs/blob/master/config.toml
+
+#bash execution/hermes/script ~/.hermes/config.toml earth mars
+
+#crossdomaind keys  add testkey --output json
+#Enter keyring passphrase:
+#Re-enter keyring passphrase:{"name":"testkey","type":"local","address":"cosmos1twaswzyhj4w2hrhllanzp7cvwejenw4qalnegs","pubkey":"{\"@type\":\"/cosmos.crypto.secp256k1.PubKey\",\"key\":\"A6HbErT/HvZdXq7PBerWoUM5JdBumH8C+oV7GvTOSQHI\"}","mnemonic":"achieve loan require spoil token judge chief huge lumber glide dumb retreat donkey vendor giant mansion tennis clap tooth stuff arctic brave banner above"}
+

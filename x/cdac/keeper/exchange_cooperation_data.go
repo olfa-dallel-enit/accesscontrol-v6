@@ -74,7 +74,7 @@ func (k Keeper) OnRecvExchangeCooperationDataPacket(ctx sdk.Context, packet chan
 	}
 
 	// TODO: packet reception logic
-	k.ForwardCooperationsToNewCooperativeDomain(ctx, packet, data.Sender)
+	//k.ForwardCooperationsToNewCooperativeDomain(ctx, packet, data.Sender)
 
 	return packetAck, nil
 }

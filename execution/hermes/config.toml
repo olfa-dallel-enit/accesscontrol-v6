@@ -151,7 +151,7 @@ default_gas = 100000
 
 # Specify the maximum amount of gas to be used as the gas limit for a transaction.
 # Default: 400 000
-max_gas = 400000
+max_gas = 1200000
 
 # Specify the price per gas used of the fee to submit a transaction and
 # the denomination of the fee. Required
@@ -240,7 +240,7 @@ account_prefix = 'cosmos'
 key_name = 'testkey'
 store_prefix = 'ibc'
 default_gas = 100000
-max_gas = 400000
+max_gas = 1200000
 gas_price = { price = 0.001, denom = 'stake' }
 gas_adjustment = 0.1
 max_msg_num = 30
@@ -261,7 +261,7 @@ account_prefix = 'cosmos'
 key_name = 'testkey'
 store_prefix = 'ibc'
 default_gas = 100000
-max_gas = 400000
+max_gas = 1200000
 gas_price = { price = 0.001, denom = 'stake' }
 gas_adjustment = 0.1
 max_msg_num = 30
@@ -282,7 +282,7 @@ account_prefix = 'cosmos'
 key_name = 'testkey'
 store_prefix = 'ibc'
 default_gas = 100000
-max_gas = 400000
+max_gas = 1200000
 gas_price = { price = 0.001, denom = 'stake' }
 gas_adjustment = 0.1
 max_msg_num = 30
@@ -303,7 +303,7 @@ account_prefix = 'cosmos'
 key_name = 'testkey'
 store_prefix = 'ibc'
 default_gas = 100000
-max_gas = 400000
+max_gas = 1200000
 gas_price = { price = 0.001, denom = 'stake' }
 gas_adjustment = 0.1
 max_msg_num = 30

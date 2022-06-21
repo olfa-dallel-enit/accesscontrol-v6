@@ -10,11 +10,11 @@ import (
 	channelutils "github.com/cosmos/ibc-go/v2/modules/core/04-channel/client/utils"
 	"github.com/spf13/cobra"
 
-	"context"
+	/*"context"
 	"fmt"
 	"github.com/spf13/cast"
 	"strings"
-	"time"
+	"time"*/
 )
 
 var _ = strconv.Itoa(0)
@@ -57,8 +57,8 @@ func CmdSendEstablishCooperation() *cobra.Command {
 				return err
 			}
 
-			tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-			time.Sleep(30 * time.Second)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+			/*time.Sleep(30 * time.Second)
 
 			queryClient := types.NewQueryClient(clientCtx)
 			params := &types.QueryEstablishedCooperationByChannelRequest{
@@ -133,7 +133,7 @@ func CmdSendEstablishCooperation() *cobra.Command {
 				tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg4)
 			}*/
 			/*******************/
-			return nil //tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+			//return nil //tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 
